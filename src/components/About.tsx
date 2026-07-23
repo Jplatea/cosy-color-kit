@@ -1,44 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { about } from '@/config/brand'
 import storyboardImage from '@/assets/storyboard-image.avif'
 
 export function About() {
   const [activeFrame, setActiveFrame] = useState(-1)
   const [animationStarted, setAnimationStarted] = useState(false)
 
-  const processSteps = [
-    {
-      number: "01",
-      title: "Concept & Script",
-      description: "Scene‑by‑scene draft with dialogues and time‑codes",
-      color: "accent-blue"
-    },
-    {
-      number: "02", 
-      title: "Look & Storyboard",
-      description: "AI engine selection and visual testing",
-      color: "accent-emerald"
-    },
-    {
-      number: "03",
-      title: "AI Production",
-      description: "Motion tests and multi-variant generation",
-      color: "accent-purple"
-    },
-    {
-      number: "04",
-      title: "Post‑production",
-      description: "VFX, color grading, and audio mixing",
-      color: "accent-blue"
-    },
-    {
-      number: "05",
-      title: "Master Delivery",
-      description: "Multi-format export and secure transfer",
-      color: "accent-purple"
-    }
-  ]
+  const processSteps = about.processSteps
 
   useEffect(() => {
     // Start film animation after a 3 second pause
@@ -75,17 +45,17 @@ export function About() {
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground">
-              Behind the Scenes
+              {about.eyebrow}
             </span>
             <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground">
-            How We Create Magic
+            {about.title}
           </h2>
           
           <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Watch our process unfold frame by frame
+            {about.subtitle}
           </p>
         </div>
 
@@ -274,7 +244,7 @@ export function About() {
             {/* Film Speed Indicator */}
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-accent-emerald rounded-full animate-pulse" />
-              <span className="text-sm font-semibold text-foreground">24 FPS</span>
+              <span className="text-sm font-semibold text-foreground">{about.stats.fps}</span>
             </div>
             
             <div className="w-px h-6 bg-border" />
@@ -282,7 +252,7 @@ export function About() {
             {/* Duration */}
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-accent-blue rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
-              <span className="text-sm font-semibold text-foreground">5-7 Days</span>
+              <span className="text-sm font-semibold text-foreground">{about.stats.duration}</span>
             </div>
             
             <div className="w-px h-6 bg-border" />
@@ -290,7 +260,7 @@ export function About() {
             {/* Quality */}
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-accent-purple rounded-full animate-pulse" style={{animationDelay: '1s'}} />
-              <span className="text-sm font-semibold text-foreground">Cinema Quality</span>
+              <span className="text-sm font-semibold text-foreground">{about.stats.quality}</span>
             </div>
           </div>
         </div>
@@ -299,7 +269,7 @@ export function About() {
         <div className="mt-20">
           <div className="text-center mb-8">
             <p className="text-muted-foreground">
-              A glimpse into our storyboard development process
+              {about.galleryCaption}
             </p>
           </div>
           
@@ -317,7 +287,7 @@ export function About() {
               {/* Main gallery image */}
               <img 
                 src={storyboardImage}
-                alt="Collection of AI-generated video content thumbnails showcasing MOJJU's diverse output"
+                alt="Collection of AI-generated video content thumbnails"
                 className="w-full h-auto rounded-xl"
                 style={{
                   filter: 'contrast(1.05) saturate(1.1) brightness(0.95)'
@@ -334,7 +304,7 @@ export function About() {
             {/* Caption */}
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground italic">
-                "Diverse scenarios, characters, and styles — all generated through our AI pipeline"
+                "{about.galleryQuote}"
               </p>
             </div>
           </div>
