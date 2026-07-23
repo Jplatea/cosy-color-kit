@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Volume2, VolumeX, Menu, X } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
-import { brand, hero, navigation } from '@/config/brand'
+import { brand, hero, navigation, video } from '@/config/brand'
 
 export function Hero() {
   const [isMuted, setIsMuted] = useState(true)
@@ -103,10 +103,10 @@ export function Hero() {
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover scale-110"
-        autoPlay={hero.video.autoplay}
-        muted={hero.video.muted}
-        loop={hero.video.loop}
-        playsInline={hero.video.playsInline}
+        autoPlay={video.autoplay}
+        muted={video.muted}
+        loop={video.loop}
+        playsInline={video.playsInline}
       >
         <source src={hero.videoSrc} type="video/webm" />
         Your browser does not support the video tag.
