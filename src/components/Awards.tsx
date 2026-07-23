@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { awards } from '@/config/brand'
 import minimalBestFilm from '../assets/minimal-best-film.png'
 import minimalAudienceChoice from '../assets/minimal-audience-choice.png'
 import minimalInnovation from '../assets/minimal-innovation.png'
