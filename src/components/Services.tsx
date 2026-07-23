@@ -1,62 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { services as servicesContent } from '@/config/brand'
 import { ImageWithFallback } from './figma/ImageWithFallback'
 
 export function Services() {
   const [isVisible, setIsVisible] = useState(false)
   const [hoveredPhoto, setHoveredPhoto] = useState<string | null>(null)
 
-  const services = [
-    {
-      id: 'campaigns',
-      title: "Campaign & Ad Content",
-      description: "Multi-platform video campaigns ready for every channel—YouTube, TikTok, Instagram, and beyond.",
-      color: 'accent-emerald',
-      rotation: 'rotate-2',
-      image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop&auto=format'
-    },
-    {
-      id: 'brand-films',
-      title: "Brand Films & Stories", 
-      description: "Cinematic brand videos that capture your essence and connect with audiences on an emotional level.",
-      color: 'accent-blue',
-      rotation: '-rotate-1',
-      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=300&fit=crop&auto=format'
-    },
-    {
-      id: 'trailers',
-      title: "Trailers & Promos",
-      description: "High-impact teasers that hook viewers instantly—perfect for launches, events, and announcements.",
-      color: 'accent-purple',
-      rotation: 'rotate-1',
-      image: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=300&fit=crop&auto=format'
-    },
-    {
-      id: 'short-films',
-      title: "Short-Form Films",
-      description: "Festival-ready mini-movies up to 5 minutes—ideal for investors, events, and premium content.",
-      color: 'accent-emerald',
-      rotation: '-rotate-2',
-      image: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=300&fit=crop&auto=format'
-    },
-    {
-      id: 'animation',
-      title: "Animation & Motion",
-      description: "Stylized animated content that explains complex ideas without needing live actors.",
-      color: 'accent-blue',
-      rotation: 'rotate-3',
-      image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop&auto=format'
-    },
-    {
-      id: 'social',
-      title: "Social Content",
-      description: "Thumb-stopping vertical videos delivered in batches to keep your feed consistently engaging.",
-      color: 'accent-purple',
-      rotation: '-rotate-1',
-      image: 'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=400&h=300&fit=crop&auto=format'
-    }
-  ]
+  const services = servicesContent.items
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300)
