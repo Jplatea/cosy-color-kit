@@ -125,6 +125,8 @@ export const services = {
   title: "What We Develop",
   subtitle: "Developed with precision, delivered with passion",
   labName: "MOJJU LAB",
+  footerNote:
+    "Each piece is carefully developed in our creative darkroom, ensuring every detail captures the essence of your vision with precision and artistic flair.",
   items: [
     {
       id: "campaigns",
