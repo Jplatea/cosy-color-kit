@@ -1,19 +1,9 @@
 'use client'
 
+import { brand, footer } from '@/config/brand'
+
 export function Footer() {
-  const aiTools = [
-    'Runway Gen-4',
-    'Kling 2', 
-    'Veo 3',
-    'Higgsfield AI',
-    'Hailuo Minimax 2',
-    'Midjourney',
-    'Leonardo AI',
-    'Krea AI',
-    'Runway',
-    'Suno AI',
-    'ElevenLabs'
-  ]
+  const aiTools = footer.tools.items
 
   return (
     <footer className="relative py-20 bg-foreground text-background">
@@ -23,17 +13,16 @@ export function Footer() {
           <div className="col-span-12 md:col-span-4">
             <div>
               <div className="font-bagel text-background text-3xl tracking-wider mb-4">
-                MOJJU
+                {brand.logoText}
               </div>
               <p className="text-background/70 leading-relaxed mb-6">
-                Revolutionizing video production with intelligent AI that understands 
-                creativity, storytelling, and human emotion.
+                {brand.tagline}
               </p>
               {/* Social Media Icons */}
               <div className="flex items-center space-x-6">
                 {/* X (Twitter) */}
                 <a
-                  href="https://x.com/Mojjuai"
+                  href={footer.social.x}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -45,7 +34,7 @@ export function Footer() {
 
                 {/* TikTok */}
                 <a
-                  href="https://www.tiktok.com/@mojju.ai"
+                  href={footer.social.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -57,7 +46,7 @@ export function Footer() {
 
                 {/* Instagram */}
                 <a
-                  href="https://www.instagram.com/mojju.ai"
+                  href={footer.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -76,7 +65,7 @@ export function Footer() {
 
                 {/* LinkedIn */}
                 <a
-                  href="https://linkedin.com/company/mojju"
+                  href={footer.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -92,12 +81,11 @@ export function Footer() {
           {/* Tools We Use Section */}
           <div className="col-span-12 md:col-span-8">
             <div>
-              <h4 className="font-black text-2xl text-background mb-4">TOOLS WE USE</h4>
+              <h4 className="font-black text-2xl text-background mb-4">{footer.tools.title}</h4>
               
               {/* AI Tools Description */}
               <p className="text-background/70 text-base mb-8 leading-relaxed">
-                We leverage the latest AI technology to deliver cutting-edge video production. 
-                Our toolkit combines the best generative AI models for video, audio, and visual content creation.
+                {footer.tools.description}
               </p>
               
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -118,10 +106,10 @@ export function Footer() {
         <div className="border-t border-background/20 pt-8 mt-16">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-background/70 mb-4 md:mb-0">
-              © 2025 MOJJU. All rights reserved.
+              {footer.copyright}
             </div>
             <div className="text-sm text-background/70">
-              2847 HIGHLAND AVE. SUITE 310 BIRMINGHAM 35205, AL, USA
+              {footer.address}
             </div>
           </div>
         </div>

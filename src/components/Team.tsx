@@ -1,5 +1,6 @@
 'use client'
 
+import { team as teamContent } from '@/config/brand'
 import { ImageWithFallback } from './figma/ImageWithFallback'
 import marcusPhoto from '../assets/team-member-1.png'
 import sofiaPhoto from '../assets/team-member-2.png'
@@ -9,72 +10,21 @@ import connorPhoto from '../assets/team-member-5.png'
 import zaraPhoto from '../assets/team-member-6.png'
 import leoPhoto from '../assets/team-member-7.png'
 
+const teamImages: Record<string, string> = {
+  'team-member-1': marcusPhoto,
+  'team-member-2': sofiaPhoto,
+  'team-member-3': jakePhoto,
+  'team-member-4': mayaPhoto,
+  'team-member-5': connorPhoto,
+  'team-member-6': zaraPhoto,
+  'team-member-7': leoPhoto,
+}
+
 export function Team() {
-  const wantedCriminals = [
-    {
-      name: "Marcus 'The Pixel Bandit'",
-      crime: "ARMED CREATIVE ROBBERY",
-      bounty: "$8,500",
-      description: "Notorious for stealing ordinary footage and transforming it into extraordinary visual experiences. Approach with caution - carries dangerous levels of creative vision and technical expertise.",
-      image: marcusPhoto,
-      rotation: 'rotate-3',
-      mustacheStyle: "artistic"
-    },
-    {
-      name: "Sofia 'The Frame Thief'",
-      crime: "GRAND THEFT OF IMAGINATION",
-      bounty: "$6,200",
-      description: "Wanted for stealing impossible creative briefs and turning them into award-winning masterpieces. Armed with strategic thinking and dangerous levels of project management skills.",
-      image: sofiaPhoto,
-      rotation: 'rotate-2',
-      mustacheStyle: "handlebar"
-    },
-    {
-      name: "Jake 'The Render Rogue'",
-      crime: "MASTERMINDING TECHNICAL HEISTS",
-      bounty: "$11,800",
-      description: "Ringleader of rendering crimes, orchestrating elaborate computational operations. Wanted for leading sophisticated processing schemes that push hardware beyond its limits.",
-      image: jakePhoto,
-      rotation: 'rotate-2',
-      mustacheStyle: "thick"
-    },
-    {
-      name: "Maya 'The Code Crusher'",
-      crime: "DIGITAL WIZARDRY & ALGORITHM SORCERY",
-      bounty: "$9,300",
-      description: "Wanted for conjuring flawless code from chaotic requirements using forbidden programming magic. Known to transform complex problems into elegant solutions with mysterious technical powers.",
-      image: mayaPhoto,
-      rotation: '-rotate-2',
-      mustacheStyle: "curly"
-    },
-    {
-      name: "Connor 'The Digital Desperado'",
-      crime: "PRODUCTION WITH INTENT TO AMAZE",
-      bounty: "$13,700",
-      description: "Mastermind behind revolutionary content creation operations. Wanted for disrupting traditional production methods and making competitors question their entire approach.",
-      image: connorPhoto,
-      rotation: 'rotate-1',
-      mustacheStyle: "villainous"
-    },
-    {
-      name: "Zara 'The Motion Maverick'",
-      crime: "ANIMATION MANIPULATION & EFFECT FORGERY",
-      bounty: "$7,900",
-      description: "Notorious for crafting motion graphics so smooth they defy the laws of physics. Armed with After Effects mastery and a dangerous eye for kinetic perfection.",
-      image: zaraPhoto,
-      rotation: '-rotate-1',
-      mustacheStyle: "artistic"
-    },
-    {
-      name: "Leo 'The Effect Enforcer'",
-      crime: "WANDERING VFX SYNTHESIS SCHEMES",
-      bounty: "$10,400",
-      description: "A nomadic visual effects outlaw who drifts from project to project, leaving behind a trail of jaw-dropping composites and impossible cinematic magic. Master of the digital realm.",
-      image: leoPhoto,
-      rotation: 'rotate-3',
-      mustacheStyle: "handlebar"
-    }
-  ]
+  const wantedCriminals = teamContent.members.map((member) => ({
+    ...member,
+    image: teamImages[member.image] ?? member.image,
+  }))
 
   const Mustache = ({ style, className }: { style: string, className?: string }) => {
     const mustaches = {
@@ -122,18 +72,18 @@ export function Team() {
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground">
-              Meet the Outlaws
+              {teamContent.eyebrow}
             </span>
             <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-8 text-foreground">
-            <span className="block mb-2">These people are</span>
-            <span className="block text-foreground">WANTED</span>
+            <span className="block mb-2">{teamContent.title}</span>
+            <span className="block text-foreground">{teamContent.titleAccent}</span>
           </h2>
           
           <p className="text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Highly skilled and creatively dangerous
+            {teamContent.subtitle}
           </p>
         </div>
 
