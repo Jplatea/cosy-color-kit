@@ -423,8 +423,8 @@ const Index = () => {
       <footer className="border-t border-white/10 px-6 py-12 text-sm text-white/60">
         <div className="max-w-7xl mx-auto grid gap-8 md:grid-cols-3 items-start">
           <div className="space-y-2">
-            <p className="font-bagel text-xl text-white">CULOW & PILILARGE</p>
-            <p>Síguenos en nuestras redes sociales y descubre todo el contenido nuevo.</p>
+            <p className="font-bagel text-xl text-white">CULOW <span className="text-white/40">y</span> PILILARGE</p>
+            <p>Síguenos en nuestras redes y descubre cada nuevo corto animado.</p>
           </div>
           <ul className="space-y-2 md:justify-self-center">
             <li><a href={SOCIALS.youtube} target="_blank" rel="noopener" className="story-link hover:text-white">YouTube: @CulowPililarge</a></li>
