@@ -187,7 +187,7 @@ export const services = {
 
 export const team = {
   eyebrow: "Meet the Outlaws",
-  title: "These people are WANTED",
+  title: "These people are",
   titleAccent: "WANTED",
   subtitle: "Highly skilled and creatively dangerous",
   members: [
