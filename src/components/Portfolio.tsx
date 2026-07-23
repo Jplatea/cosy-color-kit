@@ -11,17 +11,17 @@ export function Portfolio() {
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground">
-              Featured Work
+              {portfolio.eyebrow}
             </span>
             <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-8">
-            <span className="block mb-2">Creative Productions</span>
+            <span className="block mb-2">{portfolio.title}</span>
           </h2>
           
           <p className="text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Our latest commercial for Hampton - exploring the lonely journey of startup founders and the power of community.
+            {portfolio.description}
           </p>
         </div>
 
