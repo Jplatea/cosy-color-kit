@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Youtube, Instagram, Music2, Check, ArrowRight, Mail } from "lucide-react";
+import { Play, Youtube, Instagram, Music2, Check, ArrowRight, Mail, Sparkles } from "lucide-react";
 import heroImage from "@/assets/culow-pililarge-hero.jpg";
 
 const SOCIALS = {
@@ -21,48 +21,48 @@ const PLATFORMS = [
     id: "youtube",
     name: "YouTube",
     Icon: Youtube,
-    tagline: "Los vídeos más completos, retos, colaboraciones, especiales y contenido exclusivo.",
+    tagline: "Shorts animados en 3D, sketches, poemas absurdos y homenajes surrealistas.",
     cta: "Ver canal",
     href: SOCIALS.youtube,
     accent: "from-[#ff2d2d] to-[#ff6b6b]",
-    glow: "shadow-[0_0_60px_-10px_rgba(255,45,45,0.6)]",
+    glow: "shadow-[0_0_60px_-10px_rgba(255,45,45,0.35)]",
   },
   {
     id: "tiktok",
     name: "TikTok",
     Icon: Music2,
-    tagline: "Vídeos virales, humor rápido, tendencias y momentos espontáneos.",
+    tagline: "Micro-animaciones virales, humor absurdo servido en menos de 30 segundos.",
     cta: "Seguir en TikTok",
     href: SOCIALS.tiktok,
     accent: "from-[#00f2ea] via-[#ffffff] to-[#ff0050]",
-    glow: "shadow-[0_0_60px_-10px_rgba(255,0,80,0.5)]",
+    glow: "shadow-[0_0_60px_-10px_rgba(255,0,80,0.3)]",
   },
   {
     id: "instagram",
     name: "Instagram",
     Icon: Instagram,
-    tagline: "Detrás de cámaras, historias, novedades y contenido diario.",
+    tagline: "Fotogramas, storyboards, memes y el detrás del render de cada escena.",
     cta: "Seguir en Instagram",
     href: SOCIALS.instagram,
     accent: "from-[#feda75] via-[#fa7e1e] via-[#d62976] to-[#4f5bd5]",
-    glow: "shadow-[0_0_60px_-10px_rgba(214,41,118,0.55)]",
+    glow: "shadow-[0_0_60px_-10px_rgba(214,41,118,0.35)]",
   },
 ];
 
 const REASONS = [
-  "Humor auténtico.",
-  "Contenido original.",
+  "Humor absurdo y auténtico.",
+  "Animación 3D hecha en casa.",
+  "Personajes imposibles de olvidar.",
   "Publicaciones frecuentes.",
-  "Retos y colaboraciones.",
-  "Vídeos que se comparten.",
+  "Referencias, homenajes y memes.",
   "Una comunidad muy activa.",
 ];
 
 const VIDEOS = [
-  { id: "1", label: "Último reto", tag: "YouTube" },
-  { id: "2", label: "Momento viral", tag: "TikTok" },
-  { id: "3", label: "Detrás de cámaras", tag: "Instagram" },
-  { id: "4", label: "Colaboración", tag: "YouTube" },
+  { id: "1", label: "Chiste chistoso 1", tag: "Short" },
+  { id: "2", label: "Poesía olorosa", tag: "Short" },
+  { id: "3", label: "Homenaje a Oliver Tree", tag: "Short" },
+  { id: "4", label: "Culow poético", tag: "Short" },
 ];
 
 const Index = () => {
@@ -79,12 +79,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0d0b09] text-white overflow-x-hidden">
       {/* NAV */}
       <header className="fixed top-0 inset-x-0 z-50 glass-navbar">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <a href="#" className="font-bagel text-2xl tracking-wide bg-gradient-to-r from-[#ff2d2d] via-[#ff0050] to-[#feda75] bg-clip-text text-transparent">
-            CULOW & PILILARGE
+          <a href="#" className="flex items-center gap-3">
+            <span className="relative flex items-center justify-center h-9 w-9 rounded-full bg-white">
+              <span className="absolute h-5 w-2.5 rounded-full bg-[#0d0b09] top-1.5 right-2" />
+              <span className="absolute h-3.5 w-3.5 rounded-full bg-[#0d0b09] bottom-1.5 left-1.5" />
+            </span>
+            <span className="font-bagel text-xl tracking-wide text-white">
+              CULOW <span className="text-white/40">y</span> PILILARGE
+            </span>
           </a>
           <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
             {NAV.map((n) => (
@@ -105,33 +111,27 @@ const Index = () => {
       </header>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-end md:items-center overflow-hidden pt-24">
-        <img
-          src={heroImage}
-          alt="Culow y Pililarge, dúo de creadores de contenido"
-          width={1600}
-          height={1808}
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/80 via-transparent to-transparent" />
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16">
+        {/* Spotlight glow */}
+        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[700px] w-[700px] rounded-full bg-[#f5b845]/20 blur-[120px]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,184,69,0.12),transparent_60%)]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 md:pb-0">
-          <div className="max-w-3xl space-y-8 animate-fade-in">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-white/70">
-              <span className="w-2 h-2 rounded-full bg-[#ff2d2d] animate-pulse" /> Nuevo vídeo cada semana
+        <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-10 items-center w-full">
+          <div className="lg:col-span-7 space-y-8 animate-fade-in">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-white/70">
+              <Sparkles size={14} className="text-[#f5b845]" /> Animación 3D · Humor absurdo
             </span>
-            <h1 className="font-bagel text-5xl md:text-7xl lg:text-8xl leading-[0.95] text-shadow-strong">
-              El dúo que está{" "}
-              <span className="bg-gradient-to-r from-[#ff2d2d] via-[#ff0050] to-[#feda75] bg-clip-text text-transparent">
-                conquistando
-              </span>{" "}
-              las redes sociales
+            <h1 className="font-bagel text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.92] text-shadow-medium">
+              Dos formas.
+              <br />
+              <span className="text-[#f5b845]">Cero límites.</span>
+              <br />
+              Mil chistes.
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-2xl">
-              Humor, entretenimiento, retos y contenido viral. Miles de personas ya siguen las
-              aventuras de <strong className="text-white">Culow & Pililarge</strong>, dos creadores que
-              convierten cualquier situación cotidiana en un vídeo imposible de olvidar.
+            <p className="text-lg md:text-xl text-white/70 max-w-xl leading-relaxed">
+              <strong className="text-white">Culow y Pililarge</strong> son dos personajes animados en 3D
+              que convierten lo cotidiano en surrealismo puro. Poesía olorosa, homenajes imposibles y
+              chistes que no deberían funcionar… pero funcionan.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -160,6 +160,28 @@ const Index = () => {
               </a>
             </div>
           </div>
+          <div className="lg:col-span-5 relative">
+            <div className="relative aspect-square rounded-[2rem] overflow-hidden border border-white/10 bg-black/40">
+              <img
+                src={heroImage}
+                alt="Culow y Pililarge: dos personajes 3D minimalistas bajo un foco"
+                width={1600}
+                height={1600}
+                className="w-full h-full object-cover animate-fade-in"
+              />
+              {/* Character name tags */}
+              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-xs uppercase tracking-[0.25em]">
+                <div className="flex flex-col items-start gap-1">
+                  <span className="h-px w-8 bg-[#f5b845]" />
+                  <span className="text-white/80">Culow</span>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="h-px w-8 bg-[#f5b845]" />
+                  <span className="text-white/80">Pililarge</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -167,23 +189,25 @@ const Index = () => {
       <section id="quienes" className="relative py-28 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-start">
           <div className="md:col-span-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#ff2d2d] mb-4">01 — Quiénes son</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#f5b845] mb-4">01 — Quiénes son</p>
             <h2 className="font-bagel text-4xl md:text-6xl leading-tight">
-              Mucho más que dos creadores de contenido
+              Dos personajes. Un universo absurdo.
             </h2>
           </div>
           <div className="md:col-span-7 space-y-6 text-white/75 text-lg leading-relaxed">
             <p>
-              Culow y Pililarge han construido una comunidad gracias a un estilo propio basado en el
-              humor, la espontaneidad y la cercanía.
+              <strong className="text-white">Culow</strong> es una figura redonda y rechoncha.{" "}
+              <strong className="text-white">Pililarge</strong>, alta y esbelta. Juntos habitan un
+              escenario minimalista donde cada corto se rueda, se ilumina y se anima cuadro a cuadro.
             </p>
             <p>
-              Cada vídeo está pensado para sorprender, entretener y sacar una sonrisa, mezclando
-              retos, situaciones inesperadas y momentos que terminan convirtiéndose en contenido viral.
+              Cada pieza mezcla animación 3D casera, humor absurdo y referencias inesperadas: poemas
+              malolientes, homenajes a Oliver Tree, chistes que no tienen ningún sentido y, aun así,
+              se quedan contigo.
             </p>
             <p>
-              Su personalidad y química frente a la cámara hacen que cada publicación sea diferente,
-              consiguiendo conectar con públicos de todas las edades.
+              El resultado: un lenguaje visual reconocible al primer fotograma y una comunidad que ya
+              no puede mirar una cápsula blanca sin sonreír.
             </p>
           </div>
         </div>
@@ -193,7 +217,7 @@ const Index = () => {
       <section id="redes" className="relative py-28 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 space-y-4">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#ff2d2d]">02 — Donde sucede todo</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#f5b845]">02 — Donde sucede todo</p>
             <h2 className="font-bagel text-4xl md:text-6xl">Síguelos en todas sus plataformas</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -224,10 +248,10 @@ const Index = () => {
 
       {/* SECTION 3 — Por qué seguirlos */}
       <section id="comunidad" className="relative py-28 px-6 border-t border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#ff2d2d]/10 via-transparent to-[#ff0050]/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f5b845]/10 via-transparent to-[#ff2d2d]/10 pointer-events-none" />
         <div className="relative max-w-6xl mx-auto text-center space-y-14">
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#feda75]">03 — Por qué seguirlos</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#f5b845]">03 — Por qué seguirlos</p>
             <h2 className="font-bagel text-4xl md:text-6xl">
               Una comunidad que <span className="italic">no deja de crecer</span>
             </h2>
@@ -236,9 +260,9 @@ const Index = () => {
             {REASONS.map((r) => (
               <li
                 key={r}
-                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left gentle-animation hover:border-[#ff2d2d]/50 hover:bg-white/[0.06]"
+                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left gentle-animation hover:border-[#f5b845]/50 hover:bg-white/[0.06]"
               >
-                <span className="flex items-center justify-center h-8 w-8 rounded-full bg-[#ff2d2d]/20 text-[#ff6b6b] shrink-0">
+                <span className="flex items-center justify-center h-8 w-8 rounded-full bg-[#f5b845]/20 text-[#f5b845] shrink-0">
                   <Check size={16} strokeWidth={3} />
                 </span>
                 <span className="text-white/90 font-medium">{r}</span>
@@ -253,7 +277,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
             <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#ff2d2d]">04 — Últimos vídeos</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#f5b845]">04 — Últimos shorts</p>
               <h2 className="font-bagel text-4xl md:text-6xl max-w-xl">
                 No te pierdas sus mejores momentos
               </h2>
@@ -274,10 +298,15 @@ const Index = () => {
                 className="group relative aspect-[9/16] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.02] gentle-animation hover:border-white/30 hover:-translate-y-1"
               >
                 <div className={`absolute inset-0 opacity-40 group-hover:opacity-60 gentle-animation bg-gradient-to-br ${
-                  i % 3 === 0 ? "from-[#ff2d2d] to-[#ff0050]" :
-                  i % 3 === 1 ? "from-[#00f2ea] to-[#ff0050]" :
-                                "from-[#feda75] via-[#d62976] to-[#4f5bd5]"
+                  i % 3 === 0 ? "from-[#f5b845] to-[#ff2d2d]" :
+                  i % 3 === 1 ? "from-[#1a1815] to-[#3a2a1a]" :
+                                "from-[#ede4d3] via-[#f5b845] to-[#0d0b09]"
                 }`} />
+                {/* Silhouette hint */}
+                <div className="absolute inset-0 flex items-end justify-center gap-3 pb-16 opacity-30 group-hover:opacity-60 gentle-animation">
+                  <div className="w-8 h-6 rounded-full bg-white" />
+                  <div className="w-6 h-16 rounded-full bg-white" />
+                </div>
                 <div className="absolute inset-0 flex flex-col justify-between p-5">
                   <span className="self-start rounded-full bg-black/60 backdrop-blur px-3 py-1 text-[10px] uppercase tracking-widest">
                     {v.tag}
@@ -302,13 +331,13 @@ const Index = () => {
       <section id="colabora" className="relative py-28 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#feda75]">05 — Colaboraciones</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#f5b845]">05 — Colaboraciones</p>
             <h2 className="font-bagel text-4xl md:text-5xl leading-tight">
-              ¿Quieres colaborar con Culow & Pililarge?
+              ¿Quieres colaborar con Culow y Pililarge?
             </h2>
             <p className="text-white/70 text-lg">
-              Si eres una marca, agencia o creador de contenido y buscas una colaboración auténtica
-              con gran impacto en redes sociales, estaremos encantados de escuchar tu propuesta.
+              Si eres una marca, estudio o creador y quieres integrarte en el universo absurdo de
+              Culow y Pililarge —branded content animado, cameos o piezas a medida—, cuéntanoslo.
             </p>
           </div>
           <form onSubmit={handleCollab} className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.03] p-8">
@@ -318,7 +347,7 @@ const Index = () => {
                 type="text"
                 value={collab.name}
                 onChange={(e) => setCollab({ ...collab, name: e.target.value })}
-                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#ff2d2d] gentle-animation"
+                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#f5b845] gentle-animation"
                 placeholder="Tu nombre"
               />
             </div>
@@ -328,7 +357,7 @@ const Index = () => {
                 type="email"
                 value={collab.email}
                 onChange={(e) => setCollab({ ...collab, email: e.target.value })}
-                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#ff2d2d] gentle-animation"
+                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#f5b845] gentle-animation"
                 placeholder="tu@email.com"
               />
             </div>
@@ -338,13 +367,13 @@ const Index = () => {
                 value={collab.message}
                 onChange={(e) => setCollab({ ...collab, message: e.target.value })}
                 rows={4}
-                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#ff2d2d] gentle-animation resize-none"
+                className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-3 focus:outline-none focus:border-[#f5b845] gentle-animation resize-none"
                 placeholder="Cuéntanos tu idea..."
               />
             </div>
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#ff2d2d] hover:bg-[#ff4747] px-6 py-3 font-semibold gentle-animation"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#f5b845] text-[#0d0b09] hover:bg-[#ffcf5c] px-6 py-3 font-semibold gentle-animation"
             >
               <Mail size={18} /> {sent ? "¡Enviado!" : "Solicitar colaboración"}
             </button>
@@ -354,12 +383,12 @@ const Index = () => {
 
       {/* FINAL — Únete */}
       <section className="relative py-32 px-6 border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#ff2d2d]/10 via-[#0a0a0a] to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f5b845]/10 via-[#0d0b09] to-[#0d0b09]" />
         <div className="relative max-w-4xl mx-auto text-center space-y-10">
           <h2 className="font-bagel text-5xl md:text-7xl">Únete a la comunidad</h2>
           <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto">
-            Cada semana llegan nuevos vídeos, nuevas historias y nuevos retos. No te pierdas
-            ninguna publicación.
+            Cada semana llegan nuevos shorts, nuevas escenas y nuevos disparates. No te pierdas ni un
+            fotograma.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -394,8 +423,8 @@ const Index = () => {
       <footer className="border-t border-white/10 px-6 py-12 text-sm text-white/60">
         <div className="max-w-7xl mx-auto grid gap-8 md:grid-cols-3 items-start">
           <div className="space-y-2">
-            <p className="font-bagel text-xl text-white">CULOW & PILILARGE</p>
-            <p>Síguenos en nuestras redes sociales y descubre todo el contenido nuevo.</p>
+            <p className="font-bagel text-xl text-white">CULOW <span className="text-white/40">y</span> PILILARGE</p>
+            <p>Síguenos en nuestras redes y descubre cada nuevo corto animado.</p>
           </div>
           <ul className="space-y-2 md:justify-self-center">
             <li><a href={SOCIALS.youtube} target="_blank" rel="noopener" className="story-link hover:text-white">YouTube: @CulowPililarge</a></li>
