@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Volume2, VolumeX, Menu, X } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
+import { brand, hero, navigation } from '@/config/brand'
 
 export function Hero() {
   const [isMuted, setIsMuted] = useState(true)
@@ -102,12 +103,12 @@ export function Hero() {
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover scale-110"
-        autoPlay
-        muted
-        loop
-        playsInline
+        autoPlay={hero.video.autoplay}
+        muted={hero.video.muted}
+        loop={hero.video.loop}
+        playsInline={hero.video.playsInline}
       >
-        <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/webm" />
+        <source src={hero.videoSrc} type="video/webm" />
         Your browser does not support the video tag.
       </video>
 
@@ -134,41 +135,20 @@ export function Hero() {
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              <span className="font-bagel text-white text-xl tracking-wider">MOJJU</span>
+              <span className="font-bagel text-white text-xl tracking-wider">{brand.logoText}</span>
             </motion.div>
 
             {/* Navigation Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a 
-                href="#portfolio" 
-                className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
-              >
-                Work
-              </a>
-              <a 
-                href="#about" 
-                className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
-              >
-                Process
-              </a>
-              <a 
-                href="#services" 
-                className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
-              >
-                Capabilities
-              </a>
-              <a 
-                href="#team" 
-                className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
-              >
-                Team
-              </a>
-              <a 
-                href="#contact" 
-                className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
-              >
-                Contact
-              </a>
+              {navigation.links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
 
             {/* Right Side - Video Controls + CTA + Mobile Menu */}
@@ -185,7 +165,7 @@ export function Hero() {
                 {/* Sound On indicator - only show when muted */}
                 {isMuted && (
                   <div className="absolute -bottom-10 right-0 flex items-center text-white/80">
-                    <span className="whitespace-nowrap font-medium text-sm mr-2">Sound On</span>
+                    <span className="whitespace-nowrap font-medium text-sm mr-2">{hero.soundOnLabel}</span>
                     <span className="text-lg">↗</span>
                   </div>
                 )}
@@ -195,13 +175,10 @@ export function Hero() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  const contactSection = document.getElementById('contact')
-                  contactSection?.scrollIntoView({ behavior: 'smooth' })
-                }}
+                onClick={brand.ctaAction}
                 className="hidden sm:block bg-red-600 backdrop-blur-sm text-white font-semibold px-6 py-3 rounded-md hover:bg-red-700 gentle-animation ml-4 cursor-pointer"
               >
-                Book a Call
+                {brand.cta}
               </motion.button>
 
               {/* Mobile Hamburger Menu Button */}
