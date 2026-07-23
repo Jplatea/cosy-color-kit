@@ -1,5 +1,6 @@
 'use client'
 
+import { team as teamContent } from '@/config/brand'
 import { ImageWithFallback } from './figma/ImageWithFallback'
 import marcusPhoto from '../assets/team-member-1.png'
 import sofiaPhoto from '../assets/team-member-2.png'
@@ -9,8 +10,21 @@ import connorPhoto from '../assets/team-member-5.png'
 import zaraPhoto from '../assets/team-member-6.png'
 import leoPhoto from '../assets/team-member-7.png'
 
+const teamImages: Record<string, string> = {
+  'team-member-1': marcusPhoto,
+  'team-member-2': sofiaPhoto,
+  'team-member-3': jakePhoto,
+  'team-member-4': mayaPhoto,
+  'team-member-5': connorPhoto,
+  'team-member-6': zaraPhoto,
+  'team-member-7': leoPhoto,
+}
+
 export function Team() {
-  const wantedCriminals = [
+  const wantedCriminals = teamContent.members.map((member) => ({
+    ...member,
+    image: teamImages[member.image] ?? member.image,
+  }))
     {
       name: "Marcus 'The Pixel Bandit'",
       crime: "ARMED CREATIVE ROBBERY",
