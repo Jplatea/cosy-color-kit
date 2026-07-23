@@ -339,6 +339,12 @@ const Index = () => {
               Si eres una marca, estudio o creador y quieres integrarte en el universo absurdo de
               Culow y Pililarge —branded content animado, cameos o piezas a medida—, cuéntanoslo.
             </p>
+            <a
+              href="mailto:hola@culowypililarge.com"
+              className="inline-flex items-center gap-2 text-[#f5b845] hover:text-white gentle-animation"
+            >
+              <Mail size={18} /> hola@culowypililarge.com
+            </a>
           </div>
           <form onSubmit={handleCollab} className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.03] p-8">
             <div>
@@ -421,7 +427,7 @@ const Index = () => {
 
       {/* FOOTER */}
       <footer className="border-t border-white/10 px-6 py-12 text-sm text-white/60">
-        <div className="max-w-7xl mx-auto grid gap-8 md:grid-cols-3 items-start">
+        <div className="max-w-7xl mx-auto grid gap-8 md:grid-cols-4 items-start">
           <div className="space-y-2">
             <p className="font-bagel text-xl text-white">CULOW <span className="text-white/40">y</span> PILILARGE</p>
             <p>Síguenos en nuestras redes y descubre cada nuevo corto animado.</p>
@@ -431,6 +437,12 @@ const Index = () => {
             <li><a href={SOCIALS.tiktok} target="_blank" rel="noopener" className="story-link hover:text-white">TikTok: @culow_pililarge</a></li>
             <li><a href={SOCIALS.instagram} target="_blank" rel="noopener" className="story-link hover:text-white">Instagram: @culowpililarge</a></li>
           </ul>
+          <div className="md:justify-self-center space-y-2">
+            <p className="text-xs uppercase tracking-widest text-white/40">Contacto</p>
+            <a href="mailto:hola@culowypililarge.com" className="story-link hover:text-white inline-flex items-center gap-2">
+              <Mail size={16} /> hola@culowypililarge.com
+            </a>
+          </div>
           <p className="md:text-right">© {new Date().getFullYear()} Culow & Pililarge. Todos los derechos reservados.</p>
         </div>
       </footer>
