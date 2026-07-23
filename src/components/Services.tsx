@@ -45,7 +45,7 @@ export function Services() {
           }`}>
             <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-amber-200/80">
-              Fresh from the Darkroom
+              {servicesContent.eyebrow}
             </span>
             <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse" />
           </div>
@@ -53,13 +53,13 @@ export function Services() {
           <h2 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-amber-100 transform transition-all duration-1000 delay-200 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            What We Develop
+            {servicesContent.title}
           </h2>
           
           <p className={`text-xl text-amber-200/90 leading-relaxed max-w-3xl mx-auto transform transition-all duration-1000 delay-400 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}>
-            Developed with precision, delivered with passion
+            {servicesContent.subtitle}
           </p>
         </div>
 
@@ -270,7 +270,7 @@ export function Services() {
                     
                     {/* Developer stamp */}
                     <div className="absolute bottom-2 right-2 text-xs text-gray-400 font-mono opacity-60">
-                      MOJJU LAB
+                      {servicesContent.labName}
                     </div>
                   </div>
                 </div>
@@ -473,7 +473,7 @@ export function Services() {
                     <div className="absolute bottom-8 left-3 w-2 h-8 bg-yellow-100/20 rounded-full transform rotate-15" />
                     
                     <div className="absolute bottom-2 right-2 text-xs text-gray-400 font-mono opacity-60">
-                      MOJJU LAB
+                      {servicesContent.labName}
                     </div>
                   </div>
                 </div>
@@ -484,7 +484,7 @@ export function Services() {
           {/* Darkroom atmosphere note */}
           <div className="mt-16 text-center">
             <p className="text-sm text-amber-200/70 leading-relaxed max-w-2xl mx-auto">
-              Each piece is carefully developed in our creative darkroom, ensuring every detail captures the essence of your vision with precision and artistic flair.
+              {servicesContent.footerNote}
             </p>
           </div>
         </div>
