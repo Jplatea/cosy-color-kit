@@ -1,19 +1,9 @@
 'use client'
 
+import { brand, footer } from '@/config/brand'
+
 export function Footer() {
-  const aiTools = [
-    'Runway Gen-4',
-    'Kling 2', 
-    'Veo 3',
-    'Higgsfield AI',
-    'Hailuo Minimax 2',
-    'Midjourney',
-    'Leonardo AI',
-    'Krea AI',
-    'Runway',
-    'Suno AI',
-    'ElevenLabs'
-  ]
+  const aiTools = footer.tools.items
 
   return (
     <footer className="relative py-20 bg-foreground text-background">
