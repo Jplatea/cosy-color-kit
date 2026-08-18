@@ -57,6 +57,18 @@ async function resolveChannelId(handle) {
   if (!match) throw new Error(`no encuentro el channelId de ${clean}`);
   return match[1];
 }
+/**
+ * Los títulos del canal acaban en ristras de hashtags (#culow #pililarge...).
+ * En YouTube sirven para que te encuentren; en la web sobran y estropean el
+ * titular, así que se recortan al sincronizar.
+ */
+function cleanTitle(text) {
+  return text
+    .replace(/#[\p{L}\p{N}_]+/gu, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/[\s·|/\\-]+$/u, "")
+    .trim();
+}
 
 function decodeEntities(text) {
   return text
@@ -80,7 +92,7 @@ async function readFeed(channelId) {
       const title = entry.match(/<title>([\s\S]*?)<\/title>/)?.[1];
       const published = entry.match(/<published>([^<]+)<\/published>/)?.[1];
       if (!id || !title) return null;
-      return { id, title: decodeEntities(title.trim()), published };
+       return { id, title: cleanTitle(decodeEntities(title)), published };
     })
     .filter(Boolean);
 }
