@@ -1,7 +1,112 @@
-import {
-  DIAS, K, SECCIONES, VENTANA_ONLINE_MS, cmd, diaISO, hayAlmacen, hoy, pais,
-  pipeline, visitante, type Peticion, type Respuesta,
-} from "./_store";
+/**
+ * Vercel empaqueta cada función por separado y deja fuera los ficheros que
+ * empiezan por guion bajo, así que un módulo compartido no viaja con ellas
+ * (`ERR_MODULE_NOT_FOUND` al arrancar). Por eso este bloque está repetido en
+ * `stats.ts` y en `visit.ts`: cada fichero tiene que bastarse solo.
+ *
+ * Los contadores viven en Redis (Upstash) porque cada llamada arranca en una
+ * máquina limpia, sin disco donde guardar nada. Se habla con él por su API
+ * REST y con `fetch` a secas, sin librería, para no añadir dependencias.
+ */
+
+const BASE =
+  process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
+const TOKEN =
+  process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "";
+
+const hayAlmacen = Boolean(BASE && TOKEN);
+
+type Arg = string | number;
+
+async function pedir(url: string, body: unknown) {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { authorization: `Bearer ${TOKEN}`, "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`Upstash respondió ${res.status}`);
+  return res.json();
+}
+
+/** Varios comandos en una sola ida y vuelta. */
+async function pipeline(cmds: Arg[][]): Promise<unknown[]> {
+  if (!cmds.length) return [];
+  const out = await pedir(`${BASE}/pipeline`, cmds.map((c) => c.map(String)));
+  return (Array.isArray(out) ? out : []).map((r: any) => r?.result);
+}
+
+const K = {
+  total: "cyp:total",
+  days: "cyp:days",
+  pages: "cyp:pages",
+  countries: "cyp:countries",
+  online: "cyp:online",
+  seen: (hash: string) => `cyp:seen:${hash}`,
+};
+
+const DIAS = 14;
+const VENTANA_ONLINE_MS = 5 * 60 * 1000;
+
+const hoy = () => new Date().toISOString().slice(0, 10);
+const diaISO = (atras: number) =>
+  new Date(Date.now() - atras * 86_400_000).toISOString().slice(0, 10);
+
+/** Lo mínimo que se usa de la petición; evita depender de los tipos de Vercel. */
+type Peticion = {
+  method?: string;
+  headers: Record<string, string | string[] | undefined>;
+  body?: unknown;
+  socket?: { remoteAddress?: string };
+};
+
+type Respuesta = {
+  status: (code: number) => Respuesta;
+  json: (data: unknown) => unknown;
+  end: () => unknown;
+  setHeader: (k: string, v: string) => unknown;
+};
+
+/** Un comando suelto. */
+async function cmd<T = unknown>(...args: Arg[]): Promise<T> {
+  const out: any = await pedir(BASE, args.map(String));
+  if (out?.error) throw new Error(String(out.error));
+  return out?.result as T;
+}
+
+/** Solo estas secciones cuentan: evita que nadie infle claves inventadas. */
+const SECCIONES = new Set([
+  "inicio", "videos", "shorts", "hablar", "vestidor", "poemas",
+]);
+
+const cabecera = (req: Peticion, nombre: string) => {
+  const v = req.headers[nombre];
+  return Array.isArray(v) ? v[0] : v;
+};
+
+function ip(req: Peticion): string {
+  const fwd = cabecera(req, "x-forwarded-for");
+  if (fwd) return String(fwd).split(",")[0].trim();
+  return req.socket?.remoteAddress || "";
+}
+
+/**
+ * Identificador efímero del visitante.
+ *
+ * No se guarda ninguna IP: solo este hash. Y como la sal incluye el día, el
+ * identificador de hoy no sirve para reconocer a nadie mañana.
+ */
+async function visitante(req: Peticion): Promise<string> {
+  const { createHash } = await import("node:crypto");
+  const sal = process.env.CYP_STATS_SECRET || "culowypililarge";
+  const material = `${sal}|${hoy()}|${ip(req)}|${cabecera(req, "user-agent") || ""}`;
+  return createHash("sha256").update(material).digest("hex").slice(0, 16);
+}
+
+/** País del visitante. Lo pone Vercel: ni IPs ni servicios de terceros. */
+function pais(req: Peticion): string | null {
+  const cc = cabecera(req, "x-vercel-ip-country");
+  return cc && /^[A-Za-z]{2}$/.test(String(cc)) ? String(cc).toUpperCase() : null;
+}
 
 /** Registra una visita y las secciones que ha llegado a ver. */
 export default async function handler(req: Peticion, res: Respuesta) {
@@ -9,11 +114,11 @@ export default async function handler(req: Peticion, res: Respuesta) {
   if (!hayAlmacen) return res.status(503).json({ error: "sin almacén configurado" });
 
   try {
-    const body =
-      typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body as any) || {};
+    const body: any =
+      typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
     const secciones: string[] = Array.isArray(body.sections) ? body.sections.slice(0, 20) : [];
 
-    const hash = visitante(req);
+    const hash = await visitante(req);
     const ahora = Date.now();
 
     // NX: solo entra el primero del día. Ese es el contador de únicos.
@@ -21,7 +126,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
       "SET", K.seen(hash), "1", "NX", "EX", 86_400
     );
 
-    const tareas: (string | number)[][] = [
+    const tareas: Arg[][] = [
       ["ZADD", K.online, ahora, hash],
       ["ZREMRANGEBYSCORE", K.online, 0, ahora - VENTANA_ONLINE_MS],
     ];
