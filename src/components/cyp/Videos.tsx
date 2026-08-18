@@ -2,6 +2,8 @@ import { Eyebrow, SectionTitle, Thumb } from "./primitives";
 import { socials, videos, youtubeThumb } from "@/config/cyp";
 
 export function Videos() {
+  if (!videos.length) return null;
+
   return (
     <section id="videos" className="bg-cyp-ink-soft px-6 py-[100px] lg:px-10">
       <div className="mx-auto max-w-[1200px]">
