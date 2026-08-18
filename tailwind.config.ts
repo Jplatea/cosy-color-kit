@@ -19,8 +19,21 @@ export default {
     extend: {
       fontFamily: {
         bagel: ['Bagel Fat One', 'cursive'],
+        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
+        // Paleta del rediseño: esculturas mate blancas sobre estudio oscuro cálido.
+        cyp: {
+          ink: "#0a0807",       // fondo de página
+          "ink-soft": "#0d0a09", // fondo de secciones alternas
+          card: "#141010",
+          stage: "#100c0b",      // fondo de los escenarios de personajes
+          cream: "#f2ece2",      // texto
+          "cream-hi": "#faf5ec", // titulares
+          gold: "#e8b25c",
+          "gold-hi": "#f6c877",
+          "on-gold": "#160f06",  // texto sobre botones dorados
+        },
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
@@ -80,10 +93,35 @@ export default {
             height: "0",
           },
         },
+        "cyp-bob": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-14px)" },
+        },
+        "cyp-bob-slow": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "cyp-spot": {
+          "0%, 100%": { opacity: ".55" },
+          "50%": { opacity: ".8" },
+        },
+        "cyp-marquee": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        "cyp-blink": {
+          "0%, 92%, 100%": { transform: "scaleY(1)" },
+          "96%": { transform: "scaleY(.08)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "cyp-bob": "cyp-bob 7s ease-in-out infinite",
+        "cyp-bob-slow": "cyp-bob-slow 8.5s ease-in-out infinite",
+        "cyp-spot": "cyp-spot 9s ease-in-out infinite",
+        "cyp-marquee": "cyp-marquee 32s linear infinite",
+        "cyp-blink": "cyp-blink 6s ease-in-out infinite",
       },
     },
   },
