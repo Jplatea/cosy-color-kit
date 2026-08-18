@@ -1,4 +1,20 @@
-# Remix of Culow Pililarge
+# Culow y Pililarge
+
+La web de los dos personajes: vídeos, shorts, poemas, dos juguetes interactivos
+y un panel de visitas con mapa mundial.
+
+```sh
+npm i && npm run dev     # la web
+npm run server           # el contador de visitas (opcional)
+npm run sync:youtube     # trae los últimos vídeos del canal
+```
+
+**[→ Documentación del rediseño](docs/REDISENO.md)** — secciones, cómo rellenar
+los vídeos, cómo enchufar las voces reales y cómo funciona el contador.
+
+---
+
+## Estilos de partida (prompt original)
 
 создай пустой проект с такими стилями @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
 
@@ -579,3 +595,7 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+
+
+

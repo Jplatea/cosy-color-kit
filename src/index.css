@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -39,26 +39,28 @@
   --radius: 0.75rem;
 }
 
+/* Estudio oscuro cálido: la identidad del rediseño. El sitio es dark-only,
+   así que <html> lleva la clase .dark de forma permanente (ver index.html). */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #1a1a1a;
-  --card-foreground: #fafafa;
-  --popover: #1a1a1a;
-  --popover-foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #fafafa;
-  --muted: #1a1a1a;
-  --muted-foreground: #a1a1aa;
-  --accent: #1a1a1a;
-  --accent-foreground: #fafafa;
+  --background: #0a0807;
+  --foreground: #f2ece2;
+  --card: #141010;
+  --card-foreground: #f2ece2;
+  --popover: #141010;
+  --popover-foreground: #f2ece2;
+  --primary: #e8b25c;
+  --primary-foreground: #160f06;
+  --secondary: #100c0b;
+  --secondary-foreground: #f2ece2;
+  --muted: #141010;
+  --muted-foreground: rgba(242, 236, 226, 0.55);
+  --accent: #e8b25c;
+  --accent-foreground: #160f06;
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #1a1a1a;
-  --ring: #71717a;
+  --border: rgba(242, 236, 226, 0.1);
+  --input: #0a0807;
+  --ring: #e8b25c;
 }
 
 
@@ -121,6 +123,16 @@
   /* Font utility classes */
   .font-bagel {
     font-family: 'Bagel Fat One', cursive;
+  }
+
+  body {
+    font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: #e8b25c;
+    color: #0a0807;
   }
   
   /* Simplified utility classes */
