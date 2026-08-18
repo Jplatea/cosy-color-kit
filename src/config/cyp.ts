@@ -51,7 +51,9 @@ const videosDeEjemplo: Video[] = [
   { youtubeId: "", title: "Culow descubre la fregona", meta: "YouTube" },
 ];
 
-export const videos: Video[] = synced.videos.length ? synced.videos : videosDeEjemplo;
+const sincronizado = Boolean(synced.channelId);
+
+export const videos: Video[] = sincronizado ? synced.videos : videosDeEjemplo;
 
 export type Short = {
   /** ID de YouTube Shorts: lo que va después de `/shorts/`. */
@@ -70,10 +72,10 @@ const shortsDeEjemplo: Short[] = [
   { youtubeId: "", title: "Dos formas, un ascensor" },
 ];
 
-export const shorts: Short[] = synced.shorts.length ? synced.shorts : shortsDeEjemplo;
+export const shorts: Short[] = sincronizado ? synced.shorts : shortsDeEjemplo;
 
 /** true cuando los vídeos vienen del canal de verdad y no del contenido de ejemplo. */
-export const contenidoSincronizado = synced.videos.length > 0 || synced.shorts.length > 0;
+export const contenidoSincronizado = sincronizado;
 
 /** Feed de Instagram. `image` es la miniatura; `url` el permalink del post. */
 export const instagramPosts: { image?: string; url?: string }[] = [
