@@ -4,7 +4,7 @@ import { muestraDe } from "@/lib/voces";
 import { Cartela, Peana, Sala, SectionTitle } from "./primitives";
 
 /**
- * Sala 4: el estudio de las dos piezas.
+ * Sala 3: el estudio de las dos piezas.
  *
  * Aquí van los textos largos, los que en un museo cuelgan en un panel al lado
  * de la obra y nadie lee entero. La gracia está en el tono: se describe a un
@@ -83,7 +83,7 @@ export function Personajes() {
     <section id="personajes" className="bg-museo-pared px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 border-b border-museo-linea pb-8">
-          <Sala n="04">Estudio de las piezas</Sala>
+          <Sala n="03">Estudio de las piezas</Sala>
           <SectionTitle className="mt-4">Quién es quién</SectionTitle>
         </div>
 

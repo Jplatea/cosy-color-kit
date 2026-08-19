@@ -1,45 +1,50 @@
 import { LinkRule, Marco, Sala, SectionTitle, Thumb } from "./primitives";
-import { socials, videos, youtubeThumb } from "@/config/cyp";
+import { loDelCanal, socials, youtubeThumb } from "@/config/cyp";
 
 /**
- * Sala 2: las proyecciones.
+ * Sala 2: las piezas breves.
  *
- * Cada vídeo del canal se cuelga como un cuadro: pasepartú, filete y la
- * cartela debajo. El recorte depende del formato de lo que publique el canal,
- * porque a un vídeo vertical hay que pedirle la miniatura vertical: la 16:9
- * llega con relleno negro a los lados y parece una miniatura metida dentro de
- * otra.
+ * Antes esto eran dos salas —«Proyecciones» para los vídeos largos y «Piezas
+ * breves» para los verticales—, y con este canal enseñaban exactamente lo
+ * mismo: aquí todo se publica en vertical, así que las dos rejillas salían
+ * idénticas una debajo de otra. Ahora es una sola pared con todo lo del canal,
+ * de lo más nuevo a lo más viejo.
+ *
+ * El marco es apaisado aunque el vídeo sea vertical, y no es un descuido: la
+ * escena de estos vídeos es ancha y el formato vertical es relleno negro por
+ * arriba y por abajo. Cada foto se acerca con lo que se midió de ella al
+ * sincronizar, hasta que los personajes quepan enteros y no sobre negro.
  */
 export function Videos() {
-  const verticalManda = videos.filter((v) => v.vertical).length * 2 >= videos.length;
+  const piezas = loDelCanal();
 
   return (
     <section id="videos" className="bg-museo-pared px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-museo-linea pb-8">
           <div>
-            <Sala n="02">Proyecciones</Sala>
-            <SectionTitle className="mt-4">Lo último del canal</SectionTitle>
+            <Sala n="02">Piezas breves</Sala>
+            <SectionTitle className="mt-4">
+              Quince segundos, <span className="italic text-museo-tinta-suave">una idea tonta</span>
+            </SectionTitle>
+            <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
+              Todo lo que hay colgado, de lo más reciente a lo más antiguo. Cero explicación en
+              ninguna de ellas.
+            </p>
           </div>
           <LinkRule href={socials.youtubeVideos}>Ver el catálogo completo →</LinkRule>
         </div>
 
-        {/*
-          Marcos apaisados aunque el vídeo sea vertical.
-          Medidos uno a uno, en estos fotogramas la luz vive en una franja
-          estrecha centrada en el 58 % de la altura; todo lo de arriba y lo de
-          abajo es negro. Recortando a 16:10 en vez de a 4:5 el marco mide la
-          mitad de alto y el negro sobrante se queda fuera, sin perder nada de
-          lo que se ve. El ancho no se toca: tres por fila.
-        */}
-        <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {videos.map((v, i) => {
-            const img = v.image || youtubeThumb(v.youtubeId, verticalManda);
+        <div className="grid gap-x-8 gap-y-11 sm:grid-cols-2 lg:grid-cols-3">
+          {piezas.map((v, i) => {
+            const img = v.image || youtubeThumb(v.youtubeId, v.vertical ?? true);
             const href = v.youtubeId
-              ? `https://www.youtube.com/watch?v=${v.youtubeId}`
+              ? v.vertical
+                ? `https://www.youtube.com/shorts/${v.youtubeId}`
+                : `https://www.youtube.com/watch?v=${v.youtubeId}`
               : socials.youtubeVideos;
             return (
-              <a key={`${v.title}-${i}`} href={href} target="_blank" rel="noopener" className="group block">
+              <a key={`${v.youtubeId || v.title}-${i}`} href={href} target="_blank" rel="noopener" className="group block">
                 <Marco>
                   <div className="relative aspect-[16/10]">
                     <Thumb
@@ -56,10 +61,12 @@ export function Videos() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span>
-                    <span className="block font-display text-[19px] leading-[1.2] text-museo-tinta">
+                    <span className="block font-display text-[18px] leading-[1.25] text-museo-tinta">
                       {v.title}
                     </span>
-                    <span className="cartela mt-[6px] block text-museo-tinta-tenue">{v.meta}</span>
+                    {v.meta && (
+                      <span className="cartela mt-[6px] block text-museo-tinta-tenue">{v.meta}</span>
+                    )}
                   </span>
                 </div>
               </a>

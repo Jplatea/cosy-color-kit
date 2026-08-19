@@ -1,13 +1,14 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-08-19T17:23:58.397Z",
+  "syncedAt": "2026-08-19T23:28:28.569Z",
   "videos": [
     {
       "youtubeId": "IJI6XlCo_oY",
       "title": "Quien corre sin hablar...",
       "meta": "YouTube · hace 2 meses",
       "vertical": true,
+      "publicado": "2026-05-27T14:58:39+00:00",
       "banda": 0.292,
       "centro": 0.512,
       "ratio": 0.5625
@@ -17,6 +18,7 @@
       "title": "El consejo de Culow",
       "meta": "YouTube · hace 3 meses",
       "vertical": true,
+      "publicado": "2026-05-16T13:10:07+00:00",
       "banda": 0.283,
       "centro": 0.5,
       "ratio": 0.5625
@@ -26,6 +28,7 @@
       "title": "La playa cansa y la piscina da hambre Pronto la historia de",
       "meta": "YouTube · hace 5 meses",
       "vertical": true,
+      "publicado": "2026-02-25T21:03:44+00:00",
       "banda": 0.242,
       "centro": 0.496,
       "ratio": 0.5625
@@ -35,6 +38,7 @@
       "title": "Culow habla líquido",
       "meta": "YouTube · hace 6 meses",
       "vertical": true,
+      "publicado": "2026-02-11T21:33:01+00:00",
       "banda": 0.183,
       "centro": 0.475,
       "ratio": 0.5625
@@ -44,6 +48,7 @@
       "title": "La elegancia Culow&Pililaege",
       "meta": "YouTube · hace 6 meses",
       "vertical": true,
+      "publicado": "2026-02-07T12:55:42+00:00",
       "banda": 0.208,
       "centro": 0.512,
       "ratio": 0.5625
@@ -53,6 +58,7 @@
       "title": "Como Come el Mulo...",
       "meta": "YouTube · hace 6 meses",
       "vertical": true,
+      "publicado": "2026-01-27T16:56:35+00:00",
       "banda": 0.267,
       "centro": 0.5,
       "ratio": 0.5625
@@ -62,7 +68,9 @@
     {
       "youtubeId": "0_i0yMDNnBA",
       "title": "Sandía en el microhondas 🍉",
+      "meta": "YouTube · hace 2 días",
       "vertical": true,
+      "publicado": "2026-08-17T15:17:43+00:00",
       "banda": 0.817,
       "centro": 0.5,
       "ratio": 0.5625
@@ -70,7 +78,9 @@
     {
       "youtubeId": "nC-NNDp2ij0",
       "title": "Club ❌ Asociación✅",
+      "meta": "YouTube · hace 1 sem.",
       "vertical": true,
+      "publicado": "2026-08-12T14:20:05+00:00",
       "banda": 0.675,
       "centro": 0.521,
       "ratio": 1
@@ -78,7 +88,9 @@
     {
       "youtubeId": "bqOO2kLhU64",
       "title": "El viaje a Túnez 🇹🇳",
+      "meta": "YouTube · hace 2 sem.",
       "vertical": true,
+      "publicado": "2026-08-03T11:22:21+00:00",
       "banda": 0.7,
       "centro": 0.5,
       "ratio": 0.5625
@@ -86,7 +98,9 @@
     {
       "youtubeId": "hKRfbEcBVgY",
       "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
+      "meta": "YouTube · hace 4 sem.",
       "vertical": true,
+      "publicado": "2026-07-21T10:57:53+00:00",
       "banda": 0.367,
       "centro": 0.55,
       "ratio": 0.5625
@@ -94,7 +108,9 @@
     {
       "youtubeId": "m9S7-X9qylI",
       "title": "Chiste chistoso 1",
+      "meta": "YouTube · hace 1 meses",
       "vertical": true,
+      "publicado": "2026-07-14T12:12:42+00:00",
       "banda": 0.317,
       "centro": 0.492,
       "ratio": 0.5625
@@ -102,7 +118,9 @@
     {
       "youtubeId": "W5PwOvU87Bs",
       "title": "Homenaje a Oliver Tree y Gaspi",
+      "meta": "YouTube · hace 1 meses",
       "vertical": true,
+      "publicado": "2026-07-04T11:07:45+00:00",
       "banda": 0.3,
       "centro": 0.508,
       "ratio": 0.5625
@@ -110,7 +128,9 @@
     {
       "youtubeId": "CXdsbkgXjJQ",
       "title": "Poesía olorosa",
+      "meta": "YouTube · hace 1 meses",
       "vertical": true,
+      "publicado": "2026-06-21T16:16:19+00:00",
       "banda": 0.317,
       "centro": 0.5,
       "ratio": 0.5625
@@ -118,7 +138,9 @@
     {
       "youtubeId": "CIwiglqQBes",
       "title": "Culow poético",
+      "meta": "YouTube · hace 2 meses",
       "vertical": true,
+      "publicado": "2026-05-31T17:05:30+00:00",
       "banda": 0.267,
       "centro": 0.525,
       "ratio": 0.5625

@@ -1,7 +1,6 @@
 import { Nav } from "@/components/cyp/Nav";
 import { Hero } from "@/components/cyp/Hero";
 import { Videos } from "@/components/cyp/Videos";
-import { Shorts } from "@/components/cyp/Shorts";
 import { Personajes } from "@/components/cyp/Personajes";
 import { HazlosHablar } from "@/components/cyp/HazlosHablar";
 import { Vestidor } from "@/components/cyp/Vestidor";
@@ -23,7 +22,6 @@ const Index = () => {
       <Nav />
       <Hero />
       <Videos />
-      <Shorts />
       <Personajes />
       <HazlosHablar />
       <Vestidor />

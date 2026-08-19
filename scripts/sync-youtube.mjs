@@ -243,12 +243,15 @@ async function main() {
       title: v.title,
       meta: relativeDate(v.published),
       vertical: verticales.includes(v),
+      publicado: v.published,
       ...(encuadreVideos[i] || {}),
     })),
     shorts: shorts.map((s, i) => ({
       youtubeId: s.id,
       title: s.title,
+      meta: relativeDate(s.published),
       vertical: true,
+      publicado: s.published,
       ...(encuadreShorts[i] || {}),
     })),
   };

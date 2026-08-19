@@ -32,15 +32,15 @@ visitas solo cuenta lo de tu navegador y lo dice.
 | Sala | Sección | Qué hace |
 |---|---|---|
 | 01 | Entrada | Las dos piezas con su cartela y las tres redes |
-| 02 | Proyecciones | Los últimos vídeos del canal, sincronizados solos |
-| 03 | Piezas breves | Los verticales |
-| 04 | Las dos piezas | Quién es quién |
-| 05 | Audioguía | Escribes algo y lo dice Culow o Pililarge |
-| 06 | Vestuario | 19 disfraces, color y complementos |
+| 02 | Piezas breves | Todo lo del canal, sincronizado solo, de lo más nuevo a lo más viejo |
+| 03 | Las dos piezas | Quién es quién, y cómo suena cada uno |
+| 04 | Audioguía | Escribes algo y lo dice Culow o Pililarge |
+| 05 | Vestuario | 19 disfraces, y un sastre que inventa lo que le pidas |
+| 06 | Identificación | ¿Con cuál de los dos te identificas? |
 | 07 | Textos de sala | Los poemas, recitados en voz alta |
 | 08 | Tasación | Subasta de objetos sin ningún valor |
-| 09 | Identificación | ¿Con cuál de los dos te identificas? |
-| 10 | Otras sedes | YouTube, TikTok e Instagram |
+| 09 | Otras sedes | YouTube, TikTok e Instagram |
+| 10 | Tienda | Camisetas, sudaderas, taza… fabricadas por encargo |
 | 11 | Libro de visitas | Contador real y mapa por países |
 | 12 | Préstamos | Formulario de contacto |
 

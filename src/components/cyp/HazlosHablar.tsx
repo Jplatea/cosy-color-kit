@@ -7,7 +7,7 @@ import { duet, phrases } from "@/config/cyp";
 import { tinta } from "@/lib/color";
 
 /**
- * Sala 5: la audioguía.
+ * Sala 4: la audioguía.
  *
  * Es el mismo juguete de siempre —escribes algo y lo dice el que elijas— pero
  * presentado como el aparato que te dan en la entrada de un museo: un cacharro
@@ -44,7 +44,7 @@ export function HazlosHablar() {
     <section id="hablar" className="px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 border-b border-museo-linea pb-8">
-          <Sala n="05">Audioguía</Sala>
+          <Sala n="04">Audioguía</Sala>
           <SectionTitle className="mt-4">
             Que hablen <span className="italic text-museo-tinta-suave">las piezas</span>
           </SectionTitle>

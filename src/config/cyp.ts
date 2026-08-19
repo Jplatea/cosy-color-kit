@@ -26,8 +26,7 @@ export const handles = {
 } as const;
 
 export const nav = [
-  { label: "Proyecciones", href: "#videos" },
-  { label: "Piezas breves", href: "#shorts" },
+  { label: "Piezas breves", href: "#videos" },
   { label: "Las dos piezas", href: "#personajes" },
   { label: "Audioguía", href: "#hablar" },
   { label: "Vestuario", href: "#vestidor" },
@@ -49,6 +48,8 @@ export type Video = {
   banda?: number;
   centro?: number;
   ratio?: number;
+  /** Fecha de publicación (ISO). Sirve para ordenar la pared. */
+  publicado?: string;
 };
 
 /** Contenido de ejemplo: solo se ve si `youtube.json` está sin sincronizar. */
@@ -74,6 +75,8 @@ export type Short = {
   banda?: number;
   centro?: number;
   ratio?: number;
+  /** Fecha de publicación (ISO). Sirve para ordenar la pared. */
+  publicado?: string;
 };
 
 const shortsDeEjemplo: Short[] = [
@@ -84,6 +87,29 @@ const shortsDeEjemplo: Short[] = [
 ];
 
 export const shorts: Short[] = synced.shorts.length ? synced.shorts : shortsDeEjemplo;
+
+/**
+ * Todo lo del canal en una sola lista, de lo más reciente a lo más antiguo.
+ *
+ * La sincronización sigue separando verticales de apaisados —hace falta para
+ * saber qué miniatura pedirle a YouTube—, pero la web ya no tiene dos salas que
+ * enseñaban lo mismo. Se ordena por fecha de publicación; lo que no la traiga
+ * se queda detrás en el orden en que venía, que es el del propio feed.
+ */
+export function loDelCanal(): (Video & Short)[] {
+  const todo = [...shorts, ...videos] as (Video & Short)[];
+  return todo
+    .map((v, i) => ({ v, i }))
+    .sort((a, b) => {
+      const fa = a.v.publicado;
+      const fb = b.v.publicado;
+      if (fa && fb) return fb.localeCompare(fa);
+      if (fa) return -1;
+      if (fb) return 1;
+      return a.i - b.i;
+    })
+    .map(({ v }) => v);
+}
 
 /** true cuando los vídeos vienen del canal de verdad y no del contenido de ejemplo. */
 export const contenidoSincronizado = synced.videos.length > 0 || synced.shorts.length > 0;
@@ -160,8 +186,7 @@ export const marquee = [
 /** Secciones que se contabilizan en el panel de visitas. */
 export const trackedSections = [
   { id: "inicio", label: "Entrada" },
-  { id: "videos", label: "Proyecciones" },
-  { id: "shorts", label: "Piezas breves" },
+  { id: "videos", label: "Piezas breves" },
   { id: "hablar", label: "Audioguía" },
   { id: "vestidor", label: "Vestuario" },
   { id: "poemas", label: "Textos de sala" },

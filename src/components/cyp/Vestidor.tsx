@@ -19,7 +19,7 @@ import { useNarrow } from "@/hooks/useNarrow";
 import { tinta } from "@/lib/color";
 
 /**
- * Sala 6: el vestuario de la colección.
+ * Sala 5: el vestuario de la colección.
  *
  * Los mandos van plegados a propósito. Con los diecinueve disfraces, la paleta
  * y los complementos desplegados a la vez, la columna de controles medía más
@@ -137,7 +137,7 @@ export function Vestidor() {
     <section id="vestidor" className="bg-museo-pared px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1000px]">
         <div className="mb-9 border-b border-museo-linea pb-8">
-          <Sala n="06">Vestuario de la colección</Sala>
+          <Sala n="05">Vestuario de la colección</Sala>
           <SectionTitle className="mt-4">El vestidor</SectionTitle>
           <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
             Elija una pieza, póngale un traje y cámbiele el color. Todos los trajes son parodias

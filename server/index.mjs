@@ -47,7 +47,7 @@ const ONLINE_WINDOW_MS = 5 * 60 * 1000;
 const MAX_BODY_BYTES = 4 * 1024;
 
 /** Solo se contabilizan estas secciones: evita que nadie infle claves a mano. */
-const SECTIONS = new Set(["inicio", "videos", "shorts", "hablar", "vestidor", "poemas"]);
+const SECTIONS = new Set(["inicio", "videos", "hablar", "vestidor", "poemas"]);
 
 const today = () => new Date().toISOString().slice(0, 10);
 const dayKey = (offset) =>

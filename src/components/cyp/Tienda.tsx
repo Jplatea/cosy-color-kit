@@ -14,7 +14,7 @@ import {
 } from "@/config/tienda";
 
 /**
- * Sala 13: la tienda del museo.
+ * Sala 10: la tienda del museo.
  *
  * Toda tienda de museo vende la broma de la exposición impresa en algo. Esta
  * también, y el catálogo se dibuja entero: cada prenda es una silueta en SVG
@@ -84,7 +84,7 @@ export function Tienda() {
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-museo-linea pb-8">
           <div>
-            <Sala n="13">Tienda del museo</Sala>
+            <Sala n="10">Tienda del museo</Sala>
             <SectionTitle className="mt-4">
               Llévese la broma <span className="italic text-museo-tinta-suave">puesta</span>
             </SectionTitle>
