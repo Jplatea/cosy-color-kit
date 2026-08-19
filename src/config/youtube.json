@@ -1,24 +1,127 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-08-18T22:24:01.224Z",
-  "videos": [],
+  "syncedAt": "2026-08-19T17:23:58.397Z",
+  "videos": [
+    {
+      "youtubeId": "IJI6XlCo_oY",
+      "title": "Quien corre sin hablar...",
+      "meta": "YouTube · hace 2 meses",
+      "vertical": true,
+      "banda": 0.292,
+      "centro": 0.512,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "UI5IVQ5MToo",
+      "title": "El consejo de Culow",
+      "meta": "YouTube · hace 3 meses",
+      "vertical": true,
+      "banda": 0.283,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "hom5niMwMQc",
+      "title": "La playa cansa y la piscina da hambre Pronto la historia de",
+      "meta": "YouTube · hace 5 meses",
+      "vertical": true,
+      "banda": 0.242,
+      "centro": 0.496,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "gkEDOc414CU",
+      "title": "Culow habla líquido",
+      "meta": "YouTube · hace 6 meses",
+      "vertical": true,
+      "banda": 0.183,
+      "centro": 0.475,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "DnyVAHlMEs0",
+      "title": "La elegancia Culow&Pililaege",
+      "meta": "YouTube · hace 6 meses",
+      "vertical": true,
+      "banda": 0.208,
+      "centro": 0.512,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "i7P-0FNijSY",
+      "title": "Como Come el Mulo...",
+      "meta": "YouTube · hace 6 meses",
+      "vertical": true,
+      "banda": 0.267,
+      "centro": 0.5,
+      "ratio": 0.5625
+    }
+  ],
   "shorts": [
     {
       "youtubeId": "0_i0yMDNnBA",
-      "title": "Sandía en el microhondas 🍉"
+      "title": "Sandía en el microhondas 🍉",
+      "vertical": true,
+      "banda": 0.817,
+      "centro": 0.5,
+      "ratio": 0.5625
     },
     {
       "youtubeId": "nC-NNDp2ij0",
-      "title": "Club ❌ Asociación✅"
+      "title": "Club ❌ Asociación✅",
+      "vertical": true,
+      "banda": 0.675,
+      "centro": 0.521,
+      "ratio": 1
     },
     {
       "youtubeId": "bqOO2kLhU64",
-      "title": "El viaje a Túnez 🇹🇳"
+      "title": "El viaje a Túnez 🇹🇳",
+      "vertical": true,
+      "banda": 0.7,
+      "centro": 0.5,
+      "ratio": 0.5625
     },
     {
       "youtubeId": "hKRfbEcBVgY",
-      "title": "Respira... Culow y Pililarge//Chiste Chistoso 2."
+      "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
+      "vertical": true,
+      "banda": 0.367,
+      "centro": 0.55,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "m9S7-X9qylI",
+      "title": "Chiste chistoso 1",
+      "vertical": true,
+      "banda": 0.317,
+      "centro": 0.492,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "W5PwOvU87Bs",
+      "title": "Homenaje a Oliver Tree y Gaspi",
+      "vertical": true,
+      "banda": 0.3,
+      "centro": 0.508,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "CXdsbkgXjJQ",
+      "title": "Poesía olorosa",
+      "vertical": true,
+      "banda": 0.317,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
+      "youtubeId": "CIwiglqQBes",
+      "title": "Culow poético",
+      "vertical": true,
+      "banda": 0.267,
+      "centro": 0.525,
+      "ratio": 0.5625
     }
   ]
 }

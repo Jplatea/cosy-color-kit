@@ -1,96 +1,94 @@
-import { ArrowRight, Instagram, Music2, Youtube } from "lucide-react";
-import { Eyebrow, SectionTitle } from "./primitives";
-import { socials } from "@/config/cyp";
+import { Sala, SectionTitle, Thumb } from "./primitives";
+import { ICONOS, type RedId } from "./social-icons";
+import { handles, instagramPosts, socials } from "@/config/cyp";
 
 /**
- * Las tres plataformas, una tarjeta cada una.
+ * Sala 10: las otras sedes.
  *
- * Recupera la sección "Redes" que tenía la web anterior —mismos textos— pero
- * con el acabado del rediseño: tarjeta oscura, y el color de cada marca como
- * un resplandor difuminado en la esquina en vez de teñir el borde. Sustituye a
- * la rejilla de seis fotos de Instagram, que no se puede rellenar sola: la API
- * de Instagram exige darse de alta en Meta y renovar un token cada dos meses.
+ * Antes aquí había una rejilla de seis huecos esperando fotos de Instagram que
+ * no llegaban nunca: Instagram no deja leer un perfil sin token, así que la
+ * rejilla se quedaba vacía siempre. Ahora manda lo que sí se puede enseñar
+ * —dónde está cada cosa y qué se encuentra en cada sitio— y la rejilla solo
+ * aparece si alguien ha puesto miniaturas de verdad en `instagramPosts`.
  */
 
-const PLATAFORMAS = [
+const SEDES: { id: RedId; n: string; nombre: string; handle: string; href: string; que: string }[] = [
   {
     id: "youtube",
+    n: "I",
     nombre: "YouTube",
-    Icono: Youtube,
-    texto: "Shorts animados en 3D, sketches, poemas absurdos y homenajes surrealistas.",
-    cta: "Ver canal",
+    handle: handles.youtube,
     href: socials.youtube,
-    marca: "linear-gradient(135deg, #ff2d2d, #ff6b6b)",
-    halo: "rgba(255,45,45,.32)",
+    que: "La sede central. Los vídeos enteros y todos los verticales, sin cortes ni algoritmo de por medio.",
   },
   {
     id: "tiktok",
+    n: "II",
     nombre: "TikTok",
-    Icono: Music2,
-    texto: "Micro-animaciones virales, humor absurdo servido en menos de 30 segundos.",
-    cta: "Seguir en TikTok",
+    handle: handles.tiktok,
     href: socials.tiktok,
-    marca: "linear-gradient(135deg, #00f2ea, #ffffff 55%, #ff0050)",
-    halo: "rgba(255,0,80,.28)",
+    que: "Lo mismo en vertical y con más prisa. Es la sala donde se les va del todo y nadie los vigila.",
   },
   {
     id: "instagram",
+    n: "III",
     nombre: "Instagram",
-    Icono: Instagram,
-    texto: "Fotogramas, storyboards, memes y el detrás del render de cada escena.",
-    cta: "Seguir en Instagram",
+    handle: handles.instagram,
     href: socials.instagram,
-    marca: "linear-gradient(135deg, #feda75, #fa7e1e 35%, #d62976 70%, #4f5bd5)",
-    halo: "rgba(214,41,118,.32)",
+    que: "El archivo fotográfico: ellos dos quietos, mirando cosas. Documentación de una colección que no la necesita.",
   },
 ];
 
 export function Redes() {
-  return (
-       <section
-      id="redes"
-      className="border-t border-cyp-cream/10 px-6 py-[100px] lg:px-10"
-    >
-      <div className="mx-auto max-w-[1200px]">
-        <Eyebrow>Donde sucede todo</Eyebrow>
-        <SectionTitle className="mb-[6px] mt-3">Síguelos en todas partes</SectionTitle>
-        <p className="mb-[34px] max-w-[640px] text-[17px] text-cyp-cream/60">
-          Tres sitios, el mismo disparate.
-        </p>
+  const conFotos = instagramPosts.filter((p) => p.image);
 
-        <div className="grid gap-[22px] md:grid-cols-3">
-          {PLATAFORMAS.map(({ id, nombre, Icono, texto, cta, href, marca, halo }) => (
-            <a
-              key={id}
-              href={href}
-              target="_blank"
-              rel="noopener"
-              className="group relative overflow-hidden rounded-[24px] border border-cyp-cream/[0.09] bg-cyp-card p-8 transition-colors hover:border-cyp-cream/25"
-            >
-              {/* El color de la marca, difuminado en la esquina: se intensifica al pasar por encima. */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full opacity-40 blur-3xl transition-opacity duration-300 group-hover:opacity-75"
-                style={{ background: halo }}
-              />
-              <div className="relative grid gap-5">
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-2xl text-white"
-                  style={{ background: marca }}
-                >
-                  <Icono size={26} />
-                </div>
-                <h3 className="font-bagel text-[30px] leading-none text-cyp-cream-hi">{nombre}</h3>
-                <p className="min-h-[4.5rem] text-[16px] leading-[1.6] text-cyp-cream/[0.68]">
-                  {texto}
-                </p>
-                <span className="inline-flex items-center gap-2 text-[14.5px] font-bold text-cyp-cream transition-all group-hover:gap-3 group-hover:text-cyp-gold">
-                  {cta} <ArrowRight size={16} />
-                </span>
-              </div>
-            </a>
-          ))}
+  return (
+    <section id="redes" className="px-6 py-[86px] lg:px-8">
+      <div className="mx-auto max-w-[1180px]">
+        <div className="mb-10 border-b border-museo-linea pb-8">
+          <Sala n="10">Otras sedes</Sala>
+          <SectionTitle className="mt-4">
+            La misma colección, <span className="italic text-museo-tinta-70">en tres edificios</span>
+          </SectionTitle>
         </div>
+
+        <div className="grid gap-x-8 gap-y-10 md:grid-cols-3">
+          {SEDES.map((s) => {
+            const Icono = ICONOS[s.id];
+            return (
+            <a key={s.id} href={s.href} target="_blank" rel="noopener" className="group block border-t border-museo-tinta pt-5">
+              <div className="mb-4 flex items-center gap-3 text-museo-tinta">
+                <span className="cartela text-museo-laton">{s.n}</span>
+                <Icono className="h-5 w-5" />
+              </div>
+              <div className="font-display text-[30px] leading-none text-museo-tinta transition-colors group-hover:text-museo-laton">
+                {s.nombre}
+              </div>
+              <div className="cartela mt-[10px] text-museo-tinta-45">{s.handle}</div>
+              <p className="mt-4 text-[15px] leading-[1.65] text-museo-tinta-70">{s.que}</p>
+              <span className="cartela mt-4 inline-block border-b border-museo-linea pb-[3px] text-museo-tinta transition-colors group-hover:border-museo-laton group-hover:text-museo-laton">
+                Visitar →
+              </span>
+            </a>
+            );
+          })}
+        </div>
+
+        {conFotos.length > 0 && (
+          <div className="mt-12 grid grid-cols-3 gap-4 lg:grid-cols-6">
+            {conFotos.map((p, i) => (
+              <a
+                key={i}
+                href={p.url || socials.instagram}
+                target="_blank"
+                rel="noopener"
+                className="relative block aspect-square overflow-hidden border border-museo-linea bg-museo-peana"
+              >
+                <Thumb src={p.image} alt={`Publicación ${i + 1} de Instagram`} />
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ export function useStats() {
 
   useEffect(() => {
     let alive = true;
-    fetchStats(SECTION_IDS).then((r) => {
+    fetchStats().then((r) => {
       if (!alive) return;
       setStats(r.stats);
       setLive(r.live);

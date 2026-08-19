@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eyebrow, GoldButton, SectionTitle } from "./primitives";
+import { GoldButton, Sala, SectionTitle } from "./primitives";
 import { handles, socials } from "@/config/cyp";
 
 const LINKS = [
@@ -10,7 +10,7 @@ const LINKS = [
 ];
 
 const FIELD =
-  "rounded-[13px] border border-cyp-cream/[0.16] bg-cyp-ink p-[15px] text-[15.5px] text-cyp-cream outline-none focus:border-cyp-gold";
+  "border border-museo-linea bg-museo-papel p-[14px] text-[15px] text-museo-tinta outline-none transition-colors focus:border-museo-tinta";
 
 export function Contacto() {
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "" });
@@ -32,28 +32,30 @@ export function Contacto() {
   };
 
   return (
-    <section id="contacto" className="bg-cyp-ink-soft px-6 py-[100px] lg:px-10">
-      <div className="mx-auto grid max-w-[1200px] items-start gap-11 lg:grid-cols-2">
+    <section id="contacto" className="px-6 py-[86px] lg:px-8">
+      <div className="mx-auto grid max-w-[1180px] items-start gap-12 lg:grid-cols-2">
         <div>
-          <Eyebrow>Contacto</Eyebrow>
-          <SectionTitle className="mb-[14px] mt-3">
-            Colaboraciones, marcas y recados
+          <Sala n="12">Préstamos y colaboraciones</Sala>
+          <SectionTitle className="mb-[16px] mt-4">
+            Escríbanos al <span className="italic text-museo-tinta-70">departamento</span>
           </SectionTitle>
-          <p className="mb-[26px] max-w-[480px] text-[17px] leading-[1.65] text-cyp-cream/65">
-            Si quieres que Culow abrace tu producto o que Pililarge lo mire con desconfianza,
-            escríbenos. Contestamos en cuanto Pililarge consiga sentarse.
+          <p className="mb-[26px] max-w-[52ch] text-[16px] leading-[1.7] text-museo-tinta-70">
+            Si quiere que Culow abrace su producto o que Pililarge lo mire con desconfianza,
+            escriba. Se contesta en cuanto Pililarge consiga sentarse.
           </p>
-          <div className="grid gap-3">
+          <div className="grid">
             {LINKS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 target={l.href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener"
-                className="flex items-center justify-between rounded-[16px] border border-cyp-cream/10 bg-cyp-card px-[22px] py-[18px] font-semibold transition-colors hover:border-cyp-gold"
+                className="group flex items-center justify-between gap-4 border-b border-museo-linea py-[15px] transition-colors hover:border-museo-tinta"
               >
-                <span>{l.label}</span>
-                <span className="text-cyp-gold">{l.action}</span>
+                <span className="text-[15px] text-museo-tinta">{l.label}</span>
+                <span className="cartela text-museo-tinta-45 transition-colors group-hover:text-museo-laton">
+                  {l.action} →
+                </span>
               </a>
             ))}
           </div>
@@ -61,43 +63,43 @@ export function Contacto() {
 
         <form
           onSubmit={send}
-          className="grid gap-4 rounded-[24px] border border-cyp-cream/[0.09] bg-cyp-card p-8"
+          className="grid gap-4 border border-museo-linea bg-museo-pared p-8"
         >
           <label className="grid gap-2">
-            <span className="text-[13px] font-semibold text-cyp-cream/60">Tu nombre</span>
+            <span className="cartela text-museo-tinta-45">Nombre</span>
             <input
               type="text"
               required
-              placeholder="Cómo te llamas"
+              placeholder="Cómo se llama"
               value={form.nombre}
               onChange={(e) => setForm({ ...form, nombre: e.target.value })}
               className={FIELD}
             />
           </label>
           <label className="grid gap-2">
-            <span className="text-[13px] font-semibold text-cyp-cream/60">Tu email</span>
+            <span className="cartela text-museo-tinta-45">Correo</span>
             <input
               type="email"
               required
-              placeholder="tu@email.com"
+              placeholder="usted@correo.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className={FIELD}
             />
           </label>
           <label className="grid gap-2">
-            <span className="text-[13px] font-semibold text-cyp-cream/60">Qué quieres</span>
+            <span className="cartela text-museo-tinta-45">Asunto</span>
             <textarea
               rows={5}
               required
-              placeholder="Cuéntanoslo sin miedo"
+              placeholder="Cuéntelo sin miedo"
               value={form.mensaje}
               onChange={(e) => setForm({ ...form, mensaje: e.target.value })}
               className={`${FIELD} resize-y leading-[1.5]`}
             />
           </label>
           <GoldButton type="submit" className="w-full py-4 text-base">
-            {sent ? "Recibido, gracias" : "Enviar"}
+            {sent ? "Recibido, gracias" : "Enviar la solicitud"}
           </GoldButton>
         </form>
       </div>

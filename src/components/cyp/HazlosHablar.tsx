@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { Character, type CharacterId } from "./Character";
-import { Chip, Eyebrow, GhostButton, GoldButton, SectionTitle } from "./primitives";
+import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { METER_BARS, VOICES, useSpeech } from "@/hooks/useSpeech";
 import { useNarrow } from "@/hooks/useNarrow";
 import { duet, phrases } from "@/config/cyp";
 
+/**
+ * Sala 5: la audioguía.
+ *
+ * Es el mismo juguete de siempre —escribes algo y lo dice el que elijas— pero
+ * presentado como el aparato que te dan en la entrada de un museo: un cacharro
+ * con su número de pista, su aguja de nivel y sus instrucciones de uso. El
+ * medidor se dibuja con barras finas de tinta en vez de con luces de discoteca.
+ */
 export function HazlosHablar() {
   const narrow = useNarrow();
   const { speaking, speaker, setSpeaker, speak, stop, sayDialogue, meterRef, supported, assigned } =
@@ -22,113 +30,99 @@ export function HazlosHablar() {
   };
 
   return (
-    <section id="hablar" className="relative overflow-hidden px-6 py-[100px] lg:px-10">
-      <div
-        className="pointer-events-none absolute -top-[140px] left-1/2 h-[600px] w-[900px] -translate-x-1/2"
-        style={{
-          background: "radial-gradient(50% 50% at 50% 40%, rgba(232,178,92,.13), transparent 70%)",
-        }}
-      />
+    <section id="hablar" className="px-6 py-[86px] lg:px-8">
+      <div className="mx-auto max-w-[1180px]">
+        <div className="mb-10 border-b border-museo-linea pb-8">
+          <Sala n="05">Audioguía</Sala>
+          <SectionTitle className="mt-4">
+            Que hablen <span className="italic text-museo-tinta-70">las piezas</span>
+          </SectionTitle>
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+            Escriba lo que quiera oír, elija a cuál de los dos se lo pone en la boca y pulse.
+            El aparato es gratuito y no hay que devolverlo.
+          </p>
+        </div>
 
-      <div className="relative mx-auto max-w-[1200px]">
-        <Eyebrow>Juguete nº 1</Eyebrow>
-        <SectionTitle className="mb-[6px] mt-3">Hazlos hablar</SectionTitle>
-        <p className="mb-[34px] max-w-[640px] text-[17px] text-cyp-cream/60">
-          Escribe algo, elige quién lo dice y dale al botón. El modulador de la izquierda reacciona
-          a la voz.
-        </p>
+        <div className="grid items-stretch gap-[26px] lg:grid-cols-2">
+          {/* El aparato: vitrina arriba, aguja de nivel abajo. */}
+          <div className="border border-museo-linea bg-museo-pared">
+            <Peana className="h-[290px] px-6 pb-8 pt-6">
+              <div className="flex items-end gap-7 sm:gap-12">
+                {(["culow", "pililarge"] as const).map((who) => (
+                  <div
+                    key={who}
+                    className="transition-all duration-300"
+                    style={{
+                      opacity: speaking && speaker !== who ? 0.34 : 1,
+                      transform: speaking && speaker === who ? "scale(1.05)" : "none",
+                    }}
+                  >
+                    <Character
+                      char={who}
+                      scale={who === "culow" ? (narrow ? 0.42 : 0.56) : narrow ? 0.34 : 0.46}
+                      dress
+                      costume="none"
+                      bob={!speaking}
+                    />
+                  </div>
+                ))}
+              </div>
+            </Peana>
 
-        <div className="grid items-stretch gap-6 lg:grid-cols-2">
-          {/* Escenario + modulador */}
-          <div
-            className="relative grid content-between gap-[22px] rounded-[24px] border border-cyp-cream/[0.09] p-[30px]"
-            style={{
-              background:
-                "radial-gradient(70% 60% at 50% 8%, rgba(255,236,205,.10), transparent 70%), #100c0b",
-            }}
-          >
-            <div className="flex min-h-[280px] items-end justify-center gap-6 pt-[10px] sm:gap-11">
-              {(["culow", "pililarge"] as const).map((who) => (
-                <div
-                  key={who}
-                  className="transition-all duration-300"
-                  style={{
-                    opacity: speaking && speaker !== who ? 0.32 : 1,
-                    transform: speaking && speaker === who ? "scale(1.04)" : "none",
-                  }}
-                >
-                  <Character
-                    char={who}
-                    scale={
-                      who === "culow" ? (narrow ? 0.52 : 0.72) : narrow ? 0.46 : 0.62
-                    }
-                    dress
-                    costume="none"
-                    bob={!speaking}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div>
-              <div className="mb-[10px] flex items-center justify-between">
-                <span className="text-[12.5px] uppercase tracking-[0.12em] text-cyp-cream/45">
-                  Modulador
-                </span>
-                <span className="text-[12.5px] uppercase tracking-[0.12em] text-cyp-gold">
-                  {speaking ? `${VOICES[speaker].name} hablando` : "en silencio"}
+            <div className="border-t border-museo-linea p-6">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="cartela text-museo-tinta-45">Nivel</span>
+                <span className="cartela text-museo-laton">
+                  {speaking ? `Pista — ${VOICES[speaker].name}` : "En silencio"}
                 </span>
               </div>
-              <div
-                ref={meterRef}
-                aria-hidden
-                className="flex h-[92px] items-end gap-1 px-[2px]"
-              >
+              {/* Barras finas de tinta: aguja de estudio, no ecualizador de coche. */}
+              <div ref={meterRef} aria-hidden className="flex h-[70px] items-end gap-[3px]">
                 {Array.from({ length: METER_BARS }, (_, i) => (
                   <div
                     key={i}
-                    className="flex-1 rounded-[3px]"
+                    className="flex-1"
                     style={{
-                      height: "8%",
-                      background:
-                        "linear-gradient(180deg, #f6c877, #e8b25c 60%, rgba(232,178,92,.35))",
+                      height: "6%",
+                      background: "#14120f",
+                      opacity: 0.75,
                       transition: speaking ? "none" : "height .3s ease",
                     }}
                   />
                 ))}
               </div>
+              <div className="mt-2 h-px w-full bg-museo-linea" />
             </div>
           </div>
 
-          {/* Controles */}
-          <div className="grid content-start gap-5 rounded-[24px] border border-cyp-cream/[0.09] bg-cyp-card p-[30px]">
+          {/* Los mandos, con la pinta de un panel de instrucciones. */}
+          <div className="grid content-start gap-5 border border-museo-linea bg-museo-pared p-6 sm:p-8">
             <div className="grid gap-[10px]">
-              <span className="text-[13px] font-semibold uppercase tracking-[0.1em] text-cyp-cream/50">
-                Quién habla
-              </span>
+              <span className="cartela text-museo-tinta-45">Quién habla</span>
               <div className="flex gap-[10px]">
-                <Chip active={speaker === "culow"} onClick={() => pick("culow")}>
+                <Chip active={speaker === "culow"} onClick={() => pick("culow")} className="flex-1">
                   Culow
                 </Chip>
-                <Chip active={speaker === "pililarge"} onClick={() => pick("pililarge")}>
+                <Chip
+                  active={speaker === "pililarge"}
+                  onClick={() => pick("pililarge")}
+                  className="flex-1"
+                >
                   Pililarge
                 </Chip>
               </div>
             </div>
 
             <div className="grid gap-[10px]">
-              <label
-                htmlFor="cyp-texto"
-                className="text-[13px] font-semibold uppercase tracking-[0.1em] text-cyp-cream/50"
-              >
+              <label htmlFor="cyp-texto" className="cartela text-museo-tinta-45">
                 Qué dice
               </label>
               <textarea
                 id="cyp-texto"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                rows={4}
-                className="w-full resize-y rounded-[14px] border border-cyp-cream/[0.16] bg-cyp-ink p-4 text-[16px] leading-[1.5] text-cyp-cream outline-none focus:border-cyp-gold"
+                rows={3}
+                className="w-full resize-y border border-museo-linea bg-museo-papel p-4 text-[16px] leading-[1.5] text-museo-tinta outline-none transition-colors focus:border-museo-tinta"
               />
               <div className="flex flex-wrap gap-2">
                 {phrases.map((p) => (
@@ -136,7 +130,7 @@ export function HazlosHablar() {
                     key={p.label}
                     type="button"
                     onClick={() => setText(p.text)}
-                    className="rounded-full border border-cyp-cream/[0.18] px-[13px] py-2 text-[13px] text-cyp-cream/[0.72] transition-colors hover:border-cyp-gold hover:text-cyp-gold"
+                    className="cartela border border-museo-linea px-[11px] py-[7px] text-museo-tinta-70 transition-colors hover:border-museo-tinta hover:text-museo-tinta"
                   >
                     {p.label}
                   </button>
@@ -144,10 +138,10 @@ export function HazlosHablar() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-[18px]">
+            <div className="grid grid-cols-2 gap-5">
               <label className="grid gap-2">
-                <span className="text-[12.5px] text-cyp-cream/55">
-                  Tono <b className="text-cyp-gold">{pitch.toFixed(2)}</b>
+                <span className="cartela text-museo-tinta-45">
+                  Tono <b className="text-museo-laton">{pitch.toFixed(2)}</b>
                 </span>
                 <input
                   type="range"
@@ -156,12 +150,12 @@ export function HazlosHablar() {
                   step={0.05}
                   value={pitch}
                   onChange={(e) => setPitch(parseFloat(e.target.value))}
-                  className="w-full accent-cyp-gold"
+                  className="w-full accent-museo-tinta"
                 />
               </label>
               <label className="grid gap-2">
-                <span className="text-[12.5px] text-cyp-cream/55">
-                  Velocidad <b className="text-cyp-gold">{rate.toFixed(2)}</b>
+                <span className="cartela text-museo-tinta-45">
+                  Velocidad <b className="text-museo-laton">{rate.toFixed(2)}</b>
                 </span>
                 <input
                   type="range"
@@ -170,30 +164,29 @@ export function HazlosHablar() {
                   step={0.05}
                   value={rate}
                   onChange={(e) => setRate(parseFloat(e.target.value))}
-                  className="w-full accent-cyp-gold"
+                  className="w-full accent-museo-tinta"
                 />
               </label>
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <GoldButton onClick={() => speak(text, speaker, pitch, rate)}>Que lo diga</GoldButton>
-              <GhostButton onClick={stop}>Callar</GhostButton>
-              <GhostButton onClick={() => sayDialogue(duet)}>Diálogo a dos</GhostButton>
+              <GoldButton onClick={() => speak(text, speaker, pitch, rate)}>Reproducir</GoldButton>
+              <GhostButton onClick={stop}>Parar</GhostButton>
+              <GhostButton onClick={() => sayDialogue(duet)}>Pista a dos voces</GhostButton>
             </div>
 
-            <div className="grid gap-2 border-t border-cyp-cream/10 pt-4 text-[13px] leading-[1.55] text-cyp-cream/40">
+            <div className="grid gap-2 border-t border-museo-linea pt-4 text-[13px] leading-[1.6] text-museo-tinta-45">
               {supported ? (
                 <>
                   <p>
-                    Cada personaje coge una voz distinta del sistema y la frase se trocea en
-                    cláusulas: Culow atropella y se acelera, Pililarge se para entre frase y frase.
-                    Para que suenen como los actores de verdad, mete los clips del canal en{" "}
-                    <code className="text-cyp-cream/60">public/voces/</code> y apúntalos en{" "}
-                    <code className="text-cyp-cream/60">src/config/cyp.ts</code>: entonces suena el
-                    audio real y el modulador dibuja su onda.
+                    Cada uno coge una voz distinta del sistema y la frase se trocea en cláusulas:
+                    Culow va grave y atropellado, Pililarge agudo y a trocitos. Para que suenen como
+                    los actores de verdad, mete los clips del canal en{" "}
+                    <code className="text-museo-tinta-70">public/voces/</code> y apúntalos en{" "}
+                    <code className="text-museo-tinta-70">src/config/cyp.ts</code>.
                   </p>
                   {(assigned.culow || assigned.pililarge) && (
-                    <p className="text-cyp-cream/30">
+                    <p>
                       Voces de este navegador — Culow: {assigned.culow?.name ?? "por defecto"} ·
                       Pililarge: {assigned.pililarge?.name ?? "por defecto"}
                     </p>
@@ -201,8 +194,8 @@ export function HazlosHablar() {
                 </>
               ) : (
                 <p>
-                  Este navegador no tiene síntesis de voz, así que los personajes se quedan
-                  callados. Prueba en Chrome, Edge o Safari.
+                  Este navegador no tiene síntesis de voz, así que las piezas se quedan calladas.
+                  Pruebe en Chrome, Edge o Safari.
                 </p>
               )}
             </div>

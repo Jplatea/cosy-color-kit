@@ -4,7 +4,7 @@
  * Sirve las dos rutas que espera el panel del frontend:
  *
  *   GET  /api/stats  -> { total, today, online, pages, days, countries }
- *   POST /api/visit  -> { sections: string[] }   (204)
+ *   POST /api/visit  -> { sections: string[], pais?: "ES" }   (204)
  *
  * Sin dependencias: solo Node. Los datos se guardan en un JSON al lado de
  * este fichero, así que arranca en cualquier sitio sin montar una base de
@@ -152,21 +152,33 @@ const GEO_HEADERS = [
 
 const geoCache = new Map();
 
-/** País del visitante: primero cabeceras del hosting, y solo si se pide, consulta externa. */
-async function countryOf(req, hash) {
+const esCodigoPais = (v) => typeof v === "string" && /^[A-Za-z]{2}$/.test(v.trim());
+
+/**
+ * País del visitante, por orden de fiabilidad:
+ *
+ *  1. Cabecera del hosting (Cloudflare, Vercel, Netlify…). Es la buena: la
+ *     pone la red a partir de la IP y aquí no hay que tocar la IP para nada.
+ *  2. Consulta externa, solo si se configura `CYP_GEO_URL` a propósito.
+ *  3. Lo que declara el propio navegador (`pais`), deducido de su idioma o su
+ *     zona horaria. Es lo que hace que el mapa funcione en local y en un
+ *     hosting estático sin cabeceras, sin llamar a ningún servicio ni mirar
+ *     ninguna IP. Se acepta el último porque es el único que el visitante
+ *     puede cambiar, así que solo entra cuando no hay nada mejor.
+ */
+async function countryOf(req, hash, declarado) {
   for (const header of GEO_HEADERS) {
     const value = req.headers[header];
-    if (typeof value === "string" && /^[A-Za-z]{2}$/.test(value.trim())) {
-      return value.trim().toUpperCase();
-    }
+    if (esCodigoPais(value)) return value.trim().toUpperCase();
   }
 
   const template = process.env.CYP_GEO_URL;
-  if (!template) return null;
+  if (!template) return esCodigoPais(declarado) ? declarado.trim().toUpperCase() : null;
   if (geoCache.has(hash)) return geoCache.get(hash);
 
   const ip = clientIp(req);
-  if (!ip || ip.startsWith("127.") || ip === "::1") return null;
+  const local = !ip || ip.startsWith("127.") || ip === "::1";
+  if (local) return esCodigoPais(declarado) ? declarado.trim().toUpperCase() : null;
 
   try {
     const controller = new AbortController();
@@ -180,17 +192,19 @@ async function countryOf(req, hash) {
     const body = await res.json();
     const code = body.country_code || body.countryCode || body.country;
     const clean = typeof code === "string" && /^[A-Za-z]{2}$/.test(code) ? code.toUpperCase() : null;
-    geoCache.set(hash, clean);
-    return clean;
+    const valor = clean || (esCodigoPais(declarado) ? declarado.trim().toUpperCase() : null);
+    geoCache.set(hash, valor);
+    return valor;
   } catch {
-    geoCache.set(hash, null);
-    return null;
+    const valor = esCodigoPais(declarado) ? declarado.trim().toUpperCase() : null;
+    geoCache.set(hash, valor);
+    return valor;
   }
 }
 
 // ------------------------------------------------------------- registro
 
-async function recordVisit(req, sections) {
+async function recordVisit(req, sections, pais) {
   prune();
 
   const hash = visitorHash(req);
@@ -204,7 +218,7 @@ async function recordVisit(req, sections) {
     db.total += 1;
     db.days[day] = (db.days[day] || 0) + 1;
 
-    const country = await countryOf(req, hash);
+    const country = await countryOf(req, hash, pais);
     if (country) db.countries[country] = (db.countries[country] || 0) + 1;
   }
 
@@ -316,7 +330,7 @@ const server = createServer(async (req, res) => {
       const raw = await readBody(req);
       const body = raw ? JSON.parse(raw) : {};
       const sections = Array.isArray(body.sections) ? body.sections.slice(0, 20) : [];
-      await recordVisit(req, sections);
+      await recordVisit(req, sections, body.pais);
       res.writeHead(204).end();
     } catch {
       sendJson(res, 400, { error: "petición inválida" });

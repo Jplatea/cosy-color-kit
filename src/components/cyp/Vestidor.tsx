@@ -1,5 +1,4 @@
-import { useState, type ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import {
   COSTUMES,
   Character,
@@ -11,49 +10,51 @@ import {
   type CharacterId,
   type CostumeId,
   type Extras,
-  type Grupo,
 } from "./Character";
-import { Chip, Eyebrow, GhostButton, GoldButton, SectionTitle } from "./primitives";
+import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { useNarrow } from "@/hooks/useNarrow";
 
 /**
- * Un apartado plegable del panel.
+ * Sala 6: el vestuario de la colección.
  *
- * Van todos con el mismo `name`, así que el navegador se encarga de cerrar el
- * anterior al abrir otro: el panel nunca crece más de un bloque abierto. Los
- * navegadores que no entienden `name` simplemente los dejan abrirse sueltos.
+ * Los mandos van plegados a propósito. Con los diecinueve disfraces, la paleta
+ * y los complementos desplegados a la vez, la columna de controles medía más
+ * que la pantalla y arrastraba a la vitrina detrás: la pieza —que es lo único
+ * que hay que mirar— acababa en una caja gigante llena de aire. Así el disfraz
+ * se elige en un desplegable de una línea, el color y los complementos se abren
+ * solo si hace falta, y la sala entera cabe de una vez.
  */
-function Bloque({
+
+/** Un bloque de mandos que se abre y se cierra. Cerrado no ocupa nada. */
+function Plegable({
   titulo,
-  valor,
-  abierto,
+  resumen,
   children,
 }: {
   titulo: string;
-  /** Resumen de lo elegido, para leerlo con el bloque cerrado. */
-  valor: ReactNode;
-  abierto?: boolean;
-  children: ReactNode;
+  /** Lo elegido ahora mismo, para verlo sin tener que abrir. */
+  resumen: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
-    <details
-      name="vestidor"
-      open={abierto}
-      className="group overflow-hidden rounded-[14px] border border-cyp-cream/[0.09] bg-cyp-ink/40"
-    >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-[14px] py-[12px] [&::-webkit-details-marker]:hidden">
-        <span className="text-[12.5px] font-semibold uppercase tracking-[0.1em] text-cyp-cream/50">
-          {titulo}
-        </span>
-        <span className="flex min-w-0 items-center gap-2">
-          <span className="truncate text-[13.5px] text-cyp-cream/[0.82]">{valor}</span>
-          <ChevronDown
-            size={16}
-            className="shrink-0 text-cyp-cream/40 transition-transform group-open:rotate-180"
-          />
+    <details className="group border border-museo-linea">
+      <summary className="flex cursor-pointer list-none items-center gap-3 px-[14px] py-[11px] [&::-webkit-details-marker]:hidden">
+        <span className="cartela text-museo-tinta-45">{titulo}</span>
+        <span className="ml-auto flex items-center gap-[10px] text-[13px] text-museo-tinta-70">
+          {resumen}
+          <svg
+            viewBox="0 0 12 8"
+            className="h-2 w-3 shrink-0 transition-transform duration-200 group-open:rotate-180"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            aria-hidden
+          >
+            <path d="M1 1.5 6 6.5l5-5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </span>
       </summary>
-      <div className="border-t border-cyp-cream/[0.07] px-3 pb-[14px] pt-[13px]">{children}</div>
+      <div className="border-t border-museo-linea-fina px-[14px] py-[14px]">{children}</div>
     </details>
   );
 }
@@ -62,25 +63,23 @@ export function Vestidor() {
   const narrow = useNarrow();
   const [char, setChar] = useState<CharacterId>("culow");
   const [costume, setCostume] = useState<CostumeId>("larva");
-  const [color, setColor] = useState<string>(
-    COSTUMES.find((c) => c.id === "larva")!.color
-  );
+  const [color, setColor] = useState<string>(COSTUMES.find((c) => c.id === "larva")!.color);
   const [extras, setExtras] = useState<Extras>(NO_EXTRAS);
-  const [grupoActivo, setGrupoActivo] = useState<Grupo>(GRUPOS[0]);
 
   const actual = COSTUMES.find((c) => c.id === costume);
-  const nombreColor = SWATCHES.find((s) => s.value === color)?.name ?? "A juego";
-  const puestos = EXTRAS.filter((x) => extras[x.id]).length;
+  const puestos = EXTRAS.filter((x) => extras[x.id]);
+  const colorActual = SWATCHES.find((s) => s.value === color);
 
-  const pickCostume = (c: (typeof COSTUMES)[number]) => {
+  const elegir = (id: CostumeId) => {
+    const c = COSTUMES.find((x) => x.id === id);
+    if (!c) return;
     setCostume(c.id);
     setColor(c.color);
   };
 
   const randomLook = () => {
-    // Solo los que tienen categoría: sorprender con «Sin disfraz» no sorprende.
-    const conDisfraz = COSTUMES.filter((x) => x.grupo);
-    const c = conDisfraz[Math.floor(Math.random() * conDisfraz.length)];
+    // El índice arranca en 1 para no "sorprender" con «Sin disfraz».
+    const c = COSTUMES[1 + Math.floor(Math.random() * (COSTUMES.length - 1))];
     const sw = SWATCHES[Math.floor(Math.random() * SWATCHES.length)];
     const ex = { ...NO_EXTRAS };
     EXTRAS.forEach((x) => {
@@ -90,8 +89,6 @@ export function Vestidor() {
     setCostume(c.id);
     setColor(sw.value);
     setExtras(ex);
-    // Que la pestaña siga al disfraz sorteado, o el elegido no se ve marcado.
-    if (c.grupo) setGrupoActivo(c.grupo);
   };
 
   const resetLook = () => {
@@ -101,109 +98,94 @@ export function Vestidor() {
   };
 
   return (
-    <section id="vestidor" className="bg-cyp-ink-soft px-6 py-[100px] lg:px-10">
-      <div className="mx-auto max-w-[1200px]">
-        <Eyebrow>Juguete nº 2</Eyebrow>
-        <SectionTitle className="mb-[6px] mt-3">El vestidor</SectionTitle>
-        <p className="mb-[34px] max-w-[640px] text-[17px] text-cyp-cream/60">
-          Elige a uno, ponle un disfraz, cámbiale el color y añádele complementos. Todos los
-          disfraces son parodias hechas a mano, no calcos.
-        </p>
+    <section id="vestidor" className="bg-museo-pared px-6 py-[86px] lg:px-8">
+      <div className="mx-auto max-w-[1000px]">
+        <div className="mb-9 border-b border-museo-linea pb-8">
+          <Sala n="06">Vestuario de la colección</Sala>
+          <SectionTitle className="mt-4">El vestidor</SectionTitle>
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+            Elija una pieza, póngale un traje y cámbiele el color. Todos los trajes son parodias
+            hechas a mano, no calcos.
+          </p>
+        </div>
 
-        <div className="grid items-start gap-5 lg:grid-cols-[1fr_380px]">
-          {/* Escenario */}
-          <div
-            className="relative flex min-h-[390px] items-end justify-center rounded-[24px] border border-cyp-cream/[0.09] px-[30px] pb-[44px] pt-[54px]"
-            style={{
-              background:
-                "radial-gradient(60% 55% at 50% 6%, rgba(255,236,205,.12), transparent 72%), #100c0b",
-            }}
-          >
-            <div
-              className="absolute bottom-[32px] left-1/2 h-[80px] w-[360px] -translate-x-1/2 blur-[6px]"
-              style={{
-                background:
-                  "radial-gradient(50% 50% at 50% 50%, rgba(255,235,205,.12), transparent 70%)",
-              }}
-            />
-            <div className="relative z-[2]">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_320px]">
+          {/* La vitrina: lo justo para que quepa el más alto de los dos. */}
+          <figure>
+            <Peana className="h-[320px] rounded-[3px] px-6 pb-[34px] pt-6">
               <Character
                 char={char}
-                scale={char === "culow" ? (narrow ? 1 : 1.5) : narrow ? 0.6 : 0.78}
+                scale={char === "culow" ? (narrow ? 0.68 : 0.9) : narrow ? 0.5 : 0.65}
                 dress
                 costume={costume}
                 color={color}
                 extras={extras}
                 bob
               />
+            </Peana>
+            <figcaption className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-museo-tinta pt-3">
+              <span className="font-display text-[21px] text-museo-tinta">
+                «{char === "culow" ? "Culow" : "Pililarge"}
+                {actual && actual.id !== "none" ? `, de ${actual.label.toLowerCase()}` : ", sin traje"}»
+              </span>
+              <span className="cartela text-museo-tinta-45">
+                Intervención del visitante · {new Date().getFullYear()}
+              </span>
+            </figcaption>
+          </figure>
+
+          {/* Mandos: dos botones fijos y tres plegables. */}
+          <div className="grid content-start gap-[9px] border border-museo-linea p-[18px]">
+            <div className="flex gap-[9px]">
+              <Chip active={char === "culow"} onClick={() => setChar("culow")} className="flex-1">
+                Culow
+              </Chip>
+              <Chip
+                active={char === "pililarge"}
+                onClick={() => setChar("pililarge")}
+                className="flex-1"
+              >
+                Pililarge
+              </Chip>
             </div>
-          </div>
 
-          {/* Panel de control */}
-          <div className="grid content-start gap-[10px] rounded-[24px] border border-cyp-cream/[0.09] bg-cyp-card p-3">
-            <Bloque titulo="Personaje" valor={char === "culow" ? "Culow" : "Pililarge"}>
-              <div className="flex gap-[10px]">
-                <Chip active={char === "culow"} onClick={() => setChar("culow")}>
-                  Culow
-                </Chip>
-                <Chip active={char === "pililarge"} onClick={() => setChar("pililarge")}>
-                  Pililarge
-                </Chip>
-              </div>
-            </Bloque>
-
-            <Bloque titulo="Disfraz" valor={actual?.label ?? "Ninguno"} abierto>
-              {/* "Sin disfraz" va suelto arriba: no pertenece a ninguna categoría. */}
-              <div className="mb-3 flex flex-wrap gap-[9px]">
+            {/* El desplegable nativo: una línea, y en el móvil lo pinta el
+                sistema con su propia rueda, que es lo cómodo ahí. */}
+            <label className="grid gap-[6px] border border-museo-linea px-[14px] py-[10px]">
+              <span className="cartela text-museo-tinta-45">Traje</span>
+              <select
+                value={costume}
+                onChange={(e) => elegir(e.target.value as CostumeId)}
+                className="w-full cursor-pointer appearance-none bg-transparent font-display text-[19px] text-museo-tinta outline-none"
+              >
                 {COSTUMES.filter((c) => !c.grupo).map((c) => (
-                  <Chip key={c.id} active={costume === c.id} onClick={() => pickCostume(c)}>
+                  <option key={c.id} value={c.id}>
                     {c.label}
-                  </Chip>
+                  </option>
                 ))}
-              </div>
-
-              {/* Las categorías, como pestañas: solo se pinta la abierta, así el panel
-                  mide lo que la categoría más larga y no la suma de las cuatro. */}
-              <div className="mb-3 flex flex-wrap gap-[5px] border-t border-cyp-cream/[0.07] pt-3">
                 {GRUPOS.map((g) => (
-                  <button
-                    key={g}
-                    type="button"
-                    onClick={() => setGrupoActivo(g)}
-                    aria-pressed={grupoActivo === g}
-                    className={
-                      grupoActivo === g
-                        ? "shrink-0 rounded-full bg-cyp-gold/[0.14] px-[9px] py-[5px] text-[11px] font-semibold uppercase tracking-[0.08em] text-cyp-gold"
-                        : "shrink-0 rounded-full px-[9px] py-[5px] text-[11px] font-semibold uppercase tracking-[0.08em] text-cyp-cream/40 transition-colors hover:text-cyp-cream/70"
-                    }
-                  >
-                    {g}
-                  </button>
+                  <optgroup key={g} label={g}>
+                    {COSTUMES.filter((c) => c.grupo === g).map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
-              </div>
+              </select>
+            </label>
 
-              <div className="flex flex-wrap gap-[8px]">
-                {COSTUMES.filter((c) => c.grupo === grupoActivo).map((c) => (
-                  <Chip key={c.id} active={costume === c.id} onClick={() => pickCostume(c)}>
-                    {c.label}
-                  </Chip>
-                ))}
-              </div>
-            </Bloque>
-
-            <Bloque
+            <Plegable
               titulo="Color"
-              valor={
-                <span className="flex items-center gap-2">
-                  <span
-                    className="inline-block h-[13px] w-[13px] shrink-0 rounded-full"
-                    style={{ background: color, border: "1px solid rgba(242,236,226,.25)" }}
-                  />
-                  {nombreColor}
-                </span>
+              resumen={
+                <span
+                  className="h-[16px] w-[16px] rounded-full border border-museo-linea"
+                  style={{ background: color }}
+                  title={colorActual?.name || color}
+                />
               }
             >
-              <div className="flex flex-wrap gap-[9px]">
+              <div className="flex flex-wrap gap-2">
                 {SWATCHES.map((s) => (
                   <button
                     key={s.value}
@@ -213,24 +195,24 @@ export function Vestidor() {
                     aria-pressed={color === s.value}
                     onClick={() => setColor(s.value)}
                     style={{
-                      width: 32,
-                      height: 32,
+                      width: 28,
+                      height: 28,
                       borderRadius: "50%",
                       cursor: "pointer",
                       background: s.value,
-                      border: `2px solid ${color === s.value ? "#e8b25c" : "rgba(242,236,226,.2)"}`,
-                      boxShadow: color === s.value ? "0 0 0 3px rgba(232,178,92,.25)" : "none",
+                      border: `1px solid ${color === s.value ? "#14120f" : "rgba(20,18,15,.2)"}`,
+                      boxShadow: color === s.value ? "0 0 0 2px rgba(20,18,15,.18)" : "none",
                     }}
                   />
                 ))}
               </div>
-            </Bloque>
+            </Plegable>
 
-            <Bloque
+            <Plegable
               titulo="Complementos"
-              valor={puestos === 0 ? "Ninguno" : puestos === 1 ? "1 puesto" : `${puestos} puestos`}
+              resumen={puestos.length ? `${puestos.length} puestos` : "Ninguno"}
             >
-              <div className="flex flex-wrap gap-[9px]">
+              <div className="flex flex-wrap gap-2">
                 {EXTRAS.map((x) => (
                   <Chip
                     key={x.id}
@@ -241,14 +223,14 @@ export function Vestidor() {
                   </Chip>
                 ))}
               </div>
-            </Bloque>
+            </Plegable>
 
-            <div className="mt-1 flex flex-wrap gap-[10px] border-t border-cyp-cream/10 pt-[14px]">
-              <GoldButton onClick={randomLook} className="px-[18px] py-[12px] text-[14.5px]">
-                Sorpréndeme
+            <div className="mt-1 flex gap-[9px]">
+              <GoldButton onClick={randomLook} className="flex-1 px-3 py-[12px] text-[13.5px]">
+                Sorpréndame
               </GoldButton>
-              <GhostButton onClick={resetLook} className="px-4 py-[12px] text-[14.5px]">
-                Desnudarlo
+              <GhostButton onClick={resetLook} className="px-3 py-[12px] text-[13.5px]">
+                Desvestir
               </GhostButton>
             </div>
           </div>

@@ -21,6 +21,7 @@
 import { writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import jpeg from "jpeg-js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, "..", "src", "config", "youtube.json");
@@ -34,8 +35,8 @@ function arg(name, fallback) {
 }
 const DRY = process.argv.includes("--dry");
 const HANDLE = arg("handle", "@CulowPililarge");
-const WANT_VIDEOS = Number(arg("videos", "3"));
-const WANT_SHORTS = Number(arg("shorts", "4"));
+const WANT_VIDEOS = Number(arg("videos", "6"));
+const WANT_SHORTS = Number(arg("shorts", "8"));
 
 async function get(url) {
   const res = await fetch(url, {
@@ -56,18 +57,6 @@ async function resolveChannelId(handle) {
     html.match(/"externalId":"(UC[\w-]{22})"/);
   if (!match) throw new Error(`no encuentro el channelId de ${clean}`);
   return match[1];
-}
-/**
- * Los títulos del canal acaban en ristras de hashtags (#culow #pililarge...).
- * En YouTube sirven para que te encuentren; en la web sobran y estropean el
- * titular, así que se recortan al sincronizar.
- */
-function cleanTitle(text) {
-  return text
-    .replace(/#[\p{L}\p{N}_]+/gu, "")
-    .replace(/\s{2,}/g, " ")
-    .replace(/[\s·|/\\-]+$/u, "")
-    .trim();
 }
 
 function decodeEntities(text) {
@@ -92,7 +81,7 @@ async function readFeed(channelId) {
       const title = entry.match(/<title>([\s\S]*?)<\/title>/)?.[1];
       const published = entry.match(/<published>([^<]+)<\/published>/)?.[1];
       if (!id || !title) return null;
-       return { id, title: cleanTitle(decodeEntities(title)), published };
+      return { id, title: limpiarTitulo(decodeEntities(title)), published };
     })
     .filter(Boolean);
 }
@@ -118,6 +107,88 @@ async function isShort(id) {
   }
 }
 
+/**
+ * Los títulos del canal arrastran la cola de hashtags que YouTube pide para
+ * posicionar. En la web estorban: se quitan, se colapsan los espacios de más
+ * y se deja el título a secas.
+ */
+function limpiarTitulo(raw) {
+  const limpio = raw
+    .replace(/#[^ #]+/g, " ")
+    .replace(/  +/g, " ")
+    .replace(/[ ·|,-]+$/, "")
+    .trim();
+  // Si el título era solo hashtags, mejor el original que una tarjeta vacía.
+  return limpio.length >= 3 ? limpio : raw.trim();
+}
+
+/**
+ * Dónde están los personajes dentro del fotograma.
+ *
+ * Estos vídeos no llenan el cuadro: casi todos son una escena en negro con los
+ * muñecos en una franja central, y esa franja mide cosas muy distintas según el
+ * vídeo —medidos, entre el 19 % y el 82 % de la altura—. Sin este dato, un
+ * recorte fijo o deja medio marco en negro o corta a alguno por la cabeza.
+ *
+ * Así que se mira la miniatura de verdad: se baja a una rejilla pequeña, se
+ * marca cada fila que tenga algún pixel claramente por encima del negro de
+ * fondo, y se guarda la primera y la última. Con eso, la web sabe cuánto tiene
+ * que acercar cada foto para que los personajes salgan enteros y no sobre
+ * negro. Se decide por el pixel más claro de la fila y no por su media, porque
+ * un muñeco pequeño sobre fondo negro apenas mueve la media.
+ */
+async function encuadre(id) {
+  try {
+    const res = await fetch(`https://i.ytimg.com/vi/${id}/oardefault.jpg`, {
+      headers: { "user-agent": UA },
+    });
+    if (!res.ok) return null;
+    const { data, width, height } = jpeg.decode(
+      Buffer.from(await res.arrayBuffer()),
+      { useTArray: true }
+    );
+
+    const FILAS = 120;
+    const COLS = 48;
+    const UMBRAL = 55;
+    let primera = -1;
+    let ultima = -1;
+
+    for (let fy = 0; fy < FILAS; fy++) {
+      const y = Math.min(height - 1, Math.floor(((fy + 0.5) / FILAS) * height));
+      let max = 0;
+      for (let fx = 0; fx < COLS; fx++) {
+        const x = Math.min(width - 1, Math.floor(((fx + 0.5) / COLS) * width));
+        const i = (y * width + x) * 4;
+        const v = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        if (v > max) max = v;
+      }
+      if (max > UMBRAL) {
+        if (primera < 0) primera = fy;
+        ultima = fy;
+      }
+    }
+
+    // Un fotograma entero en negro no dice nada: mejor no guardar nada y que la
+    // web use su encuadre por defecto.
+    if (primera < 0) return null;
+
+    const arriba = primera / FILAS;
+    const abajo = (ultima + 1) / FILAS;
+    return {
+      /** Qué parte de la altura ocupan los personajes, de 0 a 1. */
+      banda: Number((abajo - arriba).toFixed(3)),
+      /** A qué altura está el centro de esa franja, de 0 a 1. */
+      centro: Number(((arriba + abajo) / 2).toFixed(3)),
+      /** Proporción de la miniatura (ancho ÷ alto), medida y no supuesta. */
+      ratio: Number((width / height).toFixed(4)),
+    };
+  } catch {
+    // Sin red o con una miniatura rara, la web tira de su encuadre por defecto.
+    return null;
+  }
+}
+
 const relativeDate = (iso) => {
   if (!iso) return "YouTube";
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
@@ -139,19 +210,47 @@ async function main() {
   console.log("  separando verticales de vídeos largos…");
   const flags = await Promise.all(entries.map((e) => isShort(e.id)));
 
-  const shorts = entries.filter((_, i) => flags[i]).slice(0, WANT_SHORTS);
-  const videos = entries.filter((_, i) => !flags[i]).slice(0, WANT_VIDEOS);
+  const verticales = entries.filter((_, i) => flags[i]);
+  const largos = entries.filter((_, i) => !flags[i]);
+
+  const shorts = verticales.slice(0, WANT_SHORTS);
+  /**
+   * El canal puede publicar solo en vertical: entonces no hay ningún vídeo
+   * largo con el que llenar la parrilla. En ese caso la parrilla se queda con
+   * los verticales que no han cabido en la fila de shorts, para que las dos
+   * secciones enseñen material real y ninguna repita lo de la otra.
+   */
+  const videos = (largos.length ? largos : verticales.slice(WANT_SHORTS)).slice(0, WANT_VIDEOS);
+
+  console.log("  midiendo dónde salen los personajes en cada miniatura…");
+  const [encuadreVideos, encuadreShorts] = await Promise.all([
+    Promise.all(videos.map((v) => encuadre(v.id))),
+    Promise.all(shorts.map((s) => encuadre(s.id))),
+  ]);
 
   const payload = {
     channelId,
     handle: HANDLE,
     syncedAt: new Date().toISOString(),
-    videos: videos.map((v) => ({
+    /**
+     * `vertical` es lo que decide con qué miniatura y en qué formato se pinta
+     * cada tarjeta. Sin este dato la web pedía siempre la miniatura 16:9, y un
+     * vídeo vertical llega ahí metido dentro de un marco negro con el fondo
+     * repetido a los lados: la miniatura dentro de otra miniatura.
+     */
+    videos: videos.map((v, i) => ({
       youtubeId: v.id,
       title: v.title,
       meta: relativeDate(v.published),
+      vertical: verticales.includes(v),
+      ...(encuadreVideos[i] || {}),
     })),
-    shorts: shorts.map((s) => ({ youtubeId: s.id, title: s.title })),
+    shorts: shorts.map((s, i) => ({
+      youtubeId: s.id,
+      title: s.title,
+      vertical: true,
+      ...(encuadreShorts[i] || {}),
+    })),
   };
 
   console.log(`\n  ${payload.videos.length} vídeos:`);

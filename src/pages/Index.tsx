@@ -6,18 +6,19 @@ import { Personajes } from "@/components/cyp/Personajes";
 import { HazlosHablar } from "@/components/cyp/HazlosHablar";
 import { Vestidor } from "@/components/cyp/Vestidor";
 import { Poemas } from "@/components/cyp/Poemas";
-import { InstagramFeed } from "@/components/cyp/InstagramFeed";
+import { Redes } from "@/components/cyp/Redes";
+import { Subasta } from "@/components/cyp/Subasta";
+import { Test } from "@/components/cyp/Test";
 import { Visitas } from "@/components/cyp/Visitas";
 import { Contacto } from "@/components/cyp/Contacto";
 import { SiteFooter } from "@/components/cyp/SiteFooter";
 import { useSectionTracking } from "@/hooks/useVisitas";
-import { Redes } from "@/components/cyp/Redes";
 
 const Index = () => {
   useSectionTracking();
 
   return (
-    <div className="min-w-0 overflow-x-hidden bg-cyp-ink text-cyp-cream">
+    <div className="min-w-0 overflow-x-hidden">
       <Nav />
       <Hero />
       <Videos />
@@ -25,8 +26,9 @@ const Index = () => {
       <Personajes />
       <HazlosHablar />
       <Vestidor />
+      <Test />
       <Poemas />
-      <InstagramFeed />
+      <Subasta />
       <Redes />
       <Visitas />
       <Contacto />

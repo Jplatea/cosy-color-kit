@@ -26,13 +26,13 @@ export const handles = {
 } as const;
 
 export const nav = [
-  { label: "Vídeos", href: "#videos" },
-  { label: "Shorts", href: "#shorts" },
-  { label: "Ellos dos", href: "#personajes" },
-  { label: "Hazlos hablar", href: "#hablar" },
-  { label: "Vestidor", href: "#vestidor" },
-  { label: "Poemas", href: "#poemas" },
-  { label: "Visitas", href: "#visitas" },
+  { label: "Proyecciones", href: "#videos" },
+  { label: "Piezas breves", href: "#shorts" },
+  { label: "Las dos piezas", href: "#personajes" },
+  { label: "Audioguía", href: "#hablar" },
+  { label: "Vestuario", href: "#vestidor" },
+  { label: "Tasación", href: "#subasta" },
+  { label: "Libro de visitas", href: "#visitas" },
 ] as const;
 
 export type Video = {
@@ -42,6 +42,12 @@ export type Video = {
   meta: string;
   /** Miniatura propia. Solo hace falta si no hay `youtubeId`. */
   image?: string;
+  /** Vertical (9:16) o apaisado. Lo rellena `npm run sync:youtube`. */
+  vertical?: boolean;
+  /** Dónde salen los personajes en la miniatura. Lo mide `sync:youtube`. */
+  banda?: number;
+  centro?: number;
+  ratio?: number;
 };
 
 /** Contenido de ejemplo: solo se ve si `youtube.json` está sin sincronizar. */
@@ -51,9 +57,7 @@ const videosDeEjemplo: Video[] = [
   { youtubeId: "", title: "Culow descubre la fregona", meta: "YouTube" },
 ];
 
-const sincronizado = Boolean(synced.channelId);
-
-export const videos: Video[] = sincronizado ? synced.videos : videosDeEjemplo;
+export const videos: Video[] = synced.videos.length ? synced.videos : videosDeEjemplo;
 
 export type Short = {
   /** ID de YouTube Shorts: lo que va después de `/shorts/`. */
@@ -63,6 +67,12 @@ export type Short = {
   title: string;
   /** Miniatura propia. Obligatoria para los verticales de TikTok. */
   image?: string;
+  /** Vertical (lo normal aquí) o apaisado. Lo rellena `npm run sync:youtube`. */
+  vertical?: boolean;
+  /** Dónde salen los personajes en la miniatura. Lo mide `sync:youtube`. */
+  banda?: number;
+  centro?: number;
+  ratio?: number;
 };
 
 const shortsDeEjemplo: Short[] = [
@@ -72,10 +82,10 @@ const shortsDeEjemplo: Short[] = [
   { youtubeId: "", title: "Dos formas, un ascensor" },
 ];
 
-export const shorts: Short[] = sincronizado ? synced.shorts : shortsDeEjemplo;
+export const shorts: Short[] = synced.shorts.length ? synced.shorts : shortsDeEjemplo;
 
 /** true cuando los vídeos vienen del canal de verdad y no del contenido de ejemplo. */
-export const contenidoSincronizado = sincronizado;
+export const contenidoSincronizado = synced.videos.length > 0 || synced.shorts.length > 0;
 
 /** Feed de Instagram. `image` es la miniatura; `url` el permalink del post. */
 export const instagramPosts: { image?: string; url?: string }[] = [
@@ -104,7 +114,7 @@ export const poems: Poem[] = [
   },
   {
     title: "Tratado del taburete",
-    body: "He estudiado la silla\ncuatro años enteros.\nSigo de pie.\nLa silla ha ganado.",
+    body: "He estudiado la silla\ncuatro años enteros.\nSigo de pie.\nCreo que voy ganando.",
     voice: "pililarge",
   },
   {
@@ -112,49 +122,58 @@ export const poems: Poem[] = [
     body: "Un minuto y treinta.\nDentro gira algo tibio.\nFuera giro yo,\nque tampoco tengo prisa.",
     voice: "culow",
   },
+  {
+    title: "Nana para un ventilador",
+    body: "Duerme, aspa mía,\nque ya no hace calor.\nSi te paras ahora\nnadie se entera.",
+    voice: "pililarge",
+  },
 ];
 
 /** Frases de un clic para la sección "Hazlos hablar". */
 export const phrases: { label: string; text: string }[] = [
-  { label: "Hola criaturas", text: "Hola criaturas. Hoy no traemos nada útil." },
-  { label: "Filosofía barata", text: "Si nadie te mira, ¿sigues siendo alto?" },
-  { label: "Queja doméstica", text: "La lavadora ha vuelto a hablarme mal." },
+  { label: "Saludo", text: "Hola criaturas. Hoy tampoco traemos nada útil." },
+  { label: "Pregunta tonta", text: "Oye, ¿el agua está mojada, o solo lo parece?" },
+  { label: "Queja de bar", text: "La lavadora me ha vuelto a hablar mal. Y encima tenía razón." },
+  { label: "Duda existencial", text: "Si nadie me mira, ¿sigo siendo alto?" },
+  { label: "Amenaza suave", text: "Como sigas así, te lo cuento todo a tu madre." },
   { label: "Despedida", text: "Nos vamos. Que os cunda la existencia." },
 ];
 
-/** El "Diálogo a dos": se recita alternando personaje. */
+/**
+ * El "Diálogo a dos": se recita alternando personaje. Culow suelta la barbaridad
+ * y Pililarge se la cree; ese es el chiste, así que el orden importa.
+ */
 export const duet: { who: "culow" | "pililarge"; text: string; audio?: string }[] = [
-  { who: "culow", text: "Pililarge, ¿tú crees que la fregona nos escucha?" },
-  { who: "pililarge", text: "Todo nos escucha, Culow. Ese es el problema." },
+  { who: "culow", text: "Pililarge, la fregona nos escucha. Lo sé porque me guiña." },
+  { who: "pililarge", text: "¿Con qué ojo, Culow? Es que quiero saludarla bien." },
 ];
 
 export const marquee = [
-  "Culow no tiene brazos y aún así abraza",
+  "Culow no tiene brazos y aún así señala",
   "Pililarge lleva 4 años intentando sentarse",
-  "Poemas absurdos cada semana",
-  "Homenajes imposibles",
+  "Humor tonto con acabados de lujo",
+  "Poemas absurdos y homenajes imposibles",
+  "Una voz grave, una voz aguda, cero argumento",
 ] as const;
 
 /** Secciones que se contabilizan en el panel de visitas. */
 export const trackedSections = [
-  { id: "inicio", label: "Inicio" },
-  { id: "videos", label: "Vídeos" },
-  { id: "shorts", label: "Shorts" },
-  { id: "hablar", label: "Hazlos hablar" },
-  { id: "vestidor", label: "Vestidor" },
-  { id: "poemas", label: "Poemas" },
+  { id: "inicio", label: "Entrada" },
+  { id: "videos", label: "Proyecciones" },
+  { id: "shorts", label: "Piezas breves" },
+  { id: "hablar", label: "Audioguía" },
+  { id: "vestidor", label: "Vestuario" },
+  { id: "poemas", label: "Textos de sala" },
 ] as const;
 
-/** Miniatura oficial de YouTube a partir del ID del vídeo. */
-export const youtubeThumb = (id?: string) =>
-  id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "";
-
 /**
- * Miniatura vertical de un Short.
+ * Miniatura oficial de YouTube a partir del ID del vídeo.
  *
- * YouTube guarda aparte la miniatura con la relación de aspecto original (9:16)
- * bajo el nombre `oardefault`. No existe para todos los vídeos, así que quien la
- * use debe dar `youtubeThumb` como respaldo: si da 404, se cae al horizontal.
+ * `hqdefault` siempre devuelve un 16:9, así que con un vídeo vertical dentro
+ * llega la imagen encajada en un marco con relleno a los lados: parece una
+ * miniatura metida dentro de otra. `oardefault` devuelve el fotograma en su
+ * proporción original —vertical si el vídeo es vertical—, que es lo que hay
+ * que pedir para los shorts. Para los apaisados, `hq720` da el 16:9 grande.
  */
-export const youtubeThumbVertical = (id?: string) =>
-  id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : "";
+export const youtubeThumb = (id?: string, vertical?: boolean) =>
+  id ? `https://i.ytimg.com/vi/${id}/${vertical ? "oardefault" : "hq720"}.jpg` : "";

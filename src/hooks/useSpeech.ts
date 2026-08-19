@@ -11,8 +11,9 @@ import type { CharacterId } from "@/components/cyp/Character";
  *     haya recortes de voz del canal, los personajes suenan como los actores.
  *  2. **Voz del navegador.** Si no hay clip, se sintetiza. Para que no suene a
  *     robot leyendo, cada personaje elige una voz distinta del sistema y la
- *     frase se trocea en cláusulas con su propia prosodia: Culow atropella y
- *     se acelera, Pililarge se para entre frase y frase y cierra hacia abajo.
+ *     frase se trocea en cláusulas con su propia prosodia: Culow suelta la
+ *     frase de golpe, grave y sin pararse a pensarla; Pililarge la va soltando
+ *     a trozos, agudo y con la duda puesta al final.
  */
 
 export type CharacterId_ = CharacterId;
@@ -27,7 +28,7 @@ type VoicePreset = {
   rateDrift: number;
   /** Variación aleatoria de tono por cláusula: evita la cadencia plana. */
   jitter: number;
-  /** Ajuste de tono en la última cláusula: Culow sube, Pililarge cierra grave. */
+  /** Ajuste de tono en la última cláusula: Culow cierra grave, Pililarge sube. */
   finalPitch: number;
   /** Voces del sistema preferidas, de mejor a peor. */
   prefer: RegExp[];
@@ -36,25 +37,29 @@ type VoicePreset = {
 export const VOICES: Record<CharacterId, VoicePreset> = {
   culow: {
     name: "Culow",
-    pitch: 1.65,
-    rate: 1.12,
-    pause: 60,
-    rateDrift: 0.04,
-    jitter: 0.06,
-    finalPitch: 0.1,
-    // Timbre claro y brillante.
-    prefer: [/mónica|monica/i, /paulina/i, /helena/i, /laura/i, /elvira/i, /esperanza/i, /female/i],
+    // Grave y basto: la frase le sale entera de un tirón y va acelerando,
+    // como quien no piensa lo que dice hasta después de haberlo dicho.
+    pitch: 0.38,
+    rate: 1.14,
+    pause: 70,
+    rateDrift: 0.05,
+    jitter: 0.05,
+    finalPitch: -0.12,
+    // Timbre grave.
+    prefer: [/jorge/i, /pablo/i, /álvaro|alvaro/i, /diego/i, /carlos/i, /enrique/i, /male/i],
   },
   pililarge: {
     name: "Pililarge",
-    pitch: 0.45,
-    rate: 0.9,
-    pause: 360,
-    rateDrift: -0.02,
-    jitter: 0.03,
-    finalPitch: -0.08,
-    // Timbre grave y lento.
-    prefer: [/jorge/i, /pablo/i, /álvaro|alvaro/i, /diego/i, /carlos/i, /enrique/i, /male/i],
+    // Agudo e inocente: va despacio, se para entre trozo y trozo y termina
+    // subiendo, como si todo lo que dice fuera medio pregunta.
+    pitch: 1.72,
+    rate: 0.92,
+    pause: 320,
+    rateDrift: -0.03,
+    jitter: 0.08,
+    finalPitch: 0.14,
+    // Timbre claro y brillante.
+    prefer: [/mónica|monica/i, /paulina/i, /helena/i, /laura/i, /elvira/i, /esperanza/i, /female/i],
   },
 };
 

@@ -1,51 +1,71 @@
 import { Character } from "./Character";
-import { Eyebrow, SectionTitle } from "./primitives";
+import { Cartela, Peana, Sala, SectionTitle } from "./primitives";
 
-const BIOS = [
+/**
+ * Sala 4: el estudio de las dos piezas.
+ *
+ * Aquí van los textos largos, los que en un museo cuelgan en un panel al lado
+ * de la obra y nadie lee entero. La gracia está en el tono: se describe a un
+ * tipo bajito y basto con el vocabulario de una ficha de conservación.
+ */
+
+const PIEZAS = [
   {
     char: "culow" as const,
-    scale: 0.7,
-    name: "Culow",
-    traits: "Bajito · redondo · optimista",
-    bio: "Se emociona con cualquier cosa: una piedra bonita, el ruido de la nevera. Habla rápido y agudo, y termina las frases antes de haberlas pensado. No tiene brazos pero insiste en aplaudir.",
+    n: "01",
+    nombre: "Culow",
+    epigrafe: "Bajito · redondo · basto",
+    texto:
+      "Dos lóbulos esféricos unidos por su punto de tangencia. Voz grave y modales de bar a las tres de la tarde: contesta antes de que le pregunten, se ríe de sus propios chistes y no pide perdón por nada. Carece de extremidades superiores, lo que no le ha impedido nunca señalar a nadie.",
+    filas: [
+      ["Función", "Empezar los problemas"],
+      ["Registro", "Grave, atropellado"],
+      ["Conservación", "Excelente. Preocupa"],
+    ] as [string, string][],
   },
   {
     char: "pililarge" as const,
-    scale: 0.47,
-    name: "Pililarge",
-    traits: "Alto · rígido · filosófico",
-    bio: "Habla grave y despacio, como si cada frase costara dinero. Lleva años intentando sentarse. Cuando por fin dice algo, suele ser demasiado profundo para la situación.",
+    n: "02",
+    nombre: "Pililarge",
+    epigrafe: "Alto · inocente · un poco tonto",
+    texto:
+      "Volumen capsular de eje vertical, sin articulación conocida. Voz aguda y cero maldad: se cree todo lo que le cuenta Culow, incluso cuando Culow se está riendo mientras se lo cuenta. Lleva cuatro años intentando sentarse en un taburete y sostiene que va por buen camino.",
+    filas: [
+      ["Función", "Creerse lo anterior"],
+      ["Registro", "Agudo, a trocitos"],
+      ["Conservación", "De pie desde 2024"],
+    ] as [string, string][],
   },
 ];
 
 export function Personajes() {
   return (
-    <section id="personajes" className="bg-cyp-ink-soft px-6 py-[100px] lg:px-10">
-      <div className="mx-auto max-w-[1200px]">
-        <Eyebrow>Ellos dos</Eyebrow>
-        <SectionTitle className="mb-10 mt-3">Quién es quién</SectionTitle>
+    <section id="personajes" className="bg-museo-pared px-6 py-[86px] lg:px-8">
+      <div className="mx-auto max-w-[1180px]">
+        <div className="mb-10 border-b border-museo-linea pb-8">
+          <Sala n="04">Estudio de las piezas</Sala>
+          <SectionTitle className="mt-4">Quién es quién</SectionTitle>
+        </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          {BIOS.map((b) => (
-            <div
-              key={b.name}
-              className="grid items-center gap-[26px] rounded-[24px] border border-cyp-cream/[0.09] p-[34px] sm:grid-cols-[150px_1fr]"
-              style={{
-                background:
-                  "radial-gradient(80% 70% at 30% 10%, rgba(255,236,205,.09), transparent 70%), #141010",
-              }}
-            >
-              <div className="flex justify-center">
-                <Character char={b.char} scale={b.scale} />
-              </div>
+        <div className="grid gap-x-[52px] gap-y-14 md:grid-cols-2">
+          {PIEZAS.map((p) => (
+            <article key={p.nombre} className="grid gap-6 sm:grid-cols-[170px_1fr] sm:items-start">
+              <Peana className="h-[210px] rounded-[3px] pb-6 pt-5">
+                <Character char={p.char} scale={p.char === "culow" ? 0.5 : 0.33} />
+              </Peana>
+
               <div>
-                <div className="font-bagel text-[34px] text-cyp-cream-hi">{b.name}</div>
-                <div className="mt-1 text-[13px] uppercase tracking-[0.1em] text-cyp-gold">
-                  {b.traits}
+                <div className="flex items-baseline gap-3">
+                  <span className="cartela text-museo-laton">{p.n}</span>
+                  <h3 className="font-display text-[32px] leading-none text-museo-tinta">
+                    {p.nombre}
+                  </h3>
                 </div>
-                <p className="mt-3 text-[16px] leading-[1.6] text-cyp-cream/[0.68]">{b.bio}</p>
+                <div className="cartela mt-[10px] text-museo-tinta-45">{p.epigrafe}</div>
+                <p className="mt-4 text-[15.5px] leading-[1.65] text-museo-tinta-70">{p.texto}</p>
+                <Cartela className="mt-5 border-t border-museo-linea pt-4" filas={p.filas} />
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

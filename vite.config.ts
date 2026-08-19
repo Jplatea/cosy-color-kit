@@ -1,13 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+import path from "node:path";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   server: {
-    host: "::",
-    port: 8080,
+    host: true,
+    port: 5188,
     // El panel de visitas pide /api/stats. En desarrollo lo atiende
     // `npm run server`; si no está levantado, el frontend cuenta en local.
     proxy: {
@@ -17,10 +15,8 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [react()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: { "@": path.resolve(process.cwd(), "./src") },
   },
-}));
+});

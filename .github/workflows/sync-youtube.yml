@@ -17,6 +17,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
+
+      # El script mide las miniaturas para encuadrarlas, y para eso necesita
+      # el decodificador de JPEG que vive en las dependencias.
+      - name: Instalar dependencias
+        run: npm ci
 
       - name: Traer los últimos vídeos del canal
         run: node scripts/sync-youtube.mjs

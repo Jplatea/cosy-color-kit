@@ -1,17 +1,31 @@
-import { useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/** Etiqueta pequeña en dorado que encabeza cada sección. */
-export function Eyebrow({ children }: { children: ReactNode }) {
+/**
+ * Las piezas sueltas de la sala.
+ *
+ * Todo el sitio se monta con esto: un número de sala, un titular en serif, un
+ * filete, una cartela y dos botones. Si algo aquí cambia, cambia el museo
+ * entero, que es exactamente lo que se quiere.
+ */
+
+/** La chapita de sala: «Sala 03 · Proyecciones». */
+export function Sala({ n, children }: { n: string; children: ReactNode }) {
   return (
-    <div className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-cyp-gold">
-      {children}
+    <div className="flex items-center gap-3 text-museo-tinta-45">
+      <span className="cartela text-museo-laton">Sala {n}</span>
+      <span className="h-px w-8 bg-museo-linea" />
+      <span className="cartela">{children}</span>
     </div>
   );
 }
 
-/** Titular de sección, en Bagel Fat One. */
+/** Se mantiene el nombre antiguo para no tocar las secciones que ya lo usan. */
+export const Eyebrow = ({ children }: { children: ReactNode }) => (
+  <div className="cartela text-museo-laton">{children}</div>
+);
+
+/** Titular de sección, en serif de catálogo. */
 export function SectionTitle({
   children,
   className,
@@ -20,23 +34,93 @@ export function SectionTitle({
   className?: string;
 }) {
   return (
-    <h2 className={cn("font-bagel text-[46px] leading-tight text-cyp-cream-hi", className)}>
+    <h2
+      className={cn(
+        "font-display text-[42px] font-normal leading-[1.05] tracking-[-0.015em] text-museo-tinta sm:text-[54px]",
+        className
+      )}
+    >
       {children}
     </h2>
   );
 }
 
-/** Botón de selección: dorado cuando está activo, contorno tenue cuando no. */
+/** El filete que separa una sala de la siguiente. */
+export const Filete = ({ className }: { className?: string }) => (
+  <hr className={cn("border-0 border-t border-museo-linea", className)} />
+);
+
+/**
+ * La cartela de museo: la ficha en letra diminuta que se pega al lado de la
+ * pieza. Cada fila es un par etiqueta/valor.
+ */
+export function Cartela({
+  filas,
+  className,
+}: {
+  filas: [string, ReactNode][];
+  className?: string;
+}) {
+  return (
+    /*
+      La columna de etiquetas se mide sola (`auto`) en vez de llevar un ancho
+      fijo. Con un ancho fijo, una etiqueta larga con el interletrado de cartela
+      —«CONSERVACIÓN»— se salía de su columna y se montaba encima del valor.
+      Midiéndola, la columna crece hasta la etiqueta más larga de esa ficha y no
+      se solapa nada; `whitespace-nowrap` evita además que una etiqueta de dos
+      palabras parta por la mitad.
+    */
+    <dl className={cn("grid gap-[7px]", className)}>
+      {filas.map(([k, v]) => (
+        <div key={k} className="grid grid-cols-[auto_1fr] items-baseline gap-x-4">
+          <dt className="cartela whitespace-nowrap text-museo-tinta-45">{k}</dt>
+          <dd className="text-[14px] leading-[1.45] text-museo-tinta-70">{v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/**
+ * La peana: el rectángulo de piedra clara donde se apoyan las piezas. Las
+ * figuras son casi blancas, así que sin este fondo desaparecerían en la pared.
+ */
+export function Peana({
+  children,
+  className,
+  style,
+}: {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  return (
+    <div
+      className={cn("relative flex items-end justify-center overflow-hidden", className)}
+      style={{
+        background:
+          "linear-gradient(176deg, #efe9de 0%, #e4ddd1 62%, #d8d0c2 100%)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,.7)",
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** Botón de selección: relleno de tinta cuando está activo, filete cuando no. */
 export function chipStyle(active: boolean): CSSProperties {
   return {
-    padding: "12px 16px",
-    borderRadius: 12,
+    padding: "10px 15px",
+    borderRadius: 2,
     cursor: "pointer",
-    fontSize: 14,
-    fontWeight: 700,
-    border: `1px solid ${active ? "#e8b25c" : "rgba(242,236,226,.18)"}`,
-    background: active ? "rgba(232,178,92,.14)" : "transparent",
-    color: active ? "#e8b25c" : "rgba(242,236,226,.78)",
+    fontSize: 13,
+    fontWeight: 500,
+    letterSpacing: ".02em",
+    border: `1px solid ${active ? "#14120f" : "rgba(20,18,15,.18)"}`,
+    background: active ? "#14120f" : "transparent",
+    color: active ? "#f7f4ef" : "rgba(20,18,15,.7)",
     transition: "all .18s ease",
   };
 }
@@ -68,7 +152,7 @@ export function Chip({
   );
 }
 
-/** Botón principal dorado. */
+/** Botón principal: tinta sólida, esquinas casi rectas. */
 export function GoldButton({
   children,
   onClick,
@@ -85,7 +169,7 @@ export function GoldButton({
       type={type}
       onClick={onClick}
       className={cn(
-        "rounded-[14px] bg-cyp-gold px-[26px] py-[15px] text-[15.5px] font-bold text-cyp-on-gold transition-colors hover:bg-cyp-gold-hi",
+        "rounded-[2px] bg-museo-tinta px-[24px] py-[13px] text-[14px] font-medium tracking-[0.01em] text-museo-papel transition-colors hover:bg-museo-laton",
         className
       )}
     >
@@ -94,7 +178,7 @@ export function GoldButton({
   );
 }
 
-/** Botón secundario: solo contorno. */
+/** Botón secundario: solo filete. */
 export function GhostButton({
   children,
   onClick,
@@ -109,7 +193,7 @@ export function GhostButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-[14px] border border-cyp-cream/20 px-[22px] py-[15px] text-[15.5px] font-bold text-cyp-cream transition-colors hover:border-cyp-cream",
+        "rounded-[2px] border border-museo-linea px-[20px] py-[13px] text-[14px] font-medium text-museo-tinta-70 transition-colors hover:border-museo-tinta hover:text-museo-tinta",
         className
       )}
     >
@@ -118,47 +202,144 @@ export function GhostButton({
   );
 }
 
+/** Enlace con el filete debajo, como una referencia de catálogo. */
+export function LinkRule({
+  href,
+  children,
+  className,
+}: {
+  href: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener"
+      className={cn(
+        "cartela border-b border-museo-tinta pb-[3px] text-museo-tinta transition-colors hover:border-museo-laton hover:text-museo-laton",
+        className
+      )}
+    >
+      {children}
+    </a>
+  );
+}
+
 /**
- * Miniatura de vídeo, short o post.
+ * Marco de pared.
  *
- * Si no hay imagen todavía, en vez de un hueco vacío pinta un marcador con la
- * silueta del foco del estudio, para que la rejilla no se caiga mientras
- * faltan las miniaturas reales.
+ * Los fotogramas del canal son escenas oscuras: medidos uno a uno, en la
+ * mayoría solo entre el 10 % y el 25 % de la altura tiene luz, y esa franja cae
+ * un poco por debajo del centro. Colgados a pelo sobre papel hueso quedaban
+ * como cuatro rectángulos negros, así que van montados como una fotografía:
+ * pasepartú de pared, filete finísimo alrededor y una sombra corta debajo, que
+ * es lo que separa «cuadro» de «agujero».
+ */
+export function Marco({
+  children,
+  compacto = false,
+  className,
+}: {
+  children: ReactNode;
+  /** Marco pequeño: el pasepartú se estrecha para no comerse la imagen. */
+  compacto?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "border border-museo-linea bg-museo-pared transition-shadow",
+        compacto
+          ? "p-[6px] shadow-[0_8px_18px_-14px_rgba(20,18,15,.5)] group-hover:shadow-[0_12px_24px_-14px_rgba(20,18,15,.55)]"
+          : "p-[11px] shadow-[0_14px_30px_-22px_rgba(20,18,15,.55)] group-hover:shadow-[0_20px_40px_-20px_rgba(20,18,15,.6)]",
+        className
+      )}
+    >
+      <div className="relative overflow-hidden bg-museo-peana">{children}</div>
+    </div>
+  );
+}
+
+/** Lo que `npm run sync:youtube` mide de cada miniatura. */
+export type Encuadre = {
+  /** Qué parte de la altura ocupan los personajes, de 0 a 1. */
+  banda?: number;
+  /** A qué altura está el centro de esa franja, de 0 a 1. */
+  centro?: number;
+  /** Proporción de la miniatura (ancho ÷ alto). */
+  ratio?: number;
+};
+
+/**
+ * Miniatura de una proyección.
+ *
+ * El acercamiento no es fijo: cada foto se coloca con lo que se midió de ella
+ * al sincronizar. La regla es una sola —los personajes tienen que salir
+ * enteros— y de ahí sale todo:
+ *
+ *   · Se calcula cuánto habría que ampliar la foto para que la franja donde
+ *     están los muñecos llene el alto del marco, y cuánto para que la foto
+ *     llene el ancho. Se coge la menor de las dos: la primera nunca corta a
+ *     nadie, y la segunda evita ampliar de más y sacar una foto borrosa.
+ *   · Después se desplaza hasta que el centro de esa franja cae en el centro
+ *     del marco.
+ *
+ * En la práctica, un vídeo con los muñecos pequeños en mitad de una escena
+ * negra se acerca hasta llenar el marco, y uno que ya llena el cuadro se queda
+ * entero con paspartú a los lados. Nunca se corta una cabeza.
+ *
+ * Sin medidas —una miniatura nueva, o el fichero sin sincronizar— se recorta
+ * centrado, que es lo de siempre.
  */
 export function Thumb({
   src,
   alt,
   label,
-  fallbackSrc,
+  encuadre,
+  caja,
 }: {
   src?: string;
   alt: string;
   label?: string;
-  /** Se prueba si `src` no existe en el servidor (un vertical que YouTube no generó). */
-  fallbackSrc?: string;
+  encuadre?: Encuadre;
+  /** Proporción del marco (ancho ÷ alto). Hace falta para calcular el zoom. */
+  caja?: number;
 }) {
-  // YouTube devuelve 404 para las miniaturas que nunca generó, y eso solo se sabe
-  // al pedirlas. Guardamos cuál estamos enseñando y bajamos un escalón al fallar:
-  // principal → respaldo → marcador de posición.
-  const [actual, setActual] = useState(src);
-  const [previa, setPrevia] = useState(src);
+  if (src) {
+    const { banda, centro = 0.5, ratio } = encuadre || {};
 
-  // Si cambia el vídeo (una sincronización nueva), se vuelve a empezar por la principal.
-  if (previa !== src) {
-    setPrevia(src);
-    setActual(src);
-  }
+    if (banda && ratio && caja) {
+      // Alto de la foto, en % del alto del marco.
+      const paraLlenarElAncho = caja / ratio;
+      const paraQueQuepanLosMuñecos = 1 / banda;
+      const alto = Math.min(paraLlenarElAncho, paraQueQuepanLosMuñecos) * 100;
 
-  if (actual) { 
-    return (
+      // Se sube o se baja hasta centrar la franja; si la foto no sobra por
+      // arriba y por abajo, simplemente se centra.
+      const arriba =
+        alto <= 100
+          ? (100 - alto) / 2
+          : Math.min(0, Math.max(100 - alto, 50 - centro * alto));
+
+      return (
         <img
-        src={actual}
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="absolute left-1/2 max-w-none -translate-x-1/2"
+          style={{ height: `${alto}%`, width: "auto", top: `${arriba}%` }}
+        />
+      );
+    }
+
+    return (
+      <img
+        src={src}
         alt={alt}
         loading="lazy"
-        onError={() =>
-          setActual(fallbackSrc && actual !== fallbackSrc ? fallbackSrc : undefined)
-        }
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
     );
   }
@@ -167,21 +348,10 @@ export function Thumb({
       aria-label={alt}
       role="img"
       className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center"
-      style={{
-        background:
-          "radial-gradient(70% 60% at 50% 22%, rgba(255,236,205,.10), transparent 72%), #141010",
-      }}
+      style={{ background: "linear-gradient(176deg,#efe9de,#ded6c8)" }}
     >
-      <div
-        className="h-9 w-9 rounded-full"
-        style={{
-          background: "radial-gradient(circle at 34% 24%, #ffffff, #efe6d8 52%, #b6a998 88%)",
-          opacity: 0.35,
-        }}
-      />
-      {label && (
-        <div className="px-4 text-[12.5px] leading-snug text-cyp-cream/35">{label}</div>
-      )}
+      <div className="h-8 w-8 rounded-full bg-museo-tinta/10" />
+      {label && <div className="cartela px-4 text-museo-tinta-45">{label}</div>}
     </div>
   );
 }

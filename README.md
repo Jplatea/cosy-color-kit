@@ -1,601 +1,120 @@
-# Culow y Pililarge
+# Museo Culow & Pililarge
 
-La web de los dos personajes: vídeos, shorts, poemas, dos juguetes interactivos
-y un panel de visitas con mapa mundial.
+La web del canal [@CulowPililarge](https://www.youtube.com/@CulowPililarge), montada como
+una exposición: papel hueso, tinta negra, cartelas de catálogo y las dos piezas sobre su
+peana. El contraste es el chiste — se trata una tontería con los modales de un museo serio.
 
-```sh
-npm i && npm run dev     # la web
-npm run server           # el contador de visitas (opcional)
-npm run sync:youtube     # trae los últimos vídeos del canal
+React + Vite + TypeScript + Tailwind. Sin dependencias de UI: todo lo que se ve está en
+`src/components/cyp/`.
+
+## Arrancar
+
+```bash
+npm install
 ```
 
-**[→ Documentación del rediseño](docs/REDISENO.md)** — secciones, cómo rellenar
-los vídeos, cómo enchufar las voces reales y cómo funciona el contador.
+Dos procesos, cada uno en su terminal:
 
----
-
-## Estilos de partida (prompt original)
-
-создай пустой проект с такими стилями @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
-
-@custom-variant dark (&:is(.dark *));
-
-:root {
-  --font-size: 16px;
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #fafafa;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #0a0a0a;
-  --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #0a0a0a;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #0a0a0a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e4e4e7;
-  --input: #f4f4f5;
-  --input-background: #ffffff;
-  --switch-background: #e4e4e7;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: #a1a1aa;
-  
-  /* Simplified accent colors */
-  --accent-blue: #2563eb;
-  --accent-emerald: #059669;
-  --accent-purple: #7c3aed;
-  
-  --radius: 0.75rem;
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #1a1a1a;
-  --card-foreground: #fafafa;
-  --popover: #1a1a1a;
-  --popover-foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #fafafa;
-  --muted: #1a1a1a;
-  --muted-foreground: #a1a1aa;
-  --accent: #1a1a1a;
-  --accent-foreground: #fafafa;
-  --destructive: #ef4444;
-  --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #1a1a1a;
-  --ring: #71717a;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-input-background: var(--input-background);
-  --color-switch-background: var(--switch-background);
-  --color-ring: var(--ring);
-  
-  /* Simplified accent colors */
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-emerald: var(--accent-emerald);
-  --color-accent-purple: var(--accent-purple);
-  
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground overflow-x-hidden;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    width: 100%;
-    max-width: 100vw;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  /* Ensure no elements can cause horizontal overflow */
-  .container {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  
-  /* Font utility classes */
-  .font-bagel {
-    font-family: 'Bagel Fat One', cursive;
-  }
-  
-  /* Simplified utility classes */
-  .clean-border {
-    border: 1px solid var(--border);
-  }
-  
-  .subtle-shadow {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  }
-  
-  .elevated-shadow {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gentle-animation {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Enhanced Glass Effect */
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(25px) saturate(1.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-  
-  .glass-effect:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-  }
-  
-  /* Enhanced glass effect for better visibility */
-  .glass-navbar {
-    background: rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(30px) saturate(1.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 1px 1px rgba(255, 255, 255, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Text shadow utilities for better readability */
-  .text-shadow-strong {
-    text-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.8),
-      0 1px 2px rgba(0, 0, 0, 0.9),
-      1px 1px 2px rgba(0, 0, 0, 0.8),
-      -1px -1px 2px rgba(0, 0, 0, 0.8);
-  }
-  
-  .text-shadow-medium {
-    text-shadow: 
-      0 1px 3px rgba(0, 0, 0, 0.7),
-      0 1px 1px rgba(0, 0, 0, 0.8),
-      1px 1px 1px rgba(0, 0, 0, 0.7),
-      -1px -1px 1px rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Video Optimizations */
-  .video-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .video-container video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
-    object-fit: cover;
-  }
-  
-  /* Advanced Animations */
-  @keyframes float-gentle {
-    0%, 100% { 
-      transform: translateY(0px) rotate(0deg); 
-    }
-    50% { 
-      transform: translateY(-10px) rotate(1deg); 
-    }
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-    50% { 
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-    }
-  }
-  
-  @keyframes drift-left {
-    0% { transform: translateX(0px); }
-    50% { transform: translateX(-15px); }
-    100% { transform: translateX(0px); }
-  }
-  
-  @keyframes drift-right {
-    0% { transform: translateX(0px); }
-    50% { transform: translateX(15px); }
-    100% { transform: translateX(0px); }
-  }
-  
-  @keyframes filmGrain {
-    0%, 100% {
-      transform: translateX(0) translateY(0);
-    }
-    25% {
-      transform: translateX(1px) translateY(1px);
-    }
-    50% {
-      transform: translateX(-1px) translateY(1px);
-    }
-    75% {
-      transform: translateX(1px) translateY(-1px);
-    }
-  }
-  
-  @keyframes projectorLight {
-    0%, 100% {
-      opacity: 0.05;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-      opacity: 0.15;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-  }
-  
-  @keyframes filmScroll {
-    from {
-      transform: translateX(0px);
-    }
-    to {
-      transform: translateX(-2272px);
-    }
-  }
-  
-  @keyframes perforationsScroll {
-    from {
-      transform: translateX(0px);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  
-  @keyframes photoSway1 {
-    0%, 100% { 
-      transform: rotate(2deg) translateY(0px); 
-    }
-    50% { 
-      transform: rotate(-1deg) translateY(-3px); 
-    }
-  }
-  
-  @keyframes photoSway2 {
-    0%, 100% { 
-      transform: rotate(-1deg) translateY(0px); 
-    }
-    50% { 
-      transform: rotate(3deg) translateY(-2px); 
-    }
-  }
-  
-  @keyframes photoSway3 {
-    0%, 100% { 
-      transform: rotate(1deg) translateY(0px); 
-    }
-    50% { 
-      transform: rotate(-2deg) translateY(-4px); 
-    }
-  }
-  
-  @keyframes ropeSlackSway {
-    0%, 100% { 
-      transform: scaleY(1) translateY(0px); 
-    }
-    50% { 
-      transform: scaleY(1.02) translateY(1px); 
-    }
-  }
-  
-  .float-gentle {
-    animation: float-gentle 6s ease-in-out infinite;
-  }
-  
-  .pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-  
-  .drift-left {
-    animation: drift-left 8s ease-in-out infinite;
-  }
-  
-  .drift-right {
-    animation: drift-right 7s ease-in-out infinite;
-  }
-  
-  .photo-sway-1 {
-    animation: photoSway1 8s ease-in-out infinite;
-  }
-  
-  .photo-sway-2 {
-    animation: photoSway2 9s ease-in-out infinite;
-  }
-  
-  .photo-sway-3 {
-    animation: photoSway3 7s ease-in-out infinite;
-  }
-  
-  .rope-sway {
-    animation: ropeSlackSway 12s ease-in-out infinite;
-  }
-  
-  .film-scroll-animation {
-    animation: filmScroll 28s linear infinite;
-  }
-  
-  .perforations-scroll-animation {
-    animation: perforationsScroll 28s linear infinite;
-  }
-  
-  /* Clean scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: var(--background);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--ring);
-  }
-}
-
-/**
- * Clean typography system
- */
-@layer base {
-  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
-    h1 {
-      font-size: 2.25rem; /* 36px */
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.05em;
-    }
-
-    h2 {
-      font-size: 1.875rem; /* 30px */
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.04em;
-    }
-
-    h3 {
-      font-size: 1.5rem; /* 24px */
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.03em;
-    }
-
-    h4 {
-      font-size: 1.25rem; /* 20px */
-      font-weight: 600;
-      line-height: 1.4;
-      letter-spacing: -0.02em;
-    }
-
-    p {
-      font-size: 1.125rem; /* 18px */
-      font-weight: var(--font-weight-normal);
-      line-height: 1.6;
-      letter-spacing: 0.01em;
-    }
-
-    label {
-      font-size: 1rem; /* 16px */
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    button {
-      font-size: 1rem; /* 16px */
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    input {
-      font-size: 1rem; /* 16px */
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-  }
-}
-
-html {
-  font-size: var(--font-size);
-  scroll-behavior: smooth;
-}
-
-/* Performance optimizations */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Mobile optimizations for video */
-@media (max-width: 768px) {
-  html, body {
-    overflow-x: hidden !important;
-    width: 100%;
-    max-width: 100vw;
-  }
-  
-  .video-container {
-    height: 100dvh; /* Use dynamic viewport height on mobile */
-  }
-  
-  /* Adjust glass effects for mobile */
-  .glass-effect {
-    backdrop-filter: blur(15px);
-  }
-  
-  .glass-navbar {
-    backdrop-filter: blur(20px);
-  }
-  
-  /* Mobile menu optimizations */
-  .mobile-menu-panel {
-    /* Ensure mobile menu is always on top */
-    z-index: 9999;
-    max-width: 90vw;
-  }
-  
-  /* Prevent horizontal scroll when mobile menu is open */
-  body.mobile-menu-open {
-    overflow-x: hidden;
-    position: fixed;
-    width: 100%;
-  }
-  
-  /* Ensure touch interactions work well on mobile */
-  .mobile-menu-link {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
-    touch-action: manipulation;
-  }
-  
-  /* Force all sections to stay within viewport */
-  section {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-  
-  /* Ensure containers don't exceed viewport */
-  .container {
-    max-width: 100vw !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  /* Prevent scrollbars in Services section */
-  #services {
-    overflow: visible !important;
-  }
-  
-  #services * {
-    overflow: visible !important;
-  }
-  
-  #services::-webkit-scrollbar,
-  #services *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-  }
-  
-  /* Prevent scrollbars in Team section */
-  #team,
-  section[aria-label="Team section"],
-  section[aria-label="Team section"] * {
-    overflow: visible !important;
-    max-height: none !important;
-    height: auto !important;
-    min-height: 0 !important;
-  }
-  
-  #team::-webkit-scrollbar,
-  #team *::-webkit-scrollbar,
-  section[aria-label="Team section"]::-webkit-scrollbar,
-  section[aria-label="Team section"] *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-  }
-  
-  /* Force Team section to be fully visible */
-  section[aria-label="Team section"] {
-    overflow: visible !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-  }
-  
-  /* Fix any absolute positioned elements that might overflow */
-  [class*="absolute"] {
-    max-width: 100vw;
-  }
-}
-
-/* Ultra-wide screen optimizations */
-@media (min-width: 2560px) {
-  .video-container video {
-    object-position: center center;
-  }
-}
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://cosy-color-kit.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/1a7f96af-7397-4aee-9b3d-97b66810651a).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+```bash
 npm run dev
 ```
 
+```bash
+npm run server
+```
 
+El primero levanta la web en <http://localhost:5188>. El segundo es el contador de visitas
+en el puerto 8787; Vite le redirige `/api`. Sin él la web funciona igual, pero el libro de
+visitas solo cuenta lo de tu navegador y lo dice.
 
+## Las salas
 
+| Sala | Sección | Qué hace |
+|---|---|---|
+| 01 | Entrada | Las dos piezas con su cartela y las tres redes |
+| 02 | Proyecciones | Los últimos vídeos del canal, sincronizados solos |
+| 03 | Piezas breves | Los verticales |
+| 04 | Las dos piezas | Quién es quién |
+| 05 | Audioguía | Escribes algo y lo dice Culow o Pililarge |
+| 06 | Vestuario | 19 disfraces, color y complementos |
+| 07 | Textos de sala | Los poemas, recitados en voz alta |
+| 08 | Tasación | Subasta de objetos sin ningún valor |
+| 09 | Identificación | ¿Con cuál de los dos te identificas? |
+| 10 | Otras sedes | YouTube, TikTok e Instagram |
+| 11 | Libro de visitas | Contador real y mapa por países |
+| 12 | Préstamos | Formulario de contacto |
+
+## Los vídeos se actualizan solos
+
+```bash
+npm run sync:youtube
+```
+
+Lee el feed público del canal, separa los verticales de los apaisados y escribe
+`src/config/youtube.json`. A partir de ahí las miniaturas, los títulos y los enlaces salen
+solos: no hay que copiar ningún ID a mano. Los títulos se limpian de hashtags al pasar.
+
+Hay un workflow de GitHub Actions preparado para ejecutarlo cada día
+(`.github/workflows/sync-youtube.yml` en el repositorio original).
+
+## El contador de visitas es real
+
+No hay ni un número inventado en toda la sección. `server/index.mjs` es un servidor de Node
+sin dependencias con `GET /api/stats` y `POST /api/visit`, y guarda los datos en un JSON al
+lado del propio fichero.
+
+Privacidad, a propósito:
+
+- **No se guarda ninguna IP.** Para saber si dos peticiones son del mismo visitante se usa
+  un hash con sal que rota cada día, así que el dato deja de ser reversible mañana.
+- **Del país solo se guarda el código** (`ES`, `MX`…), nunca ciudad ni coordenadas.
+- **No se llama a ningún servicio de terceros.** El país sale de la cabecera que ya añade el
+  hosting (Cloudflare, Vercel, Netlify…) y, si no la hay, de lo que declara el navegador a
+  partir de su idioma o su zona horaria. Ninguna de las dos cosas mira la IP.
+
+Si el backend no responde, la web cuenta en el navegador **empezando en cero** y avisa arriba
+de que esos números son solo tuyos. Nunca rellena el hueco con tráfico falso.
+
+Variables de entorno del servidor:
+
+| Variable | Para qué |
+|---|---|
+| `PORT` | Puerto (8787 por defecto) |
+| `CYP_DATA` | Ruta del JSON de datos |
+| `CYP_STATS_SECRET` | Sal del hash de visitante (si falta se genera y se guarda) |
+| `CYP_GEO_URL` | Geolocalización externa opcional, con `{ip}`. Apagada por defecto |
+| `CYP_SERVE_DIST` | `1` para que el mismo proceso sirva también el build |
+
+## Publicar
+
+```bash
+npm run build
+```
+
+```bash
+npm start
+```
+
+`npm start` levanta el servidor sirviendo `dist/` y la API en el mismo puerto, que es la
+forma más simple de tener la web y el contador funcionando de verdad. Si prefieres un
+hosting estático (Vercel, Netlify), el contador global necesita que el backend viva en
+algún sitio; sin él la web se ve entera pero el libro de visitas queda en local.
+
+## Qué se toca para cambiar cosas
+
+- **Textos, enlaces, poemas, frases:** `src/config/cyp.ts`. Es el único fichero de contenido.
+- **Los disfraces:** `src/components/cyp/costumes.tsx`. Se añade una entrada a `COSTUMES` con
+  su grupo y su color, y se le da su pinta en `CostumeParts`. Están dibujados con divs y
+  `clip-path`, así que un disfraz más no pesa nada.
+- **La anatomía de los dos:** `src/components/cyp/Character.tsx`. No lleva ni patas ni
+  brazos a propósito: la silueta limpia es la marca.
+- **Las voces:** `src/hooks/useSpeech.ts`. Culow va grave y atropellado; Pililarge, agudo y a
+  trocitos. Si metes clips reales del canal en `public/voces/` y los apuntas en `cyp.ts`,
+  suena el audio de verdad en vez de la síntesis.
+- **La paleta y las tipografías:** `tailwind.config.ts` y `src/index.css`.
+
+## El logo
+
+`src/assets/logo-mark.svg` es el símbolo en vectorial puro: las dos esferas de Culow y la
+barra de Pililarge. En la web se pinta en línea desde `src/components/cyp/Logo.tsx` para que
+herede el color y se pueda poner en negro, crema o latón sin duplicar ficheros.

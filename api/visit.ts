@@ -102,10 +102,20 @@ async function visitante(req: Peticion): Promise<string> {
   return createHash("sha256").update(material).digest("hex").slice(0, 16);
 }
 
-/** País del visitante. Lo pone Vercel: ni IPs ni servicios de terceros. */
-function pais(req: Peticion): string | null {
+const esCodigoPais = (v: unknown): v is string =>
+  typeof v === "string" && /^[A-Za-z]{2}$/.test(v.trim());
+
+/**
+ * País del visitante. Manda la cabecera de Vercel, que la pone su red a partir
+ * de la IP sin que aquí haya que tocar ninguna IP ni llamar a nadie. Si por lo
+ * que sea no llega —una petición fuera del edge, una vista previa—, se acepta
+ * lo que declare el navegador a partir de su idioma o su zona horaria. Va el
+ * último precisamente porque es el único que el visitante puede cambiar.
+ */
+function pais(req: Peticion, declarado?: unknown): string | null {
   const cc = cabecera(req, "x-vercel-ip-country");
-  return cc && /^[A-Za-z]{2}$/.test(String(cc)) ? String(cc).toUpperCase() : null;
+  if (esCodigoPais(cc)) return cc.trim().toUpperCase();
+  return esCodigoPais(declarado) ? declarado.trim().toUpperCase() : null;
 }
 
 /** Registra una visita y las secciones que ha llegado a ver. */
@@ -134,7 +144,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
     if (primeraDelDia) {
       tareas.push(["INCR", K.total]);
       tareas.push(["HINCRBY", K.days, hoy(), 1]);
-      const cc = pais(req);
+      const cc = pais(req, body.pais);
       if (cc) tareas.push(["HINCRBY", K.countries, cc, 1]);
       // Los días que salen de la ventana se van borrando solos.
       tareas.push(["HDEL", K.days, diaISO(DIAS), diaISO(DIAS + 1), diaISO(DIAS + 2)]);

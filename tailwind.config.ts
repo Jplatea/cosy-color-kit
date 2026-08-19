@@ -1,109 +1,43 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: 'calc(var(--spacing) * 4)', // 1rem with 14px base = 14px padding
-      screens: {
-        sm: '40rem',
-        md: '48rem', 
-        lg: '64rem',
-        xl: '80rem',
-        '2xl': '96rem',
-      },
-    },
     extend: {
       fontFamily: {
-        bagel: ['Bagel Fat One', 'cursive'],
-        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Serif de catálogo para los titulares y las cartelas.
+        display: ["Instrument Serif", "Georgia", "Times New Roman", "serif"],
+        // Grotesca neutra para lo que en un museo va impreso en pequeño.
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
-        // Paleta del rediseño: esculturas mate blancas sobre estudio oscuro cálido.
-        cyp: {
-          ink: "#0a0807",       // fondo de página
-          "ink-soft": "#0d0a09", // fondo de secciones alternas
-          card: "#141010",
-          stage: "#100c0b",      // fondo de los escenarios de personajes
-          cream: "#f2ece2",      // texto
-          "cream-hi": "#faf5ec", // titulares
-          gold: "#e8b25c",
-          "gold-hi": "#f6c877",
-          "on-gold": "#160f06",  // texto sobre botones dorados
+        /**
+         * La sala: papel hueso, pared blanca, peanas de piedra y tinta negra.
+         * El latón aparece en cantidades ridículas —un filete, un sello— y ese
+         * es justo el chiste: lujo de verdad puesto encima de una tontería.
+         */
+        museo: {
+          papel: "#f7f4ef",
+          pared: "#fffdf9",
+          peana: "#e4ddd1",
+          "peana-hi": "#efe9de",
+          tinta: "#14120f",
+          "tinta-70": "rgba(20,18,15,.70)",
+          "tinta-45": "rgba(20,18,15,.45)",
+          linea: "rgba(20,18,15,.16)",
+          "linea-fina": "rgba(20,18,15,.09)",
+          laton: "#9a7b3f",
+          "laton-hi": "#b8955a",
         },
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-          blue: "var(--accent-blue)",
-          emerald: "var(--accent-emerald)",
-          purple: "var(--accent-purple)",
-        },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
-        },
-        "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
-        },
         "cyp-bob": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-14px)" },
+          "50%": { transform: "translateY(-10px)" },
         },
         "cyp-bob-slow": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        "cyp-spot": {
-          "0%, 100%": { opacity: ".55" },
-          "50%": { opacity: ".8" },
+          "50%": { transform: "translateY(-6px)" },
         },
         "cyp-marquee": {
           from: { transform: "translateX(0)" },
@@ -113,17 +47,19 @@ export default {
           "0%, 92%, 100%": { transform: "scaleY(1)" },
           "96%": { transform: "scaleY(.08)" },
         },
+        "cyp-rise": {
+          from: { opacity: "0", transform: "translateY(14px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
         "cyp-bob": "cyp-bob 7s ease-in-out infinite",
         "cyp-bob-slow": "cyp-bob-slow 8.5s ease-in-out infinite",
-        "cyp-spot": "cyp-spot 9s ease-in-out infinite",
-        "cyp-marquee": "cyp-marquee 32s linear infinite",
+        "cyp-marquee": "cyp-marquee 38s linear infinite",
         "cyp-blink": "cyp-blink 6s ease-in-out infinite",
+        "cyp-rise": "cyp-rise .5s cubic-bezier(.22,1,.36,1) both",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 } satisfies Config;

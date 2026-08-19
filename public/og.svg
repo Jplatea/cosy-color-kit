@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#f7f4ef"/>
+  <rect x="60" y="60" width="1080" height="510" fill="none" stroke="#14120f" stroke-opacity=".18"/>
+  <g fill="#e4ddd1">
+    <rect x="330" y="300" width="230" height="150" rx="6"/>
+    <rect x="640" y="220" width="230" height="230" rx="6"/>
+  </g>
+  <g fill="#faf7f1">
+    <circle cx="412" cy="352" r="52"/>
+    <circle cx="478" cy="352" r="52"/>
+    <rect x="723" y="248" width="64" height="176" rx="32"/>
+  </g>
+  <text x="600" y="150" text-anchor="middle" fill="#14120f"
+        font-family="Georgia,'Times New Roman',serif" font-size="76">Museo Culow &amp; Pililarge</text>
+  <text x="600" y="196" text-anchor="middle" fill="#14120f" fill-opacity=".55"
+        font-family="Helvetica,Arial,sans-serif" font-size="19" letter-spacing="6">COLECCIÓN PERMANENTE · SALA 1</text>
+  <text x="600" y="530" text-anchor="middle" fill="#9a7b3f"
+        font-family="Helvetica,Arial,sans-serif" font-size="16" letter-spacing="6">ENTRADA GRATUITA · NO SE VENDE NADA</text>
+</svg>
