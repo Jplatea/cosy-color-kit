@@ -151,10 +151,13 @@ export function Thumb({
 
   if (actual) {  if (src) {
     return (
-      <img
-        src={src}
+        <img
+        src={actual}
         alt={alt}
         loading="lazy"
+        onError={() =>
+          setActual(fallbackSrc && actual !== fallbackSrc ? fallbackSrc : undefined)
+        }
         className="absolute inset-0 h-full w-full object-cover"
       />
     );
