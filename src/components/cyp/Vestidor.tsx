@@ -14,6 +14,7 @@ import {
 import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { coser, describir, type Traje } from "./sastre";
 import { useSpeech } from "@/hooks/useSpeech";
+import { useEncargos } from "@/hooks/useEncargos";
 import { useNarrow } from "@/hooks/useNarrow";
 import { tinta } from "@/lib/color";
 
@@ -74,6 +75,7 @@ export function Vestidor() {
   const { speak } = useSpeech();
   const [encargo, setEncargo] = useState("");
   const [traje, setTraje] = useState<Traje | null>(null);
+  const { encargos, apuntar, vaciar } = useEncargos();
 
   const actual = COSTUMES.find((c) => c.id === costume);
   const puestos = EXTRAS.filter((x) => extras[x.id]);
@@ -93,6 +95,7 @@ export function Vestidor() {
     if (!texto) return;
     const cosido = coser(texto);
     setTraje(cosido);
+    apuntar(texto);
     const quien = char;
     speak(
       cosido.reconocido.length
@@ -117,6 +120,11 @@ export function Vestidor() {
     setExtras(ex);
   };
 
+  const repetir = (texto: string) => {
+    setEncargo(texto);
+    setTraje(coser(texto));
+  };
+
   const resetLook = () => {
     setTraje(null);
     setEncargo("");
@@ -139,8 +147,14 @@ export function Vestidor() {
 
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_320px]">
           {/* La vitrina: lo justo para que quepa el más alto de los dos. */}
-          <figure>
-            <Peana className="h-[320px] rounded-[3px] px-6 pb-[34px] pt-6">
+          {/*
+            La vitrina se estira: la columna de mandos ha crecido con el sastre
+            y los últimos encargos, y con la peana a una altura fija quedaban
+            trescientos píxeles de nada debajo de la cartela. Ahora la peana se
+            come lo que sobre y las dos columnas terminan en la misma línea.
+          */}
+          <figure className="flex flex-col">
+            <Peana className="min-h-[320px] flex-1 rounded-[3px] px-6 pb-[34px] pt-6">
               <Character
                 char={char}
                 scale={char === "culow" ? (narrow ? 0.68 : 0.9) : narrow ? 0.5 : 0.65}
@@ -210,6 +224,49 @@ export function Vestidor() {
                 )}
               </div>
             </form>
+
+            {encargos.length > 0 && (
+              <details className="group border border-museo-linea">
+                <summary className="flex cursor-pointer list-none items-center gap-3 px-[14px] py-[11px] [&::-webkit-details-marker]:hidden">
+                  <span className="cartela text-museo-tinta-tenue">Últimos encargos</span>
+                  <span className="ml-auto flex items-center gap-[10px] text-[13px] text-museo-tinta-suave">
+                    {encargos.length}
+                    <svg
+                      viewBox="0 0 12 8"
+                      className="h-2 w-3 shrink-0 transition-transform duration-200 group-open:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      aria-hidden
+                    >
+                      <path d="M1 1.5 6 6.5l5-5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </summary>
+                <div className="border-t border-museo-linea-fina px-[14px] py-[12px]">
+                  <ul className="grid">
+                    {encargos.map((e) => (
+                      <li key={e}>
+                        <button
+                          type="button"
+                          onClick={() => repetir(e)}
+                          className="w-full border-b border-museo-linea-fina py-[9px] text-left text-[14px] text-museo-tinta-suave transition-colors hover:text-museo-tinta"
+                        >
+                          {e}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    type="button"
+                    onClick={vaciar}
+                    className="cartela mt-3 text-museo-tinta-tenue transition-colors hover:text-museo-tinta"
+                  >
+                    Vaciar la lista
+                  </button>
+                </div>
+              </details>
+            )}
 
             <div className="flex gap-[9px]">
               <Chip active={char === "culow"} onClick={() => setChar("culow")} className="flex-1">

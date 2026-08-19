@@ -32,6 +32,7 @@ export const nav = [
   { label: "Audioguía", href: "#hablar" },
   { label: "Vestuario", href: "#vestidor" },
   { label: "Tasación", href: "#subasta" },
+  { label: "Tienda", href: "#tienda" },
   { label: "Libro de visitas", href: "#visitas" },
 ] as const;
 

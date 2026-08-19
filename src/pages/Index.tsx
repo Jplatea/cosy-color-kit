@@ -7,6 +7,7 @@ import { HazlosHablar } from "@/components/cyp/HazlosHablar";
 import { Vestidor } from "@/components/cyp/Vestidor";
 import { Poemas } from "@/components/cyp/Poemas";
 import { Redes } from "@/components/cyp/Redes";
+import { Tienda } from "@/components/cyp/Tienda";
 import { Subasta } from "@/components/cyp/Subasta";
 import { Test } from "@/components/cyp/Test";
 import { Visitas } from "@/components/cyp/Visitas";
@@ -30,6 +31,7 @@ const Index = () => {
       <Poemas />
       <Subasta />
       <Redes />
+      <Tienda />
       <Visitas />
       <Contacto />
       <SiteFooter />
