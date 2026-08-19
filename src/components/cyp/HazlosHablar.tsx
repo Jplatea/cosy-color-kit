@@ -16,7 +16,7 @@ import { tinta } from "@/lib/color";
  */
 export function HazlosHablar() {
   const narrow = useNarrow();
-  const { speaking, speaker, setSpeaker, speak, stop, sayDialogue, meterRef, supported, assigned } =
+  const { speaking, preparando, vozReal, speaker, setSpeaker, speak, stop, sayDialogue, meterRef, supported, assigned } =
     useSpeech();
   const [text, setText] = useState(
     "Buenas. Soy una forma blanca y hoy he descubierto la fregona."
@@ -74,7 +74,11 @@ export function HazlosHablar() {
               <div className="mb-3 flex items-center justify-between">
                 <span className="cartela text-museo-tinta-tenue">Nivel</span>
                 <span className="cartela text-museo-laton">
-                  {speaking ? `Pista — ${VOICES[speaker].name}` : "En silencio"}
+                  {preparando
+                    ? "Preparando la voz…"
+                    : speaking
+                      ? `Pista — ${VOICES[speaker].name}`
+                      : "En silencio"}
                 </span>
               </div>
               {/* Barras finas de tinta: aguja de estudio, no ecualizador de coche. */}
@@ -139,7 +143,11 @@ export function HazlosHablar() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5">
+            <div
+              className="grid grid-cols-2 gap-5 transition-opacity"
+              style={{ opacity: vozReal ? 0.4 : 1 }}
+              aria-hidden={vozReal ? true : undefined}
+            >
               <label className="grid gap-2">
                 <span className="cartela text-museo-tinta-tenue">
                   Tono <b className="text-museo-laton">{pitch.toFixed(2)}</b>
@@ -177,16 +185,23 @@ export function HazlosHablar() {
             </div>
 
             <div className="grid gap-2 border-t border-museo-linea pt-4 text-[13px] leading-[1.6] text-museo-tinta-tenue">
+              {vozReal && (
+                <p>
+                  Suenan sus voces de verdad, clonadas a partir del canal. El tono y la velocidad
+                  vienen ya en la grabación, así que esos dos mandos se quedan de adorno.
+                </p>
+              )}
               {supported ? (
                 <>
-                  <p>
-                    Cada uno coge una voz distinta del sistema y la frase se trocea en cláusulas:
-                    Culow va grave y atropellado, Pililarge agudo y a trocitos. Para que suenen como
-                    los actores de verdad, mete los clips del canal en{" "}
-                    <code className="text-museo-tinta-suave">public/voces/</code> y apúntalos en{" "}
-                    <code className="text-museo-tinta-suave">src/config/cyp.ts</code>.
-                  </p>
-                  {(assigned.culow || assigned.pililarge) && (
+                  {!vozReal && (
+                    <p>
+                      Ahora mismo habla el sintetizador del navegador: cada uno coge una voz
+                      distinta del sistema y la frase se trocea en cláusulas —Culow va grave y
+                      atropellado, Pililarge agudo y a trocitos—. Con las voces clonadas
+                      configuradas, esto se sustituye solo.
+                    </p>
+                  )}
+                  {!vozReal && (assigned.culow || assigned.pililarge) && (
                     <p>
                       Voces de este navegador — Culow: {assigned.culow?.name ?? "por defecto"} ·
                       Pililarge: {assigned.pililarge?.name ?? "por defecto"}

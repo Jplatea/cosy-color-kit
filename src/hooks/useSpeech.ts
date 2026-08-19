@@ -4,16 +4,22 @@ import type { CharacterId } from "@/components/cyp/Character";
 /**
  * Voz de los personajes.
  *
- * Hay dos caminos, y la sección de arriba no distingue entre ellos:
+ * Hay tres caminos y se prueban en este orden, porque así va de lo más fiel a
+ * lo más apañado:
  *
- *  1. **Audio real.** Si una frase trae `audio`, suena ese clip y el modulador
- *     se dibuja con la amplitud real de la onda. Es el camino bueno: en cuanto
- *     haya recortes de voz del canal, los personajes suenan como los actores.
- *  2. **Voz del navegador.** Si no hay clip, se sintetiza. Para que no suene a
- *     robot leyendo, cada personaje elige una voz distinta del sistema y la
- *     frase se trocea en cláusulas con su propia prosodia: Culow suelta la
- *     frase de golpe, grave y sin pararse a pensarla; Pililarge la va soltando
- *     a trozos, agudo y con la duda puesta al final.
+ *  1. **Clip grabado.** Si una frase trae `audio`, suena ese fichero. Es la voz
+ *     del actor de verdad: nada la mejora.
+ *  2. **Voz clonada.** Si no hay clip, se le pide a `/api/voz`, que genera la
+ *     frase con las voces de ElevenLabs entrenadas con ellos dos. Sirve para
+ *     cualquier cosa que alguien escriba, que es lo que no puede dar un clip.
+ *  3. **Voz del navegador.** Si no hay ni lo uno ni lo otro, se sintetiza. Para
+ *     que no suene a robot leyendo, cada personaje coge una voz distinta del
+ *     sistema y la frase se trocea en cláusulas con su propia prosodia: Culow
+ *     suelta la frase de golpe, grave y sin pararse a pensarla; Pililarge la va
+ *     soltando a trozos, agudo y con la duda puesta al final.
+ *
+ * El tono y la velocidad solo se pueden tocar en el tercero: en los otros dos
+ * los trae la propia grabación.
  */
 
 export type CharacterId_ = CharacterId;
@@ -67,6 +73,60 @@ export const METER_BARS = 34;
 
 export type Line = { who: CharacterId | string; text: string; audio?: string };
 
+/**
+ * La voz real, la de ElevenLabs.
+ *
+ * Se pide a `/api/voz`, que es quien guarda la clave. Aquí solo se decide si
+ * usarla o no, y se recuerdan dos cosas para no repetir trabajo:
+ *
+ *  · Si el endpoint contesta que no está configurado, no se le vuelve a
+ *    preguntar en toda la visita: la web se queda con la voz del navegador sin
+ *    dar la lata ni gastar peticiones.
+ *  · Cada frase generada se guarda en memoria. Volver a pulsar la misma frase
+ *    no cuesta ni red ni dinero.
+ */
+const MAX_VOZ = 300;
+
+/** null = todavía no se sabe. */
+let vozRealDisponible: boolean | null = null;
+const cacheVoz = new Map<string, string>();
+const avisosVoz = new Set<() => void>();
+
+const marcarVoz = (valor: boolean) => {
+  if (vozRealDisponible === valor) return;
+  vozRealDisponible = valor;
+  avisosVoz.forEach((avisar) => avisar());
+};
+
+async function pedirVozReal(text: string, who: CharacterId): Promise<string | null> {
+  if (vozRealDisponible === false) return null;
+  const limpio = text.trim();
+  if (!limpio || limpio.length > MAX_VOZ) return null;
+
+  const clave = `${who}|${limpio}`;
+  const guardado = cacheVoz.get(clave);
+  if (guardado) return guardado;
+
+  try {
+    const res = await fetch(`/api/voz?v=${who}&t=${encodeURIComponent(limpio)}`);
+    // 503 = sin configurar. 404 = todavía no hay función desplegada.
+    if (res.status === 503 || res.status === 404) {
+      marcarVoz(false);
+      return null;
+    }
+    // Un 429 es pasajero: se sintetiza esta vez, pero se sigue intentando luego.
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    if (!blob.type.startsWith("audio")) return null;
+    const url = URL.createObjectURL(blob);
+    marcarVoz(true);
+    cacheVoz.set(clave, url);
+    return url;
+  } catch {
+    return null;
+  }
+}
+
 const clampPitch = (v: number) => Math.max(0.1, Math.min(2, v));
 const clampRate = (v: number) => Math.max(0.5, Math.min(1.8, v));
 
@@ -111,6 +171,7 @@ function toClauses(text: string): string[] {
 
 export function useSpeech() {
   const [speaking, setSpeaking] = useState(false);
+  const [preparando, setPreparando] = useState(false);
   const [speaker, setSpeaker] = useState<CharacterId>("culow");
   const [supported, setSupported] = useState(true);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -378,12 +439,30 @@ export function useSpeech() {
       window.speechSynthesis?.cancel();
       const run = claim();
 
+      // Un clip grabado a mano manda sobre todo lo demás.
       if (line.audio) {
         playClip(line.audio, who, run, onDone);
         return;
       }
+
       const preset = VOICES[who];
-      speakSynth(line.text, who, pitch ?? preset.pitch, rate ?? preset.rate, run, onDone);
+      const sintetizar = () =>
+        speakSynth(line.text, who, pitch ?? preset.pitch, rate ?? preset.rate, run, onDone);
+
+      // Si ya se sabe que no hay voz real, se sintetiza sin esperar a nadie.
+      if (vozRealDisponible === false) {
+        sintetizar();
+        return;
+      }
+
+      setPreparando(true);
+      void pedirVozReal(line.text, who).then((url) => {
+        setPreparando(false);
+        // Mientras se generaba, alguien puede haber tomado la palabra.
+        if (!holdsFloor(run)) return;
+        if (url) playClip(url, who, run, onDone);
+        else sintetizar();
+      });
     },
     [playClip, speakSynth]
   );
@@ -406,8 +485,23 @@ export function useSpeech() {
     [speakLine]
   );
 
+  // La disponibilidad se descubre con la primera frase; cuando se sabe, hay
+  // que repintar las secciones que lo cuentan.
+  const [, repintar] = useState(0);
+  useEffect(() => {
+    const avisar = () => repintar((n) => n + 1);
+    avisosVoz.add(avisar);
+    return () => {
+      avisosVoz.delete(avisar);
+    };
+  }, []);
+
   return {
     speaking,
+    /** true mientras se está generando la voz real. */
+    preparando,
+    /** null hasta que se prueba; true si suenan las voces clonadas. */
+    vozReal: vozRealDisponible,
     speaker,
     setSpeaker,
     speak,
