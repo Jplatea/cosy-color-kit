@@ -27,10 +27,10 @@ const Index = () => {
       <Vestidor />
       <Poemas />
       <InstagramFeed />
+      <Redes />
       <Visitas />
       <Contacto />
       <SiteFooter />
-            <Redes />
     </div>
   );
 };
