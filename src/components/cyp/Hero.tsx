@@ -1,11 +1,12 @@
+import { Instagram, Music2, Youtube } from "lucide-react";
 import { Character } from "./Character";
 import { useNarrow } from "@/hooks/useNarrow";
 import { handles, marquee, socials } from "@/config/cyp";
 
 const SOCIAL_LINKS = [
-  { name: "YouTube", handle: handles.youtube, href: socials.youtube },
-  { name: "TikTok", handle: handles.tiktok, href: socials.tiktok },
-  { name: "Instagram", handle: handles.instagram, href: socials.instagram },
+  { name: "YouTube", handle: handles.youtube, href: socials.youtube, Icono: Youtube, color: "#ff2d2d" },
+  { name: "TikTok", handle: handles.tiktok, href: socials.tiktok, Icono: Music2, color: "#00f2ea" },
+  { name: "Instagram", handle: handles.instagram, href: socials.instagram, Icono: Instagram, color: "#d62976" },
 ];
 
 export function Hero() {
@@ -58,10 +59,21 @@ export function Hero() {
           </div>
 
           <div className="mt-11 flex flex-wrap gap-x-6 gap-y-4 border-t border-cyp-cream/10 pt-[26px] sm:gap-x-[30px]">
-            {SOCIAL_LINKS.map((s) => (
-              <a key={s.name} href={s.href} target="_blank" rel="noopener" className="grid gap-[3px]">
-                <span className="font-bagel text-[22px] text-cyp-cream-hi">{s.name}</span>
-                <span className="text-[13px] text-cyp-cream/55">{s.handle}</span>
+            {SOCIAL_LINKS.map(({ name, handle, href, Icono, color }) => (
+              <a key={name} href={href} target="_blank" rel="noopener" className="group grid gap-[3px]">
+                <span className="flex items-center gap-2 font-bagel text-[22px] text-cyp-cream-hi">
+                  {/* El icono toma el color de la marca al pasar por encima; en reposo va crema
+                      para no romper la paleta del estudio. */}
+                  <Icono
+                    size={20}
+                    className="shrink-0 transition-colors"
+                    style={{ color: "rgba(242,236,226,.55)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = color)}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(242,236,226,.55)")}
+                  />
+                  {name}
+                </span>
+                <span className="text-[13px] text-cyp-cream/55">{handle}</span>
               </a>
             ))}
           </div>
