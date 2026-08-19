@@ -3,6 +3,7 @@ import {
   COSTUMES,
   Character,
   EXTRAS,
+  GRUPOS,
   NO_EXTRAS,
   SKIN,
   SWATCHES,
@@ -28,8 +29,9 @@ export function Vestidor() {
   };
 
   const randomLook = () => {
-    // El índice arranca en 1 para no "sorprender" con «Sin disfraz».
-    const c = COSTUMES[1 + Math.floor(Math.random() * (COSTUMES.length - 1))];
+    // Solo los que tienen categoría: sorprender con «Sin disfraz» no sorprende.
+    const conDisfraz = COSTUMES.filter((x) => x.grupo);
+    const c = conDisfraz[Math.floor(Math.random() * conDisfraz.length)];
     const sw = SWATCHES[Math.floor(Math.random() * SWATCHES.length)];
     const ex = { ...NO_EXTRAS };
     EXTRAS.forEach((x) => {
@@ -106,13 +108,34 @@ export function Vestidor() {
               <span className="text-[13px] font-semibold uppercase tracking-[0.1em] text-cyp-cream/50">
                 Disfraz
               </span>
+
+              {/* "Sin disfraz" va suelto arriba: no pertenece a ninguna categoría. */}
               <div className="grid grid-cols-2 gap-[9px]">
-                {COSTUMES.map((c) => (
+                {COSTUMES.filter((c) => !c.grupo).map((c) => (
                   <Chip key={c.id} active={costume === c.id} onClick={() => pickCostume(c)}>
                     {c.label}
                   </Chip>
                 ))}
               </div>
+
+              {GRUPOS.map((grupo) => {
+                const delGrupo = COSTUMES.filter((c) => c.grupo === grupo);
+                if (!delGrupo.length) return null;
+                return (
+                  <div key={grupo} className="grid gap-[9px]">
+                    <span className="mt-1 text-[11.5px] uppercase tracking-[0.14em] text-cyp-gold/70">
+                      {grupo}
+                    </span>
+                    <div className="grid grid-cols-2 gap-[9px]">
+                      {delGrupo.map((c) => (
+                        <Chip key={c.id} active={costume === c.id} onClick={() => pickCostume(c)}>
+                          {c.label}
+                        </Chip>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="grid gap-[10px]">
