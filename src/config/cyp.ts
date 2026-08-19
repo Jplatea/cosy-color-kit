@@ -148,3 +148,13 @@ export const trackedSections = [
 /** Miniatura oficial de YouTube a partir del ID del vídeo. */
 export const youtubeThumb = (id?: string) =>
   id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "";
+
+/**
+ * Miniatura vertical de un Short.
+ *
+ * YouTube guarda aparte la miniatura con la relación de aspecto original (9:16)
+ * bajo el nombre `oardefault`. No existe para todos los vídeos, así que quien la
+ * use debe dar `youtubeThumb` como respaldo: si da 404, se cae al horizontal.
+ */
+export const youtubeThumbVertical = (id?: string) =>
+  id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : "";
