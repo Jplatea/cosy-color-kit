@@ -146,24 +146,34 @@ export function CostumeParts({
 }) {
   const alto = char === "pililarge";
   const eyeTop = alto ? "11%" : "16%";
+  /**
+   * Pililarge es una cápsula que llena su marco, así que allí «encima de la
+   * cabeza» es el borde de arriba. Culow no: son dos esferas apoyadas abajo, y
+   * su cuerpo empieza bastante más abajo del techo de la caja. Además la
+   * silueta sube sobre cada lóbulo y baja en el valle donde se juntan, así que
+   * hacen falta dos alturas: `cima` para lo que va centrado y `lado` para lo
+   * que se apoya sobre un lóbulo. Sin esto, en Culow los gorros flotan.
+   */
+  const cima = alto ? 0 : 40 * s;
+  const lado = alto ? 0 : 20 * s;
   const eyeSize = 34 * s;
   const P: ReactNode[] = [];
   const cara = (mult = 1, top = eyeTop) => P.push(<Eyes key="eyes" top={top} size={eyeSize * mult} />);
 
   if (costume === "larva") {
     (["left", "right"] as const).forEach((side, i) => {
-      P.push(<div key={`st${side}`} style={{ position: "absolute", top: -46 * s, [side]: "26%", width: 6 * s, height: 44 * s, background: shade(color, -40), borderRadius: 4 * s, transform: `rotate(${i ? 16 : -16}deg)` }} />);
-      P.push(<div key={`ba${side}`} style={{ position: "absolute", top: -62 * s, [side]: "21%", width: 22 * s, height: 22 * s, borderRadius: "50%", background: shade(color, 60) }} />);
+      P.push(<div key={`st${side}`} style={{ position: "absolute", top: -46 * s + lado, [side]: "26%", width: 6 * s, height: 44 * s, background: shade(color, -40), borderRadius: 4 * s, transform: `rotate(${i ? 16 : -16}deg)` }} />);
+      P.push(<div key={`ba${side}`} style={{ position: "absolute", top: -62 * s + lado, [side]: "21%", width: 22 * s, height: 22 * s, borderRadius: "50%", background: shade(color, 60) }} />);
     });
     cara();
   } else if (costume === "esponja") {
     cara(1.05);
-    P.push(<div key="sh" style={{ position: "absolute", bottom: "4%", left: "8%", right: "8%", height: 20 * s, background: "#fffaf0", borderRadius: 4 * s }} />);
-    P.push(<div key="be" style={{ position: "absolute", bottom: "4%", left: "8%", right: "8%", height: 9 * s, background: "#8a5a2b", borderRadius: 3 * s }} />);
+    P.push(<div key="sh" style={{ position: "absolute", bottom: alto ? "4%" : "15%", left: alto ? "8%" : "13%", right: alto ? "8%" : "13%", height: 20 * s, background: "#fffaf0", borderRadius: 4 * s }} />);
+    P.push(<div key="be" style={{ position: "absolute", bottom: alto ? "4%" : "15%", left: alto ? "8%" : "13%", right: alto ? "8%" : "13%", height: 9 * s, background: "#8a5a2b", borderRadius: 3 * s }} />);
     P.push(<div key="ti" style={{ position: "absolute", top: "40%", left: "50%", width: 16 * s, height: 26 * s, marginLeft: -8 * s, background: "#c0392b", clipPath: "polygon(50% 0,100% 100%,50% 74%,0 100%)" }} />);
   } else if (costume === "cerdita") {
     (["left", "right"] as const).forEach((side) => {
-      P.push(<div key={`ea${side}`} style={{ position: "absolute", top: -18 * s, [side]: "24%", width: 26 * s, height: 30 * s, background: shade(color, -18), clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
+      P.push(<div key={`ea${side}`} style={{ position: "absolute", top: -18 * s + lado, [side]: "24%", width: 26 * s, height: 30 * s, background: shade(color, -18), clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
     });
     cara(0.85);
     P.push(
@@ -172,7 +182,7 @@ export function CostumeParts({
       </div>
     );
   } else if (costume === "amarillos") {
-    P.push(<div key="ha" style={{ position: "absolute", top: -30 * s, left: "14%", right: "14%", height: 34 * s, background: "#2b2b2b", clipPath: "polygon(0 100%,8% 12%,18% 100%,28% 4%,40% 100%,52% 10%,64% 100%,76% 2%,88% 100%,100% 22%)" }} />);
+    P.push(<div key="ha" style={{ position: "absolute", top: -30 * s + lado, left: "14%", right: "14%", height: 34 * s, background: "#2b2b2b", clipPath: "polygon(0 100%,8% 12%,18% 100%,28% 4%,40% 100%,52% 10%,64% 100%,76% 2%,88% 100%,100% 22%)" }} />);
     cara(1.2);
     P.push(<div key="mo" style={{ position: "absolute", top: alto ? "26%" : "46%", left: "50%", width: 40 * s, height: 14 * s, marginLeft: -20 * s, borderRadius: "0 0 40px 40px", border: `${3 * s}px solid rgba(0,0,0,.5)`, borderTopColor: "transparent" }} />);
   } else if (costume === "ninja") {
@@ -183,14 +193,14 @@ export function CostumeParts({
     );
     cara(0.85);
     // La cinta cruza justo por los ojos, con las dos colas al viento.
-    P.push(<div key="ban" style={{ position: "absolute", top: `calc(${eyeTop} + ${6 * s}px)`, left: "-4%", right: "-4%", height: 15 * s, background: "#c0392b", zIndex: 4 }} />);
-    P.push(<div key="t1" style={{ position: "absolute", top: `calc(${eyeTop} + ${4 * s}px)`, right: "-24%", width: 46 * s, height: 8 * s, background: "#c0392b", borderRadius: 3 * s, transform: "rotate(-14deg)", zIndex: 4 }} />);
-    P.push(<div key="t2" style={{ position: "absolute", top: `calc(${eyeTop} + ${18 * s}px)`, right: "-22%", width: 38 * s, height: 7 * s, background: "#a32f22", borderRadius: 3 * s, transform: "rotate(8deg)", zIndex: 4 }} />);
+    P.push(<div key="ban" style={{ position: "absolute", top: `calc(${eyeTop} + ${6 * s}px)`, left: alto ? "-4%" : "11%", right: alto ? "-4%" : "11%", height: 15 * s, background: "#c0392b", zIndex: 4 }} />);
+    P.push(<div key="t1" style={{ position: "absolute", top: `calc(${eyeTop} + ${4 * s}px)`, right: alto ? "-24%" : "-5%", width: 46 * s, height: 8 * s, background: "#c0392b", borderRadius: 3 * s, transform: "rotate(-14deg)", zIndex: 4 }} />);
+    P.push(<div key="t2" style={{ position: "absolute", top: `calc(${eyeTop} + ${18 * s}px)`, right: alto ? "-22%" : "-3%", width: 38 * s, height: 7 * s, background: "#a32f22", borderRadius: 3 * s, transform: "rotate(8deg)", zIndex: 4 }} />);
   } else if (costume === "heroe") {
-    P.push(<div key="cape" style={{ position: "absolute", top: alto ? "14%" : "12%", left: "-22%", right: "-22%", bottom: "-4%", background: shade(color, -50), clipPath: "polygon(28% 0,72% 0,100% 100%,0 100%)", zIndex: -1 }} />);
+    P.push(<div key="cape" style={{ position: "absolute", top: alto ? "14%" : "30%", left: "-22%", right: "-22%", bottom: "-4%", background: shade(color, -50), clipPath: "polygon(28% 0,72% 0,100% 100%,0 100%)", zIndex: -1 }} />);
     cara(0.85);
     // Antifaz: una franja estrecha a la altura de los ojos, con pico entre ceja y ceja.
-    P.push(<div key="mask" style={{ position: "absolute", top: `calc(${eyeTop} - ${9 * s}px)`, left: "8%", right: "8%", height: 30 * s, background: shade(color, -30), clipPath: "polygon(0 0,42% 0,50% 34%,58% 0,100% 0,100% 62%,74% 100%,50% 74%,26% 100%,0 62%)", zIndex: 4 }} />);
+    P.push(<div key="mask" style={{ position: "absolute", top: alto ? `calc(${eyeTop} - ${9 * s}px)` : `calc(${eyeTop} + ${2 * s}px)`, left: alto ? "8%" : "15%", right: alto ? "8%" : "15%", height: 30 * s, background: shade(color, -30), clipPath: "polygon(0 0,42% 0,50% 34%,58% 0,100% 0,100% 62%,74% 100%,50% 74%,26% 100%,0 62%)", zIndex: 4 }} />);
     P.push(<div key="em" style={{ position: "absolute", top: alto ? "44%" : "58%", left: "50%", width: 56 * s, height: 56 * s, marginLeft: -28 * s, background: "#f6c877", clipPath: "polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)", filter: "drop-shadow(0 2px 4px rgba(0,0,0,.4))" }} />);
   } else if (costume === "astro") {
     P.push(<div key="he" style={{ position: "absolute", top: alto ? "2%" : "-14%", left: "50%", width: "84%", height: alto ? "26%" : "86%", marginLeft: "-42%", borderRadius: "50%", background: "linear-gradient(150deg, rgba(255,255,255,.55), rgba(150,190,230,.28) 45%, rgba(255,255,255,.1))", border: `${3 * s}px solid rgba(255,255,255,.6)`, boxShadow: "inset 0 8px 22px rgba(255,255,255,.35)" }} />);
@@ -202,39 +212,39 @@ export function CostumeParts({
     );
   } else if (costume === "vaquero") {
     P.push(<div key="po" style={{ position: "absolute", top: alto ? "18%" : "34%", left: "-6%", right: "-6%", bottom: "2%", background: color, clipPath: "polygon(18% 0,82% 0,100% 100%,0 100%)", opacity: 0.95 }} />);
-    P.push(<div key="br" style={{ position: "absolute", top: -26 * s, left: "50%", width: 132 * s, height: 18 * s, marginLeft: -66 * s, borderRadius: "50%", background: "#7a5232" }} />);
-    P.push(<div key="cr" style={{ position: "absolute", top: -52 * s, left: "50%", width: 62 * s, height: 34 * s, marginLeft: -31 * s, borderRadius: `${10 * s}px ${10 * s}px 0 0`, background: "#8a5c38" }} />);
+    P.push(<div key="br" style={{ position: "absolute", top: -26 * s + cima, left: "50%", width: 132 * s, height: 18 * s, marginLeft: -66 * s, borderRadius: "50%", background: "#7a5232" }} />);
+    P.push(<div key="cr" style={{ position: "absolute", top: -52 * s + cima, left: "50%", width: 62 * s, height: 34 * s, marginLeft: -31 * s, borderRadius: `${10 * s}px ${10 * s}px 0 0`, background: "#8a5c38" }} />);
     P.push(<div key="ba" style={{ position: "absolute", top: alto ? "15%" : "30%", left: "50%", width: 54 * s, height: 34 * s, marginLeft: -27 * s, background: "#c0392b", clipPath: "polygon(0 0,100% 0,50% 100%)" }} />);
     cara(0.85);
   } else if (costume === "chef") {
     // El gorro se apoya en la cabeza: la cinta pisa el cuerpo y el fuelle sale de ella.
-    P.push(<div key="ba" style={{ position: "absolute", top: -18 * s, left: "50%", width: 86 * s, height: 24 * s, marginLeft: -43 * s, borderRadius: 5 * s, background: "#f4eee2", boxShadow: "0 3px 6px rgba(0,0,0,.28)" }} />);
-    P.push(<div key="pu" style={{ position: "absolute", top: -62 * s, left: "50%", width: 98 * s, height: 52 * s, marginLeft: -49 * s, borderRadius: `${44 * s}px ${44 * s}px ${10 * s}px ${10 * s}px`, background: "radial-gradient(circle at 34% 24%, #ffffff, #ece5d8 82%)", boxShadow: "inset 0 -7px 13px rgba(0,0,0,.12)" }} />);
+    P.push(<div key="ba" style={{ position: "absolute", top: -18 * s + cima, left: "50%", width: 86 * s, height: 24 * s, marginLeft: -43 * s, borderRadius: 5 * s, background: "#f4eee2", boxShadow: "0 3px 6px rgba(0,0,0,.28)" }} />);
+    P.push(<div key="pu" style={{ position: "absolute", top: -62 * s + cima, left: "50%", width: 98 * s, height: 52 * s, marginLeft: -49 * s, borderRadius: `${44 * s}px ${44 * s}px ${10 * s}px ${10 * s}px`, background: "radial-gradient(circle at 34% 24%, #ffffff, #ece5d8 82%)", boxShadow: "inset 0 -7px 13px rgba(0,0,0,.12)" }} />);
     cara(0.85);
     P.push(<div key="pañ" style={{ position: "absolute", bottom: alto ? "10%" : "2%", left: "50%", width: 70 * s, height: 30 * s, marginLeft: -35 * s, background: "#c0392b", clipPath: "polygon(0 0,100% 0,50% 100%)" }} />);
   } else if (costume === "buzo") {
     cara(0.8);
     // Correa por detrás, y las gafas encima: se ven los ojos a través del cristal.
-    P.push(<div key="ci" style={{ position: "absolute", top: `calc(${eyeTop} + ${12 * s}px)`, left: "-4%", right: "-4%", height: 9 * s, background: shade(color, -45), zIndex: 4 }} />);
+    P.push(<div key="ci" style={{ position: "absolute", top: `calc(${eyeTop} + ${12 * s}px)`, left: alto ? "-4%" : "9%", right: alto ? "-4%" : "9%", height: 9 * s, background: shade(color, -45), zIndex: 4 }} />);
     P.push(<div key="ma" style={{ position: "absolute", top: `calc(${eyeTop} - ${10 * s}px)`, left: "12%", right: "12%", height: 52 * s, borderRadius: `${22 * s}px ${22 * s}px ${16 * s}px ${16 * s}px`, background: "linear-gradient(160deg, rgba(200,238,250,.42), rgba(90,160,190,.30))", border: `${4 * s}px solid ${shade(color, -25)}`, boxShadow: "inset 0 4px 10px rgba(255,255,255,.30)", zIndex: 5 }} />);
-    P.push(<div key="tu" style={{ position: "absolute", top: -44 * s, right: "2%", width: 11 * s, height: 82 * s, borderRadius: 6 * s, background: "#f6a821", zIndex: 5 }} />);
-    P.push(<div key="tu2" style={{ position: "absolute", top: -44 * s, right: "2%", width: 30 * s, height: 11 * s, borderRadius: 6 * s, background: "#f6a821", zIndex: 5 }} />);
+    P.push(<div key="tu" style={{ position: "absolute", top: -44 * s + cima, right: alto ? "2%" : "12%", width: 11 * s, height: 82 * s, borderRadius: 6 * s, background: "#f6a821", zIndex: 5 }} />);
+    P.push(<div key="tu2" style={{ position: "absolute", top: -44 * s + cima, right: alto ? "2%" : "12%", width: 30 * s, height: 11 * s, borderRadius: 6 * s, background: "#f6a821", zIndex: 5 }} />);
   } else if (costume === "obra") {
-    P.push(<div key="do" style={{ position: "absolute", top: -50 * s, left: "50%", width: 92 * s, height: 50 * s, marginLeft: -46 * s, borderRadius: `${46 * s}px ${46 * s}px 0 0`, background: `linear-gradient(180deg, ${shade(color, 40)}, ${color})` }} />);
-    P.push(<div key="br" style={{ position: "absolute", top: -8 * s, left: "50%", width: 118 * s, height: 12 * s, marginLeft: -59 * s, borderRadius: 6 * s, background: shade(color, -30) }} />);
+    P.push(<div key="do" style={{ position: "absolute", top: -50 * s + cima, left: "50%", width: 92 * s, height: 50 * s, marginLeft: -46 * s, borderRadius: `${46 * s}px ${46 * s}px 0 0`, background: `linear-gradient(180deg, ${shade(color, 40)}, ${color})` }} />);
+    P.push(<div key="br" style={{ position: "absolute", top: -8 * s + cima, left: "50%", width: 118 * s, height: 12 * s, marginLeft: -59 * s, borderRadius: 6 * s, background: shade(color, -30) }} />);
     cara(0.85);
   } else if (costume === "abeja") {
     (["left", "right"] as const).forEach((side, i) => {
       P.push(<div key={`al${side}`} style={{ position: "absolute", top: alto ? "22%" : "18%", [side]: "-26%", width: 54 * s, height: 74 * s, borderRadius: "50%", background: "rgba(255,255,255,.42)", border: "1px solid rgba(255,255,255,.5)", transform: `rotate(${i ? 18 : -18}deg)`, zIndex: -1 }} />);
-      P.push(<div key={`an${side}`} style={{ position: "absolute", top: -34 * s, [side]: "30%", width: 4 * s, height: 32 * s, background: "#2b2b2b", borderRadius: 2 * s, transform: `rotate(${i ? 14 : -14}deg)` }} />);
-      P.push(<div key={`ap${side}`} style={{ position: "absolute", top: -44 * s, [side]: "26%", width: 14 * s, height: 14 * s, borderRadius: "50%", background: "#2b2b2b" }} />);
+      P.push(<div key={`an${side}`} style={{ position: "absolute", top: -34 * s + lado, [side]: "30%", width: 4 * s, height: 32 * s, background: "#2b2b2b", borderRadius: 2 * s, transform: `rotate(${i ? 14 : -14}deg)` }} />);
+      P.push(<div key={`ap${side}`} style={{ position: "absolute", top: -44 * s + lado, [side]: "26%", width: 14 * s, height: 14 * s, borderRadius: "50%", background: "#2b2b2b" }} />);
     });
     cara(0.9);
   } else if (costume === "rana") {
     // Los ojos van encima de la cabeza, que es lo que hace que se lea como rana.
     (["left", "right"] as const).forEach((side) => {
       P.push(
-        <div key={`oj${side}`} style={{ position: "absolute", top: -30 * s, [side]: "18%", width: 42 * s, height: 42 * s, borderRadius: "50%", background: "#fffdf8", border: `${2 * s}px solid ${shade(color, -40)}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div key={`oj${side}`} style={{ position: "absolute", top: -30 * s + lado, [side]: "18%", width: 42 * s, height: 42 * s, borderRadius: "50%", background: "#fffdf8", border: `${2 * s}px solid ${shade(color, -40)}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div style={{ width: 16 * s, height: 16 * s, borderRadius: "50%", background: "#1a1512" }} />
         </div>
       );
@@ -242,12 +252,12 @@ export function CostumeParts({
     P.push(<div key="bo" style={{ position: "absolute", top: alto ? "20%" : "42%", left: "18%", right: "18%", height: 8 * s, borderRadius: 4 * s, background: shade(color, -55) }} />);
   } else if (costume === "dino") {
     [0, 1, 2, 3].forEach((i) => {
-      P.push(<div key={`cr${i}`} style={{ position: "absolute", top: (-26 + i * 2) * s, left: `${18 + i * 18}%`, width: 20 * s, height: 26 * s, background: shade(color, -45), clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
+      P.push(<div key={`cr${i}`} style={{ position: "absolute", top: (-26 + i * 2) * s + lado, left: `${18 + i * 18}%`, width: 20 * s, height: 26 * s, background: shade(color, -45), clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
     });
     cara(0.85);
     P.push(<div key="di" style={{ position: "absolute", top: alto ? "24%" : "44%", left: "22%", right: "22%", height: 14 * s, background: "#fffdf8", clipPath: "polygon(0 0,100% 0,92% 100%,83% 20%,75% 100%,66% 20%,58% 100%,50% 20%,41% 100%,33% 20%,25% 100%,16% 20%,8% 100%,0 20%)" }} />);
   } else if (costume === "pollito") {
-    P.push(<div key="cre" style={{ position: "absolute", top: -20 * s, left: "50%", width: 30 * s, height: 24 * s, marginLeft: -15 * s, background: "#e8623c", clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
+    P.push(<div key="cre" style={{ position: "absolute", top: -20 * s + cima, left: "50%", width: 30 * s, height: 24 * s, marginLeft: -15 * s, background: "#e8623c", clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
     (["left", "right"] as const).forEach((side, i) => {
       P.push(<div key={`ala${side}`} style={{ position: "absolute", top: alto ? "34%" : "34%", [side]: "-14%", width: 34 * s, height: 52 * s, borderRadius: "50%", background: shade(color, -22), transform: `rotate(${i ? 12 : -12}deg)`, zIndex: -1 }} />);
     });
@@ -264,18 +274,18 @@ export function CostumeParts({
       P.push(<div key={`hu${side}`} style={{ position: "absolute", top: eyeTop, [side]: "22%", width: 30 * s, height: 38 * s, borderRadius: "50%", background: "#15121a" }} />);
     });
     P.push(<div key="bo" style={{ position: "absolute", top: alto ? "22%" : "44%", left: "50%", width: 26 * s, height: 32 * s, marginLeft: -13 * s, borderRadius: "50%", background: "#15121a" }} />);
-    P.push(<div key="fle" style={{ position: "absolute", left: "-2%", right: "-2%", bottom: -10 * s, height: 26 * s, background: shade(color, -6), clipPath: "polygon(0 0,100% 0,100% 40%,88% 100%,75% 40%,62% 100%,50% 40%,38% 100%,25% 40%,12% 100%,0 40%)" }} />);
+    P.push(<div key="fle" style={{ position: "absolute", left: alto ? "-2%" : "14%", right: alto ? "-2%" : "14%", bottom: alto ? -10 * s : 6 * s, height: 26 * s, background: shade(color, -6), clipPath: "polygon(0 0,100% 0,100% 40%,88% 100%,75% 40%,62% 100%,50% 40%,38% 100%,25% 40%,12% 100%,0 40%)" }} />);
   } else if (costume === "mago") {
-    P.push(<div key="som" style={{ position: "absolute", top: -86 * s, left: "50%", width: 96 * s, height: 92 * s, marginLeft: -48 * s, background: `linear-gradient(180deg, ${shade(color, 30)}, ${shade(color, -30)})`, clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
-    P.push(<div key="ala" style={{ position: "absolute", top: -12 * s, left: "50%", width: 124 * s, height: 14 * s, marginLeft: -62 * s, borderRadius: "50%", background: shade(color, -40) }} />);
+    P.push(<div key="som" style={{ position: "absolute", top: -86 * s + cima, left: "50%", width: 96 * s, height: 92 * s, marginLeft: -48 * s, background: `linear-gradient(180deg, ${shade(color, 30)}, ${shade(color, -30)})`, clipPath: "polygon(50% 0,100% 100%,0 100%)" }} />);
+    P.push(<div key="ala" style={{ position: "absolute", top: -12 * s + cima, left: "50%", width: 124 * s, height: 14 * s, marginLeft: -62 * s, borderRadius: "50%", background: shade(color, -40) }} />);
     [[-20, -60], [12, -44], [-4, -30]].map(([x, y], i) =>
-      P.push(<div key={`es${i}`} style={{ position: "absolute", top: y * s, left: "50%", marginLeft: x * s, width: 10 * s, height: 10 * s, background: "#f6c877", clipPath: "polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)" }} />)
+      P.push(<div key={`es${i}`} style={{ position: "absolute", top: y * s + cima, left: "50%", marginLeft: x * s, width: 10 * s, height: 10 * s, background: "#f6c877", clipPath: "polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)" }} />)
     );
     cara(0.8);
     P.push(<div key="bar" style={{ position: "absolute", top: alto ? "22%" : "42%", left: "50%", width: 66 * s, height: 60 * s, marginLeft: -33 * s, background: "#f2ece2", clipPath: "polygon(14% 0,86% 0,74% 62%,50% 100%,26% 62%)", opacity: 0.95 }} />);
   } else if (costume === "robot") {
-    P.push(<div key="ant" style={{ position: "absolute", top: -44 * s, left: "50%", width: 5 * s, height: 40 * s, marginLeft: -2.5 * s, background: shade(color, -40) }} />);
-    P.push(<div key="bol" style={{ position: "absolute", top: -58 * s, left: "50%", width: 18 * s, height: 18 * s, marginLeft: -9 * s, borderRadius: "50%", background: "#e8b25c", boxShadow: "0 0 14px rgba(232,178,92,.75)" }} />);
+    P.push(<div key="ant" style={{ position: "absolute", top: -44 * s + cima, left: "50%", width: 5 * s, height: 40 * s, marginLeft: -2.5 * s, background: shade(color, -40) }} />);
+    P.push(<div key="bol" style={{ position: "absolute", top: -58 * s + cima, left: "50%", width: 18 * s, height: 18 * s, marginLeft: -9 * s, borderRadius: "50%", background: "#e8b25c", boxShadow: "0 0 14px rgba(232,178,92,.75)" }} />);
     (["left", "right"] as const).forEach((side) => {
       P.push(
         <div key={`oj${side}`} style={{ position: "absolute", top: eyeTop, [side]: "20%", width: 34 * s, height: 24 * s, borderRadius: 5 * s, background: "#141a20", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -297,23 +307,25 @@ export function CostumeParts({
 
 export function ExtraParts({ extras, char, s }: { extras: Extras; char: CharacterId; s: number }) {
   const alto = char === "pililarge";
+  /** Igual que en `CostumeParts`: en Culow la coronilla no es el techo. */
+  const cima = alto ? 0 : 40 * s;
   return (
     <>
       {extras.gafas && (
-        <div style={{ position: "absolute", top: alto ? "12%" : "17%", left: "10%", right: "10%", height: 30 * s, display: "flex", alignItems: "center", gap: 6 * s, zIndex: 6 }}>
+        <div style={{ position: "absolute", top: alto ? "12%" : "20%", left: alto ? "10%" : "17%", right: alto ? "10%" : "17%", height: 30 * s, display: "flex", alignItems: "center", gap: 6 * s, zIndex: 6 }}>
           <div style={{ flex: 1, height: "100%", borderRadius: 8 * s, background: "#181513", border: `${2 * s}px solid #3a332d` }} />
           <div style={{ width: 12 * s, height: 3 * s, background: "#181513" }} />
           <div style={{ flex: 1, height: "100%", borderRadius: 8 * s, background: "#181513", border: `${2 * s}px solid #3a332d` }} />
         </div>
       )}
       {extras.corona && (
-        <div style={{ position: "absolute", top: -40 * s, left: "50%", width: 84 * s, height: 42 * s, marginLeft: -42 * s, background: "#e8b25c", clipPath: "polygon(0 100%,0 20%,20% 55%,38% 0,50% 45%,62% 0,80% 55%,100% 20%,100% 100%)", zIndex: 7 }} />
+        <div style={{ position: "absolute", top: -40 * s + cima, left: "50%", width: 84 * s, height: 42 * s, marginLeft: -42 * s, background: "#e8b25c", clipPath: "polygon(0 100%,0 20%,20% 55%,38% 0,50% 45%,62% 0,80% 55%,100% 20%,100% 100%)", zIndex: 7 }} />
       )}
       {extras.gorro && (
-        <div style={{ position: "absolute", top: -66 * s, left: "50%", width: 54 * s, height: 70 * s, marginLeft: -27 * s, background: "repeating-linear-gradient(135deg, #f39ec0 0 10px, #7c3aed 10px 20px)", clipPath: "polygon(50% 0,100% 100%,0 100%)", zIndex: 7 }} />
+        <div style={{ position: "absolute", top: -66 * s + cima, left: "50%", width: 54 * s, height: 70 * s, marginLeft: -27 * s, background: "repeating-linear-gradient(135deg, #f39ec0 0 10px, #7c3aed 10px 20px)", clipPath: "polygon(50% 0,100% 100%,0 100%)", zIndex: 7 }} />
       )}
       {extras.pajarita && (
-        <div style={{ position: "absolute", bottom: alto ? "12%" : "6%", left: "50%", width: 62 * s, height: 26 * s, marginLeft: -31 * s, background: "#c0392b", clipPath: "polygon(0 0,42% 34%,42% 66%,0 100%,100% 100%,58% 66%,58% 34%,100% 0)", zIndex: 6 }} />
+        <div style={{ position: "absolute", bottom: alto ? "12%" : "18%", left: "50%", width: 62 * s, height: 26 * s, marginLeft: -31 * s, background: "#c0392b", clipPath: "polygon(0 0,42% 34%,42% 66%,0 100%,100% 100%,58% 66%,58% 34%,100% 0)", zIndex: 6 }} />
       )}
     </>
   );
