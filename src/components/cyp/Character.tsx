@@ -5,11 +5,14 @@ import {
   NO_EXTRAS,
   SKIN,
   costumeTexture,
+  medidas,
   shade,
   type CharacterId,
   type CostumeId,
   type Extras,
 } from "./costumes";
+import { TEXTURAS, dibujarPiezas } from "./piezas";
+import type { Traje } from "./sastre";
 
 /**
  * Culow y Pililarge, esculpidos en CSS.
@@ -46,6 +49,11 @@ export type CharacterProps = {
   costume?: CostumeId;
   color?: string;
   extras?: Extras;
+  /**
+   * Un disfraz cosido por el sastre a partir de una descripción. Si viene, pisa
+   * a `costume` y a `color`: manda lo que ha pedido el visitante.
+   */
+  traje?: Traje;
   /** Flotación en bucle. */
   bob?: boolean;
 };
@@ -57,11 +65,16 @@ export function Character({
   costume = "none",
   color,
   extras = NO_EXTRAS,
+  traje,
   bob = false,
 }: CharacterProps) {
   const s = scale;
-  const base = costume === "none" ? SKIN : color || SKIN;
-  const texture = costumeTexture(costume);
+  const base = traje ? traje.color : costume === "none" ? SKIN : color || SKIN;
+  const texture = traje
+    ? traje.textura
+      ? TEXTURAS[traje.textura]
+      : null
+    : costumeTexture(costume);
   const backgroundImage = texture
     ? `${texture},${bodyGradient(base)}`
     : bodyGradient(base);
@@ -75,7 +88,11 @@ export function Character({
 
   const dressing = dress ? (
     <>
-      <CostumeParts costume={costume} color={base} char={char} s={s} />
+      {traje ? (
+        dibujarPiezas(traje.piezas, { color: base, char, s, ...medidas(char, s) })
+      ) : (
+        <CostumeParts costume={costume} color={base} char={char} s={s} />
+      )}
       <ExtraParts extras={extras} char={char} s={s} />
     </>
   ) : null;

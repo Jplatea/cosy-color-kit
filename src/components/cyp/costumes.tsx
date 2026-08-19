@@ -118,6 +118,30 @@ export function costumeTexture(costume: CostumeId): string | null {
   return null;
 }
 
+/**
+ * Dónde está la cabeza de cada uno.
+ *
+ * Pililarge es una cápsula que llena su marco, así que allí «encima de la
+ * cabeza» es el borde de arriba. Culow no: son dos esferas apoyadas abajo, y su
+ * cuerpo empieza bastante más abajo del techo de la caja. Además su silueta
+ * sube sobre cada lóbulo y baja en el valle donde se juntan, así que hacen
+ * falta dos alturas: `cima` para lo que va centrado y `lado` para lo que se
+ * apoya sobre un lóbulo. Sin esto, en Culow los gorros flotan.
+ *
+ * Lo usan los disfraces de aquí y las piezas sueltas del costurero, así que
+ * vive fuera de los dos: si cambia la anatomía, cambia en un sitio.
+ */
+export function medidas(char: CharacterId, s: number) {
+  const alto = char === "pililarge";
+  return {
+    alto,
+    cima: alto ? 0 : 40 * s,
+    lado: alto ? 0 : 20 * s,
+    eyeTop: alto ? "11%" : "16%",
+    eyeSize: 34 * s,
+  };
+}
+
 export function Eyes({ top, size }: { top: string; size: number }) {
   const eye = (side: "left" | "right") => {
     const style: CSSProperties = {
@@ -144,19 +168,7 @@ export function CostumeParts({
 }: {
   costume: CostumeId; color: string; char: CharacterId; s: number;
 }) {
-  const alto = char === "pililarge";
-  const eyeTop = alto ? "11%" : "16%";
-  /**
-   * Pililarge es una cápsula que llena su marco, así que allí «encima de la
-   * cabeza» es el borde de arriba. Culow no: son dos esferas apoyadas abajo, y
-   * su cuerpo empieza bastante más abajo del techo de la caja. Además la
-   * silueta sube sobre cada lóbulo y baja en el valle donde se juntan, así que
-   * hacen falta dos alturas: `cima` para lo que va centrado y `lado` para lo
-   * que se apoya sobre un lóbulo. Sin esto, en Culow los gorros flotan.
-   */
-  const cima = alto ? 0 : 40 * s;
-  const lado = alto ? 0 : 20 * s;
-  const eyeSize = 34 * s;
+  const { alto, eyeTop, cima, lado, eyeSize } = medidas(char, s);
   const P: ReactNode[] = [];
   const cara = (mult = 1, top = eyeTop) => P.push(<Eyes key="eyes" top={top} size={eyeSize * mult} />);
 

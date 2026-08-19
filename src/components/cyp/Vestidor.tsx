@@ -12,6 +12,8 @@ import {
   type Extras,
 } from "./Character";
 import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
+import { coser, describir, type Traje } from "./sastre";
+import { useSpeech } from "@/hooks/useSpeech";
 import { useNarrow } from "@/hooks/useNarrow";
 import { tinta } from "@/lib/color";
 
@@ -67,6 +69,12 @@ export function Vestidor() {
   const [color, setColor] = useState<string>(COSTUMES.find((c) => c.id === "larva")!.color);
   const [extras, setExtras] = useState<Extras>(NO_EXTRAS);
 
+  // El disfraz a medida. Mientras haya uno puesto pisa al del desplegable;
+  // elegir del desplegable lo quita, que es lo que espera cualquiera.
+  const { speak } = useSpeech();
+  const [encargo, setEncargo] = useState("");
+  const [traje, setTraje] = useState<Traje | null>(null);
+
   const actual = COSTUMES.find((c) => c.id === costume);
   const puestos = EXTRAS.filter((x) => extras[x.id]);
   const colorActual = SWATCHES.find((s) => s.value === color);
@@ -74,8 +82,24 @@ export function Vestidor() {
   const elegir = (id: CostumeId) => {
     const c = COSTUMES.find((x) => x.id === id);
     if (!c) return;
+    setTraje(null);
     setCostume(c.id);
     setColor(c.color);
+  };
+
+  /** Manda el encargo al sastre y deja que uno de los dos lo comente. */
+  const encargar = () => {
+    const texto = encargo.trim();
+    if (!texto) return;
+    const cosido = coser(texto);
+    setTraje(cosido);
+    const quien = char;
+    speak(
+      cosido.reconocido.length
+        ? `Vale. ${describir(cosido)}. Ya está.`
+        : `No sé qué es eso, pero te lo he hecho igual. ${describir(cosido)}.`,
+      quien
+    );
   };
 
   const randomLook = () => {
@@ -86,6 +110,7 @@ export function Vestidor() {
     EXTRAS.forEach((x) => {
       ex[x.id] = Math.random() > 0.65;
     });
+    setTraje(null);
     setChar(Math.random() > 0.5 ? "culow" : "pililarge");
     setCostume(c.id);
     setColor(sw.value);
@@ -93,6 +118,8 @@ export function Vestidor() {
   };
 
   const resetLook = () => {
+    setTraje(null);
+    setEncargo("");
     setCostume("none");
     setColor(SKIN);
     setExtras(NO_EXTRAS);
@@ -121,22 +148,69 @@ export function Vestidor() {
                 costume={costume}
                 color={color}
                 extras={extras}
+                traje={traje ?? undefined}
                 bob
               />
             </Peana>
             <figcaption className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-museo-tinta pt-3">
               <span className="font-display text-[21px] text-museo-tinta">
                 «{char === "culow" ? "Culow" : "Pililarge"}
-                {actual && actual.id !== "none" ? `, de ${actual.label.toLowerCase()}` : ", sin traje"}»
+                {traje
+                  ? `, de ${traje.nombre.toLowerCase()}`
+                  : actual && actual.id !== "none"
+                    ? `, de ${actual.label.toLowerCase()}`
+                    : ", sin traje"}»
               </span>
               <span className="cartela text-museo-tinta-tenue">
-                Intervención del visitante · {new Date().getFullYear()}
+                {traje ? describir(traje) : `Intervención del visitante · ${new Date().getFullYear()}`}
               </span>
             </figcaption>
           </figure>
 
           {/* Mandos: dos botones fijos y tres plegables. */}
           <div className="grid content-start gap-[9px] border border-museo-linea p-[18px]">
+            {/*
+              El sastre. Va lo primero porque es lo que la gente quiere probar
+              antes que nada: escribes lo que se te ocurra y sale algo. Nunca
+              contesta que no; si no reconoce ni una palabra, se lo inventa a
+              partir de la propia frase y lo dice en voz alta.
+            */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                encargar();
+              }}
+              className="grid gap-[8px] border border-museo-linea p-[14px]"
+            >
+              <label htmlFor="cyp-encargo" className="cartela text-museo-tinta-tenue">
+                Encargar un traje
+              </label>
+              <input
+                id="cyp-encargo"
+                value={encargo}
+                onChange={(e) => setEncargo(e.target.value)}
+                placeholder="un pirata azul con bigote"
+                className="w-full border-b border-museo-linea bg-transparent pb-[6px] text-[15px] text-museo-tinta outline-none transition-colors placeholder:text-museo-tinta-tenue focus:border-museo-tinta"
+              />
+              <div className="mt-1 flex items-center gap-[9px]">
+                <GoldButton type="submit" className="flex-1 px-3 py-[10px] text-[13px]">
+                  Que lo cosa
+                </GoldButton>
+                {traje && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTraje(null);
+                      setEncargo("");
+                    }}
+                    className="cartela text-museo-tinta-tenue transition-colors hover:text-museo-tinta"
+                  >
+                    Quitar
+                  </button>
+                )}
+              </div>
+            </form>
+
             <div className="flex gap-[9px]">
               <Chip active={char === "culow"} onClick={() => setChar("culow")} className="flex-1">
                 Culow
