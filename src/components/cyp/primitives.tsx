@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -128,12 +129,27 @@ export function Thumb({
   src,
   alt,
   label,
+  fallbackSrc,
 }: {
   src?: string;
   alt: string;
   label?: string;
+  /** Se prueba si `src` no existe en el servidor (un vertical que YouTube no generó). */
+  fallbackSrc?: string;
 }) {
-  if (src) {
+  // YouTube devuelve 404 para las miniaturas que nunca generó, y eso solo se sabe
+  // al pedirlas. Guardamos cuál estamos enseñando y bajamos un escalón al fallar:
+  // principal → respaldo → marcador de posición.
+  const [actual, setActual] = useState(src);
+  const [previa, setPrevia] = useState(src);
+
+  // Si cambia el vídeo (una sincronización nueva), se vuelve a empezar por la principal.
+  if (previa !== src) {
+    setPrevia(src);
+    setActual(src);
+  }
+
+  if (actual) {  if (src) {
     return (
       <img
         src={src}
