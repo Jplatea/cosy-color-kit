@@ -48,7 +48,7 @@ export function Redes() {
         <div className="mb-10 border-b border-museo-linea pb-8">
           <Sala n="10">Otras sedes</Sala>
           <SectionTitle className="mt-4">
-            La misma colección, <span className="italic text-museo-tinta-70">en tres edificios</span>
+            La misma colección, <span className="italic text-museo-tinta-suave">en tres edificios</span>
           </SectionTitle>
         </div>
 
@@ -64,8 +64,8 @@ export function Redes() {
               <div className="font-display text-[30px] leading-none text-museo-tinta transition-colors group-hover:text-museo-laton">
                 {s.nombre}
               </div>
-              <div className="cartela mt-[10px] text-museo-tinta-45">{s.handle}</div>
-              <p className="mt-4 text-[15px] leading-[1.65] text-museo-tinta-70">{s.que}</p>
+              <div className="cartela mt-[10px] text-museo-tinta-tenue">{s.handle}</div>
+              <p className="mt-4 text-[15px] leading-[1.65] text-museo-tinta-suave">{s.que}</p>
               <span className="cartela mt-4 inline-block border-b border-museo-linea pb-[3px] text-museo-tinta transition-colors group-hover:border-museo-laton group-hover:text-museo-laton">
                 Visitar →
               </span>

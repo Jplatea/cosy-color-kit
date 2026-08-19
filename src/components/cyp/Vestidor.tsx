@@ -13,6 +13,7 @@ import {
 } from "./Character";
 import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { useNarrow } from "@/hooks/useNarrow";
+import { tinta } from "@/lib/color";
 
 /**
  * Sala 6: el vestuario de la colección.
@@ -39,8 +40,8 @@ function Plegable({
   return (
     <details className="group border border-museo-linea">
       <summary className="flex cursor-pointer list-none items-center gap-3 px-[14px] py-[11px] [&::-webkit-details-marker]:hidden">
-        <span className="cartela text-museo-tinta-45">{titulo}</span>
-        <span className="ml-auto flex items-center gap-[10px] text-[13px] text-museo-tinta-70">
+        <span className="cartela text-museo-tinta-tenue">{titulo}</span>
+        <span className="ml-auto flex items-center gap-[10px] text-[13px] text-museo-tinta-suave">
           {resumen}
           <svg
             viewBox="0 0 12 8"
@@ -103,7 +104,7 @@ export function Vestidor() {
         <div className="mb-9 border-b border-museo-linea pb-8">
           <Sala n="06">Vestuario de la colección</Sala>
           <SectionTitle className="mt-4">El vestidor</SectionTitle>
-          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
             Elija una pieza, póngale un traje y cámbiele el color. Todos los trajes son parodias
             hechas a mano, no calcos.
           </p>
@@ -128,7 +129,7 @@ export function Vestidor() {
                 «{char === "culow" ? "Culow" : "Pililarge"}
                 {actual && actual.id !== "none" ? `, de ${actual.label.toLowerCase()}` : ", sin traje"}»
               </span>
-              <span className="cartela text-museo-tinta-45">
+              <span className="cartela text-museo-tinta-tenue">
                 Intervención del visitante · {new Date().getFullYear()}
               </span>
             </figcaption>
@@ -152,7 +153,7 @@ export function Vestidor() {
             {/* El desplegable nativo: una línea, y en el móvil lo pinta el
                 sistema con su propia rueda, que es lo cómodo ahí. */}
             <label className="grid gap-[6px] border border-museo-linea px-[14px] py-[10px]">
-              <span className="cartela text-museo-tinta-45">Traje</span>
+              <span className="cartela text-museo-tinta-tenue">Traje</span>
               <select
                 value={costume}
                 onChange={(e) => elegir(e.target.value as CostumeId)}
@@ -200,8 +201,8 @@ export function Vestidor() {
                       borderRadius: "50%",
                       cursor: "pointer",
                       background: s.value,
-                      border: `1px solid ${color === s.value ? "#14120f" : "rgba(20,18,15,.2)"}`,
-                      boxShadow: color === s.value ? "0 0 0 2px rgba(20,18,15,.18)" : "none",
+                      border: `1px solid ${color === s.value ? tinta() : tinta(0.2)}`,
+                      boxShadow: color === s.value ? `0 0 0 2px ${tinta(0.18)}` : "none",
                     }}
                   />
                 ))}

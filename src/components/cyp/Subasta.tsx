@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Cartela, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { useSpeech } from "@/hooks/useSpeech";
+import { laton, objeto, objetoMedio, objetoSuave, tinta } from "@/lib/color";
 
 /**
  * Sala 8: la tasación.
@@ -37,9 +38,9 @@ const LOTES: Lote[] = [
     pililarge: "¿Y si la fregona no quiere? Nadie le ha preguntado.",
     arte: (
       <g>
-        <rect x="46" y="8" width="7" height="62" rx="3.5" fill="#b9ae9c" />
-        <path d="M30 70h40l-6 34a14 14 0 0 1-28 0Z" fill="#fbf8f2" />
-        <path d="M38 74v30M50 74v32M62 74v30" stroke="#14120f" strokeWidth="1.4" opacity=".22" />
+        <rect x="46" y="8" width="7" height="62" rx="3.5" fill={objetoMedio} />
+        <path d="M30 70h40l-6 34a14 14 0 0 1-28 0Z" fill={objeto} />
+        <path d="M38 74v30M50 74v32M62 74v30" stroke={tinta()} strokeWidth="1.4" opacity=".22" />
       </g>
     ),
   },
@@ -56,15 +57,15 @@ const LOTES: Lote[] = [
     pililarge: "A mí me da aire igual. Si me lo creo mucho.",
     arte: (
       <g>
-        <rect x="45" y="72" width="10" height="32" rx="4" fill="#b9ae9c" />
-        <rect x="32" y="102" width="36" height="7" rx="3.5" fill="#b9ae9c" />
-        <circle cx="50" cy="46" r="33" fill="none" stroke="#14120f" strokeWidth="1.2" opacity=".3" />
-        <g fill="#fbf8f2" stroke="#14120f" strokeOpacity=".18" strokeWidth="1">
+        <rect x="45" y="72" width="10" height="32" rx="4" fill={objetoMedio} />
+        <rect x="32" y="102" width="36" height="7" rx="3.5" fill={objetoMedio} />
+        <circle cx="50" cy="46" r="33" fill="none" stroke={tinta()} strokeWidth="1.2" opacity=".3" />
+        <g fill={objeto} stroke={tinta()} strokeOpacity=".18" strokeWidth="1">
           <ellipse cx="50" cy="29" rx="8.5" ry="16" />
           <ellipse cx="64" cy="54" rx="8.5" ry="16" transform="rotate(120 64 54)" />
           <ellipse cx="36" cy="54" rx="8.5" ry="16" transform="rotate(240 36 54)" />
         </g>
-        <circle cx="50" cy="46" r="5" fill="#9a7b3f" />
+        <circle cx="50" cy="46" r="5" fill={laton()} />
       </g>
     ),
   },
@@ -81,9 +82,9 @@ const LOTES: Lote[] = [
     pililarge: "Yo no pujo. Si lo compro, tengo que sentarme, y no sé.",
     arte: (
       <g>
-        <ellipse cx="50" cy="42" rx="33" ry="10" fill="#fbf8f2" stroke="#14120f" strokeOpacity=".18" />
-        <rect x="17" y="42" width="66" height="7" fill="#e3d9c6" />
-        <path d="M24 49 19 104M76 49l5 55M50 49v55" stroke="#b9ae9c" strokeWidth="6" strokeLinecap="round" />
+        <ellipse cx="50" cy="42" rx="33" ry="10" fill={objeto} stroke={tinta()} strokeOpacity=".18" />
+        <rect x="17" y="42" width="66" height="7" fill={objetoSuave} />
+        <path d="M24 49 19 104M76 49l5 55M50 49v55" stroke={objetoMedio} strokeWidth="6" strokeLinecap="round" />
       </g>
     ),
   },
@@ -100,8 +101,8 @@ const LOTES: Lote[] = [
     pililarge: "Es lo mejor que he hecho y no me acuerdo de cómo.",
     arte: (
       <g>
-        <rect x="16" y="32" width="68" height="56" fill="#fbf8f2" stroke="#14120f" strokeOpacity=".18" />
-        <path d="M26 60h9l6-15 8 32 7-23 6 11h12" fill="none" stroke="#14120f" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity=".55" />
+        <rect x="16" y="32" width="68" height="56" fill={objeto} stroke={tinta()} strokeOpacity=".18" />
+        <path d="M26 60h9l6-15 8 32 7-23 6 11h12" fill="none" stroke={tinta()} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity=".55" />
       </g>
     ),
   },
@@ -143,15 +144,15 @@ export function Subasta() {
           <div>
             <Sala n="08">Tasación</Sala>
             <SectionTitle className="mt-4">
-              Objetos sin <span className="italic text-museo-tinta-70">ningún valor</span>
+              Objetos sin <span className="italic text-museo-tinta-suave">ningún valor</span>
             </SectionTitle>
-            <p className="mt-4 max-w-[56ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+            <p className="mt-4 max-w-[56ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
               Cuatro piezas de la colección, tasadas con la seriedad que no merecen. Puje lo que
               quiera: no se vende nada y ellos comentan cada cifra.
             </p>
           </div>
           <div className="border-l border-museo-tinta pl-5">
-            <div className="cartela text-museo-tinta-45">Valor de la sala</div>
+            <div className="cartela text-museo-tinta-tenue">Valor de la sala</div>
             <div className="font-display text-[38px] leading-tight text-museo-tinta">
               {euros(total)}
             </div>
@@ -179,7 +180,7 @@ export function Subasta() {
                 <div className="mb-2 flex items-baseline justify-between gap-2">
                   <span className="cartela text-museo-laton">{l.n}</span>
                   {pujas[i] > 0 && (
-                    <span className="cartela text-museo-tinta-45">
+                    <span className="cartela text-museo-tinta-tenue">
                       {pujas[i]} {pujas[i] === 1 ? "puja" : "pujas"}
                     </span>
                   )}
@@ -191,7 +192,7 @@ export function Subasta() {
               </div>
 
               <div className="border-t border-museo-linea pt-3">
-                <div className="cartela text-museo-tinta-45">
+                <div className="cartela text-museo-tinta-tenue">
                   {pujas[i] ? "Puja actual" : "Precio de salida"}
                 </div>
                 <div className="font-display text-[27px] leading-tight text-museo-tinta">
@@ -210,7 +211,7 @@ export function Subasta() {
           <GhostButton onClick={() => setPujas(LOTES.map(() => 0))} className="px-4 py-[11px] text-[13.5px]">
             Vaciar la sala
           </GhostButton>
-          <p className="cartela text-museo-tinta-45">
+          <p className="cartela text-museo-tinta-tenue">
             No se cobra nada · No se envía nada · No hay nada
           </p>
         </div>

@@ -18,6 +18,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      // Las luces se deciden antes de pintar: si no, quien entra de noche ve un
+      // fogonazo de papel blanco antes de que React llegue a montarse.
+      (function () {
+        try {
+          var g = localStorage.getItem("cyp:luces");
+          var noche =
+            g === "noche" ||
+            (g !== "dia" &&
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (noche) document.documentElement.classList.add("noche");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

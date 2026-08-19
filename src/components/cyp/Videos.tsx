@@ -59,7 +59,7 @@ export function Videos() {
                     <span className="block font-display text-[19px] leading-[1.2] text-museo-tinta">
                       {v.title}
                     </span>
-                    <span className="cartela mt-[6px] block text-museo-tinta-45">{v.meta}</span>
+                    <span className="cartela mt-[6px] block text-museo-tinta-tenue">{v.meta}</span>
                   </span>
                 </div>
               </a>

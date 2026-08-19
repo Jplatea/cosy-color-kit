@@ -12,13 +12,13 @@ export function SiteFooter() {
             <div className="font-display text-[19px] leading-none text-museo-tinta">
               Museo Culow &amp; Pililarge
             </div>
-            <div className="cartela mt-[7px] text-museo-tinta-45">
+            <div className="cartela mt-[7px] text-museo-tinta-tenue">
               Abierto todos los días · Entrada gratuita · No se vende nada
             </div>
           </div>
         </div>
 
-        <div className="cartela text-museo-tinta-45 sm:text-right">
+        <div className="cartela text-museo-tinta-tenue sm:text-right">
           <a href={socials.youtube} target="_blank" rel="noopener" className="hover:text-museo-laton">
             culowypililarge.com
           </a>

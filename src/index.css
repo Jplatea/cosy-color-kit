@@ -4,12 +4,79 @@
 @tailwind utilities;
 
 /**
- * La sala.
+ * La sala, de día y de noche.
  *
- * Todo el sitio es una exposición: papel hueso, tinta negra, filetes finísimos
- * y ni una sombra fuerte salvo la que proyectan las dos piezas sobre su peana.
- * Solo hay un color además del negro —el latón— y aparece contadas veces.
+ * Toda la paleta vive aquí, en variables, y el resto del sitio no conoce ni un
+ * color: `tailwind.config.ts` las envuelve y los componentes solo dicen
+ * `bg-museo-papel` o `text-museo-tinta`. Cambiar de día a noche es cambiar
+ * estas dos docenas de números y nada más.
+ *
+ * Los colores se guardan como tripletes sueltos (`20 18 15`) y no como `#14120f`
+ * para poder pedirles transparencia desde Tailwind —`text-museo-tinta/45`— sin
+ * tener que declarar una variable por cada nivel de opacidad.
+ *
+ * De día es un museo abierto: papel hueso, tinta negra, latón oscuro. De noche
+ * es el mismo museo con las luces bajadas y los focos puestos sobre las piezas:
+ * fondo cálido casi negro, texto crema y el latón subido de brillo para que
+ * siga leyéndose.
  */
+
+:root {
+  --cyp-papel: 247 244 239;
+  --cyp-pared: 255 253 249;
+  --cyp-tinta: 20 18 15;
+  /* El latón de día va más oscuro de lo que pediría el gusto: con el tono
+     claro, la letra de cartela de 11 px se quedaba en 3,9 de contraste sobre
+     el papel, por debajo del mínimo legible. */
+  --cyp-laton: 138 108 51;
+  --cyp-laton-hi: 168 132 63;
+
+  /* Las tres paradas del degradado de la peana, de arriba abajo. */
+  --cyp-peana-1: #efe9de;
+  --cyp-peana-2: #e4ddd1;
+  --cyp-peana-3: #d8d0c2;
+  --cyp-peana-brillo: rgba(255, 255, 255, .7);
+
+  /* Los objetos de la sala de tasación: piezas claras sobre su peana. */
+  --cyp-objeto: #fbf8f2;
+  --cyp-objeto-medio: #b9ae9c;
+  --cyp-objeto-suave: #e3d9c6;
+
+  /* La sombra que proyectan las piezas sobre la peana. */
+  --cyp-sombra-suelo: rgba(52, 42, 30, .32);
+  --cyp-sombra-marco: rgba(20, 18, 15, .55);
+
+  /* El grano de papel del fondo. */
+  --cyp-grano-luz: rgba(255, 255, 255, .8);
+  --cyp-grano-sombra: rgba(20, 18, 15, .035);
+
+  color-scheme: light;
+}
+
+.noche {
+  --cyp-papel: 20 17 15;
+  --cyp-pared: 26 22 19;
+  --cyp-tinta: 242 236 226;
+  --cyp-laton: 201 162 96;
+  --cyp-laton-hi: 226 189 124;
+
+  --cyp-peana-1: #3a3129;
+  --cyp-peana-2: #2b241e;
+  --cyp-peana-3: #1e1915;
+  --cyp-peana-brillo: rgba(255, 240, 214, .12);
+
+  --cyp-objeto: #ece5d9;
+  --cyp-objeto-medio: #8a8073;
+  --cyp-objeto-suave: #6b6055;
+
+  --cyp-sombra-suelo: rgba(0, 0, 0, .6);
+  --cyp-sombra-marco: rgba(0, 0, 0, .75);
+
+  --cyp-grano-luz: rgba(255, 236, 200, .05);
+  --cyp-grano-sombra: rgba(0, 0, 0, .3);
+
+  color-scheme: dark;
+}
 
 @layer base {
   html {
@@ -17,30 +84,32 @@
   }
 
   body {
-    background: #f7f4ef;
-    color: #14120f;
+    background: rgb(var(--cyp-papel));
+    color: rgb(var(--cyp-tinta));
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    /* Grano de papel: dos degradados muy tenues, nada de imágenes. */
+    /* Grano de sala: dos degradados muy tenues, nada de imágenes. */
     background-image:
-      radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, .8), transparent 60%),
-      radial-gradient(90% 60% at 10% 100%, rgba(20, 18, 15, .035), transparent 60%);
+      radial-gradient(120% 80% at 50% 0%, var(--cyp-grano-luz), transparent 60%),
+      radial-gradient(90% 60% at 10% 100%, var(--cyp-grano-sombra), transparent 60%);
     background-attachment: fixed;
+    /* Al bajar las luces, el cambio se ve como si alguien tocara el interruptor. */
+    transition: background-color .45s ease, color .45s ease;
   }
 
   ::selection {
-    background: #14120f;
-    color: #f7f4ef;
+    background: rgb(var(--cyp-tinta));
+    color: rgb(var(--cyp-papel));
   }
 
   ::-webkit-scrollbar { width: 11px; height: 11px; }
-  ::-webkit-scrollbar-track { background: #efeae2; }
+  ::-webkit-scrollbar-track { background: rgb(var(--cyp-tinta) / .06); }
   ::-webkit-scrollbar-thumb {
-    background: rgba(20, 18, 15, .2);
+    background: rgb(var(--cyp-tinta) / .2);
     border-radius: 999px;
-    border: 3px solid #efeae2;
+    border: 3px solid rgb(var(--cyp-papel));
   }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(20, 18, 15, .38); }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--cyp-tinta) / .38); }
 
   /* El desplegable nativo hereda la tipografía de la sala, no la del sistema. */
   select, input, textarea, button { font: inherit; color: inherit; }

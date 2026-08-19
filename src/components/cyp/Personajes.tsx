@@ -61,8 +61,8 @@ export function Personajes() {
                     {p.nombre}
                   </h3>
                 </div>
-                <div className="cartela mt-[10px] text-museo-tinta-45">{p.epigrafe}</div>
-                <p className="mt-4 text-[15.5px] leading-[1.65] text-museo-tinta-70">{p.texto}</p>
+                <div className="cartela mt-[10px] text-museo-tinta-tenue">{p.epigrafe}</div>
+                <p className="mt-4 text-[15.5px] leading-[1.65] text-museo-tinta-suave">{p.texto}</p>
                 <Cartela className="mt-5 border-t border-museo-linea pt-4" filas={p.filas} />
               </div>
             </article>

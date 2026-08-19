@@ -22,7 +22,7 @@ export function Poemas() {
         <div className="mb-10 border-b border-museo-linea pb-8">
           <Sala n="07">Textos de sala</Sala>
           <SectionTitle className="mt-4">
-            Literatura de <span className="italic text-museo-tinta-70">dudosa utilidad</span>
+            Literatura de <span className="italic text-museo-tinta-suave">dudosa utilidad</span>
           </SectionTitle>
         </div>
 
@@ -36,7 +36,7 @@ export function Poemas() {
                 </h3>
               </div>
 
-              <p className="whitespace-pre-line font-display text-[19px] leading-[1.6] text-museo-tinta-70">
+              <p className="whitespace-pre-line font-display text-[19px] leading-[1.6] text-museo-tinta-suave">
                 {p.body}
               </p>
 
@@ -46,7 +46,7 @@ export function Poemas() {
                 onClick={() =>
                   speakLine({ who: p.voice, text: p.body.replace(/\n/g, ", "), audio: p.audio })
                 }
-                className="cartela justify-self-start border-b border-museo-linea pb-[3px] text-museo-tinta-45 transition-colors hover:border-museo-tinta hover:text-museo-tinta"
+                className="cartela justify-self-start border-b border-museo-linea pb-[3px] text-museo-tinta-tenue transition-colors hover:border-museo-tinta hover:text-museo-tinta"
               >
                 Lo lee {VOICES[p.voice].name} →
               </button>

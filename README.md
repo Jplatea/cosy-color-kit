@@ -44,6 +44,26 @@ visitas solo cuenta lo de tu navegador y lo dice.
 | 11 | Libro de visitas | Contador real y mapa por países |
 | 12 | Préstamos | Formulario de contacto |
 
+## Día y noche
+
+El museo abre de día —papel hueso, tinta negra— y de noche baja las luces:
+mismo sitio, mismas piezas, con los focos puestos. El interruptor está en la
+cabecera.
+
+La primera vez manda la preferencia del sistema, así que quien tenga el móvil
+en oscuro entra ya de noche. En cuanto alguien toca el interruptor, esa
+decisión se recuerda y pasa por delante del sistema.
+
+Toda la paleta son variables CSS en `src/index.css`: cambiar de día a noche es
+cambiar esos números y nada más. Ningún componente conoce un color; usan los
+nombres de `tailwind.config.ts` (`bg-museo-papel`, `text-museo-tinta`). Donde el
+color hay que calcularlo —el mapa tiñe cada país según sus visitas— está
+`src/lib/color.ts`, que escribe la misma variable desde JavaScript.
+
+Las opacidades del texto secundario no son estéticas: por debajo del 60 % la
+letra de cartela de 11 px no llega al mínimo de contraste sobre papel. Medido
+sobre la página entera, en los dos modos, no queda ningún texto por debajo.
+
 ## Los vídeos se actualizan solos
 
 ```bash

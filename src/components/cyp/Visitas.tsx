@@ -2,6 +2,7 @@ import { Sala, SectionTitle } from "./primitives";
 import { MapaVisitas } from "./MapaVisitas";
 import { useStats } from "@/hooks/useVisitas";
 import { trackedSections } from "@/config/cyp";
+import { laton, tinta } from "@/lib/color";
 
 /**
  * Sala 11: el libro de visitas.
@@ -18,9 +19,9 @@ const fmt = (n: number | undefined) => (n || 0).toLocaleString("es-ES");
 function Cifra({ label, value, nota }: { label: string; value: string; nota?: string }) {
   return (
     <div className="border-t border-museo-tinta pt-4">
-      <div className="cartela text-museo-tinta-45">{label}</div>
+      <div className="cartela text-museo-tinta-tenue">{label}</div>
       <div className="mt-2 font-display text-[46px] leading-none text-museo-tinta">{value}</div>
-      {nota && <div className="cartela mt-2 text-museo-tinta-45">{nota}</div>}
+      {nota && <div className="cartela mt-2 text-museo-tinta-tenue">{nota}</div>}
     </div>
   );
 }
@@ -44,15 +45,15 @@ export function Visitas() {
           <div>
             <Sala n="11">Libro de visitas</Sala>
             <SectionTitle className="mt-4">
-              Quién ha pasado <span className="italic text-museo-tinta-70">por aquí</span>
+              Quién ha pasado <span className="italic text-museo-tinta-suave">por aquí</span>
             </SectionTitle>
           </div>
           <div className="flex items-center gap-[9px] border border-museo-linea px-[14px] py-[9px]">
             <span
               className="h-[6px] w-[6px] rounded-full"
-              style={{ background: live ? "#9a7b3f" : "rgba(20,18,15,.3)" }}
+              style={{ background: live ? laton() : tinta(0.3) }}
             />
-            <span className="cartela text-museo-tinta-70">
+            <span className="cartela text-museo-tinta-suave">
               {!stats
                 ? "Abriendo el libro…"
                 : live
@@ -71,7 +72,7 @@ export function Visitas() {
             nota={live ? undefined : "Usted"}
           />
           <div className="border-t border-museo-tinta pt-4">
-            <div className="cartela text-museo-tinta-45">Sala más visitada</div>
+            <div className="cartela text-museo-tinta-tenue">Sala más visitada</div>
             <div className="mt-2 font-display text-[30px] leading-tight text-museo-tinta">
               {sinNada ? "—" : topPage ? topPage.label : "—"}
             </div>
@@ -80,17 +81,17 @@ export function Visitas() {
 
         <div className="mb-12 border-t border-museo-linea pt-8">
           <div className="mb-6 flex items-baseline justify-between gap-5">
-            <span className="cartela text-museo-tinta-45">De dónde nos ven</span>
-            <span className="cartela text-museo-tinta-45">Pase el ratón por un país</span>
+            <span className="cartela text-museo-tinta-tenue">De dónde nos ven</span>
+            <span className="cartela text-museo-tinta-tenue">Pase el ratón por un país</span>
           </div>
           <MapaVisitas countries={stats?.countries} live={live} />
         </div>
 
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
           <div className="border-t border-museo-linea pt-8">
-            <div className="cartela mb-6 text-museo-tinta-45">Últimos 14 días</div>
+            <div className="cartela mb-6 text-museo-tinta-tenue">Últimos 14 días</div>
             {sinNada ? (
-              <p className="text-[14px] text-museo-tinta-45">
+              <p className="text-[14px] text-museo-tinta-tenue">
                 Sin visitas registradas todavía. La primera es la suya.
               </p>
             ) : (
@@ -101,15 +102,15 @@ export function Visitas() {
                     title={`${d.date}: ${d.count}`}
                     className="flex h-full flex-1 flex-col items-center justify-end gap-2"
                   >
-                    <div className="cartela text-museo-tinta-45">{d.count || ""}</div>
+                    <div className="cartela text-museo-tinta-tenue">{d.count || ""}</div>
                     <div
                       className="w-full"
                       style={{
                         height: Math.max(1, (d.count / maxDay) * 110),
-                        background: i === arr.length - 1 ? "#9a7b3f" : "rgba(20,18,15,.2)",
+                        background: i === arr.length - 1 ? laton() : tinta(0.2),
                       }}
                     />
-                    <div className="cartela text-museo-tinta-45">{d.date.slice(8)}</div>
+                    <div className="cartela text-museo-tinta-tenue">{d.date.slice(8)}</div>
                   </div>
                 ))}
               </div>
@@ -117,11 +118,11 @@ export function Visitas() {
           </div>
 
           <div className="border-t border-museo-linea pt-8">
-            <div className="cartela mb-6 text-museo-tinta-45">Visitas por sala</div>
+            <div className="cartela mb-6 text-museo-tinta-tenue">Visitas por sala</div>
             <div className="grid gap-[14px]">
               {trackedSections.map((s) => (
                 <div key={s.id} className="grid gap-[6px]">
-                  <div className="flex justify-between text-[13.5px] text-museo-tinta-70">
+                  <div className="flex justify-between text-[13.5px] text-museo-tinta-suave">
                     <span>{s.label}</span>
                     <b className="text-museo-tinta">{fmt(stats?.pages[s.id])}</b>
                   </div>
@@ -137,11 +138,11 @@ export function Visitas() {
           </div>
         </div>
 
-        <p className="mt-10 max-w-[80ch] border-t border-museo-linea pt-5 text-[13px] leading-[1.65] text-museo-tinta-45">
+        <p className="mt-10 max-w-[80ch] border-t border-museo-linea pt-5 text-[13px] leading-[1.65] text-museo-tinta-tenue">
           {live ? (
             <>
               Estas cifras vienen del contador propio, en{" "}
-              <code className="text-museo-tinta-70">/api/stats</code>. No guarda ninguna IP: para
+              <code className="text-museo-tinta-suave">/api/stats</code>. No guarda ninguna IP: para
               distinguir visitantes usa un hash con sal que cambia cada día, y del país solo
               archiva el código de dos letras.
             </>
@@ -149,8 +150,8 @@ export function Visitas() {
             <>
               El contador de verdad no está respondiendo, así que lo que ve son sus propias
               visitas contadas en este navegador, empezando en cero. Para el recuento global hay
-              que levantarlo con <code className="text-museo-tinta-70">npm run server</code> —o
-              publicarlo con <code className="text-museo-tinta-70">npm start</code>—; aquí no se
+              que levantarlo con <code className="text-museo-tinta-suave">npm run server</code> —o
+              publicarlo con <code className="text-museo-tinta-suave">npm start</code>—; aquí no se
               rellena el hueco con números inventados.
             </>
           )}

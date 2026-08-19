@@ -4,6 +4,7 @@ import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./prim
 import { METER_BARS, VOICES, useSpeech } from "@/hooks/useSpeech";
 import { useNarrow } from "@/hooks/useNarrow";
 import { duet, phrases } from "@/config/cyp";
+import { tinta } from "@/lib/color";
 
 /**
  * Sala 5: la audioguía.
@@ -35,9 +36,9 @@ export function HazlosHablar() {
         <div className="mb-10 border-b border-museo-linea pb-8">
           <Sala n="05">Audioguía</Sala>
           <SectionTitle className="mt-4">
-            Que hablen <span className="italic text-museo-tinta-70">las piezas</span>
+            Que hablen <span className="italic text-museo-tinta-suave">las piezas</span>
           </SectionTitle>
-          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
             Escriba lo que quiera oír, elija a cuál de los dos se lo pone en la boca y pulse.
             El aparato es gratuito y no hay que devolverlo.
           </p>
@@ -71,7 +72,7 @@ export function HazlosHablar() {
 
             <div className="border-t border-museo-linea p-6">
               <div className="mb-3 flex items-center justify-between">
-                <span className="cartela text-museo-tinta-45">Nivel</span>
+                <span className="cartela text-museo-tinta-tenue">Nivel</span>
                 <span className="cartela text-museo-laton">
                   {speaking ? `Pista — ${VOICES[speaker].name}` : "En silencio"}
                 </span>
@@ -84,7 +85,7 @@ export function HazlosHablar() {
                     className="flex-1"
                     style={{
                       height: "6%",
-                      background: "#14120f",
+                      background: tinta(),
                       opacity: 0.75,
                       transition: speaking ? "none" : "height .3s ease",
                     }}
@@ -98,7 +99,7 @@ export function HazlosHablar() {
           {/* Los mandos, con la pinta de un panel de instrucciones. */}
           <div className="grid content-start gap-5 border border-museo-linea bg-museo-pared p-6 sm:p-8">
             <div className="grid gap-[10px]">
-              <span className="cartela text-museo-tinta-45">Quién habla</span>
+              <span className="cartela text-museo-tinta-tenue">Quién habla</span>
               <div className="flex gap-[10px]">
                 <Chip active={speaker === "culow"} onClick={() => pick("culow")} className="flex-1">
                   Culow
@@ -114,7 +115,7 @@ export function HazlosHablar() {
             </div>
 
             <div className="grid gap-[10px]">
-              <label htmlFor="cyp-texto" className="cartela text-museo-tinta-45">
+              <label htmlFor="cyp-texto" className="cartela text-museo-tinta-tenue">
                 Qué dice
               </label>
               <textarea
@@ -130,7 +131,7 @@ export function HazlosHablar() {
                     key={p.label}
                     type="button"
                     onClick={() => setText(p.text)}
-                    className="cartela border border-museo-linea px-[11px] py-[7px] text-museo-tinta-70 transition-colors hover:border-museo-tinta hover:text-museo-tinta"
+                    className="cartela border border-museo-linea px-[11px] py-[7px] text-museo-tinta-suave transition-colors hover:border-museo-tinta hover:text-museo-tinta"
                   >
                     {p.label}
                   </button>
@@ -140,7 +141,7 @@ export function HazlosHablar() {
 
             <div className="grid grid-cols-2 gap-5">
               <label className="grid gap-2">
-                <span className="cartela text-museo-tinta-45">
+                <span className="cartela text-museo-tinta-tenue">
                   Tono <b className="text-museo-laton">{pitch.toFixed(2)}</b>
                 </span>
                 <input
@@ -154,7 +155,7 @@ export function HazlosHablar() {
                 />
               </label>
               <label className="grid gap-2">
-                <span className="cartela text-museo-tinta-45">
+                <span className="cartela text-museo-tinta-tenue">
                   Velocidad <b className="text-museo-laton">{rate.toFixed(2)}</b>
                 </span>
                 <input
@@ -175,15 +176,15 @@ export function HazlosHablar() {
               <GhostButton onClick={() => sayDialogue(duet)}>Pista a dos voces</GhostButton>
             </div>
 
-            <div className="grid gap-2 border-t border-museo-linea pt-4 text-[13px] leading-[1.6] text-museo-tinta-45">
+            <div className="grid gap-2 border-t border-museo-linea pt-4 text-[13px] leading-[1.6] text-museo-tinta-tenue">
               {supported ? (
                 <>
                   <p>
                     Cada uno coge una voz distinta del sistema y la frase se trocea en cláusulas:
                     Culow va grave y atropellado, Pililarge agudo y a trocitos. Para que suenen como
                     los actores de verdad, mete los clips del canal en{" "}
-                    <code className="text-museo-tinta-70">public/voces/</code> y apúntalos en{" "}
-                    <code className="text-museo-tinta-70">src/config/cyp.ts</code>.
+                    <code className="text-museo-tinta-suave">public/voces/</code> y apúntalos en{" "}
+                    <code className="text-museo-tinta-suave">src/config/cyp.ts</code>.
                   </p>
                   {(assigned.culow || assigned.pililarge) && (
                     <p>

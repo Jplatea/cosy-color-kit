@@ -4,6 +4,7 @@ import { GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives
 import { useSpeech } from "@/hooks/useSpeech";
 import { useNarrow } from "@/hooks/useNarrow";
 import { socials } from "@/config/cyp";
+import { papel, tinta } from "@/lib/color";
 
 /**
  * "¿Cuál de los dos eres tú?".
@@ -125,9 +126,9 @@ export function Test() {
         <div className="mb-10 border-b border-museo-linea pb-8">
           <Sala n="09">Sala de identificación</Sala>
           <SectionTitle className="mt-4">
-            ¿Con cuál de las dos <span className="italic text-museo-tinta-70">se identifica usted</span>?
+            ¿Con cuál de las dos <span className="italic text-museo-tinta-suave">se identifica usted</span>?
           </SectionTitle>
-          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-70">
+          <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
             Cinco preguntas sin ningún rigor científico. Al final se lo dice en voz alta la pieza
             que le haya tocado.
           </p>
@@ -157,9 +158,9 @@ className="border border-museo-linea bg-museo-pared p-[22px]"
                         onClick={() => responder(i, j as 0 | 1)}
                         className="border px-4 py-[13px] text-left text-[14px] transition-colors"
                         style={{
-                          borderColor: activa ? "#14120f" : "rgba(20,18,15,.18)",
-                          background: activa ? "#14120f" : "transparent",
-                          color: activa ? "#f7f4ef" : "rgba(20,18,15,.7)",
+                          borderColor: activa ? tinta() : tinta(0.18),
+                          background: activa ? tinta() : "transparent",
+                          color: activa ? papel() : tinta(0.7),
                         }}
                       >
                         {o.texto}
@@ -190,7 +191,7 @@ className="border border-museo-linea bg-museo-pared p-[22px]"
                   <div className="mt-2 font-display text-[34px] leading-tight text-museo-tinta">
                     {v.titulo}
                   </div>
-                  <p className="mt-3 text-[15px] leading-[1.65] text-museo-tinta-70">
+                  <p className="mt-3 text-[15px] leading-[1.65] text-museo-tinta-suave">
                     {v.resumen}
                   </p>
                 </div>
@@ -214,7 +215,7 @@ className="border border-museo-linea bg-museo-pared p-[22px]"
                     style={{ width: `${(contestadas / PREGUNTAS.length) * 100}%` }}
                   />
                 </div>
-                <p className="text-[15px] leading-[1.65] text-museo-tinta-70">
+                <p className="text-[15px] leading-[1.65] text-museo-tinta-suave">
                   Contesta las cinco y aquí sale quién eres. No hay respuestas buenas; tampoco
                   malas; en realidad no hay respuestas.
                 </p>

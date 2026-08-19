@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // El interruptor de día/noche pone la clase `.noche` en <html>.
+  darkMode: ["class", ".noche"],
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -12,22 +14,29 @@ export default {
       },
       colors: {
         /**
-         * La sala: papel hueso, pared blanca, peanas de piedra y tinta negra.
+         * La sala: papel, pared, peanas de piedra y tinta. Los valores no están
+         * aquí sino en `src/index.css`, en variables, para que el mismo nombre
+         * sirva de día y de noche. `<alpha-value>` deja que Tailwind siga
+         * pudiendo pedir transparencia: `text-museo-tinta/45` funciona igual.
+         *
          * El latón aparece en cantidades ridículas —un filete, un sello— y ese
          * es justo el chiste: lujo de verdad puesto encima de una tontería.
          */
         museo: {
-          papel: "#f7f4ef",
-          pared: "#fffdf9",
-          peana: "#e4ddd1",
-          "peana-hi": "#efe9de",
-          tinta: "#14120f",
-          "tinta-70": "rgba(20,18,15,.70)",
-          "tinta-45": "rgba(20,18,15,.45)",
-          linea: "rgba(20,18,15,.16)",
-          "linea-fina": "rgba(20,18,15,.09)",
-          laton: "#9a7b3f",
-          "laton-hi": "#b8955a",
+          papel: "rgb(var(--cyp-papel) / <alpha-value>)",
+          pared: "rgb(var(--cyp-pared) / <alpha-value>)",
+          peana: "var(--cyp-peana-2)",
+          "peana-hi": "var(--cyp-peana-1)",
+          tinta: "rgb(var(--cyp-tinta) / <alpha-value>)",
+          // Texto secundario y letra de cartela. Las opacidades no son un
+          // gusto: por debajo de 0.60 la cartela de 11 px no llega al mínimo
+          // de contraste sobre papel, que es el fondo más exigente de los dos.
+          "tinta-suave": "rgb(var(--cyp-tinta) / 0.72)",
+          "tinta-tenue": "rgb(var(--cyp-tinta) / 0.60)",
+          linea: "rgb(var(--cyp-tinta) / 0.16)",
+          "linea-fina": "rgb(var(--cyp-tinta) / 0.09)",
+          laton: "rgb(var(--cyp-laton) / <alpha-value>)",
+          "laton-hi": "rgb(var(--cyp-laton-hi) / <alpha-value>)",
         },
       },
       keyframes: {

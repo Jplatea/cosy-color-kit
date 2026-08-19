@@ -22,7 +22,7 @@ export function Shorts() {
           <div>
             <Sala n="03">Piezas breves</Sala>
             <SectionTitle className="mt-4">
-              Quince segundos, <span className="italic text-museo-tinta-70">una idea tonta</span>
+              Quince segundos, <span className="italic text-museo-tinta-suave">una idea tonta</span>
             </SectionTitle>
           </div>
           <LinkRule href={socials.tiktok}>También en TikTok →</LinkRule>

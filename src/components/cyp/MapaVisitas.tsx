@@ -3,6 +3,7 @@ import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { FeatureCollection, Geometry } from "geojson";
 import topoUrl from "world-atlas/countries-110m.json?url";
+import { laton, tinta } from "@/lib/color";
 
 /**
  * Mapa mundial de visitas.
@@ -153,8 +154,8 @@ export function MapaVisitas({
   const radius = (value: number) => 2.5 + 14.5 * t(value);
   const landFill = (code: string) => {
     const value = data[code];
-    if (!value) return "rgba(20,18,15,.05)";
-    return `rgba(20,18,15,${(0.12 + 0.5 * t(value)).toFixed(3)})`;
+    if (!value) return tinta(0.05);
+    return tinta(Number((0.12 + 0.5 * t(value)).toFixed(3)));
   };
 
   const showTip = (e: React.MouseEvent, text: string) =>
@@ -171,7 +172,7 @@ export function MapaVisitas({
         role="img"
         aria-label="Mapa mundial de visitas por país"
       >
-        <path d={sphere} fill="#efe9de" stroke="rgba(20,18,15,.12)" />
+        <path d={sphere} fill="var(--cyp-peana-1)" stroke={tinta(0.12)} />
 
         <g>
           {paths.map((p) => (
@@ -179,7 +180,7 @@ export function MapaVisitas({
               key={p.code + p.d.slice(0, 12)}
               d={p.d}
               fill={landFill(p.code)}
-              stroke="rgba(20,18,15,.16)"
+              stroke={tinta(0.16)}
               strokeWidth={0.5}
               onMouseMove={(e) =>
                 showTip(
@@ -201,7 +202,7 @@ export function MapaVisitas({
               cx={d.x}
               cy={d.y}
               r={radius(d.value) * 2.1}
-              fill="rgba(154,123,63,.14)"
+              fill={laton(0.14)}
             />
           ))}
           {dots.map((d) => (
@@ -210,9 +211,9 @@ export function MapaVisitas({
               cx={d.x}
               cy={d.y}
               r={radius(d.value)}
-              fill="#9a7b3f"
+              fill={laton()}
               fillOpacity={0.9}
-              stroke="#14120f"
+              stroke={tinta()}
               strokeWidth={1}
               onMouseMove={(e) => showTip(e, `${d.name} · ${fmt(d.value)} visitas`)}
               onMouseLeave={() => setTip(null)}
@@ -222,10 +223,10 @@ export function MapaVisitas({
       </svg>
 
       <div>
-        <h3 className="cartela mb-4 text-museo-tinta-45">Procedencia del público</h3>
+        <h3 className="cartela mb-4 text-museo-tinta-tenue">Procedencia del público</h3>
 
         {!hasReal && (
-          <p className="text-[13px] leading-[1.55] text-museo-tinta-45">
+          <p className="text-[13px] leading-[1.55] text-museo-tinta-tenue">
             {live
               ? "Todavía no ha entrado nadie de ningún país registrado. En cuanto entre alguien, aparece aquí."
               : "Sin el contador levantado no hay procedencias que enseñar."}
@@ -234,7 +235,7 @@ export function MapaVisitas({
 
         {top.map(([code, value]) => (
           <div key={code} className="mb-[13px] grid gap-[6px]">
-            <div className="flex justify-between text-[13px] text-museo-tinta-70">
+            <div className="flex justify-between text-[13px] text-museo-tinta-suave">
               <span>{NAMES[code] || code}</span>
               <b className="text-museo-tinta">{fmt(value)}</b>
             </div>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Interruptor } from "./Interruptor";
 import { LogoMark } from "./Logo";
+import { useLuces } from "@/hooks/useLuces";
 import { nav, socials } from "@/config/cyp";
 
 /**
@@ -11,6 +13,7 @@ import { nav, socials } from "@/config/cyp";
  * sitio a la sala que se esté mirando.
  */
 export function Nav() {
+  const { esDeNoche } = useLuces();
   const [open, setOpen] = useState(false);
   const [bajado, setBajado] = useState(false);
 
@@ -30,11 +33,11 @@ export function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-6 py-[9px] lg:px-8">
-          <span className="cartela text-museo-tinta-45">
+          <span className="cartela text-museo-tinta-tenue">
             Abierto todos los días · Entrada gratuita
           </span>
-          <span className="cartela hidden text-museo-tinta-45 sm:block">
-            Prohibido tocar las piezas (se puede)
+          <span className="cartela hidden text-museo-tinta-tenue sm:block">
+            {esDeNoche ? "Luces bajadas · Prohibido tocar (se puede)" : "Prohibido tocar las piezas (se puede)"}
           </span>
         </div>
       </div>
@@ -46,7 +49,7 @@ export function Nav() {
             <span className="block font-display text-[21px] tracking-[-0.01em] text-museo-tinta">
               Culow &amp; Pililarge
             </span>
-            <span className="cartela block text-museo-tinta-45">Colección permanente</span>
+            <span className="cartela block text-museo-tinta-tenue">Colección permanente</span>
           </span>
         </a>
 
@@ -55,12 +58,14 @@ export function Nav() {
             <a
               key={item.href}
               href={item.href}
-              className="cartela text-museo-tinta-70 transition-colors hover:text-museo-laton"
+              className="cartela text-museo-tinta-suave transition-colors hover:text-museo-laton"
             >
               {item.label}
             </a>
           ))}
         </nav>
+
+        <Interruptor />
 
         <a
           href={socials.youtube}
@@ -88,7 +93,7 @@ export function Nav() {
 
       {open && (
         <div className="border-t border-museo-linea-fina px-6 pb-5 pt-3 lg:hidden">
-          <div className="cartela mb-3 text-museo-tinta-45">Plano de salas</div>
+          <div className="cartela mb-3 text-museo-tinta-tenue">Plano de salas</div>
           <div className="grid">
             {nav.map((item, i) => (
               <a

@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { papel, tinta } from "@/lib/color";
 
 /**
  * Las piezas sueltas de la sala.
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
 /** La chapita de sala: «Sala 03 · Proyecciones». */
 export function Sala({ n, children }: { n: string; children: ReactNode }) {
   return (
-    <div className="flex items-center gap-3 text-museo-tinta-45">
+    <div className="flex items-center gap-3 text-museo-tinta-tenue">
       <span className="cartela text-museo-laton">Sala {n}</span>
       <span className="h-px w-8 bg-museo-linea" />
       <span className="cartela">{children}</span>
@@ -73,8 +74,8 @@ export function Cartela({
     <dl className={cn("grid gap-[7px]", className)}>
       {filas.map(([k, v]) => (
         <div key={k} className="grid grid-cols-[auto_1fr] items-baseline gap-x-4">
-          <dt className="cartela whitespace-nowrap text-museo-tinta-45">{k}</dt>
-          <dd className="text-[14px] leading-[1.45] text-museo-tinta-70">{v}</dd>
+          <dt className="cartela whitespace-nowrap text-museo-tinta-tenue">{k}</dt>
+          <dd className="text-[14px] leading-[1.45] text-museo-tinta-suave">{v}</dd>
         </div>
       ))}
     </dl>
@@ -99,8 +100,8 @@ export function Peana({
       className={cn("relative flex items-end justify-center overflow-hidden", className)}
       style={{
         background:
-          "linear-gradient(176deg, #efe9de 0%, #e4ddd1 62%, #d8d0c2 100%)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,.7)",
+          "linear-gradient(176deg, var(--cyp-peana-1) 0%, var(--cyp-peana-2) 62%, var(--cyp-peana-3) 100%)",
+        boxShadow: "inset 0 1px 0 var(--cyp-peana-brillo)",
         ...style,
       }}
     >
@@ -118,9 +119,9 @@ export function chipStyle(active: boolean): CSSProperties {
     fontSize: 13,
     fontWeight: 500,
     letterSpacing: ".02em",
-    border: `1px solid ${active ? "#14120f" : "rgba(20,18,15,.18)"}`,
-    background: active ? "#14120f" : "transparent",
-    color: active ? "#f7f4ef" : "rgba(20,18,15,.7)",
+    border: `1px solid ${active ? tinta() : tinta(0.18)}`,
+    background: active ? tinta() : "transparent",
+    color: active ? papel() : tinta(0.7),
     transition: "all .18s ease",
   };
 }
@@ -193,7 +194,7 @@ export function GhostButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-[2px] border border-museo-linea px-[20px] py-[13px] text-[14px] font-medium text-museo-tinta-70 transition-colors hover:border-museo-tinta hover:text-museo-tinta",
+        "rounded-[2px] border border-museo-linea px-[20px] py-[13px] text-[14px] font-medium text-museo-tinta-suave transition-colors hover:border-museo-tinta hover:text-museo-tinta",
         className
       )}
     >
@@ -252,8 +253,8 @@ export function Marco({
       className={cn(
         "border border-museo-linea bg-museo-pared transition-shadow",
         compacto
-          ? "p-[6px] shadow-[0_8px_18px_-14px_rgba(20,18,15,.5)] group-hover:shadow-[0_12px_24px_-14px_rgba(20,18,15,.55)]"
-          : "p-[11px] shadow-[0_14px_30px_-22px_rgba(20,18,15,.55)] group-hover:shadow-[0_20px_40px_-20px_rgba(20,18,15,.6)]",
+          ? "p-[6px] shadow-[0_8px_18px_-14px_var(--cyp-sombra-marco)] group-hover:shadow-[0_12px_24px_-14px_var(--cyp-sombra-marco)]"
+          : "p-[11px] shadow-[0_14px_30px_-22px_var(--cyp-sombra-marco)] group-hover:shadow-[0_20px_40px_-20px_var(--cyp-sombra-marco)]",
         className
       )}
     >
@@ -348,10 +349,10 @@ export function Thumb({
       aria-label={alt}
       role="img"
       className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center"
-      style={{ background: "linear-gradient(176deg,#efe9de,#ded6c8)" }}
+      style={{ background: "linear-gradient(176deg, var(--cyp-peana-1), var(--cyp-peana-3))" }}
     >
       <div className="h-8 w-8 rounded-full bg-museo-tinta/10" />
-      {label && <div className="cartela px-4 text-museo-tinta-45">{label}</div>}
+      {label && <div className="cartela px-4 text-museo-tinta-tenue">{label}</div>}
     </div>
   );
 }

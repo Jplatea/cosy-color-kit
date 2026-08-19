@@ -55,7 +55,7 @@ export function Hero() {
             <div className="cartela mb-5 text-museo-laton">Colección permanente · Sala 1</div>
             <h1 className="max-w-[15ch] font-display text-[52px] leading-[0.98] tracking-[-0.02em] text-museo-tinta sm:text-[76px] lg:text-[96px]">
               Dos formas blancas
-              <span className="block italic text-museo-tinta-70">haciendo el ridículo</span>
+              <span className="block italic text-museo-tinta-suave">haciendo el ridículo</span>
             </h1>
           </div>
           <Cartela
@@ -106,10 +106,11 @@ export function Hero() {
                 <span
                   key={`${pass}-${line}`}
                   aria-hidden={pass === 1 ? true : undefined}
-                  className="cartela text-museo-tinta-45"
+                  className="cartela text-museo-tinta-tenue"
                 >
                   {line}
-                  <span className="px-6 text-museo-laton">◆</span>
+                  {/* Separador, no contenido: el lector de pantalla no lo dice. */}
+                  <span aria-hidden className="px-6 text-museo-laton">◆</span>
                 </span>
               ))
             )}
@@ -134,7 +135,7 @@ export function Hero() {
                   <Icono className="h-[19px] w-[19px]" />
                 </span>
                 <span className="min-w-0">
-                  <span className="cartela block text-museo-tinta-45">{r.nombre}</span>
+                  <span className="cartela block text-museo-tinta-tenue">{r.nombre}</span>
                   <span className="block truncate font-display text-[21px] leading-tight text-museo-tinta transition-colors group-hover:text-museo-laton">
                     {r.handle}
                   </span>

@@ -37,9 +37,9 @@ export function Contacto() {
         <div>
           <Sala n="12">Préstamos y colaboraciones</Sala>
           <SectionTitle className="mb-[16px] mt-4">
-            Escríbanos al <span className="italic text-museo-tinta-70">departamento</span>
+            Escríbanos al <span className="italic text-museo-tinta-suave">departamento</span>
           </SectionTitle>
-          <p className="mb-[26px] max-w-[52ch] text-[16px] leading-[1.7] text-museo-tinta-70">
+          <p className="mb-[26px] max-w-[52ch] text-[16px] leading-[1.7] text-museo-tinta-suave">
             Si quiere que Culow abrace su producto o que Pililarge lo mire con desconfianza,
             escriba. Se contesta en cuanto Pililarge consiga sentarse.
           </p>
@@ -53,7 +53,7 @@ export function Contacto() {
                 className="group flex items-center justify-between gap-4 border-b border-museo-linea py-[15px] transition-colors hover:border-museo-tinta"
               >
                 <span className="text-[15px] text-museo-tinta">{l.label}</span>
-                <span className="cartela text-museo-tinta-45 transition-colors group-hover:text-museo-laton">
+                <span className="cartela text-museo-tinta-tenue transition-colors group-hover:text-museo-laton">
                   {l.action} →
                 </span>
               </a>
@@ -66,7 +66,7 @@ export function Contacto() {
           className="grid gap-4 border border-museo-linea bg-museo-pared p-8"
         >
           <label className="grid gap-2">
-            <span className="cartela text-museo-tinta-45">Nombre</span>
+            <span className="cartela text-museo-tinta-tenue">Nombre</span>
             <input
               type="text"
               required
@@ -77,7 +77,7 @@ export function Contacto() {
             />
           </label>
           <label className="grid gap-2">
-            <span className="cartela text-museo-tinta-45">Correo</span>
+            <span className="cartela text-museo-tinta-tenue">Correo</span>
             <input
               type="email"
               required
@@ -88,7 +88,7 @@ export function Contacto() {
             />
           </label>
           <label className="grid gap-2">
-            <span className="cartela text-museo-tinta-45">Asunto</span>
+            <span className="cartela text-museo-tinta-tenue">Asunto</span>
             <textarea
               rows={5}
               required

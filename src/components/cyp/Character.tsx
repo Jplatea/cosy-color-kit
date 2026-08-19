@@ -94,7 +94,8 @@ export function Character({
         height: 26 * s,
         marginLeft: -100 * s,
         borderRadius: "50%",
-        background: "radial-gradient(50% 50% at 50% 50%, rgba(52,42,30,.32), transparent 72%)",
+        background:
+          "radial-gradient(50% 50% at 50% 50%, var(--cyp-sombra-suelo), transparent 72%)",
         filter: "blur(7px)",
       }}
     />
