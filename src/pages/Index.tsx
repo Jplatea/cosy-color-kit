@@ -11,6 +11,7 @@ import { Visitas } from "@/components/cyp/Visitas";
 import { Contacto } from "@/components/cyp/Contacto";
 import { SiteFooter } from "@/components/cyp/SiteFooter";
 import { useSectionTracking } from "@/hooks/useVisitas";
+import { Redes } from "@/components/cyp/Redes";
 
 const Index = () => {
   useSectionTracking();
@@ -29,6 +30,7 @@ const Index = () => {
       <Visitas />
       <Contacto />
       <SiteFooter />
+            <Redes />
     </div>
   );
 };
