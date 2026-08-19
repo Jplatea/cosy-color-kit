@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CharacterId } from "@/components/cyp/Character";
+import { GUION, clipDe } from "@/lib/voces";
 
 /**
  * Voz de los personajes.
@@ -40,34 +41,59 @@ type VoicePreset = {
   prefer: RegExp[];
 };
 
+/**
+ * Los ajustes no son a ojo: salen de medir las grabaciones reales del canal
+ * (`src/assets/voces/*-muestra.mp3`) con autocorrelación, ventana a ventana.
+ *
+ *            tono medio        rango        ritmo
+ *   Culow      124 Hz       108–147 Hz    4,8 sílabas/s
+ *   Pililarge  216 Hz       191–242 Hz    4,0 sílabas/s
+ *
+ * Pililarge suena 1,74 veces más agudo que Culow, y Culow habla un 20 % más
+ * rápido. Las voces del sistema en español ya están cerca de esas frecuencias
+ * —una de hombre ronda los 118 Hz y una de mujer los 200—, así que el tono se
+ * queda pegado a 1: el trabajo lo hace elegir bien la voz, no estirarla. Antes
+ * estaba en 0,38 y 1,72, que es lo que sonaba a monstruo y a ardilla.
+ */
 export const VOICES: Record<CharacterId, VoicePreset> = {
   culow: {
     name: "Culow",
-    // Grave y basto: la frase le sale entera de un tirón y va acelerando,
-    // como quien no piensa lo que dice hasta después de haberlo dicho.
-    pitch: 0.38,
-    rate: 1.14,
+    // 124 Hz sobre una voz de hombre. Va rápido y casi no respira: suelta la
+    // frase entera de un tirón y encima acelera.
+    pitch: 1.05,
+    rate: 1.1,
     pause: 70,
     rateDrift: 0.05,
     jitter: 0.05,
-    finalPitch: -0.12,
+    finalPitch: -0.08,
     // Timbre grave.
     prefer: [/jorge/i, /pablo/i, /álvaro|alvaro/i, /diego/i, /carlos/i, /enrique/i, /male/i],
   },
   pililarge: {
     name: "Pililarge",
-    // Agudo e inocente: va despacio, se para entre trozo y trozo y termina
-    // subiendo, como si todo lo que dice fuera medio pregunta.
-    pitch: 1.72,
-    rate: 0.92,
+    // 216 Hz sobre una voz de mujer, y un 20 % más lento que Culow. Se para
+    // entre trozo y trozo y termina subiendo, como si dudara de lo que acaba
+    // de decir.
+    pitch: 1.1,
+    rate: 0.9,
     pause: 320,
     rateDrift: -0.03,
     jitter: 0.08,
-    finalPitch: 0.14,
+    finalPitch: 0.12,
     // Timbre claro y brillante.
     prefer: [/mónica|monica/i, /paulina/i, /helena/i, /laura/i, /elvira/i, /esperanza/i, /female/i],
   },
 };
+
+/**
+ * Cuánto separarlos cuando el sistema solo tiene una voz en español.
+ *
+ * Con dos voces distintas, el tono apenas hay que tocarlo. Pero en un móvil o
+ * en un Linux con una sola voz instalada, los dos sonarían exactamente igual y
+ * el diálogo dejaría de tener gracia. Entonces se estiran a mano, respetando
+ * la proporción medida entre ellos: 1,74 veces.
+ */
+const SEPARACION: Record<CharacterId, number> = { culow: 0.74, pililarge: 1.29 };
 
 export const METER_BARS = 34;
 
@@ -439,15 +465,21 @@ export function useSpeech() {
       window.speechSynthesis?.cancel();
       const run = claim();
 
-      // Un clip grabado a mano manda sobre todo lo demás.
-      if (line.audio) {
-        playClip(line.audio, who, run, onDone);
+      // Un clip grabado manda sobre todo lo demás. Puede venir dado a mano en
+      // la configuración, o estar en `src/assets/voces/` con el nombre del
+      // guion: se busca por el texto exacto, así que da igual si la frase llega
+      // de un botón, de un poema o escrita a mano en la caja.
+      const grabado =
+        line.audio ??
+        clipDe(GUION.find((toma) => toma.quien === who && toma.texto === line.text.trim())?.id);
+      if (grabado) {
+        playClip(grabado, who, run, onDone);
         return;
       }
 
-      const preset = VOICES[who];
+      const ajuste = preset(who);
       const sintetizar = () =>
-        speakSynth(line.text, who, pitch ?? preset.pitch, rate ?? preset.rate, run, onDone);
+        speakSynth(line.text, who, pitch ?? ajuste.pitch, rate ?? ajuste.rate, run, onDone);
 
       // Si ya se sabe que no hay voz real, se sintetiza sin esperar a nadie.
       if (vozRealDisponible === false) {
@@ -465,6 +497,23 @@ export function useSpeech() {
       });
     },
     [playClip, speakSynth]
+  );
+
+  /**
+   * El ajuste que toca en esta máquina. Si a los dos les ha tocado la misma
+   * voz del sistema —o solo hay una—, se separan a mano; si no, se usan los
+   * valores medidos tal cual.
+   */
+  const mismaVoz =
+    !assigned.culow || !assigned.pililarge || assigned.culow === assigned.pililarge;
+
+  const preset = useCallback(
+    (who: CharacterId): VoicePreset => {
+      const base = VOICES[who];
+      if (!mismaVoz) return base;
+      return { ...base, pitch: clampPitch(base.pitch * SEPARACION[who]) };
+    },
+    [mismaVoz]
   );
 
   const speak = useCallback(
@@ -512,5 +561,7 @@ export function useSpeech() {
     supported,
     /** Qué voz del sistema le ha tocado a cada uno (se muestra en la sección). */
     assigned,
+    /** El tono y la velocidad que tocan en esta máquina. */
+    preset,
   };
 }

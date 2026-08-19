@@ -1,6 +1,7 @@
 import { Sala, SectionTitle } from "./primitives";
 import { VOICES, useSpeech } from "@/hooks/useSpeech";
 import { poems } from "@/config/cyp";
+import { comoSeRecita } from "@/lib/voces";
 
 /**
  * Sala 7: los textos de sala.
@@ -44,7 +45,7 @@ export function Poemas() {
                 type="button"
                 // Cada verso acaba en pausa: se recita como verso, no como párrafo.
                 onClick={() =>
-                  speakLine({ who: p.voice, text: p.body.replace(/\n/g, ", "), audio: p.audio })
+                  speakLine({ who: p.voice, text: comoSeRecita(p.body), audio: p.audio })
                 }
                 className="cartela justify-self-start border-b border-museo-linea pb-[3px] text-museo-tinta-tenue transition-colors hover:border-museo-tinta hover:text-museo-tinta"
               >

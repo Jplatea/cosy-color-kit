@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { Character } from "./Character";
+import { muestraDe } from "@/lib/voces";
 import { Cartela, Peana, Sala, SectionTitle } from "./primitives";
 
 /**
@@ -38,6 +40,44 @@ const PIEZAS = [
   },
 ];
 
+/**
+ * El botón de oírlos. Suena la grabación de verdad, no el sintetizador: aquí
+ * no se trata de que digan nada concreto, sino de saber cómo suenan. Solo
+ * aparece si hay muestra puesta.
+ */
+function Escuchar({ quien, nombre }: { quien: "culow" | "pililarge"; nombre: string }) {
+  const url = muestraDe(quien);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  if (!url) return null;
+
+  const sonar = () => {
+    // Se para lo que hubiera sonando antes, incluida la otra ficha.
+    document.querySelectorAll("audio[data-muestra]").forEach((a) => {
+      const el = a as HTMLAudioElement;
+      el.pause();
+      el.currentTime = 0;
+    });
+    window.speechSynthesis?.cancel();
+    void audio.current?.play();
+  };
+
+  return (
+    <>
+      <audio ref={audio} src={url} preload="none" data-muestra />
+      <button
+        type="button"
+        onClick={sonar}
+        className="cartela mt-4 inline-flex items-center gap-2 border-b border-museo-linea pb-[3px] text-museo-tinta-tenue transition-colors hover:border-museo-tinta hover:text-museo-tinta"
+      >
+        <svg viewBox="0 0 12 12" className="h-[9px] w-[9px]" fill="currentColor" aria-hidden>
+          <path d="M2 1l9 5-9 5z" />
+        </svg>
+        Así suena {nombre}
+      </button>
+    </>
+  );
+}
+
 export function Personajes() {
   return (
     <section id="personajes" className="bg-museo-pared px-6 py-[86px] lg:px-8">
@@ -64,6 +104,7 @@ export function Personajes() {
                 <div className="cartela mt-[10px] text-museo-tinta-tenue">{p.epigrafe}</div>
                 <p className="mt-4 text-[15.5px] leading-[1.65] text-museo-tinta-suave">{p.texto}</p>
                 <Cartela className="mt-5 border-t border-museo-linea pt-4" filas={p.filas} />
+                <Escuchar quien={p.char} nombre={p.nombre} />
               </div>
             </article>
           ))}

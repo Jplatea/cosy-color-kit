@@ -10,7 +10,8 @@
     "typecheck": "tsc -b",
     "server": "node server/index.mjs",
     "start": "CYP_SERVE_DIST=1 node server/index.mjs",
-    "sync:youtube": "node scripts/sync-youtube.mjs"
+    "sync:youtube": "node scripts/sync-youtube.mjs",
+    "voces": "node scripts/voces.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

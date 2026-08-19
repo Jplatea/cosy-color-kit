@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Character, type CharacterId } from "./Character";
 import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { METER_BARS, VOICES, useSpeech } from "@/hooks/useSpeech";
@@ -16,7 +16,7 @@ import { tinta } from "@/lib/color";
  */
 export function HazlosHablar() {
   const narrow = useNarrow();
-  const { speaking, preparando, vozReal, speaker, setSpeaker, speak, stop, sayDialogue, meterRef, supported, assigned } =
+  const { speaking, preparando, vozReal, speaker, setSpeaker, speak, stop, sayDialogue, meterRef, supported, assigned, preset } =
     useSpeech();
   const [text, setText] = useState(
     "Buenas. Soy una forma blanca y hoy he descubierto la fregona."
@@ -26,9 +26,19 @@ export function HazlosHablar() {
 
   const pick = (who: CharacterId) => {
     setSpeaker(who);
-    setPitch(VOICES[who].pitch);
-    setRate(VOICES[who].rate);
+    setPitch(preset(who).pitch);
+    setRate(preset(who).rate);
   };
+
+  // Las voces del sistema llegan de forma asíncrona, y hasta que no se sabe
+  // cuáles hay no se sabe si los dos comparten voz. Cuando se resuelve, los
+  // mandos saltan al valor bueno.
+  useEffect(() => {
+    setPitch(preset(speaker).pitch);
+    setRate(preset(speaker).rate);
+    // Solo cuando cambia el reparto de voces, no en cada pulsación.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preset]);
 
   return (
     <section id="hablar" className="px-6 py-[86px] lg:px-8">
