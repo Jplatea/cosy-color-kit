@@ -149,7 +149,7 @@ export function Thumb({
     setActual(src);
   }
 
-  if (actual) {  if (src) {
+  if (actual) { 
     return (
         <img
         src={actual}
