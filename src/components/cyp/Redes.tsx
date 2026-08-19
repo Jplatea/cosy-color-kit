@@ -47,7 +47,10 @@ const PLATAFORMAS = [
 
 export function Redes() {
   return (
-    <section id="redes" className="bg-cyp-ink-soft px-6 py-[100px] lg:px-10">
+       <section
+      id="redes"
+      className="border-t border-cyp-cream/10 px-6 py-[100px] lg:px-10"
+    >
       <div className="mx-auto max-w-[1200px]">
         <Eyebrow>Donde sucede todo</Eyebrow>
         <SectionTitle className="mb-[6px] mt-3">Síguelos en todas partes</SectionTitle>
