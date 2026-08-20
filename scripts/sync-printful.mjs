@@ -21,13 +21,16 @@
  *   PRINTFUL_STORE_ID   solo si tu cuenta tiene más de una tienda
  */
 
-import { writeFile, readFile } from "node:fs/promises";
+import { writeFile, readFile, readdir, mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const AQUI = dirname(fileURLToPath(import.meta.url));
 const RAIZ = join(AQUI, "..");
 const SALIDA = join(RAIZ, "src", "config", "printful.json");
+/** Donde van las maquetas que descargas tú, una carpeta por producto. */
+const ALBUM = join(RAIZ, "public", "tienda");
+const MAX_FOTOS = 12;
 /**
  * Los precios también van a la función de cobro, escritos dentro de ella.
  *
@@ -125,6 +128,60 @@ async function colorDe(catalogo) {
 /** Los céntimos, que es como se hacen las cuentas sin decimales sueltos. */
 const centimos = (precio) => Math.round(Number(precio || 0) * 100);
 
+/**
+ * El nombre de carpeta de un producto: su primera palabra, sin adornos.
+ *
+ * «Bolsaca para el dinerete, gafitas chulas….» → `bolsaca`. Corto a propósito:
+ * esa carpeta la vas a abrir tú en el explorador para soltar fotos dentro, y
+ * un nombre largo con comas no hay quien lo teclee.
+ */
+const ranura = (nombre) =>
+  String(nombre || "")
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .split(" ")[0] || "producto";
+
+const INSTRUCCIONES = `Fotos de este producto para la tienda de la web.
+
+Deja aquí las maquetas que descargues del generador de Printful (.jpg, .png o
+.webp). Se ordenan por nombre, así que numéralas para mandar tú:
+
+    01-portada.jpg
+    02-colgado.jpg
+    03-detalle.jpg
+
+La primera es la que se ve grande; las demás salen como miniaturas debajo.
+Caben doce. Después, en la raíz del proyecto:
+
+    npm run sync:printful
+
+Este fichero lo reescribe el script en cada sincronización; no hace falta
+tocarlo.
+`;
+
+/**
+ * Las fotos que hayas dejado tú en `public/tienda/<carpeta>/`.
+ *
+ * Printful solo devuelve por su API una maqueta por producto, aunque su
+ * generador te enseñe quince. Las otras catorce se descargan de ahí y se
+ * dejan en esta carpeta; la carpeta se crea sola en cada sincronización, así
+ * que siempre está esperando.
+ *
+ * Se ordenan por nombre: numerarlas (`01-…`, `02-…`) decide en qué orden se
+ * ven y, de paso, cuál hace de portada.
+ */
+async function fotosLocales(carpeta) {
+  const dir = join(ALBUM, carpeta);
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, "LEEME.txt"), INSTRUCCIONES, "utf8");
+  const ficheros = (await readdir(dir)).filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f));
+  ficheros.sort((a, b) => a.localeCompare(b, "es", { numeric: true }));
+  return ficheros.map((f) => `/tienda/${carpeta}/${encodeURIComponent(f)}`);
+}
+
 async function main() {
   console.log("Leyendo tu tienda de Printful…");
 
@@ -160,24 +217,32 @@ async function main() {
     );
 
     /**
-     * Todas las fotos que da Printful, sin repetir.
+     * Las fotos del producto: primero las tuyas, detrás la de Printful.
      *
-     * La portada primero y detrás las vistas de cada variante: el frente, la
-     * espalda, el detalle del bordado, y con varios colores una por color. Lo
-     * que se queda fuera es el estampado a pelo, que no es una foto del
-     * producto. Se corta en seis: a partir de ahí la galería es un catálogo.
+     * De Printful **solo vale lo que viene marcado como `type: "preview"`**.
+     * Los demás ficheros de cada variante —`default`, `back`,
+     * `embroidery_chest_left`…— son los de impresión: el logo a pelo, sin
+     * prenda debajo. Se veía a simple vista en que la sudadera y la gorra
+     * enseñaban la misma imagen, que era el bordado suelto y no la prenda.
+     *
+     * Y como su API devuelve una sola maqueta por producto, aunque su
+     * generador te enseñe quince, las demás vistas las pones tú en
+     * `public/tienda/<carpeta>/`. Van delante: si te has molestado en
+     * elegirlas, mandan sobre la que trae Printful por defecto.
      */
-    const fotos = [];
+    const carpeta = ranura(detalle?.sync_product?.name ?? resumen.name);
+    const fotos = await fotosLocales(carpeta);
+    const propias = fotos.length;
     const meter = (url) => {
-      // `printfile-preview` es el estampado a pelo, sin prenda debajo. En la
-      // galería no pinta nada: quien mira quiere ver el producto, no el logo.
-      if (!url || url.includes("printfile-preview")) return;
-      if (!fotos.includes(url) && fotos.length < 6) fotos.push(url);
+      if (!url) return;
+      if (!fotos.includes(url) && fotos.length < MAX_FOTOS) fotos.push(url);
     };
-    meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
     for (const v of crudas) {
-      for (const fichero of v.files || []) meter(fichero.preview_url);
+      for (const fichero of v.files || []) {
+        if (fichero.type === "preview") meter(fichero.preview_url);
+      }
     }
+    meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
 
     productos.push({
       id: detalle?.sync_product?.id ?? resumen.id,
@@ -191,7 +256,11 @@ async function main() {
     const tallas = [...new Set(variantes.map((v) => v.talla))].join(", ");
     const gama = [...new Set(variantes.map((v) => v.color).filter(Boolean))].join(", ");
     console.log(`      ${variantes.length} variantes · tallas: ${tallas || "—"} · colores: ${gama || "—"}`);
-    console.log(`      ${fotos.length} foto(s)`);
+    console.log(
+      `      ${fotos.length} foto(s)` +
+        (propias ? ` (${propias} tuya(s))` : "") +
+        `  ·  public/tienda/${carpeta}/`
+    );
     const precios = [...new Set(variantes.map((v) => v.precio))];
     console.log(
       `      precio: ${precios.map((p) => (p / 100).toFixed(2) + " €").join(" / ") || "sin fijar"}`

@@ -77,6 +77,24 @@ solos: no hay que copiar ningún ID a mano. Los títulos se limpian de hashtags 
 Hay un workflow de GitHub Actions preparado para ejecutarlo cada día
 (`.github/workflows/sync-youtube.yml` en el repositorio original).
 
+## Las fotos de la tienda
+
+```bash
+npm run sync:printful
+```
+
+De Printful se coge **solo lo marcado como `preview`**: la foto de la prenda. Los demás
+ficheros de cada variante (`default`, `back`, `embroidery_*`) son los de impresión, o sea
+el logo a pelo sin nada debajo, y en una galería no pintan nada.
+
+Su API devuelve una sola maqueta por producto aunque su generador te enseñe quince. Las
+otras se descargan de ahí y se dejan en `public/tienda/<carpeta>/` — una por producto, con
+el nombre de su primera palabra (`bolsaca`, `sudadera`, `gorraca`, `camisetita`). Las crea
+la propia sincronización, así que siempre están esperando.
+
+Se ordenan por nombre, de modo que numerarlas decide el orden y cuál hace de portada.
+Caben doce y van **delante** de la de Printful: si te has molestado en elegirlas, mandan.
+
 ## El contador de visitas es real
 
 No hay ni un número inventado en toda la sección. `server/index.mjs` es un servidor de Node

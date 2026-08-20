@@ -148,9 +148,13 @@ export function Tienda() {
                   )}
                 </Peana>
 
-                {/* Las demás vistas, debajo. Con una sola no hay nada que elegir. */}
+                {/*
+                  Las demás vistas, debajo. Con una sola no hay nada que elegir.
+                  Se envuelven en varias filas porque de un producto puede haber
+                  una docena de maquetas y en una sola fila se saldrían.
+                */}
                 {p.fotos.length > 1 && (
-                  <div className="mt-2 flex gap-2">
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {p.fotos.map((url, i) => {
                       const activa = (foto[p.id] ?? 0) === i;
                       return (
