@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-20T11:32:08.490Z",
+  "sincronizado": "2026-08-20T11:34:10.211Z",
   "productos": [
     {
       "id": 457277860,
@@ -32,11 +32,13 @@
       "miniatura": "/tienda/sudadera/01-plana.webp",
       "fotos": [
         "/tienda/sudadera/01-plana.webp",
-        "/tienda/sudadera/02-percha.webp",
-        "/tienda/sudadera/03-puesta.webp",
-        "/tienda/sudadera/04-puesta-2.webp",
-        "/tienda/sudadera/05-detalle.webp",
-        "/tienda/sudadera/06-bordado.webp"
+        "/tienda/sudadera/02-puesta.webp",
+        "/tienda/sudadera/03-puesta-2.webp",
+        "/tienda/sudadera/04-bordado.webp",
+        "/tienda/sudadera/05-capucha.webp",
+        "/tienda/sudadera/06-puno.webp",
+        "/tienda/sudadera/07-detras.webp",
+        "/tienda/sudadera/08-plana-detras.webp"
       ],
       "variantes": [
         {
