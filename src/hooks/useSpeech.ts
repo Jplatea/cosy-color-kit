@@ -139,7 +139,24 @@ async function pedirVozReal(text: string, who: CharacterId): Promise<string | nu
     if (!res.ok) return null;
     const blob = await res.blob();
     if (!blob.type.startsWith("audio")) return null;
-    const url = URL.createObjectURL(blob);
+    let url = URL.createObjectURL(blob);
+
+    /*
+      Si el servidor ha tenido que prestarle a Pililarge la voz de Culow —lo
+      hace cuando solo hay una voz clonada, que es lo normal— lo dice por esta
+      cabecera con los semitonos que hay que subirle. Se le suben aquí, igual
+      que a las tomas grabadas.
+
+      Clonar las dos voces por separado sonaría a dos personas distintas.
+      Modulando una sola suena a lo que es: la misma, con el mando puesto.
+    */
+    const semis = Number(res.headers.get("x-cyp-modular") || 0);
+    if (semis) {
+      const subida = await modular(url, semis);
+      // Si el navegador no puede modular, mejor la voz sin subir que ninguna.
+      if (subida) url = subida;
+    }
+
     marcarVoz(true);
     cacheVoz.set(clave, url);
     return url;

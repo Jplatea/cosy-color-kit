@@ -19,7 +19,9 @@
  * Variables de entorno:
  *   ELEVENLABS_API_KEY          clave de la cuenta
  *   ELEVENLABS_VOICE_CULOW      id de la voz clonada de Culow
- *   ELEVENLABS_VOICE_PILILARGE  id de la voz clonada de Pililarge
+ *   ELEVENLABS_VOICE_PILILARGE  id de la voz de Pililarge. **Opcional**: sin
+ *                               ella se usa la de Culow y el navegador le sube
+ *                               el tono, que es como se hace en el canal
  *   ELEVENLABS_MODEL            modelo (por defecto eleven_multilingual_v2)
  *   KV_REST_API_URL / _TOKEN    Redis, para la caché y el límite (opcional)
  *
@@ -111,7 +113,25 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const quien = String(params.get("v") || "").toLowerCase();
   const texto = String(params.get("t") || "").trim();
 
-  const voz = VOCES[quien];
+  /*
+    Con clonar una sola voz basta.
+
+    Pililarge es Culow subido de tono —en el canal se lo hace un modulador—, así
+    que si no hay una voz suya se genera con la de Culow y el navegador se
+    encarga de subirla; se le dice por la cabecera cuánto. Sale más fiel que
+    clonar las dos por separado, que sonarían a dos personas distintas en vez de
+    a la misma con el mando puesto, y de paso ahorra la mitad: los dos comparten
+    el audio generado, la cuota y la caché.
+
+    El número no se importa de `src/lib/modulador.ts` aunque esté ahí: Vercel
+    empaqueta cada función por su cuenta y de al lado no llega nada. Si se
+    cambia, se cambia en los dos sitios.
+  */
+  const SEMITONOS_PILILARGE = 9.6;
+  const propia = VOCES[quien];
+  const voz = propia ?? (quien === "pililarge" ? VOCES.culow : undefined);
+  const subirTono = !propia && quien === "pililarge" ? SEMITONOS_PILILARGE : 0;
+
   if (!CLAVE || !voz) {
     return res.status(503).json({ error: "las voces reales no están configuradas" });
   }
@@ -132,6 +152,8 @@ export default async function handler(req: Peticion, res: Respuesta) {
 
   const responderAudio = (audio: Buffer) => {
     res.setHeader("content-type", "audio/mpeg");
+    // Cuánto tiene que subirlo el navegador. 0 = tal cual viene.
+    if (subirTono) res.setHeader("x-cyp-modular", String(subirTono));
     res.setHeader("content-length", String(audio.length));
     // Una frase siempre suena igual, así que se puede cachear para siempre.
     res.setHeader("cache-control", "public, max-age=31536000, s-maxage=31536000, immutable");
@@ -161,7 +183,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
       body: JSON.stringify({
         text: texto,
         model_id: MODELO,
-        voice_settings: AJUSTES[quien] || AJUSTES.culow,
+        voice_settings: (subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow,
       }),
     });
 
