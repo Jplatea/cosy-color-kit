@@ -124,7 +124,7 @@ export function Test() {
     <section id="test" className="px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 border-b border-museo-linea pb-8">
-          <Sala n="06">Sala de identificación</Sala>
+          <Sala n="07">Sala de identificación</Sala>
           <SectionTitle className="mt-4">
             ¿Con cuál de las dos <span className="italic text-museo-tinta-suave">se identifica usted</span>?
           </SectionTitle>

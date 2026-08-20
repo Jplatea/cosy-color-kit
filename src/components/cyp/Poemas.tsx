@@ -4,7 +4,7 @@ import { poems } from "@/config/cyp";
 import { comoSeRecita } from "@/lib/voces";
 
 /**
- * Sala 7: los textos de sala.
+ * Sala 8: los textos de sala.
  *
  * Los poemas se presentan como los paneles impresos que un museo cuelga junto
  * a la obra: número romano, título en cursiva y el texto centrado con mucho
@@ -21,7 +21,7 @@ export function Poemas() {
     <section id="poemas" className="px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 border-b border-museo-linea pb-8">
-          <Sala n="07">Textos de sala</Sala>
+          <Sala n="08">Textos de sala</Sala>
           <SectionTitle className="mt-4">
             Literatura de <span className="italic text-museo-tinta-suave">dudosa utilidad</span>
           </SectionTitle>

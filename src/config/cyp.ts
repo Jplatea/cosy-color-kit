@@ -30,8 +30,8 @@ export const nav = [
   { label: "Las dos piezas", href: "#personajes" },
   { label: "Audioguía", href: "#hablar" },
   { label: "Vestuario", href: "#vestidor" },
-  { label: "Tasación", href: "#subasta" },
   { label: "Tienda", href: "#tienda" },
+  { label: "Tasación", href: "#subasta" },
   { label: "Libro de visitas", href: "#visitas" },
 ] as const;
 

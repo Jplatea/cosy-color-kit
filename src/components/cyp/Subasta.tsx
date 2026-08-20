@@ -4,7 +4,7 @@ import { useSpeech } from "@/hooks/useSpeech";
 import { laton, objeto, objetoMedio, objetoSuave, tinta } from "@/lib/color";
 
 /**
- * Sala 8: la tasación.
+ * Sala 9: la tasación.
  *
  * Aquí es donde el sitio enseña del todo la carta: cuatro chorradas —una
  * fregona, un ventilador roto— tratadas con ficha técnica, procedencia y
@@ -142,7 +142,7 @@ export function Subasta() {
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-8 border-b border-museo-linea pb-8">
           <div>
-            <Sala n="08">Tasación</Sala>
+            <Sala n="09">Tasación</Sala>
             <SectionTitle className="mt-4">
               Objetos sin <span className="italic text-museo-tinta-suave">ningún valor</span>
             </SectionTitle>

@@ -25,11 +25,11 @@ const Index = () => {
       <Personajes />
       <HazlosHablar />
       <Vestidor />
+      <Tienda />
       <Test />
       <Poemas />
       <Subasta />
       <Redes />
-      <Tienda />
       <Visitas />
       <Contacto />
       <SiteFooter />

@@ -36,11 +36,11 @@ visitas solo cuenta lo de tu navegador y lo dice.
 | 03 | Las dos piezas | Quién es quién, y cómo suena cada uno |
 | 04 | Audioguía | Escribes algo y lo dice Culow o Pililarge |
 | 05 | Vestuario | 19 disfraces, y un sastre que inventa lo que le pidas |
-| 06 | Identificación | ¿Con cuál de los dos te identificas? |
-| 07 | Textos de sala | Los poemas, recitados en voz alta |
-| 08 | Tasación | Subasta de objetos sin ningún valor |
-| 09 | Otras sedes | YouTube, TikTok e Instagram |
-| 10 | Tienda | Camisetas, sudaderas, taza… fabricadas por encargo |
+| 06 | Tienda | Lo que hay en Printful, fabricado por encargo |
+| 07 | Identificación | ¿Con cuál de los dos te identificas? |
+| 08 | Textos de sala | Los poemas, recitados en voz alta |
+| 09 | Tasación | Subasta de objetos sin ningún valor |
+| 10 | Otras sedes | YouTube, TikTok e Instagram |
 | 11 | Libro de visitas | Contador real y mapa por países |
 | 12 | Préstamos | Formulario de contacto |
 

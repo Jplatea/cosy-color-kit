@@ -3,7 +3,7 @@ import { ICONOS, type RedId } from "./social-icons";
 import { handles, instagramPosts, socials } from "@/config/cyp";
 
 /**
- * Sala 9: las otras sedes.
+ * Sala 10: las otras sedes.
  *
  * Antes aquí había una rejilla de seis huecos esperando fotos de Instagram que
  * no llegaban nunca: Instagram no deja leer un perfil sin token, así que la
@@ -46,7 +46,7 @@ export function Redes() {
     <section id="redes" className="px-6 py-[86px] lg:px-8">
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 border-b border-museo-linea pb-8">
-          <Sala n="09">Otras sedes</Sala>
+          <Sala n="10">Otras sedes</Sala>
           <SectionTitle className="mt-4">
             La misma colección, <span className="italic text-museo-tinta-suave">en tres edificios</span>
           </SectionTitle>
