@@ -9,3 +9,6 @@ disenos/
 # Las carpetas de fotos de la tienda las crea sync:printful; el LEEME es
 # una nota local, no hace falta publicarla.
 public/tienda/*/LEEME.txt
+
+.vercel
+.env*

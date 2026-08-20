@@ -220,6 +220,19 @@ export default async function handler(req: Peticion, res: Respuesta) {
     // dependencia menos que mantener para tres campos.
     const params = new URLSearchParams();
     params.set("mode", "payment");
+    /*
+      Tarjeta, dicho a las claras.
+
+      Si no se dice nada, Stripe elige los métodos que tengas activados para la
+      moneda, y una cuenta recién abierta no tiene ninguno: contesta 400 con un
+      «No valid payment method types for this Checkout Session» y la web se
+      queda en «el cobro no ha respondido». Pidiendo tarjeta funciona desde el
+      primer minuto, sin tocar ajustes.
+
+      Cuando actives más métodos en el panel de Stripe —Bizum, que en España lo
+      pide mucha gente— se quita esta línea y vuelven a salir solos.
+    */
+    params.set("payment_method_types[0]", "card");
     params.set("success_url", `${origen}/?pedido=hecho`);
     params.set("cancel_url", `${origen}/#tienda`);
     params.set("shipping_address_collection[allowed_countries][0]", "ES");

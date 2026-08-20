@@ -227,22 +227,27 @@ async function main() {
      *
      * Y como su API devuelve una sola maqueta por producto, aunque su
      * generador te enseñe quince, las demás vistas las pones tú en
-     * `public/tienda/<carpeta>/`. Van delante: si te has molestado en
-     * elegirlas, mandan sobre la que trae Printful por defecto.
+     * `public/tienda/<carpeta>/`. **Si hay alguna ahí, esa es la galería
+     * entera**: la de Printful ni aparece. Es lo que hace falta para poder
+     * quitar una foto de verdad — mientras la suya siguiera colándose al
+     * final, borrar ficheros no servía de nada. Si quieres conservar la suya,
+     * guárdala en la carpeta como una más.
      */
     const carpeta = ranura(detalle?.sync_product?.name ?? resumen.name);
-    const fotos = await fotosLocales(carpeta);
-    const propias = fotos.length;
+    const propias = await fotosLocales(carpeta);
+    const fotos = [...propias];
     const meter = (url) => {
       if (!url) return;
       if (!fotos.includes(url) && fotos.length < MAX_FOTOS) fotos.push(url);
     };
-    for (const v of crudas) {
-      for (const fichero of v.files || []) {
-        if (fichero.type === "preview") meter(fichero.preview_url);
+    if (!propias.length) {
+      for (const v of crudas) {
+        for (const fichero of v.files || []) {
+          if (fichero.type === "preview") meter(fichero.preview_url);
+        }
       }
+      meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
     }
-    meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
 
     productos.push({
       id: detalle?.sync_product?.id ?? resumen.id,
@@ -258,7 +263,7 @@ async function main() {
     console.log(`      ${variantes.length} variantes · tallas: ${tallas || "—"} · colores: ${gama || "—"}`);
     console.log(
       `      ${fotos.length} foto(s)` +
-        (propias ? ` (${propias} tuya(s))` : "") +
+        (propias.length ? ` (todas tuyas)` : " (de Printful)") +
         `  ·  public/tienda/${carpeta}/`
     );
     const precios = [...new Set(variantes.map((v) => v.precio))];
