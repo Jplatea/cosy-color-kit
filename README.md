@@ -156,3 +156,32 @@ algún sitio; sin él la web se ve entera pero el libro de visitas queda en loca
 `src/assets/logo-mark.svg` es el símbolo en vectorial puro: las dos esferas de Culow y la
 barra de Pililarge. En la web se pinta en línea desde `src/components/cyp/Logo.tsx` para que
 herede el color y se pueda poner en negro, crema o latón sin duplicar ficheros.
+
+## Los pedidos llegan solos a la imprenta
+
+`api/pedido.ts` es el webhook de Stripe. Cuando alguien termina de pagar, Stripe llama ahí,
+la función mira qué se compró y a dónde va, y crea el pedido en Printful. Sin esa pieza el
+cobro funciona igual, pero los pedidos hay que copiarlos a mano.
+
+No se fía de lo que le llega, porque un webhook es una URL pública:
+
+- **Comprueba la firma** con `STRIPE_WEBHOOK_SECRET`, cuando el cuerpo llega en crudo.
+- **Y, pase lo que pase, vuelve a preguntarle a Stripe.** Del aviso solo usa el
+  identificador de la sesión; el qué y el cuánto salen de la API. Un aviso falso no puede
+  inventarse un pago que Stripe no confirme, así que este cierre basta él solo.
+- **No duplica.** Cada pedido lleva como `external_id` el de la sesión de Stripe, y Stripe
+  reintenta el aviso mientras no reciba un 200. El segundo intento se encuentra el pedido
+  ya creado y no hace nada.
+
+Variables, todas en Vercel:
+
+| Variable | Para qué |
+|---|---|
+| `STRIPE_SECRET_KEY` | La misma que usa el cobro |
+| `STRIPE_WEBHOOK_SECRET` | El secreto de firma (`whsec_…`) |
+| `PRINTFUL_API_KEY` | Token de Printful, con permiso sobre pedidos |
+| `PRINTFUL_STORE_ID` | Solo si la cuenta tiene más de una tienda |
+| `PRINTFUL_CONFIRMAR` | `1` para mandar a producción. Sin esto queda en borrador |
+
+Empieza sin `PRINTFUL_CONFIRMAR`: los pedidos entran como borrador y los confirmas tú en
+Printful, así se ve qué va a salir antes de pagarlo. Cuando te fíes, pones el `1`.
