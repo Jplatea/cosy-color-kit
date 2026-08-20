@@ -1,4 +1,4 @@
-import { LinkRule, Sala, SectionTitle, Thumb } from "./primitives";
+import { Bocadillo, LinkRule, Sala, SectionTitle, Thumb } from "./primitives";
 import { ICONOS, type RedId } from "./social-icons";
 import { handles, loDelCanal, socials, youtubeThumb } from "@/config/cyp";
 
@@ -90,20 +90,22 @@ export function Videos() {
                     caja={4 / 3}
                   />
 
-                  {/* El número de viñeta, arriba a la izquierda. */}
-                  <span className="absolute left-0 top-0 z-[2] bg-museo-tinta px-[7px] py-[3px] text-[10px] font-semibold tracking-[0.12em] text-museo-papel">
+                  <Bocadillo
+                    grande={i === 0}
+                    className={
+                      i === 0
+                        ? "left-[18px] top-[18px] max-w-[62%] group-hover:bg-museo-laton group-hover:text-museo-papel"
+                        : "left-[10px] top-[10px] max-w-[76%] group-hover:bg-museo-laton group-hover:text-museo-papel"
+                    }
+                  >
+                    {v.title}
+                  </Bocadillo>
+
+                  {/* El número, en su cartucho de esquina como en los tebeos. */}
+                  <span className="absolute bottom-0 right-0 z-[2] border-l-2 border-t-2 border-museo-tinta bg-museo-papel px-[8px] py-[3px] text-[10px] font-semibold tracking-[0.12em] text-museo-tinta">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
-                  {/* El cartucho de texto: opaco a propósito. Estos fotogramas
-                      son oscuros y un título flotando encima no se leería. */}
-                  <span
-                    className={`absolute bottom-[6px] left-[6px] right-[6px] z-[2] border border-museo-tinta bg-museo-papel px-[8px] py-[5px] leading-[1.25] text-museo-tinta transition-colors group-hover:bg-museo-laton group-hover:text-museo-papel ${
-                      i === 0 ? "text-[14px] sm:text-[16px]" : "text-[12px]"
-                    }`}
-                  >
-                    <span className="line-clamp-2 font-display">{v.title}</span>
-                  </span>
                 </a>
               );
             })}

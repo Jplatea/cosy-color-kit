@@ -49,11 +49,13 @@ type VoicePreset = {
  *   Culow      124 Hz       108–147 Hz    4,8 sílabas/s
  *   Pililarge  216 Hz       191–242 Hz    4,0 sílabas/s
  *
- * Pililarge suena 1,74 veces más agudo que Culow, y Culow habla un 20 % más
- * rápido. Las voces del sistema en español ya están cerca de esas frecuencias
- * —una de hombre ronda los 118 Hz y una de mujer los 200—, así que el tono se
- * queda pegado a 1: el trabajo lo hace elegir bien la voz, no estirarla. Antes
- * estaba en 0,38 y 1,72, que es lo que sonaba a monstruo y a ardilla.
+ * Pililarge suena 1,74 veces más agudo que Culow —9,6 semitonos exactos— y
+ * Culow habla un 20 % más rápido. Esa proporción tan redonda no es casualidad:
+ * en el canal las dos voces las pone la misma persona y a Pililarge se le sube
+ * el tono con un modulador. Por eso aquí los dos usan la MISMA voz del sistema
+ * y lo único que los separa es el tono, igual que en los vídeos. Darle a
+ * Pililarge una voz de mujer, que es lo que se hacía antes, sonaba a otra
+ * persona en vez de a Culow subido.
  */
 export const VOICES: Record<CharacterId, VoicePreset> = {
   culow: {
@@ -71,29 +73,21 @@ export const VOICES: Record<CharacterId, VoicePreset> = {
   },
   pililarge: {
     name: "Pililarge",
-    // 216 Hz sobre una voz de mujer, y un 20 % más lento que Culow. Se para
-    // entre trozo y trozo y termina subiendo, como si dudara de lo que acaba
-    // de decir.
-    pitch: 1.1,
+    // La misma voz que Culow, subida 1,74 veces: 124 Hz pasan a 216, que son
+    // los 9,6 semitonos que le mete el modulador en el canal. Además va un 20 %
+    // más lento: se para entre trozo y trozo y termina subiendo, como si dudara
+    // de lo que acaba de decir.
+    pitch: 1.74,
     rate: 0.9,
     pause: 320,
     rateDrift: -0.03,
     jitter: 0.08,
     finalPitch: 0.12,
-    // Timbre claro y brillante.
+    // No se usa: Pililarge hereda la voz de Culow. Se deja por si algún día
+    // se separan de verdad.
     prefer: [/mónica|monica/i, /paulina/i, /helena/i, /laura/i, /elvira/i, /esperanza/i, /female/i],
   },
 };
-
-/**
- * Cuánto separarlos cuando el sistema solo tiene una voz en español.
- *
- * Con dos voces distintas, el tono apenas hay que tocarlo. Pero en un móvil o
- * en un Linux con una sola voz instalada, los dos sonarían exactamente igual y
- * el diálogo dejaría de tener gracia. Entonces se estiran a mano, respetando
- * la proporción medida entre ellos: 1,74 veces.
- */
-const SEPARACION: Record<CharacterId, number> = { culow: 0.74, pililarge: 1.29 };
 
 export const METER_BARS = 34;
 
@@ -228,27 +222,23 @@ export function useSpeech() {
   }, []);
 
   /**
-   * Reparte las voces del sistema entre los dos, asegurando que no les toque
-   * la misma: media conversación se pierde si suenan idénticos.
+   * A los dos les toca la MISMA voz del sistema, y eso es a propósito.
+   *
+   * En el canal las dos voces las pone la misma persona: se graba una vez y a
+   * Pililarge se le sube el tono con un modulador. Se nota en la medida —124 Hz
+   * Culow, 216 Hz Pililarge, exactamente 1,74 veces— y explica por qué antes no
+   * se parecían: la web le daba a Pililarge una voz de mujer del sistema, así
+   * que sonaba a otra persona en vez de a Culow con el tono subido.
    */
   const assigned = useMemo(() => {
     const spanish = voices.filter((v) => /^es/i.test(v.lang));
     const pool = spanish.length ? spanish : voices;
-    const best = (who: CharacterId, taken?: SpeechSynthesisVoice) => {
-      const free = pool.filter((v) => v !== taken);
-      for (const pattern of VOICES[who].prefer) {
-        const hit = free.find((v) => pattern.test(v.name));
-        if (hit) return hit;
-      }
-      return (
-        free.find((v) => /es[-_]ES/i.test(v.lang)) ||
-        free[0] ||
-        pool[0] ||
-        null
-      );
-    };
-    const culow = best("culow");
-    return { culow, pililarge: best("pililarge", culow ?? undefined) };
+    for (const pattern of VOICES.culow.prefer) {
+      const hit = pool.find((v) => pattern.test(v.name));
+      if (hit) return { culow: hit, pililarge: hit };
+    }
+    const suelta = pool.find((v) => /es[-_]ES/i.test(v.lang)) || pool[0] || null;
+    return { culow: suelta, pililarge: suelta };
   }, [voices]);
 
   const stopMeter = useCallback(() => {
@@ -499,22 +489,8 @@ export function useSpeech() {
     [playClip, speakSynth]
   );
 
-  /**
-   * El ajuste que toca en esta máquina. Si a los dos les ha tocado la misma
-   * voz del sistema —o solo hay una—, se separan a mano; si no, se usan los
-   * valores medidos tal cual.
-   */
-  const mismaVoz =
-    !assigned.culow || !assigned.pililarge || assigned.culow === assigned.pililarge;
-
-  const preset = useCallback(
-    (who: CharacterId): VoicePreset => {
-      const base = VOICES[who];
-      if (!mismaVoz) return base;
-      return { ...base, pitch: clampPitch(base.pitch * SEPARACION[who]) };
-    },
-    [mismaVoz]
-  );
+  /** El ajuste de cada uno. Los dos comparten voz; lo que los separa es el tono. */
+  const preset = useCallback((who: CharacterId): VoicePreset => VOICES[who], []);
 
   const speak = useCallback(
     (text: string, who: CharacterId, pitch?: number, rate?: number, audio?: string) =>

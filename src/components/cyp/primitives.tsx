@@ -263,6 +263,58 @@ export function Marco({
   );
 }
 
+/**
+ * Un bocadillo de cómic.
+ *
+ * Papel opaco con filete grueso y su rabito apuntando hacia abajo, que es de
+ * donde saldría la voz. Va opaco a propósito: los fotogramas del canal son casi
+ * negros y un texto flotando encima no se leería.
+ *
+ * El rabito son dos triángulos, uno encima del otro: el de abajo con el color
+ * del filete y el de arriba con el del relleno, un poco más pequeño y
+ * desplazado. Así el rabito queda perfilado igual que el globo, que es lo que
+ * lo hace parecer un bocadillo y no una pestaña pegada.
+ */
+export function Bocadillo({
+  children,
+  className,
+  grande = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** En la viñeta grande cabe más texto y aguanta más cuerpo de letra. */
+  grande?: boolean;
+}) {
+  return (
+    <span
+      className={cn(
+        "absolute z-[2] rounded-[18px] border-2 border-museo-tinta bg-museo-papel text-museo-tinta transition-colors",
+        grande ? "px-[14px] py-[9px]" : "px-[10px] py-[6px]",
+        className
+      )}
+    >
+      <span
+        className={cn(
+          "block font-display leading-[1.2]",
+          grande ? "line-clamp-3 text-[17px] sm:text-[21px]" : "line-clamp-2 text-[12.5px]"
+        )}
+      >
+        {children}
+      </span>
+
+      {/* El rabito: primero el filete, luego el relleno encima. */}
+      <span
+        aria-hidden
+        className="absolute left-[22px] top-full h-0 w-0 border-l-[9px] border-r-[13px] border-t-[15px] border-l-transparent border-r-transparent border-t-museo-tinta"
+      />
+      <span
+        aria-hidden
+        className="absolute left-[25px] top-[calc(100%-3px)] h-0 w-0 border-l-[6px] border-r-[9px] border-t-[11px] border-l-transparent border-r-transparent border-t-museo-papel"
+      />
+    </span>
+  );
+}
+
 /** Lo que `npm run sync:youtube` mide de cada miniatura. */
 export type Encuadre = {
   /** Qué parte de la altura ocupan los personajes, de 0 a 1. */
