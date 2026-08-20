@@ -39,14 +39,39 @@ const VOCES: Record<string, string | undefined> = {
 };
 
 /**
- * Cómo habla cada uno. El tono y la velocidad no se tocan aquí —los trae la
- * voz clonada—, pero sí cuánto se le deja improvisar: Culow va suelto y
- * expresivo, Pililarge más plano y quieto, que es justo su gracia.
+ * Cómo habla cada uno.
+ *
+ * El tono y el timbre los trae la voz clonada; aquí solo se decide cuánta
+ * cuerda se le deja. Y esa cuerda es exactamente lo que se comía el acento.
+ *
+ * **`style` va a cero, y no es negociable.** Es el mando de «exagera la
+ * interpretación», y para exagerar el modelo se separa de la muestra: se
+ * inventa entonaciones que no están en ella y arrastra la pronunciación hacia
+ * el español neutro de la mayoría de sus datos, que es latino. Estaba en 0,5
+ * para Culow y por eso sonaba a Latinoamérica por mucho que la muestra fuera
+ * andaluza.
+ *
+ * **`similarity_boost` bien alto**, por lo mismo pero al revés: es cuánto se
+ * agarra a la referencia, y el acento viaja ahí.
+ *
+ * Queda `stability`, que es el único margen expresivo. Muy baja se desmadra
+ * —y al desmadrarse también deriva de acento—; muy alta sale un locutor de
+ * telediario. Culow un poco más suelto que Pililarge, que la gracia de
+ * Pililarge es lo plano que suena.
  */
 const AJUSTES: Record<string, Record<string, number | boolean>> = {
-  culow: { stability: 0.34, similarity_boost: 0.82, style: 0.5, use_speaker_boost: true },
-  pililarge: { stability: 0.58, similarity_boost: 0.8, style: 0.32, use_speaker_boost: true },
+  culow: { stability: 0.45, similarity_boost: 0.95, style: 0, use_speaker_boost: true },
+  pililarge: { stability: 0.55, similarity_boost: 0.95, style: 0, use_speaker_boost: true },
 };
+
+/**
+ * Cambia cuando cambian los ajustes de arriba, y entra en la llave de la caché.
+ *
+ * Sin esto, tocar `style` no servía de nada: la frase ya generada seguía
+ * saliendo de Redis con el acento viejo durante los dos meses que dura la
+ * caché, y uno se vuelve loco creyendo que el ajuste no hace nada.
+ */
+const VERSION_AJUSTES = "v2-sin-style";
 
 const MAX_CARACTERES = 300;
 /** Peticiones por visitante y hora. Generoso para jugar, corto para abusar. */
@@ -146,7 +171,10 @@ export default async function handler(req: Peticion, res: Respuesta) {
     return res.status(403).json({ error: "origen no permitido" });
   }
 
-  const hash = createHash("sha256").update(`${voz}|${MODELO}|${texto}`).digest("hex").slice(0, 32);
+  const hash = createHash("sha256")
+    .update(`${voz}|${MODELO}|${VERSION_AJUSTES}|${texto}`)
+    .digest("hex")
+    .slice(0, 32);
   const llave = `cyp:voz:${hash}`;
 
   const responderAudio = (audio: Buffer) => {
