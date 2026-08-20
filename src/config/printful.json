@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-20T11:34:10.211Z",
+  "sincronizado": "2026-08-20T11:53:48.984Z",
   "productos": [
     {
       "id": 457277860,
@@ -9,8 +9,7 @@
         "/tienda/bolsaca/01-plana.webp",
         "/tienda/bolsaca/02-en-mano.webp",
         "/tienda/bolsaca/03-persona.webp",
-        "/tienda/bolsaca/04-de-lado.webp",
-        "/tienda/bolsaca/05-pared.webp"
+        "/tienda/bolsaca/04-de-lado.webp"
       ],
       "variantes": [
         {
@@ -33,7 +32,6 @@
       "fotos": [
         "/tienda/sudadera/01-plana.webp",
         "/tienda/sudadera/02-puesta.webp",
-        "/tienda/sudadera/03-puesta-2.webp",
         "/tienda/sudadera/04-bordado.webp",
         "/tienda/sudadera/05-capucha.webp",
         "/tienda/sudadera/06-puno.webp",
