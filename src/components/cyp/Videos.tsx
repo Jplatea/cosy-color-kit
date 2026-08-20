@@ -1,4 +1,5 @@
 import { Bocadillo, LinkRule, Sala, SectionTitle, Thumb } from "./primitives";
+import { FORMAS, Onomatopeya, RUIDOS, TRAMA, Vineta } from "./comic";
 import { ICONOS, type RedId } from "./social-icons";
 import { handles, loDelCanal, socials, youtubeThumb } from "@/config/cyp";
 
@@ -63,9 +64,12 @@ export function Videos() {
           <LinkRule href={socials.youtubeVideos}>Ver el catálogo completo →</LinkRule>
         </div>
 
-        {/* La página. El borde grueso es el papel; las calles, el fondo. */}
-        <div className="border-[3px] border-museo-tinta bg-museo-tinta p-[3px]">
-          <div className="grid grid-cols-2 gap-[3px] sm:aspect-[4/3] sm:grid-cols-6 sm:grid-rows-3">
+        {/* La página: filete grueso alrededor y trama de puntos en las calles. */}
+        <div
+          className="border-[3px] border-museo-tinta p-[10px]"
+          style={{ background: `${TRAMA}, rgb(var(--cyp-papel))` }}
+        >
+          <div className="grid grid-cols-2 gap-[10px] sm:aspect-[4/3] sm:grid-cols-6 sm:grid-rows-3">
             {piezas.map((v, i) => {
               const img = v.image || youtubeThumb(v.youtubeId, v.vertical ?? true);
               const href = v.youtubeId
@@ -74,49 +78,61 @@ export function Videos() {
                   : `https://www.youtube.com/watch?v=${v.youtubeId}`
                 : socials.youtubeVideos;
 
+              const ruido = RUIDOS[i];
+
               return (
-                <a
+                <Vineta
                   key={`${v.youtubeId || v.title}-${i}`}
-                  href={href}
-                  target="_blank"
-                  rel="noopener"
-                  className={`group relative aspect-[4/3] overflow-hidden bg-museo-peana sm:aspect-auto ${VINETAS[i]}`}
+                  forma={FORMAS[i]}
+                  className={`group aspect-[4/3] sm:aspect-auto ${VINETAS[i]}`}
                 >
-                  <Thumb
-                    src={img}
-                    alt={v.title}
-                    label="Sin miniatura"
-                    encuadre={v}
-                    caja={4 / 3}
-                  />
+                  <a href={href} target="_blank" rel="noopener" className="absolute inset-0 block">
+                    <Thumb
+                      src={img}
+                      alt={v.title}
+                      label="Sin miniatura"
+                      encuadre={v}
+                      caja={4 / 3}
+                    />
 
-                  <Bocadillo
-                    grande={i === 0}
-                    className={
-                      i === 0
-                        ? "left-[18px] top-[18px] max-w-[62%] group-hover:bg-museo-laton group-hover:text-museo-papel"
-                        : "left-[10px] top-[10px] max-w-[76%] group-hover:bg-museo-laton group-hover:text-museo-papel"
-                    }
-                  >
-                    {v.title}
-                  </Bocadillo>
+                    {ruido && (
+                      <Onomatopeya
+                        texto={ruido.texto}
+                        className={ruido.className}
+                        giro={ruido.giro}
+                      />
+                    )}
 
-                  {/* El número, en su cartucho de esquina como en los tebeos. */}
-                  <span className="absolute bottom-0 right-0 z-[2] border-l-2 border-t-2 border-museo-tinta bg-museo-papel px-[8px] py-[3px] text-[10px] font-semibold tracking-[0.12em] text-museo-tinta">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                    <Bocadillo
+                      grande={i === 0}
+                      className={
+                        i === 0
+                          ? "left-[20px] top-[20px] max-w-[58%]"
+                          : "left-[12px] top-[12px] max-w-[74%]"
+                      }
+                    >
+                      {v.title}
+                    </Bocadillo>
 
-                </a>
+                    {/* El número, en su cartucho de esquina como en los tebeos. */}
+                    <span className="absolute bottom-0 right-0 z-[3] border-l-[3px] border-t-[3px] border-museo-tinta bg-museo-papel px-[9px] pb-[2px] pt-[4px] font-comic text-[15px] leading-none tracking-[0.06em] text-museo-tinta">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </a>
+                </Vineta>
               );
             })}
           </div>
         </div>
 
         {/* La última viñeta, que en realidad es la puerta de salida. */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-6 border border-museo-linea px-6 py-5">
+        <div
+          className="mt-6 flex flex-wrap items-center justify-between gap-6 border-[3px] border-museo-tinta px-6 py-5"
+          style={{ background: `${TRAMA}, rgb(var(--cyp-papel))` }}
+        >
           <div>
-            <div className="font-display text-[26px] italic leading-none text-museo-tinta">
-              Continuará…
+            <div className="font-comic text-[38px] leading-none tracking-[0.02em] text-museo-tinta">
+              ¡Continuará!
             </div>
             <p className="mt-2 text-[14px] text-museo-tinta-suave">
               El resto está colgado en las tres casas. Aquí solo caben seis.
@@ -132,10 +148,10 @@ export function Videos() {
                   href={r.href}
                   target="_blank"
                   rel="noopener"
-                  className="group flex items-center gap-[10px] border border-museo-linea px-[14px] py-[9px] transition-colors hover:border-museo-tinta hover:bg-museo-tinta"
+                  className="group flex items-center gap-[10px] border-2 border-museo-tinta bg-museo-papel px-[14px] py-[8px] transition-colors hover:bg-museo-tinta"
                 >
                   <Icono className="h-[17px] w-[17px] text-museo-tinta transition-colors group-hover:text-museo-papel" />
-                  <span className="cartela text-museo-tinta-suave transition-colors group-hover:text-museo-papel">
+                  <span className="font-comic text-[17px] leading-none tracking-[0.04em] text-museo-tinta transition-colors group-hover:text-museo-papel">
                     {r.nombre}
                   </span>
                 </a>

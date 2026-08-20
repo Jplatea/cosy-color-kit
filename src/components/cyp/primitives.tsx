@@ -295,8 +295,8 @@ export function Bocadillo({
     >
       <span
         className={cn(
-          "block font-display leading-[1.2]",
-          grande ? "line-clamp-3 text-[17px] sm:text-[21px]" : "line-clamp-2 text-[12.5px]"
+          "block font-comic leading-[1.05] tracking-[0.03em]",
+          grande ? "line-clamp-3 text-[22px] sm:text-[30px]" : "line-clamp-2 text-[16px]"
         )}
       >
         {children}

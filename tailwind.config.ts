@@ -11,6 +11,9 @@ export default {
         display: ["Instrument Serif", "Georgia", "Times New Roman", "serif"],
         // Grotesca neutra para lo que en un museo va impreso en pequeño.
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        // Rotulación de tebeo. Solo se usa en la sala 2, que es una página de
+        // cómic; en el resto del museo desentonaría, y ese es justo el chiste.
+        comic: ["Bangers", "Impact", "Haettenschweiler", "sans-serif"],
       },
       colors: {
         /**
