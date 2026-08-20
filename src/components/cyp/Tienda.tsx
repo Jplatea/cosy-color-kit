@@ -159,7 +159,7 @@ export function Tienda() {
                   <p className="mt-2 text-[13.5px] leading-[1.55] text-museo-tinta-suave">{p.ficha}</p>
                   <p className="cartela mt-2 text-museo-tinta-tenue">
                     {diseno.nombre} · {color.nombre}
-                    {p.tallas[0] !== "UNICA" ? ` · ${NOMBRE_TALLA(e.talla)}` : ""}
+                    {e.talla !== "UNICA" ? ` · ${NOMBRE_TALLA(e.talla)}` : ""}
                   </p>
                 </div>
 
@@ -202,7 +202,12 @@ export function Tienda() {
                       </div>
                     </div>
 
-                    {p.tallas[0] !== "UNICA" && (
+                    {/*
+                      Con una sola talla el selector no elige nada: es un botón
+                      que ya está pulsado. La medida se sigue viendo en la línea
+                      de debajo del título, que es donde informa sin estorbar.
+                    */}
+                    {p.tallas.length > 1 && (
                       <div className="grid gap-[8px]">
                         <span className="cartela text-museo-tinta-tenue">Talla</span>
                         <div className="flex flex-wrap gap-[7px]">

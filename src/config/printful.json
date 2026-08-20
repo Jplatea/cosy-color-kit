@@ -1,6 +1,24 @@
 {
-  "sincronizado": "2026-08-20T10:03:55.885Z",
+  "sincronizado": "2026-08-20T10:20:13.517Z",
   "productos": [
+    {
+      "id": 457277860,
+      "nombre": "Bolsaca para el dinerete, gafitas chulas....",
+      "miniatura": "https://files.cdn.printful.com/files/087/0879b0a4dfaea114aa1de23e02cd598f_preview.png",
+      "variantes": [
+        {
+          "id": 5449680122,
+          "catalogo": 8905,
+          "nombre": "Bolsaca para el dinerete, gafitas chulas....",
+          "talla": "15″×15″",
+          "color": "Yellow",
+          "precio": 1850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#de9219"
+        }
+      ]
+    },
     {
       "id": 457271888,
       "nombre": "Sudadera to perita de cuello como si llevaras collarin",
