@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CharacterId } from "@/components/cyp/Character";
 import { GUION, clipDe } from "@/lib/voces";
+import { SEMITONOS_PILILARGE, modular } from "@/lib/modulador";
 
 /**
  * Voz de los personajes.
@@ -195,6 +196,32 @@ export function useSpeech() {
   const [speaker, setSpeaker] = useState<CharacterId>("culow");
   const [supported, setSupported] = useState(true);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+
+  /*
+    Las tomas de Pililarge se van cocinando en cuanto la página está tranquila.
+
+    Modular un clip cuesta cerca de un segundo, y hacerlo en el momento en que
+    alguien pulsa el botón se nota. Aquí se hace antes, de una en una y en los
+    ratos muertos, así que cuando llega el clic ya está esperando. Lo que salga
+    se queda guardado dentro del propio modulador; esto solo le da el empujón.
+  */
+  useEffect(() => {
+    const ocioso =
+      (window as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ??
+      ((cb: () => void) => window.setTimeout(cb, 1200));
+    let vivo = true;
+    ocioso(async () => {
+      for (const toma of GUION) {
+        if (!vivo) return;
+        if (toma.quien !== "culow") continue;
+        const url = clipDe(toma.id);
+        if (url) await modular(url, SEMITONOS_PILILARGE);
+      }
+    });
+    return () => {
+      vivo = false;
+    };
+  }, []);
 
   const meterRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | undefined>(undefined);
@@ -470,6 +497,33 @@ export function useSpeech() {
       const ajuste = preset(who);
       const sintetizar = () =>
         speakSynth(line.text, who, pitch ?? ajuste.pitch, rate ?? ajuste.rate, run, onDone);
+
+      /*
+        Pililarge es Culow subido de tono, así que su grabación ya existe:
+        es la de Culow pasada por el modulador.
+
+        Todas las tomas del guion están puestas a nombre de Culow —es quien
+        viene elegido de fábrica en la audioguía—, con lo que al cambiar de
+        personaje se perdía la voz de verdad y se caía a la síntesis. Se notaba
+        muchísimo: la misma frase sonaba a ellos con uno y a robot con el otro.
+        Ahora se coge esa misma toma y se le suben los 9,6 semitonos que los
+        separan, igual que en los vídeos.
+      */
+      if (who === "pililarge") {
+        const deCulow = clipDe(
+          GUION.find((toma) => toma.quien === "culow" && toma.texto === line.text.trim())?.id
+        );
+        if (deCulow) {
+          setPreparando(true);
+          void modular(deCulow, SEMITONOS_PILILARGE).then((url) => {
+            setPreparando(false);
+            if (!holdsFloor(run)) return;
+            if (url) playClip(url, who, run, onDone);
+            else sintetizar();
+          });
+          return;
+        }
+      }
 
       // Si ya se sabe que no hay voz real, se sintetiza sin esperar a nadie.
       if (vozRealDisponible === false) {
