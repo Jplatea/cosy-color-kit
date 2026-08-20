@@ -52,11 +52,11 @@ export type Producto = {
   /** clave `color/talla/diseño` -> id de variante de Printful. */
   variantes: Record<string, number>;
   /**
-   * La foto de la prenda que da Printful. Cuando existe manda sobre el dibujo:
-   * es la imagen real de lo que se recibe, y en una tienda eso importa más que
-   * la coherencia del estilo.
+   * Las fotos que da Printful. Cuando hay, mandan sobre el dibujo: son la
+   * imagen real de lo que se recibe, y en una tienda eso importa más que la
+   * coherencia del estilo. La primera es la portada.
    */
-  foto?: string;
+  fotos: string[];
 };
 
 /** La clave con la que se busca la variante de imprenta. */
@@ -134,6 +134,7 @@ type ProductoPF = {
   id: number;
   nombre: string;
   miniatura?: string;
+  fotos?: string[];
   variantes: VariantePF[];
 };
 
@@ -189,9 +190,7 @@ function deLaImprenta(): Producto[] {
         colores,
         disenos: [diseno],
         variantes,
-        // Solo se pone si existe: con `foto: undefined` el campo pasa a ser
-        // obligatorio-pero-vacío y deja de encajar con el tipo.
-        ...(p.miniatura ? { foto: p.miniatura } : {}),
+        fotos: p.fotos?.length ? p.fotos : p.miniatura ? [p.miniatura] : [],
       } satisfies Producto;
     })
     .filter((p): p is Producto => p !== null);
@@ -230,6 +229,7 @@ const MUESTRA: Producto[] = (
   disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"] as DisenoId[],
   variantes: {},
   precios: {},
+  fotos: [],
 }));
 
 const deImprenta = deLaImprenta();

@@ -24,12 +24,15 @@
  * función. Vive aquí y no en `src/` porque Vercel empaqueta cada función con lo
  * que cuelga de ella: importar el catálogo del frontend rompería en producción.
  *
+ * Y es un módulo, no un JSON. Con un `import` de JSON la función reventaba con
+ * FUNCTION_INVOCATION_FAILED —el empaquetador no se llevaba el fichero—; un
+ * import de código sí se sigue. El guion bajo del nombre evita además que
+ * Vercel lo tome por un endpoint y publique la tabla en `/api/precios`.
+ *
  * Se busca por id de variante, que es lo único que manda el navegador. El
  * importe sale siempre de aquí.
  */
-import tabla from "./precios.json";
-
-const PRECIOS = (tabla?.precios ?? {}) as Record<string, { nombre: string; precio: number }>;
+import { PRECIOS } from "./_precios";
 
 const ENVIO = { precio: 490, gratisDesde: 6000 };
 const MAX_UNIDADES = 20;

@@ -1,10 +1,14 @@
 {
-  "sincronizado": "2026-08-20T10:20:13.517Z",
+  "sincronizado": "2026-08-20T10:25:37.783Z",
   "productos": [
     {
       "id": 457277860,
       "nombre": "Bolsaca para el dinerete, gafitas chulas....",
       "miniatura": "https://files.cdn.printful.com/files/087/0879b0a4dfaea114aa1de23e02cd598f_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/087/0879b0a4dfaea114aa1de23e02cd598f_preview.png",
+        "https://files.cdn.printful.com/printfile-preview/1041448143/8bbe50bdeb21a14e2f16574de274b6d9_preview.png"
+      ],
       "variantes": [
         {
           "id": 5449680122,
@@ -23,6 +27,10 @@
       "id": 457271888,
       "nombre": "Sudadera to perita de cuello como si llevaras collarin",
       "miniatura": "https://files.cdn.printful.com/files/b27/b275b0ec75d8450aaf7e34086006c5f8_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/b27/b275b0ec75d8450aaf7e34086006c5f8_preview.png",
+        "https://files.cdn.printful.com/files/34e/34e5a7896652a91559e029064bb958f7_preview.png"
+      ],
       "variantes": [
         {
           "id": 5449668444,
@@ -107,6 +115,10 @@
       "id": 457271468,
       "nombre": "Gorraca para aparcar coches como un pro",
       "miniatura": "https://files.cdn.printful.com/files/dcb/dcb5949dfa31fc3a8eb30162935160e5_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/dcb/dcb5949dfa31fc3a8eb30162935160e5_preview.png",
+        "https://files.cdn.printful.com/files/34e/34e5a7896652a91559e029064bb958f7_preview.png"
+      ],
       "variantes": [
         {
           "id": 5449667542,
@@ -136,6 +148,11 @@
       "id": 457099259,
       "nombre": "Camisetita para ver a tus Bros en el padel",
       "miniatura": "https://files.cdn.printful.com/files/997/997bcc366105a0b21d730ced904c1ff0_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/997/997bcc366105a0b21d730ced904c1ff0_preview.png",
+        "https://files.cdn.printful.com/files/c32/c326a236f9646686e192ac3e9cdb055a_preview.png",
+        "https://files.cdn.printful.com/files/c44/c4491ff94bd573dce158d80de3c5247f_preview.png"
+      ],
       "variantes": [
         {
           "id": 5449158693,

@@ -35,8 +35,14 @@ const SALIDA = join(RAIZ, "src", "config", "printful.json");
  * petición, cualquiera compraría una camiseta por un céntimo cambiando un
  * número en el inspector. Y tiene que vivir dentro de `api/` porque Vercel
  * empaqueta cada función con lo que cuelga de ella y nada más.
+ *
+ * Es un módulo TypeScript y no un JSON, y el nombre empieza por guion bajo por
+ * dos motivos distintos. El JSON no llegaba: la función reventaba en producción
+ * con FUNCTION_INVOCATION_FAILED porque el empaquetador no se lo llevaba
+ * consigo, mientras que un import de código sí se sigue. Y el guion bajo evita
+ * que Vercel lo tome por un endpoint más y publique la tabla en `/api/precios`.
  */
-const SALIDA_API = join(RAIZ, "api", "precios.json");
+const SALIDA_API = join(RAIZ, "api", "_precios.ts");
 
 /** Lee `.env.local` sin depender de nada: son cuatro líneas de `CLAVE=valor`. */
 async function claveDelEntorno(nombre) {
@@ -155,10 +161,27 @@ async function main() {
       }))
     );
 
+    /**
+     * Todas las fotos que da Printful, sin repetir.
+     *
+     * La portada primero, y detrás las vistas previas de cada variante: la del
+     * mockup y la del estampado suelto. Con varios colores salen más, una por
+     * color. Se corta en seis: a partir de ahí la galería es un catálogo.
+     */
+    const fotos = [];
+    const meter = (url) => {
+      if (url && !fotos.includes(url) && fotos.length < 6) fotos.push(url);
+    };
+    meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
+    for (const v of crudas) {
+      for (const fichero of v.files || []) meter(fichero.preview_url);
+    }
+
     productos.push({
       id: detalle?.sync_product?.id ?? resumen.id,
       nombre: detalle?.sync_product?.name ?? resumen.name,
-      miniatura: detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url ?? "",
+      miniatura: fotos[0] ?? "",
+      fotos,
       variantes,
     });
 
@@ -166,6 +189,7 @@ async function main() {
     const tallas = [...new Set(variantes.map((v) => v.talla))].join(", ");
     const gama = [...new Set(variantes.map((v) => v.color).filter(Boolean))].join(", ");
     console.log(`      ${variantes.length} variantes · tallas: ${tallas || "—"} · colores: ${gama || "—"}`);
+    console.log(`      ${fotos.length} foto(s)`);
     const precios = [...new Set(variantes.map((v) => v.precio))];
     console.log(
       `      precio: ${precios.map((p) => (p / 100).toFixed(2) + " €").join(" / ") || "sin fijar"}`
@@ -188,7 +212,18 @@ async function main() {
       };
     }
   }
-  await writeFile(SALIDA_API, `${JSON.stringify({ precios }, null, 2)}\n`, "utf8");
+  const cabecera = [
+    "/**",
+    " * Precios de la tienda, por id de variante de Printful.",
+    " *",
+    " * Generado por `npm run sync:printful`. No se edita a mano: se vuelve a",
+    " * sincronizar. Lo lee `checkout.ts` para cotizar cada línea del pedido sin",
+    " * fiarse de lo que mande el navegador.",
+    " */",
+    "",
+    "export const PRECIOS: Record<string, { nombre: string; precio: number }> =",
+  ].join("\n");
+  await writeFile(SALIDA_API, `${cabecera} ${JSON.stringify(precios, null, 2)};\n`, "utf8");
 
   console.log(`\nEscrito en ${SALIDA}`);
   console.log(`Y la tabla de precios del cobro en ${SALIDA_API}`);

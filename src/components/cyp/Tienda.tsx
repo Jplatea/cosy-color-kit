@@ -3,6 +3,7 @@ import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./prim
 import { Prenda } from "./prendas";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
+import { tinta } from "@/lib/color";
 import {
   ENVIO,
   NOMBRE_TALLA,
@@ -40,6 +41,8 @@ const porDefecto = (p: Producto): Eleccion => ({
 
 export function Tienda() {
   const [abierto, setAbierto] = useState<string | null>(null);
+  /** Qué foto de la galería se está mirando, por producto. */
+  const [foto, setFoto] = useState<Record<string, number>>({});
   const [eleccion, setEleccion] = useState<Record<string, Eleccion>>({});
   const [estado, setEstado] = useState<"quieto" | "yendo" | "cerrada" | "error">("quieto");
   const cesta = useCesta();
@@ -122,15 +125,15 @@ export function Tienda() {
             return (
               <article key={p.id} className="flex flex-col">
                 {/*
-                  La foto de Printful manda sobre el dibujo cuando existe: es la
-                  imagen real de lo que se recibe, y en una tienda eso pesa más
-                  que la coherencia del estilo. El dibujo se queda de reserva
-                  para lo que aún no tenga foto.
+                  Las fotos de Printful mandan sobre el dibujo: son la imagen
+                  real de lo que se recibe, y en una tienda eso pesa más que la
+                  coherencia del estilo. El dibujo se queda de reserva para lo
+                  que aún no tenga foto.
                 */}
                 <Peana className="rounded-[3px] border border-museo-linea p-4">
-                  {p.foto ? (
+                  {p.fotos.length ? (
                     <img
-                      src={p.foto}
+                      src={p.fotos[Math.min(foto[p.id] ?? 0, p.fotos.length - 1)]}
                       alt={`${p.nombre} en ${color.nombre}`}
                       loading="lazy"
                       className="h-[230px] w-full object-contain"
@@ -146,6 +149,33 @@ export function Tienda() {
                     />
                   )}
                 </Peana>
+
+                {/* Las demás vistas, debajo. Con una sola no hay nada que elegir. */}
+                {p.fotos.length > 1 && (
+                  <div className="mt-2 flex gap-2">
+                    {p.fotos.map((url, i) => {
+                      const activa = (foto[p.id] ?? 0) === i;
+                      return (
+                        <button
+                          key={url}
+                          type="button"
+                          onClick={() => setFoto((v) => ({ ...v, [p.id]: i }))}
+                          aria-label={`Vista ${i + 1} de ${p.nombre}`}
+                          aria-pressed={activa}
+                          className="h-[54px] w-[54px] shrink-0 border bg-museo-peana p-[3px] transition-colors"
+                          style={{ borderColor: activa ? tinta() : tinta(0.16) }}
+                        >
+                          <img
+                            src={url}
+                            alt=""
+                            loading="lazy"
+                            className="h-full w-full object-contain"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
 
                 <div className="mt-4 flex-1 border-t border-museo-tinta pt-3">
                   <div className="flex items-baseline justify-between gap-3">
@@ -172,6 +202,14 @@ export function Tienda() {
                   </GhostButton>
                 ) : (
                   <div className="mt-4 grid gap-[14px] border border-museo-linea p-[14px]">
+                    {/*
+                      Estampado y color vienen dados por el producto de Printful:
+                      cada uno es un diseño sobre un tejido concreto. Ofrecerlos
+                      cuando solo hay una opción es pedir que elijan entre una
+                      cosa, y encima da a entender que cambiarlo cambia lo que se
+                      fabrica, que no es verdad.
+                    */}
+                    {p.disenos.length > 1 && (
                     <div className="grid gap-[8px]">
                       <span className="cartela text-museo-tinta-tenue">Estampado</span>
                       <div className="flex flex-wrap gap-[7px]">
@@ -186,7 +224,9 @@ export function Tienda() {
                         ))}
                       </div>
                     </div>
+                    )}
 
+                    {p.colores.length > 1 && (
                     <div className="grid gap-[8px]">
                       <span className="cartela text-museo-tinta-tenue">Color</span>
                       <div className="flex flex-wrap gap-[7px]">
@@ -201,6 +241,7 @@ export function Tienda() {
                         ))}
                       </div>
                     </div>
+                    )}
 
                     {/*
                       Con una sola talla el selector no elige nada: es un botón
@@ -276,9 +317,9 @@ export function Tienda() {
                     key={`${linea.producto}-${linea.color}-${linea.talla}-${linea.diseno}`}
                     className="flex flex-wrap items-center gap-4 border-b border-museo-linea py-4"
                   >
-                    {producto.foto ? (
+                    {producto.fotos.length ? (
                       <img
-                        src={producto.foto}
+                        src={producto.fotos[0]}
                         alt={producto.nombre}
                         loading="lazy"
                         className="h-[54px] w-[54px] shrink-0 object-contain"
