@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-20T11:25:55.942Z",
+  "sincronizado": "2026-08-20T11:32:08.490Z",
   "productos": [
     {
       "id": 457277860,
@@ -29,9 +29,14 @@
     {
       "id": 457271888,
       "nombre": "Sudadera to perita de cuello como si llevaras collarin",
-      "miniatura": "https://files.cdn.printful.com/files/b27/b275b0ec75d8450aaf7e34086006c5f8_preview.png",
+      "miniatura": "/tienda/sudadera/01-plana.webp",
       "fotos": [
-        "https://files.cdn.printful.com/files/b27/b275b0ec75d8450aaf7e34086006c5f8_preview.png"
+        "/tienda/sudadera/01-plana.webp",
+        "/tienda/sudadera/02-percha.webp",
+        "/tienda/sudadera/03-puesta.webp",
+        "/tienda/sudadera/04-puesta-2.webp",
+        "/tienda/sudadera/05-detalle.webp",
+        "/tienda/sudadera/06-bordado.webp"
       ],
       "variantes": [
         {
@@ -116,9 +121,14 @@
     {
       "id": 457271468,
       "nombre": "Gorraca para aparcar coches como un pro",
-      "miniatura": "https://files.cdn.printful.com/files/dcb/dcb5949dfa31fc3a8eb30162935160e5_preview.png",
+      "miniatura": "/tienda/gorraca/01-escritorio.webp",
       "fotos": [
-        "https://files.cdn.printful.com/files/dcb/dcb5949dfa31fc3a8eb30162935160e5_preview.png"
+        "/tienda/gorraca/01-escritorio.webp",
+        "/tienda/gorraca/02-de-lado.webp",
+        "/tienda/gorraca/03-puesta.webp",
+        "/tienda/gorraca/04-puesta-2.webp",
+        "/tienda/gorraca/05-detras.webp",
+        "/tienda/gorraca/06-dentro.webp"
       ],
       "variantes": [
         {
