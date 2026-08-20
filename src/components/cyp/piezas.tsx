@@ -62,7 +62,8 @@ export type PiezaId =
   | "gafas"
   | "parche"
   | "pajarita"
-  | "cinturon";
+  | "cinturon"
+  | "zapatos";
 
 export type TexturaId = "rayas" | "lunares" | "escamas" | "pelo" | "metal";
 
@@ -514,6 +515,46 @@ const DIBUJOS: Record<PiezaId, Dibujo> = {
       zIndex: 5,
     }),
   ],
+
+  /**
+   * Los zapatos.
+   *
+   * Ninguno de los dos tiene pies, así que los zapatos no calzan nada: se
+   * apoyan debajo del cuerpo y ya está. En Culow van uno bajo cada lóbulo; en
+   * Pililarge, juntos en la base de la cápsula. Que no haya pierna que meter
+   * dentro es exactamente el chiste.
+   */
+  zapatos: ({ s, alto }) =>
+    aLosLados((side, i) => [
+      <div
+        key={`za-${side}`}
+        style={{
+          position: "absolute",
+          bottom: -14 * s,
+          [side]: alto ? "6%" : "16%",
+          width: 54 * s,
+          height: 24 * s,
+          background: "linear-gradient(180deg,#3a322b,#171310)",
+          borderRadius: `${16 * s}px ${16 * s}px ${6 * s}px ${6 * s}px`,
+          transform: `rotate(${i ? 4 : -4}deg) scaleX(${i ? 1 : -1})`,
+          boxShadow: `inset 0 ${-4 * s}px ${6 * s}px rgba(0,0,0,.5)`,
+          zIndex: 3,
+        }}
+      >
+        {/* La puntera, un pelín levantada: sin esto parecen ladrillos. */}
+        <div
+          style={{
+            position: "absolute",
+            right: -2 * s,
+            bottom: 0,
+            width: 22 * s,
+            height: 18 * s,
+            borderRadius: `${11 * s}px ${11 * s}px ${4 * s}px ${4 * s}px`,
+            background: "linear-gradient(180deg,#4a4038,#221c17)",
+          }}
+        />
+      </div>,
+    ]),
 };
 
 /** Dibuja las piezas pedidas, en el orden en que se piden. */
@@ -548,6 +589,7 @@ export const NOMBRES: Record<PiezaId, string> = {
   parche: "parche",
   pajarita: "pajarita",
   cinturon: "cinturón",
+  zapatos: "zapatos",
 };
 
 export const NOMBRES_TEXTURA: Record<TexturaId, string> = {

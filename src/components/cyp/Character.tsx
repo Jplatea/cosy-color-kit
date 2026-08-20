@@ -11,7 +11,7 @@ import {
   type CostumeId,
   type Extras,
 } from "./costumes";
-import { TEXTURAS, dibujarPiezas } from "./piezas";
+import { TEXTURAS, dibujarPiezas, type PiezaId } from "./piezas";
 import type { Traje } from "./sastre";
 
 /**
@@ -28,6 +28,16 @@ import type { Traje } from "./sastre";
  * hero y en las biografías van desnudos y sin cara; en los dos juguetes,
  * vestidos.
  */
+
+/**
+ * Los complementos que no dibuja `ExtraParts` sino el costurero. Alas y melena
+ * ya existían para el sastre, así que aquí solo se conectan.
+ */
+const EXTRA_DEL_COSTURERO: Partial<Record<keyof Extras, PiezaId>> = {
+  alas: "alas",
+  pelo: "melena",
+  zapatos: "zapatos",
+};
 
 /** Medidas base (a escala 1). Todo lo demás se deriva de aquí. */
 const BODY = {
@@ -86,14 +96,20 @@ export function Character({
       : "animate-cyp-bob-slow"
     : undefined;
 
+  const ctx = { color: base, char, s, ...medidas(char, s) };
+  const sueltos = (Object.keys(EXTRA_DEL_COSTURERO) as (keyof Extras)[])
+    .filter((id) => extras[id])
+    .map((id) => EXTRA_DEL_COSTURERO[id]!);
+
   const dressing = dress ? (
     <>
       {traje ? (
-        dibujarPiezas(traje.piezas, { color: base, char, s, ...medidas(char, s) })
+        dibujarPiezas(traje.piezas, ctx)
       ) : (
         <CostumeParts costume={costume} color={base} char={char} s={s} />
       )}
       <ExtraParts extras={extras} char={char} s={s} />
+      {sueltos.length > 0 && dibujarPiezas(sueltos, ctx)}
     </>
   ) : null;
 

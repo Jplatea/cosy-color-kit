@@ -25,11 +25,25 @@ export type CostumeId =
   // Fantasía
   | "vampiro" | "fantasma" | "mago" | "robot";
 
-export type ExtraId = "gafas" | "corona" | "pajarita" | "gorro";
+/**
+ * Los complementos se pueden poner encima de cualquier disfraz. Los tres
+ * últimos no se dibujan aquí sino en el costurero (`piezas.tsx`), que ya los
+ * tenía hechos para el sastre: repetirlos habría sido tener el mismo ala en
+ * dos sitios y que un día dejaran de parecerse.
+ */
+export type ExtraId =
+  | "gafas"
+  | "corona"
+  | "pajarita"
+  | "gorro"
+  | "alas"
+  | "pelo"
+  | "zapatos";
 export type Extras = Record<ExtraId, boolean>;
 
 export const NO_EXTRAS: Extras = {
   gafas: false, corona: false, pajarita: false, gorro: false,
+  alas: false, pelo: false, zapatos: false,
 };
 
 /** El orden de este array manda: es el orden en que salen los grupos. */
@@ -88,6 +102,9 @@ export const EXTRAS: { id: ExtraId; label: string }[] = [
   { id: "corona", label: "Corona" },
   { id: "pajarita", label: "Pajarita" },
   { id: "gorro", label: "Gorro de fiesta" },
+  { id: "pelo", label: "Pelo" },
+  { id: "alas", label: "Alas" },
+  { id: "zapatos", label: "Zapatos" },
 ];
 
 export const SKIN = "#f1e8da";
