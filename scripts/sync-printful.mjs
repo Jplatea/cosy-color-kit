@@ -162,13 +162,17 @@ async function main() {
     /**
      * Todas las fotos que da Printful, sin repetir.
      *
-     * La portada primero, y detrás las vistas previas de cada variante: la del
-     * mockup y la del estampado suelto. Con varios colores salen más, una por
-     * color. Se corta en seis: a partir de ahí la galería es un catálogo.
+     * La portada primero y detrás las vistas de cada variante: el frente, la
+     * espalda, el detalle del bordado, y con varios colores una por color. Lo
+     * que se queda fuera es el estampado a pelo, que no es una foto del
+     * producto. Se corta en seis: a partir de ahí la galería es un catálogo.
      */
     const fotos = [];
     const meter = (url) => {
-      if (url && !fotos.includes(url) && fotos.length < 6) fotos.push(url);
+      // `printfile-preview` es el estampado a pelo, sin prenda debajo. En la
+      // galería no pinta nada: quien mira quiere ver el producto, no el logo.
+      if (!url || url.includes("printfile-preview")) return;
+      if (!fotos.includes(url) && fotos.length < 6) fotos.push(url);
     };
     meter(detalle?.sync_product?.thumbnail_url ?? resumen.thumbnail_url);
     for (const v of crudas) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chip, GhostButton, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
+import { Chip, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { Prenda } from "./prendas";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
@@ -40,7 +40,6 @@ const porDefecto = (p: Producto): Eleccion => ({
 });
 
 export function Tienda() {
-  const [abierto, setAbierto] = useState<string | null>(null);
   /** Qué foto de la galería se está mirando, por producto. */
   const [foto, setFoto] = useState<Record<string, number>>({});
   const [eleccion, setEleccion] = useState<Record<string, Eleccion>>({});
@@ -120,7 +119,6 @@ export function Tienda() {
             const color = p.colores.find((c) => c.id === e.color) ?? p.colores[0];
             const diseno = DISENOS[e.diseno];
             const variante = p.variantes[claveVariante(e.color, e.talla, e.diseno)];
-            const estaAbierto = abierto === p.id;
 
             return (
               <article key={p.id} className="flex flex-col">
@@ -182,51 +180,45 @@ export function Tienda() {
                     <h3 className="font-display text-[22px] leading-tight text-museo-tinta">
                       {p.nombre}
                     </h3>
-                    <span className="font-display text-[20px] text-museo-tinta">
+                    <span className="shrink-0 font-display text-[20px] text-museo-tinta">
                       {euros(precioDe(p, e.color, e.talla, e.diseno))}
                     </span>
                   </div>
                   <p className="mt-2 text-[13.5px] leading-[1.55] text-museo-tinta-suave">{p.ficha}</p>
-                  <p className="cartela mt-2 text-museo-tinta-tenue">
-                    {diseno.nombre} · {color.nombre}
-                    {e.talla !== "UNICA" ? ` · ${NOMBRE_TALLA(e.talla)}` : ""}
-                  </p>
                 </div>
 
-                {!estaAbierto ? (
-                  <GhostButton
-                    onClick={() => setAbierto(p.id)}
-                    className="mt-4 w-full px-4 py-[12px] text-[13.5px]"
-                  >
-                    Elegir y añadir
-                  </GhostButton>
-                ) : (
-                  <div className="mt-4 grid gap-[14px] border border-museo-linea p-[14px]">
-                    {/*
-                      Estampado y color vienen dados por el producto de Printful:
-                      cada uno es un diseño sobre un tejido concreto. Ofrecerlos
-                      cuando solo hay una opción es pedir que elijan entre una
-                      cosa, y encima da a entender que cambiarlo cambia lo que se
-                      fabrica, que no es verdad.
-                    */}
-                    {p.disenos.length > 1 && (
+                {/*
+                  Los selectores van a la vista, sin desplegable.
+                  Antes estaban detrás de un botón «Elegir y añadir», y aunque
+                  funcionaban no los encontraba nadie: la talla es lo único que
+                  hay que decidir aquí, así que esconderla era esconder la
+                  compra entera.
+
+                  Estampado y color vienen dados por el producto de Printful
+                  —cada uno es un diseño sobre un tejido concreto—, así que solo
+                  aparecen si de verdad hay entre qué elegir. Ofrecer una opción
+                  única es pedir que elijan entre una cosa, y encima sugiere que
+                  cambiarla cambia lo que se fabrica.
+                */}
+                <div className="mt-4 grid gap-[14px]">
+                  {p.tallas.length > 1 && (
                     <div className="grid gap-[8px]">
-                      <span className="cartela text-museo-tinta-tenue">Estampado</span>
+                      <span className="cartela text-museo-tinta-tenue">Talla</span>
                       <div className="flex flex-wrap gap-[7px]">
-                        {p.disenos.map((d) => (
+                        {p.tallas.map((tl) => (
                           <Chip
-                            key={d}
-                            active={e.diseno === d}
-                            onClick={() => cambiar(p, { diseno: d })}
+                            key={tl}
+                            active={e.talla === tl}
+                            onClick={() => cambiar(p, { talla: tl })}
                           >
-                            {DISENOS[d].nombre}
+                            {NOMBRE_TALLA(tl)}
                           </Chip>
                         ))}
                       </div>
                     </div>
-                    )}
+                  )}
 
-                    {p.colores.length > 1 && (
+                  {p.colores.length > 1 && (
                     <div className="grid gap-[8px]">
                       <span className="cartela text-museo-tinta-tenue">Color</span>
                       <div className="flex flex-wrap gap-[7px]">
@@ -241,55 +233,38 @@ export function Tienda() {
                         ))}
                       </div>
                     </div>
-                    )}
+                  )}
 
-                    {/*
-                      Con una sola talla el selector no elige nada: es un botón
-                      que ya está pulsado. La medida se sigue viendo en la línea
-                      de debajo del título, que es donde informa sin estorbar.
-                    */}
-                    {p.tallas.length > 1 && (
-                      <div className="grid gap-[8px]">
-                        <span className="cartela text-museo-tinta-tenue">Talla</span>
-                        <div className="flex flex-wrap gap-[7px]">
-                          {p.tallas.map((tl) => (
-                            <Chip key={tl} active={e.talla === tl} onClick={() => cambiar(p, { talla: tl })}>
-                              {tl}
-                            </Chip>
-                          ))}
-                        </div>
+                  {p.disenos.length > 1 && (
+                    <div className="grid gap-[8px]">
+                      <span className="cartela text-museo-tinta-tenue">Estampado</span>
+                      <div className="flex flex-wrap gap-[7px]">
+                        {p.disenos.map((d) => (
+                          <Chip
+                            key={d}
+                            active={e.diseno === d}
+                            onClick={() => cambiar(p, { diseno: d })}
+                          >
+                            {DISENOS[d].nombre}
+                          </Chip>
+                        ))}
                       </div>
-                    )}
-
-                    <p className="text-[13px] leading-[1.5] text-museo-tinta-tenue">
-                      {diseno.descripcion}
-                    </p>
-
-                    <div className="flex flex-wrap gap-[9px] border-t border-museo-linea pt-[12px]">
-                      <GoldButton
-                        onClick={() =>
-                          cesta.anadir({ producto: p.id, ...e, cantidad: 1 })
-                        }
-                        className="flex-1 px-3 py-[11px] text-[13.5px]"
-                      >
-                        Añadir a la cesta
-                      </GoldButton>
-                      <button
-                        type="button"
-                        onClick={() => setAbierto(null)}
-                        className="cartela text-museo-tinta-tenue transition-colors hover:text-museo-tinta"
-                      >
-                        Cerrar
-                      </button>
                     </div>
+                  )}
 
-                    {!variante && (
-                      <p className="cartela text-museo-laton">
-                        Esta combinación aún no está dada de alta en la imprenta
-                      </p>
-                    )}
-                  </div>
-                )}
+                  <GoldButton
+                    onClick={() => cesta.anadir({ producto: p.id, ...e, cantidad: 1 })}
+                    className="w-full px-4 py-[13px] text-[14px]"
+                  >
+                    Añadir a la cesta
+                  </GoldButton>
+
+                  {!variante && (
+                    <p className="cartela text-museo-laton">
+                      Esta combinación aún no está dada de alta en la imprenta
+                    </p>
+                  )}
+                </div>
               </article>
             );
           })}
