@@ -33,6 +33,24 @@ import { createHash } from "node:crypto";
 const CLAVE = process.env.ELEVENLABS_API_KEY || "";
 const MODELO = process.env.ELEVENLABS_MODEL || "eleven_multilingual_v2";
 
+/**
+ * Puerta para comparar modelos, temporal.
+ *
+ * El acento salía latino con una muestra andaluza, y después de dejar `style`
+ * a cero queda por saber cuál de los modelos respeta mejor la referencia. Sin
+ * esto habría que cambiar la variable de entorno y redesplegar por cada
+ * prueba, que son cinco minutos cada vuelta.
+ *
+ * Va con lista cerrada —solo estos nombres— y le siguen aplicando el límite
+ * por visitante y la caché. **Se quita en cuanto se elija uno.**
+ */
+const MODELOS_PERMITIDOS = new Set([
+  "eleven_multilingual_v2",
+  "eleven_v3",
+  "eleven_turbo_v2_5",
+  "eleven_flash_v2_5",
+]);
+
 const VOCES: Record<string, string | undefined> = {
   culow: process.env.ELEVENLABS_VOICE_CULOW,
   pililarge: process.env.ELEVENLABS_VOICE_PILILARGE,
@@ -137,6 +155,8 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const params = new URL(req.url || "", "http://x").searchParams;
   const quien = String(params.get("v") || "").toLowerCase();
   const texto = String(params.get("t") || "").trim();
+  const pedido = String(params.get("m") || "");
+  const modelo = MODELOS_PERMITIDOS.has(pedido) ? pedido : MODELO;
 
   /*
     Si falta la voz de Pililarge, se sale del paso con la de Culow subida.
@@ -172,7 +192,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
   }
 
   const hash = createHash("sha256")
-    .update(`${voz}|${MODELO}|${VERSION_AJUSTES}|${texto}`)
+    .update(`${voz}|${modelo}|${VERSION_AJUSTES}|${texto}`)
     .digest("hex")
     .slice(0, 32);
   const llave = `cyp:voz:${hash}`;
@@ -209,15 +229,15 @@ export default async function handler(req: Peticion, res: Respuesta) {
       },
       body: JSON.stringify({
         text: texto,
-        model_id: MODELO,
+        model_id: modelo,
         voice_settings: (subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow,
       }),
     });
 
     if (!eleven.ok) {
       const detalle = await eleven.text();
-      console.error("[voz] elevenlabs", eleven.status, detalle.slice(0, 300));
-      return res.status(502).json({ error: "la voz no ha respondido" });
+      console.error("[voz] elevenlabs", eleven.status, modelo, detalle.slice(0, 300));
+      return res.status(502).json({ error: "la voz no ha respondido", modelo, detalle: detalle.slice(0, 200) });
     }
 
     const audio = Buffer.from(await eleven.arrayBuffer());
