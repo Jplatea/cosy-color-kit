@@ -104,8 +104,15 @@ const AJUSTES: Record<string, Record<string, number | boolean>> = {
 const VERSION_AJUSTES = "v2-sin-style";
 
 const MAX_CARACTERES = 300;
-/** Peticiones por visitante y hora. Generoso para jugar, corto para abusar. */
-const LIMITE_HORA = 40;
+/**
+ * Peticiones por visitante y hora. Generoso para jugar, corto para abusar.
+ *
+ * Va por IP, así que una casa o una oficina enteras comparten cupo. Con 40 se
+ * agotaba en una tarde de pruebas, y quien lo agota deja de oír las voces
+ * buenas sin entender por qué. Se puede subir con `CYP_LIMITE_VOZ` sin tocar
+ * código, que es lo que hace falta el día que un vídeo traiga visitas de golpe.
+ */
+const LIMITE_HORA = Number(process.env.CYP_LIMITE_VOZ) || 60;
 const CACHE_SEGUNDOS = 60 * 60 * 24 * 60;
 
 const BASE = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
