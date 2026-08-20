@@ -31,7 +31,19 @@
 import { createHash } from "node:crypto";
 
 const CLAVE = process.env.ELEVENLABS_API_KEY || "";
-const MODELO = process.env.ELEVENLABS_MODEL || "eleven_multilingual_v2";
+/**
+ * El modelo, uno por personaje.
+ *
+ * No hay un ganador único: se generó la misma frase con los cuatro y con las
+ * dos voces, y `eleven_v3` es el que borda a Pililarge mientras que a Culow lo
+ * deja correcto pero fino. Como el modelo se elige por petición, cada uno lleva
+ * el suyo y no hay que conformarse con el que menos moleste a los dos.
+ */
+const MODELO_POR_VOZ: Record<string, string> = {
+  culow: process.env.ELEVENLABS_MODEL_CULOW || "eleven_v3",
+  pililarge: process.env.ELEVENLABS_MODEL_PILILARGE || "eleven_v3",
+};
+const MODELO = process.env.ELEVENLABS_MODEL || "";
 
 /**
  * Puerta para comparar modelos, temporal.
@@ -156,7 +168,21 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const quien = String(params.get("v") || "").toLowerCase();
   const texto = String(params.get("t") || "").trim();
   const pedido = String(params.get("m") || "");
-  const modelo = MODELOS_PERMITIDOS.has(pedido) ? pedido : MODELO;
+  const modelo = MODELOS_PERMITIDOS.has(pedido)
+    ? pedido
+    : MODELO || MODELO_POR_VOZ[quien] || "eleven_multilingual_v2";
+
+  /*
+    Los dos mandos que dan carácter, abiertos también para poder probar sin
+    redesplegar. Temporal, igual que `m`: se quitan los tres cuando se fijen
+    los ajustes buenos.
+  */
+  const numero = (nombre: string) => {
+    const v = Number(params.get(nombre));
+    return Number.isFinite(v) && v >= 0 && v <= 1 ? v : null;
+  };
+  const estabilidad = numero("st");
+  const parecido = numero("sb");
 
   /*
     Si falta la voz de Pililarge, se sale del paso con la de Culow subida.
@@ -192,7 +218,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
   }
 
   const hash = createHash("sha256")
-    .update(`${voz}|${modelo}|${VERSION_AJUSTES}|${texto}`)
+    .update(`${voz}|${modelo}|${VERSION_AJUSTES}|${estabilidad}|${parecido}|${texto}`)
     .digest("hex")
     .slice(0, 32);
   const llave = `cyp:voz:${hash}`;
@@ -230,7 +256,11 @@ export default async function handler(req: Peticion, res: Respuesta) {
       body: JSON.stringify({
         text: texto,
         model_id: modelo,
-        voice_settings: (subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow,
+        voice_settings: {
+          ...((subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow),
+          ...(estabilidad !== null ? { stability: estabilidad } : {}),
+          ...(parecido !== null ? { similarity_boost: parecido } : {}),
+        },
       }),
     });
 
