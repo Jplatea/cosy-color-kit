@@ -43,20 +43,26 @@ type VoicePreset = {
 };
 
 /**
- * Los ajustes no son a ojo: salen de medir las grabaciones reales del canal
- * (`src/assets/voces/*-muestra.mp3`) con autocorrelación, ventana a ventana.
+ * Los ajustes salen de medir las grabaciones reales del canal
+ * (`src/assets/voces/*-muestra.mp3`).
  *
- *            tono medio        rango        ritmo
- *   Culow      124 Hz       108–147 Hz    4,8 sílabas/s
- *   Pililarge  216 Hz       191–242 Hz    4,0 sílabas/s
+ *              tono      ritmo
+ *   Culow      122 Hz   4,8 sílabas/s
+ *   Pililarge  174 Hz   4,0 sílabas/s
  *
- * Pililarge suena 1,74 veces más agudo que Culow —9,6 semitonos exactos— y
- * Culow habla un 20 % más rápido. Esa proporción tan redonda no es casualidad:
- * en el canal las dos voces las pone la misma persona y a Pililarge se le sube
- * el tono con un modulador. Por eso aquí los dos usan la MISMA voz del sistema
- * y lo único que los separa es el tono, igual que en los vídeos. Darle a
- * Pililarge una voz de mujer, que es lo que se hacía antes, sonaba a otra
- * persona en vez de a Culow subido.
+ * Son 6,1 semitonos de diferencia, y Culow habla un 20 % más rápido.
+ *
+ * Cuidado con estas cifras, que ya han estado mal dos veces. La medida vieja
+ * daba 216 Hz para Pililarge —se equivocaba de octava, justo el doble— y sobre
+ * ese error se construyó la teoría de que las dos voces eran la misma persona
+ * pasada por un modulador. Se comprobó comparando envolventes espectrales y no
+ * se sostiene: subirle el tono a Culow lo ALEJA de Pililarge en vez de
+ * acercarlo (0,404 tal cual, 0,633 subido 9,6). **Son dos voces distintas.**
+ *
+ * Aquí abajo solo se sintetiza, que es el último recurso: una voz del sistema
+ * no va a sonar a ninguno de los dos por mucho que se le muevan los mandos. Lo
+ * que hay es una caricatura razonable de cada uno —Culow grave y atropellado,
+ * Pililarge agudo y a trocitos— para cuando no hay nada mejor.
  */
 export const VOICES: Record<CharacterId, VoicePreset> = {
   culow: {

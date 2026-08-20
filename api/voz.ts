@@ -19,9 +19,9 @@
  * Variables de entorno:
  *   ELEVENLABS_API_KEY          clave de la cuenta
  *   ELEVENLABS_VOICE_CULOW      id de la voz clonada de Culow
- *   ELEVENLABS_VOICE_PILILARGE  id de la voz de Pililarge. **Opcional**: sin
- *                               ella se usa la de Culow y el navegador le sube
- *                               el tono, que es como se hace en el canal
+ *   ELEVENLABS_VOICE_PILILARGE  id de la voz clonada de Pililarge. Sin ella se
+ *                               sale del paso con la de Culow subida de tono,
+ *                               pero es un apaño: son dos voces distintas
  *   ELEVENLABS_MODEL            modelo (por defecto eleven_multilingual_v2)
  *   KV_REST_API_URL / _TOKEN    Redis, para la caché y el límite (opcional)
  *
@@ -114,20 +114,19 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const texto = String(params.get("t") || "").trim();
 
   /*
-    Con clonar una sola voz basta.
+    Si falta la voz de Pililarge, se sale del paso con la de Culow subida.
 
-    Pililarge es Culow subido de tono —en el canal se lo hace un modulador—, así
-    que si no hay una voz suya se genera con la de Culow y el navegador se
-    encarga de subirla; se le dice por la cabecera cuánto. Sale más fiel que
-    clonar las dos por separado, que sonarían a dos personas distintas en vez de
-    a la misma con el mando puesto, y de paso ahorra la mitad: los dos comparten
-    el audio generado, la cuota y la caché.
+    **Es un apaño, no lo deseable.** Se comprobó midiendo la envolvente
+    espectral de los dos: subirle el tono a Culow no lo acerca a Pililarge, lo
+    aleja. Son dos voces distintas y hay que clonar las dos. Esto solo evita que
+    media web se caiga a la voz robótica del navegador mientras falte una.
 
-    El número no se importa de `src/lib/modulador.ts` aunque esté ahí: Vercel
+    Los 6,1 semitonos son la diferencia de tono medida —174 Hz sobre 122—. El
+    número no se importa de `src/lib/modulador.ts` aunque esté ahí: Vercel
     empaqueta cada función por su cuenta y de al lado no llega nada. Si se
     cambia, se cambia en los dos sitios.
   */
-  const SEMITONOS_PILILARGE = 9.6;
+  const SEMITONOS_PILILARGE = 6.1;
   const propia = VOCES[quien];
   const voz = propia ?? (quien === "pililarge" ? VOCES.culow : undefined);
   const subirTono = !propia && quien === "pililarge" ? SEMITONOS_PILILARGE : 0;

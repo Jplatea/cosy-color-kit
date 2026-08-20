@@ -1,21 +1,34 @@
 /**
  * El modulador: sube de tono una grabación sin acelerarla.
  *
- * En el canal las dos voces las pone la misma persona, y Pililarge sale de
- * pasar a Culow por un modulador básico. Medidas sobre las grabaciones del
- * canal: Culow ronda los 124 Hz y Pililarge los 216, o sea **1,74 veces más
- * agudo — 9,6 semitonos**. Y sin embargo Pililarge no habla más deprisa: si
- * fuera un simple «acelerar la cinta» iría un 74 % más rápido, y no es el caso.
- * Así que hay que subir el tono dejando la duración quieta.
+ * Sirve para un apaño concreto: cuando de una frase solo existe la toma de
+ * Culow, se le sube el tono para que Pililarge no se caiga a la voz robótica
+ * del navegador. **Es una aproximación, no la voz de Pililarge.**
  *
- * Con eso, cualquier frase grabada de Culow vale también para Pililarge, y la
- * voz que se oye es la de verdad en los dos casos. Es exactamente lo que
- * hacéis vosotros, hecho en el navegador.
+ * Conviene decirlo claro porque durante un tiempo se creyó lo contrario. La
+ * teoría era que las dos voces las ponía la misma persona y que Pililarge salía
+ * de pasar a Culow por un modulador. Se comprobó comparando la envolvente
+ * espectral —el «color» de una voz, lo que hace que reconozcas a alguien aunque
+ * cante otra nota— de Pililarge contra Culow subido en varias cantidades:
+ *
+ *     Culow tal cual        0,404      <- el más parecido
+ *     Culow +4 semitonos    0,393
+ *     Culow +6,1            0,472
+ *     Culow +9,6            0,633
+ *
+ * Si Pililarge fuera Culow subido, la distancia caería en picado justo en la
+ * cantidad correcta. No cae: empeora cuanto más se sube. **Son dos voces
+ * distintas**, y ningún tratamiento de tono convierte una en la otra.
+ *
+ * Lo que sí arregló la comprobación fue la cifra: el tono de Pililarge son
+ * 174 Hz, no los 216 que decía la medida vieja —se había equivocado de octava,
+ * justo el doble—. Sobre los 122 Hz de Culow eso son 6,1 semitonos y no 9,6,
+ * así que el apaño estaba dejándolo un cuarto por encima de donde debía.
  *
  * Va en dos pasos, que es la forma clásica de conseguirlo:
  *
- *   1. **Estirar** la grabación 1,74 veces sin tocar el tono (SOLA).
- *   2. **Reproducirla 1,74 veces más rápido**, que devuelve la duración
+ *   1. **Estirar** la grabación sin tocar el tono (SOLA).
+ *   2. **Reproducirla igual de rápido de más**, que devuelve la duración
  *      original y sube el tono de paso.
  *
  * El estirado es lo delicado. Cortar en trozos y pegarlos separados deja un eco
@@ -25,8 +38,8 @@
  * unos milisegundos más y la diferencia se oye.
  */
 
-/** Cuánto sube Pililarge sobre Culow: 216/124 Hz. */
-export const SEMITONOS_PILILARGE = 9.6;
+/** La diferencia de tono medida entre los dos: 174 Hz sobre 122. */
+export const SEMITONOS_PILILARGE = 6.1;
 
 const razon = (semitonos: number) => Math.pow(2, semitonos / 12);
 
