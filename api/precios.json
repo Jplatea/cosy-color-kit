@@ -1,39 +1,75 @@
 {
   "precios": {
+    "5449668444": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
+      "precio": 4850
+    },
+    "5449668445": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
+      "precio": 4850
+    },
+    "5449668446": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
+      "precio": 4850
+    },
+    "5449668447": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
+      "precio": 4850
+    },
+    "5449668448": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
+      "precio": 4850
+    },
+    "5449668449": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
+      "precio": 5000
+    },
+    "5449668450": {
+      "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
+      "precio": 5200
+    },
+    "5449667542": {
+      "nombre": "Gorraca para aparcar coches como un pro · S/M",
+      "precio": 1950
+    },
+    "5449667543": {
+      "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+      "precio": 1950
+    },
     "5449158693": {
-      "nombre": "Unisex t-shirt · XS",
+      "nombre": "Camisetita para ver a tus Bros en el padel · XS",
       "precio": 2900
     },
     "5449158694": {
-      "nombre": "Unisex t-shirt · S",
+      "nombre": "Camisetita para ver a tus Bros en el padel · S",
       "precio": 2900
     },
     "5449158695": {
-      "nombre": "Unisex t-shirt · M",
+      "nombre": "Camisetita para ver a tus Bros en el padel · M",
       "precio": 2900
     },
     "5449158696": {
-      "nombre": "Unisex t-shirt · L",
+      "nombre": "Camisetita para ver a tus Bros en el padel · L",
       "precio": 2900
     },
     "5449158697": {
-      "nombre": "Unisex t-shirt · XL",
+      "nombre": "Camisetita para ver a tus Bros en el padel · XL",
       "precio": 2900
     },
     "5449158698": {
-      "nombre": "Unisex t-shirt · 2XL",
+      "nombre": "Camisetita para ver a tus Bros en el padel · 2XL",
       "precio": 3050
     },
     "5449158699": {
-      "nombre": "Unisex t-shirt · 3XL",
+      "nombre": "Camisetita para ver a tus Bros en el padel · 3XL",
       "precio": 3200
     },
     "5449158700": {
-      "nombre": "Unisex t-shirt · 4XL",
+      "nombre": "Camisetita para ver a tus Bros en el padel · 4XL",
       "precio": 3400
     },
     "5449158701": {
-      "nombre": "Unisex t-shirt · 5XL",
+      "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
       "precio": 3650
     }
   }

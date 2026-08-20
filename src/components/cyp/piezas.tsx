@@ -520,40 +520,56 @@ const DIBUJOS: Record<PiezaId, Dibujo> = {
   /**
    * El pelo.
    *
-   * No vale la melena de león que ya había: esa va detrás del cuerpo —que es lo
-   * suyo para enmarcar una cabeza de león— y aquí desaparecía entera detrás de
-   * los lóbulos. El pelo va por delante y encima de la coronilla, con un
-   * mechón levantado: sin el mechón parece un casco.
+   * Se apoya en `lado` y no en `cima`, que es lo que fallaba antes: en Culow la
+   * silueta sube sobre cada lóbulo y baja en el valle donde se juntan, y `cima`
+   * es justo el valle. El pelo se metía en el hueco y quedaba medio tapado por
+   * las dos esferas. Apoyado en el punto alto se ve entero.
+   *
+   * Y no es la melena de león, que va por detrás del cuerpo: esta va delante,
+   * con flequillo y con un mechón levantado. Sin el mechón parece un casco.
    */
-  pelo: ({ s, cima, alto }) => [
+  pelo: ({ s, lado, alto }) => [
+    // El casquete, ancho y bien asentado sobre la coronilla.
     caja("pe-base", {
-      top: -24 * s + cima,
-      left: alto ? "2%" : "12%",
-      right: alto ? "2%" : "12%",
-      height: 50 * s,
-      borderRadius: `${30 * s}px ${30 * s}px ${10 * s}px ${10 * s}px`,
-      background: "linear-gradient(180deg,#4a3324,#241708)",
+      top: -34 * s + lado,
+      left: alto ? "-4%" : "4%",
+      right: alto ? "-4%" : "4%",
+      height: 62 * s,
+      borderRadius: `${44 * s}px ${44 * s}px ${14 * s}px ${14 * s}px`,
+      background: "linear-gradient(168deg,#6b4a33 0%,#43301f 46%,#241708 100%)",
+      boxShadow: `inset 0 ${-6 * s}px ${10 * s}px rgba(0,0,0,.45)`,
       zIndex: 4,
     }),
-    // El flequillo: tres picos por delante, para que no sea un bloque liso.
-    caja("pe-flequillo", {
-      top: 14 * s + cima,
-      left: alto ? "2%" : "12%",
-      right: alto ? "2%" : "12%",
-      height: 22 * s,
-      background: "#33220f",
-      clipPath: "polygon(0 0,100% 0,100% 40%,82% 100%,64% 34%,46% 100%,28% 34%,10% 96%,0 38%)",
+    // Un brillo arriba a la izquierda: sin él es una mancha oscura y ya está.
+    caja("pe-brillo", {
+      top: -26 * s + lado,
+      left: alto ? "8%" : "16%",
+      width: 46 * s,
+      height: 20 * s,
+      borderRadius: "50%",
+      background: "linear-gradient(120deg,rgba(255,236,205,.5),transparent 70%)",
       zIndex: 5,
     }),
-    // Y el mechón de arriba, que es lo que le da la gracia.
+    // El flequillo: picos por delante, para que no sea un bloque liso.
+    caja("pe-flequillo", {
+      top: 12 * s + lado,
+      left: alto ? "-4%" : "4%",
+      right: alto ? "-4%" : "4%",
+      height: 30 * s,
+      background: "#2e1f10",
+      clipPath:
+        "polygon(0 0,100% 0,100% 30%,86% 100%,72% 26%,58% 92%,44% 22%,30% 96%,16% 28%,0 86%)",
+      zIndex: 5,
+    }),
+    // Y el mechón, que es lo que le da la gracia y lo que más se ve.
     caja("pe-mechon", {
-      top: -46 * s + cima,
-      left: "54%",
-      width: 20 * s,
-      height: 34 * s,
-      background: "#3d2a1c",
-      borderRadius: `${10 * s}px ${10 * s}px 0 0`,
-      transform: "rotate(22deg)",
+      top: -74 * s + lado,
+      left: "52%",
+      width: 26 * s,
+      height: 52 * s,
+      background: "linear-gradient(180deg,#7a5638,#3a2817)",
+      borderRadius: `${13 * s}px ${13 * s}px ${4 * s}px ${4 * s}px`,
+      transform: "rotate(24deg)",
       transformOrigin: "bottom center",
       zIndex: 4,
     }),
