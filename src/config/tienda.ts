@@ -1,21 +1,27 @@
 import type { DisenoId } from "@/components/cyp/disenos";
 import type { PrendaId } from "@/components/cyp/prendas";
+import printful from "./printful.json";
 
 /**
  * El catálogo de la tienda.
  *
- * Este fichero es lo único que hay que tocar para cambiar precios, tallas o
- * qué se vende. Los precios van en céntimos y en enteros: en euros y con
- * decimales, sumar tres cosas acaba dando 44,900000000000006.
+ * Manda Printful. Lo que esté dado de alta allí es lo que se vende aquí:
+ * `npm run sync:printful` escribe `printful.json` con los productos, sus
+ * tallas, sus colores y —lo importante— el id que hay que mandar para crear el
+ * pedido. Si no hay nada sincronizado todavía, se enseña el catálogo de
+ * muestra de abajo pero sin poder pagarlo, que es mejor que cobrar algo que
+ * nadie puede fabricar.
  *
- * `variantes` es el puente con la imprenta. Printful identifica cada
- * combinación concreta —esta sudadera, en negro, talla L— con un número suyo,
- * y sin ese número no sabe qué imprimir. Mientras esté vacío la tienda enseña
- * el producto pero no deja pagarlo, que es mejor que cobrar por algo que nadie
- * puede fabricar. Los números salen del catálogo de Printful.
+ * Lo que Printful no sabe es cómo se dibuja cada prenda ni qué estampado
+ * lleva: eso es nuestro. Se deduce del nombre que le hayas puesto al producto
+ * en Printful, así que llámalo en cristiano —«Camiseta Culow · símbolo»— y
+ * saldrá bien solo. Si alguna vez falla, `AJUSTES` lo fuerza a mano.
+ *
+ * Los precios van en céntimos y en enteros: en euros y con decimales, sumar
+ * tres cosas acaba dando 44,900000000000006.
  */
 
-export type TallaId = "XS" | "S" | "M" | "L" | "XL" | "2XL" | "UNICA";
+export type TallaId = string;
 
 export type ColorPrenda = {
   id: string;
@@ -42,105 +48,174 @@ export type Producto = {
   variantes: Record<string, number>;
 };
 
-const CRUDO: ColorPrenda = {
-  id: "crudo",
-  nombre: "Crudo",
-  tela: "#efe9de",
-  sombra: "#b9ae9c",
-  tinta: "#14120f",
-};
-
-const TINTA: ColorPrenda = {
-  id: "tinta",
-  nombre: "Tinta",
-  tela: "#1c1a18",
-  sombra: "#000000",
-  tinta: "#f2ece2",
-};
-
-const PIEDRA: ColorPrenda = {
-  id: "piedra",
-  nombre: "Piedra",
-  tela: "#b9b2a5",
-  sombra: "#8a8478",
-  tinta: "#14120f",
-};
-
-const ROPA: TallaId[] = ["XS", "S", "M", "L", "XL", "2XL"];
-const UNA: TallaId[] = ["UNICA"];
-
-export const PRODUCTOS: Producto[] = [
-  {
-    id: "camiseta",
-    nombre: "Camiseta",
-    prenda: "camiseta",
-    ficha: "Algodón orgánico peinado, 180 g. Corte recto, cuello reforzado.",
-    precio: 2490,
-    tallas: ROPA,
-    colores: [CRUDO, TINTA, PIEDRA],
-    disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"],
-    variantes: {},
-  },
-  {
-    id: "sudadera",
-    nombre: "Sudadera con capucha",
-    prenda: "sudadera",
-    ficha: "Algodón y poliéster, 320 g. Interior cepillado, capucha forrada.",
-    precio: 4990,
-    tallas: ROPA,
-    colores: [TINTA, CRUDO],
-    disenos: ["simbolo", "rotulo", "lujo"],
-    variantes: {},
-  },
-  {
-    id: "pantalon",
-    nombre: "Pantalón de chándal",
-    prenda: "pantalon",
-    ficha: "Mismo tejido que la sudadera. Bolsillos laterales, puño elástico.",
-    precio: 4490,
-    tallas: ROPA,
-    colores: [TINTA, PIEDRA],
-    disenos: ["simbolo", "lujo"],
-    variantes: {},
-  },
-  {
-    id: "taza",
-    nombre: "Taza",
-    prenda: "taza",
-    ficha: "Cerámica blanca, 325 ml. Apta para lavavajillas y para la fregona.",
-    precio: 1490,
-    tallas: UNA,
-    colores: [CRUDO, TINTA],
-    disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"],
-    variantes: {},
-  },
-  {
-    id: "bolsa",
-    nombre: "Bolsa de tela",
-    prenda: "bolsa",
-    ficha: "Lona de algodón, 340 g. Asas largas. Cabe una fregona entera.",
-    precio: 1690,
-    tallas: UNA,
-    colores: [CRUDO],
-    disenos: ["simbolo", "rotulo", "lujo"],
-    variantes: {},
-  },
-  {
-    id: "gorra",
-    nombre: "Gorra",
-    prenda: "gorra",
-    ficha: "Sarga de algodón, cierre metálico. Visera curva.",
-    precio: 2190,
-    tallas: UNA,
-    colores: [TINTA, CRUDO],
-    disenos: ["simbolo", "lujo"],
-    variantes: {},
-  },
-];
-
 /** La clave con la que se busca la variante de imprenta. */
 export const claveVariante = (color: string, talla: TallaId, diseno: DisenoId) =>
   `${color}/${talla}/${diseno}`;
+
+// ------------------------------------------------------- de nombre a dibujo
+
+/** Cómo se llama cada prenda por ahí fuera, en español y en inglés. */
+const PISTAS_PRENDA: [PrendaId, RegExp][] = [
+  ["sudadera", /sudadera|hoodie|sweatshirt|crewneck/i],
+  ["pantalon", /pantal|jogger|sweatpant|short/i],
+  ["taza", /taza|mug/i],
+  ["bolsa", /bolsa|tote|shopper/i],
+  ["gorra", /gorra|cap|hat|beanie/i],
+  ["camiseta", /camiseta|t-?shirt|\btee\b|top/i],
+];
+
+const PISTAS_DISENO: [DisenoId, RegExp][] = [
+  ["rotulo", /r[oó]tulo|logotipo|wordmark/i],
+  ["brazos", /brazo|se[ñn]ala/i],
+  ["sentarme", /sentar|cuatro a[ñn]os|4 a[ñn]os/i],
+  ["lujo", /lujo/i],
+  ["simbolo", /s[ií]mbolo|logo|icono/i],
+];
+
+/** Fuerza a mano lo que el nombre no deje claro. La clave es el id de Printful. */
+const AJUSTES: Record<string, { prenda?: PrendaId; diseno?: DisenoId; ficha?: string }> = {};
+
+const buscar = <T,>(pistas: [T, RegExp][], texto: string, porDefecto: T): T =>
+  pistas.find(([, patron]) => patron.test(texto))?.[0] ?? porDefecto;
+
+/** Aclara el tejido para saber si el estampado va en negro o en crema. */
+function tintaSobre(hex: string): string {
+  const limpio = hex.replace("#", "");
+  if (limpio.length !== 6) return "#14120f";
+  const r = parseInt(limpio.slice(0, 2), 16);
+  const g = parseInt(limpio.slice(2, 4), 16);
+  const b = parseInt(limpio.slice(4, 6), 16);
+  // Luminancia percibida: el ojo pesa mucho más el verde que el azul.
+  const luz = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luz > 0.55 ? "#14120f" : "#f2ece2";
+}
+
+function oscurecer(hex: string, cuanto = 0.24): string {
+  const limpio = hex.replace("#", "");
+  if (limpio.length !== 6) return "#8a8478";
+  const canal = (i: number) =>
+    Math.max(0, Math.round(parseInt(limpio.slice(i, i + 2), 16) * (1 - cuanto)))
+      .toString(16)
+      .padStart(2, "0");
+  return `#${canal(0)}${canal(2)}${canal(4)}`;
+}
+
+const idDeColor = (nombre: string) =>
+  nombre
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "unico";
+
+// ------------------------------------------------------------- el catálogo
+
+type VariantePF = {
+  id: number;
+  talla: string;
+  color: string;
+  precio: number;
+  hex?: string;
+  disponible?: boolean;
+};
+
+type ProductoPF = {
+  id: number;
+  nombre: string;
+  variantes: VariantePF[];
+};
+
+function deLaImprenta(): Producto[] {
+  const crudos = (printful?.productos ?? []) as ProductoPF[];
+
+  return crudos
+    .map((p) => {
+      const vivas = p.variantes.filter((v) => v.disponible !== false && v.precio > 0);
+      if (!vivas.length) return null;
+
+      const ajuste = AJUSTES[String(p.id)] || {};
+      const prenda = ajuste.prenda ?? buscar(PISTAS_PRENDA, p.nombre, "camiseta");
+      const diseno = ajuste.diseno ?? buscar(PISTAS_DISENO, p.nombre, "simbolo");
+
+      const colores: ColorPrenda[] = [];
+      for (const v of vivas) {
+        const id = idDeColor(v.color || "único");
+        if (colores.some((c) => c.id === id)) continue;
+        const tela = v.hex && /^#?[0-9a-f]{6}$/i.test(v.hex) ? `#${v.hex.replace("#", "")}` : "#efe9de";
+        colores.push({
+          id,
+          nombre: v.color || "Único",
+          tela,
+          sombra: oscurecer(tela),
+          tinta: tintaSobre(tela),
+        });
+      }
+
+      const tallas = [...new Set(vivas.map((v) => v.talla || "UNICA"))];
+
+      const variantes: Record<string, number> = {};
+      for (const v of vivas) {
+        variantes[claveVariante(idDeColor(v.color || "único"), v.talla || "UNICA", diseno)] = v.id;
+      }
+
+      return {
+        id: `pf-${p.id}`,
+        // El nombre de Printful suele traer el modelo detrás; se queda lo de antes
+        // del primer separador, que es como lo has llamado tú.
+        nombre: p.nombre.split(/\s[–—|]\s/)[0].trim() || p.nombre,
+        prenda,
+        ficha: ajuste.ficha ?? FICHAS[prenda],
+        // El precio lo pone Printful: es el único sitio donde debe vivir.
+        precio: Math.min(...vivas.map((v) => v.precio)),
+        tallas,
+        colores,
+        disenos: [diseno],
+        variantes,
+      } satisfies Producto;
+    })
+    .filter((p): p is Producto => p !== null);
+}
+
+const FICHAS: Record<PrendaId, string> = {
+  camiseta: "Algodón orgánico peinado. Corte recto, cuello reforzado.",
+  sudadera: "Algodón y poliéster. Interior cepillado, capucha forrada.",
+  pantalon: "Mismo tejido que la sudadera. Bolsillos laterales, puño elástico.",
+  taza: "Cerámica. Apta para lavavajillas y para la fregona.",
+  bolsa: "Lona de algodón. Asas largas. Cabe una fregona entera.",
+  gorra: "Sarga de algodón, cierre metálico. Visera curva.",
+};
+
+/**
+ * El escaparate de antes de que hubiera imprenta. Se ve, pero no se puede
+ * comprar: sin id de variante no hay nada que fabricar.
+ */
+const MUESTRA: Producto[] = (
+  [
+    ["camiseta", "Camiseta", 2490, ["S", "M", "L", "XL"]],
+    ["sudadera", "Sudadera con capucha", 4990, ["S", "M", "L", "XL"]],
+    ["taza", "Taza", 1490, ["UNICA"]],
+  ] as [PrendaId, string, number, string[]][]
+).map(([prenda, nombre, precio, tallas]) => ({
+  id: `muestra-${prenda}`,
+  nombre,
+  prenda,
+  ficha: FICHAS[prenda],
+  precio,
+  tallas,
+  colores: [
+    { id: "crudo", nombre: "Crudo", tela: "#efe9de", sombra: "#b9ae9c", tinta: "#14120f" },
+    { id: "tinta", nombre: "Tinta", tela: "#1c1a18", sombra: "#000000", tinta: "#f2ece2" },
+  ],
+  disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"] as DisenoId[],
+  variantes: {},
+}));
+
+const deImprenta = deLaImprenta();
+
+/** true cuando lo que se ve viene de Printful y no del escaparate de muestra. */
+export const hayImprenta = deImprenta.length > 0;
+
+export const PRODUCTOS: Producto[] = hayImprenta ? deImprenta : MUESTRA;
 
 export const euros = (centimos: number) =>
   (centimos / 100).toLocaleString("es-ES", {
@@ -156,12 +231,4 @@ export const ENVIO = {
   texto: "Envío a península. Gratis a partir de 60 €.",
 };
 
-export const NOMBRE_TALLA: Record<TallaId, string> = {
-  XS: "XS",
-  S: "S",
-  M: "M",
-  L: "L",
-  XL: "XL",
-  "2XL": "2XL",
-  UNICA: "Talla única",
-};
+export const NOMBRE_TALLA = (t: TallaId) => (t === "UNICA" ? "Talla única" : t);

@@ -7,6 +7,7 @@ import {
   ENVIO,
   NOMBRE_TALLA,
   PRODUCTOS,
+  hayImprenta,
   claveVariante,
   euros,
   type Producto,
@@ -92,6 +93,11 @@ export function Tienda() {
               Lo único de aquí que sí se vende. Se fabrica por encargo cuando alguien lo pide,
               así que no hay stock, no hay saldos y no sobra nada.
             </p>
+            {!hayImprenta && (
+              <p className="cartela mt-4 text-museo-laton">
+                Escaparate de muestra · La imprenta todavía no está conectada
+              </p>
+            )}
           </div>
           {cesta.unidades > 0 && (
             <a
@@ -137,7 +143,7 @@ export function Tienda() {
                   <p className="mt-2 text-[13.5px] leading-[1.55] text-museo-tinta-suave">{p.ficha}</p>
                   <p className="cartela mt-2 text-museo-tinta-tenue">
                     {diseno.nombre} · {color.nombre}
-                    {p.tallas[0] !== "UNICA" ? ` · ${NOMBRE_TALLA[e.talla]}` : ""}
+                    {p.tallas[0] !== "UNICA" ? ` · ${NOMBRE_TALLA(e.talla)}` : ""}
                   </p>
                 </div>
 

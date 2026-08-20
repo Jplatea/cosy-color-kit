@@ -11,7 +11,9 @@
     "server": "node server/index.mjs",
     "start": "CYP_SERVE_DIST=1 node server/index.mjs",
     "sync:youtube": "node scripts/sync-youtube.mjs",
-    "voces": "node scripts/voces.mjs"
+    "voces": "node scripts/voces.mjs",
+    "sync:printful": "node scripts/sync-printful.mjs",
+    "voces:generar": "node scripts/voces-generar.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

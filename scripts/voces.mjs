@@ -88,6 +88,16 @@ for (const m of poemas.matchAll(
 }
 if (!poemas) avisos.push("no encuentro `poems` en cyp.ts");
 
+/**
+ * Con --json escupe el guion en crudo y se calla. Lo usa el generador en
+ * Python para no tener que volver a leer el TypeScript por su cuenta: el
+ * guion se decide en un solo sitio.
+ */
+if (process.argv.includes("--json")) {
+  console.log(JSON.stringify(tomas, null, 2));
+  process.exit(0);
+}
+
 const hay = new Set(
   (existsSync(CARPETA) ? readdirSync(CARPETA) : [])
     .filter((f) => /\.(mp3|m4a|ogg|wav)$/i.test(f))
