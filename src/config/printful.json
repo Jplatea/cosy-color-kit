@@ -1,11 +1,19 @@
 {
-  "sincronizado": "2026-08-20T10:51:08.874Z",
+  "sincronizado": "2026-08-20T11:15:38.925Z",
   "productos": [
     {
       "id": 457277860,
       "nombre": "Bolsaca para el dinerete, gafitas chulas....",
-      "miniatura": "https://files.cdn.printful.com/files/473/4736427bbac83f9bbec112260819f8cc_preview.png",
+      "miniatura": "/tienda/bolsaca/01-plana.webp",
       "fotos": [
+        "/tienda/bolsaca/01-plana.webp",
+        "/tienda/bolsaca/02-en-mano.webp",
+        "/tienda/bolsaca/03-puesta.webp",
+        "/tienda/bolsaca/04-escalera.webp",
+        "/tienda/bolsaca/05-de-lado.webp",
+        "/tienda/bolsaca/06-escritorio.webp",
+        "/tienda/bolsaca/07-detalle.webp",
+        "/tienda/bolsaca/08-pared.webp",
         "https://files.cdn.printful.com/files/473/4736427bbac83f9bbec112260819f8cc_preview.png",
         "https://files.cdn.printful.com/files/087/0879b0a4dfaea114aa1de23e02cd598f_preview.png"
       ],
@@ -145,8 +153,16 @@
     {
       "id": 457099259,
       "nombre": "Camisetita para ver a tus Bros en el padel",
-      "miniatura": "https://files.cdn.printful.com/files/997/997bcc366105a0b21d730ced904c1ff0_preview.png",
+      "miniatura": "/tienda/camisetita/01-espalda.webp",
       "fotos": [
+        "/tienda/camisetita/01-espalda.webp",
+        "/tienda/camisetita/02-puesta.webp",
+        "/tienda/camisetita/03-espalda-puesta.webp",
+        "/tienda/camisetita/04-plana.webp",
+        "/tienda/camisetita/05-percha.webp",
+        "/tienda/camisetita/06-delante.webp",
+        "/tienda/camisetita/07-detalle.webp",
+        "/tienda/camisetita/08-plana-delante.webp",
         "https://files.cdn.printful.com/files/997/997bcc366105a0b21d730ced904c1ff0_preview.png"
       ],
       "variantes": [
