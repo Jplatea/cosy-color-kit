@@ -13,7 +13,8 @@
     "sync:youtube": "node scripts/sync-youtube.mjs",
     "voces": "node scripts/voces.mjs",
     "sync:printful": "node scripts/sync-printful.mjs",
-    "voces:generar": "node scripts/voces-generar.mjs"
+    "voces:generar": "node scripts/voces-generar.mjs",
+    "disenos": "node scripts/disenos.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -26,6 +27,7 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^1.0.7",
     "@types/d3-geo": "^3.1.1",
     "@types/node": "^22.16.5",
     "@types/react": "^18.3.23",

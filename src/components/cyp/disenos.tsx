@@ -47,10 +47,18 @@ function lineas(
   filas: string[],
   opciones: { fuente?: string; peso?: number; interletra?: number; alto?: number } = {}
 ) {
-  const { fuente = "Inter, Helvetica, Arial, sans-serif", peso = 600, interletra = 0.14, alto = 1.25 } = opciones;
+  const {
+    // Bangers, la misma rotulación que va impresa en la prenda: lo que se ve
+    // aquí tiene que ser lo que llega a casa del cliente.
+    fuente = "Bangers, Impact, sans-serif",
+    peso = 400,
+    interletra = 0.04,
+    alto = 1.16,
+  } = opciones;
   // El cuerpo sale de lo que quepa: manda la línea más larga o el alto total.
   const masLarga = Math.max(...filas.map((f) => f.length), 1);
-  const porAncho = z.w / (masLarga * (0.56 + interletra));
+  // Bangers es estrecha: cada letra ocupa poco menos de la mitad del cuerpo.
+  const porAncho = z.w / (masLarga * (0.44 + interletra));
   const porAlto = z.h / (filas.length * alto);
   const cuerpo = Math.min(porAncho, porAlto);
   const primeraY = z.y + z.h / 2 - ((filas.length - 1) * cuerpo * alto) / 2 + cuerpo * 0.34;
@@ -84,9 +92,8 @@ export const DISENOS: Record<DisenoId, Diseno> = {
     dibujar: (z, tinta) => (
       <>
         {simbolo({ ...z, h: z.h * 0.6 }, tinta, 0.8)}
-        {lineas({ x: z.x, y: z.y + z.h * 0.66, w: z.w, h: z.h * 0.2 }, tinta, ["CULOW & PILILARGE"], {
-          peso: 500,
-          interletra: 0.2,
+        {lineas({ x: z.x, y: z.y + z.h * 0.68, w: z.w, h: z.h * 0.22 }, tinta, ["CULOW & PILILARGE"], {
+          interletra: 0.1,
         })}
       </>
     ),
@@ -96,14 +103,14 @@ export const DISENOS: Record<DisenoId, Diseno> = {
     nombre: "Sin brazos",
     descripcion: "«Culow no tiene brazos y aún así señala», en letra de cartela.",
     dibujar: (z, tinta) =>
-      lineas(z, tinta, ["CULOW NO TIENE BRAZOS", "Y AÚN ASÍ SEÑALA"], { interletra: 0.16 }),
+      lineas(z, tinta, ["CULOW NO TIENE BRAZOS", "Y AÚN ASÍ SEÑALA"]),
   },
 
   sentarme: {
     nombre: "Cuatro años",
     descripcion: "«Llevo cuatro años intentando sentarme». Lo dice Pililarge.",
     dibujar: (z, tinta) =>
-      lineas(z, tinta, ["LLEVO CUATRO AÑOS", "INTENTANDO", "SENTARME"], { interletra: 0.16 }),
+      lineas(z, tinta, ["LLEVO CUATRO AÑOS", "INTENTANDO", "SENTARME"]),
   },
 
   lujo: {
@@ -111,10 +118,10 @@ export const DISENOS: Record<DisenoId, Diseno> = {
     descripcion: "Dos palabras en serif de catálogo. No hace falta más.",
     dibujar: (z, tinta) =>
       lineas(z, tinta, ["Lujo", "estúpido"], {
+        // El único que no va rotulado: el chiste del lujo pide serif.
         fuente: "'Instrument Serif', Georgia, serif",
-        peso: 400,
         interletra: 0.01,
-        alto: 1.05,
+        alto: 0.98,
       }),
   },
 };

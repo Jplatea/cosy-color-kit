@@ -121,15 +121,30 @@ export function Tienda() {
 
             return (
               <article key={p.id} className="flex flex-col">
+                {/*
+                  La foto de Printful manda sobre el dibujo cuando existe: es la
+                  imagen real de lo que se recibe, y en una tienda eso pesa más
+                  que la coherencia del estilo. El dibujo se queda de reserva
+                  para lo que aún no tenga foto.
+                */}
                 <Peana className="rounded-[3px] border border-museo-linea p-4">
-                  <Prenda
-                    prenda={p.prenda}
-                    color={color.tela}
-                    sombra={color.sombra}
-                    titulo={`${p.nombre} en ${color.nombre}, con el estampado «${diseno.nombre}»`}
-                    className="h-[230px] w-full"
-                    estampado={(z) => diseno.dibujar(z, color.tinta)}
-                  />
+                  {p.foto ? (
+                    <img
+                      src={p.foto}
+                      alt={`${p.nombre} en ${color.nombre}`}
+                      loading="lazy"
+                      className="h-[230px] w-full object-contain"
+                    />
+                  ) : (
+                    <Prenda
+                      prenda={p.prenda}
+                      color={color.tela}
+                      sombra={color.sombra}
+                      titulo={`${p.nombre} en ${color.nombre}, con el estampado «${diseno.nombre}»`}
+                      className="h-[230px] w-full"
+                      estampado={(z) => diseno.dibujar(z, color.tinta)}
+                    />
+                  )}
                 </Peana>
 
                 <div className="mt-4 flex-1 border-t border-museo-tinta pt-3">
@@ -256,14 +271,23 @@ export function Tienda() {
                     key={`${linea.producto}-${linea.color}-${linea.talla}-${linea.diseno}`}
                     className="flex flex-wrap items-center gap-4 border-b border-museo-linea py-4"
                   >
-                    <Prenda
-                      prenda={producto.prenda}
-                      color={color.tela}
-                      sombra={color.sombra}
-                      titulo={producto.nombre}
-                      className="h-[54px] w-[54px] shrink-0"
-                      estampado={(z) => DISENOS[linea.diseno].dibujar(z, color.tinta)}
-                    />
+                    {producto.foto ? (
+                      <img
+                        src={producto.foto}
+                        alt={producto.nombre}
+                        loading="lazy"
+                        className="h-[54px] w-[54px] shrink-0 object-contain"
+                      />
+                    ) : (
+                      <Prenda
+                        prenda={producto.prenda}
+                        color={color.tela}
+                        sombra={color.sombra}
+                        titulo={producto.nombre}
+                        className="h-[54px] w-[54px] shrink-0"
+                        estampado={(z) => DISENOS[linea.diseno].dibujar(z, color.tinta)}
+                      />
+                    )}
                     <div className="min-w-[160px] flex-1">
                       <div className="text-[15px] text-museo-tinta">{producto.nombre}</div>
                       <div className="cartela mt-[5px] text-museo-tinta-tenue">
