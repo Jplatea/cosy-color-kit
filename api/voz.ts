@@ -45,23 +45,6 @@ const MODELO_POR_VOZ: Record<string, string> = {
 };
 const MODELO = process.env.ELEVENLABS_MODEL || "";
 
-/**
- * Puerta para comparar modelos, temporal.
- *
- * El acento salía latino con una muestra andaluza, y después de dejar `style`
- * a cero queda por saber cuál de los modelos respeta mejor la referencia. Sin
- * esto habría que cambiar la variable de entorno y redesplegar por cada
- * prueba, que son cinco minutos cada vuelta.
- *
- * Va con lista cerrada —solo estos nombres— y le siguen aplicando el límite
- * por visitante y la caché. **Se quita en cuanto se elija uno.**
- */
-const MODELOS_PERMITIDOS = new Set([
-  "eleven_multilingual_v2",
-  "eleven_v3",
-  "eleven_turbo_v2_5",
-  "eleven_flash_v2_5",
-]);
 
 const VOCES: Record<string, string | undefined> = {
   culow: process.env.ELEVENLABS_VOICE_CULOW,
@@ -90,7 +73,7 @@ const VOCES: Record<string, string | undefined> = {
  * Pililarge es lo plano que suena.
  */
 const AJUSTES: Record<string, Record<string, number | boolean>> = {
-  culow: { stability: 0.45, similarity_boost: 0.95, style: 0, use_speaker_boost: true },
+  culow: { stability: 0.15, similarity_boost: 1, style: 0, use_speaker_boost: true },
   pililarge: { stability: 0.55, similarity_boost: 0.95, style: 0, use_speaker_boost: true },
 };
 
@@ -101,7 +84,53 @@ const AJUSTES: Record<string, Record<string, number | boolean>> = {
  * saliendo de Redis con el acento viejo durante los dos meses que dura la
  * caché, y uno se vuelve loco creyendo que el ajuste no hace nada.
  */
-const VERSION_AJUSTES = "v2-sin-style";
+const VERSION_AJUSTES = "v3-ceceo";
+
+/**
+ * Escribe el texto con ceceo andaluz antes de mandárselo al modelo.
+ *
+ * El acento no se pide, se escribe. No hay ningún ajuste de «habla andaluz»:
+ * el modelo pronuncia lo que lee, y su español por defecto tira a neutro
+ * latino. Pero si se le escribe «grazias» en vez de «gracias», dice «grazias».
+ *
+ * Dos reglas, las que salieron de probar media docena de escrituras y quedarse
+ * con la que sonó de verdad andaluza:
+ *
+ *   · La **c ante e/i** pasa a z.        parece  -> pareze
+ *   · La **s** pasa a z...               solo    -> zolo
+ *     ...salvo la que cierra una         está    -> eztá
+ *     palabra de cuatro letras o más.    gracias -> grazias
+ *
+ * Esa excepción es la diferencia entre el ceceo y una parodia: en la boca de
+ * un andaluz la ese final de palabra larga se aspira o se cae, no se cecea.
+ * Sin ella salía «graziaz», que no lo dice nadie.
+ */
+function ceceo(texto: string): string {
+  return texto.replace(/\p{L}+/gu, (palabra) => {
+    const letras = [...palabra];
+    const largo = letras.length;
+    return letras
+      .map((letra, i) => {
+        const baja = letra.toLowerCase();
+        const siguiente = (letras[i + 1] || "").toLowerCase();
+        const cambia =
+          (baja === "c" && "eiéí".includes(siguiente)) ||
+          (baja === "s" && !(i === largo - 1 && largo >= 4));
+        if (!cambia) return letra;
+        return letra === baja ? "z" : "Z";
+      })
+      .join("");
+  });
+}
+
+/**
+ * Quién cecea.
+ *
+ * Culow sí: es lo que se buscaba. Pililarge no, porque su voz clonada ya sonaba
+ * bien tal cual y no se toca lo que funciona. Si algún día se quiere para los
+ * dos, se cambia aquí y ya.
+ */
+const CECEAN: Record<string, boolean> = { culow: true, pililarge: false };
 
 const MAX_CARACTERES = 300;
 /**
@@ -174,22 +203,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const params = new URL(req.url || "", "http://x").searchParams;
   const quien = String(params.get("v") || "").toLowerCase();
   const texto = String(params.get("t") || "").trim();
-  const pedido = String(params.get("m") || "");
-  const modelo = MODELOS_PERMITIDOS.has(pedido)
-    ? pedido
-    : MODELO || MODELO_POR_VOZ[quien] || "eleven_multilingual_v2";
-
-  /*
-    Los dos mandos que dan carácter, abiertos también para poder probar sin
-    redesplegar. Temporal, igual que `m`: se quitan los tres cuando se fijen
-    los ajustes buenos.
-  */
-  const numero = (nombre: string) => {
-    const v = Number(params.get(nombre));
-    return Number.isFinite(v) && v >= 0 && v <= 1 ? v : null;
-  };
-  const estabilidad = numero("st");
-  const parecido = numero("sb");
+  const modelo = MODELO || MODELO_POR_VOZ[quien] || "eleven_multilingual_v2";
 
   /*
     Si falta la voz de Pililarge, se sale del paso con la de Culow subida.
@@ -225,7 +239,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
   }
 
   const hash = createHash("sha256")
-    .update(`${voz}|${modelo}|${VERSION_AJUSTES}|${estabilidad}|${parecido}|${texto}`)
+    .update(`${voz}|${modelo}|${VERSION_AJUSTES}|${texto}`)
     .digest("hex")
     .slice(0, 32);
   const llave = `cyp:voz:${hash}`;
@@ -261,20 +275,16 @@ export default async function handler(req: Peticion, res: Respuesta) {
         accept: "audio/mpeg",
       },
       body: JSON.stringify({
-        text: texto,
+        text: CECEAN[quien] ? ceceo(texto) : texto,
         model_id: modelo,
-        voice_settings: {
-          ...((subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow),
-          ...(estabilidad !== null ? { stability: estabilidad } : {}),
-          ...(parecido !== null ? { similarity_boost: parecido } : {}),
-        },
+        voice_settings: (subirTono ? AJUSTES.culow : AJUSTES[quien]) || AJUSTES.culow,
       }),
     });
 
     if (!eleven.ok) {
       const detalle = await eleven.text();
       console.error("[voz] elevenlabs", eleven.status, modelo, detalle.slice(0, 300));
-      return res.status(502).json({ error: "la voz no ha respondido", modelo, detalle: detalle.slice(0, 200) });
+      return res.status(502).json({ error: "la voz no ha respondido" });
     }
 
     const audio = Buffer.from(await eleven.arrayBuffer());
