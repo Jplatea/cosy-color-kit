@@ -29,20 +29,18 @@ const AQUI = dirname(fileURLToPath(import.meta.url));
 const RAIZ = join(AQUI, "..");
 const SALIDA = join(RAIZ, "src", "config", "printful.json");
 /**
- * La misma información, recortada, al lado de la función de cobro.
+ * Los precios también van a la función de cobro, escritos dentro de ella.
  *
  * El servidor tiene que poder mirar el precio por su cuenta: si viniera en la
  * petición, cualquiera compraría una camiseta por un céntimo cambiando un
- * número en el inspector. Y tiene que vivir dentro de `api/` porque Vercel
- * empaqueta cada función con lo que cuelga de ella y nada más.
+ * número en el inspector.
  *
- * Es un módulo TypeScript y no un JSON, y el nombre empieza por guion bajo por
- * dos motivos distintos. El JSON no llegaba: la función reventaba en producción
- * con FUNCTION_INVOCATION_FAILED porque el empaquetador no se lo llevaba
- * consigo, mientras que un import de código sí se sigue. Y el guion bajo evita
- * que Vercel lo tome por un endpoint más y publique la tabla en `/api/precios`.
+ * Y van dentro del propio fichero, no en uno al lado, porque probamos las dos
+ * cosas y las dos reventaron en producción: ni un `import` de JSON ni uno de un
+ * módulo hermano llegaban a la función empaquetada. Vercel mete cada función en
+ * su propio paquete, así que lo único que no se pierde es el fichero en sí.
  */
-const SALIDA_API = join(RAIZ, "api", "_precios.ts");
+const SALIDA_API = join(RAIZ, "api", "checkout.ts");
 
 /** Lee `.env.local` sin depender de nada: son cuatro líneas de `CLAVE=valor`. */
 async function claveDelEntorno(nombre) {
@@ -212,21 +210,26 @@ async function main() {
       };
     }
   }
-  const cabecera = [
-    "/**",
-    " * Precios de la tienda, por id de variante de Printful.",
-    " *",
-    " * Generado por `npm run sync:printful`. No se edita a mano: se vuelve a",
-    " * sincronizar. Lo lee `checkout.ts` para cotizar cada línea del pedido sin",
-    " * fiarse de lo que mande el navegador.",
-    " */",
-    "",
-    "export const PRECIOS: Record<string, { nombre: string; precio: number }> =",
-  ].join("\n");
-  await writeFile(SALIDA_API, `${cabecera} ${JSON.stringify(precios, null, 2)};\n`, "utf8");
+  // Se sustituye solo el trozo entre las marcas: el resto de la función de
+  // cobro no se toca. Si las marcas no están, se para en vez de escribir
+  // encima —así fue como se destruyó el fichero una vez—.
+  const DESDE = "// === PRECIOS · generado, no editar ===";
+  const HASTA = "// === FIN PRECIOS ===";
+  const cobro = await readFile(SALIDA_API, "utf8");
+  const a = cobro.indexOf(DESDE);
+  const b = cobro.indexOf(HASTA);
+  if (a < 0 || b < 0 || b < a) {
+    throw new Error(
+      "no encuentro las marcas de precios en api/checkout.ts; no escribo nada"
+    );
+  }
+  const tabla =
+    `${DESDE}\nconst PRECIOS: Record<string, { nombre: string; precio: number }> = ` +
+    `${JSON.stringify(precios, null, 2)};\n`;
+  await writeFile(SALIDA_API, cobro.slice(0, a) + tabla + cobro.slice(b), "utf8");
 
   console.log(`\nEscrito en ${SALIDA}`);
-  console.log(`Y la tabla de precios del cobro en ${SALIDA_API}`);
+  console.log("Y los precios, dentro de api/checkout.ts");
   console.log("Aquí no hay nada secreto: son números de catálogo y precios.\n");
 
   const sinPrecio = productos.flatMap((p) => p.variantes).filter((v) => !v.precio);

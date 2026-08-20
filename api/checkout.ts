@@ -20,19 +20,101 @@
  */
 
 /**
- * La tabla de precios, escrita por `npm run sync:printful` al lado de esta
- * función. Vive aquí y no en `src/` porque Vercel empaqueta cada función con lo
- * que cuelga de ella: importar el catálogo del frontend rompería en producción.
+ * La tabla de precios, por id de variante de Printful.
  *
- * Y es un módulo, no un JSON. Con un `import` de JSON la función reventaba con
- * FUNCTION_INVOCATION_FAILED —el empaquetador no se llevaba el fichero—; un
- * import de código sí se sigue. El guion bajo del nombre evita además que
- * Vercel lo tome por un endpoint y publique la tabla en `/api/precios`.
+ * Está escrita aquí dentro, y no importada, después de que dos intentos
+ * fallaran en producción con FUNCTION_INVOCATION_FAILED: ni un `import` de
+ * JSON ni uno de un módulo hermano llegaban a la función ya empaquetada.
+ * Vercel mete cada función en su propio paquete y de al lado no llegaba nada,
+ * así que lo único que no puede perderse por el camino es el propio fichero.
+ *
+ * La rellena `npm run sync:printful` entre las dos marcas. No se toca a mano:
+ * se vuelve a sincronizar.
  *
  * Se busca por id de variante, que es lo único que manda el navegador. El
- * importe sale siempre de aquí.
+ * importe sale siempre de aquí, nunca de la petición: si viniera en ella,
+ * cualquiera compraría una sudadera por un céntimo.
  */
-import { PRECIOS } from "./_precios";
+// === PRECIOS · generado, no editar ===
+const PRECIOS: Record<string, { nombre: string; precio: number }> = {
+  "5449680122": {
+    "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
+    "precio": 1850
+  },
+  "5449668444": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
+    "precio": 4850
+  },
+  "5449668445": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
+    "precio": 4850
+  },
+  "5449668446": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
+    "precio": 4850
+  },
+  "5449668447": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
+    "precio": 4850
+  },
+  "5449668448": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
+    "precio": 4850
+  },
+  "5449668449": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
+    "precio": 5000
+  },
+  "5449668450": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
+    "precio": 5200
+  },
+  "5449667542": {
+    "nombre": "Gorraca para aparcar coches como un pro · S/M",
+    "precio": 1950
+  },
+  "5449667543": {
+    "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+    "precio": 1950
+  },
+  "5449158693": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XS",
+    "precio": 2900
+  },
+  "5449158694": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · S",
+    "precio": 2900
+  },
+  "5449158695": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · M",
+    "precio": 2900
+  },
+  "5449158696": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · L",
+    "precio": 2900
+  },
+  "5449158697": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XL",
+    "precio": 2900
+  },
+  "5449158698": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · 2XL",
+    "precio": 3050
+  },
+  "5449158699": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · 3XL",
+    "precio": 3200
+  },
+  "5449158700": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · 4XL",
+    "precio": 3400
+  },
+  "5449158701": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
+    "precio": 3650
+  }
+};
+// === FIN PRECIOS ===
 
 const ENVIO = { precio: 490, gratisDesde: 6000 };
 const MAX_UNIDADES = 20;
