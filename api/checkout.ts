@@ -19,18 +19,17 @@
  *   CYP_URL             dominio público, para las vueltas de Stripe
  */
 
-// El catálogo, repetido aquí a propósito: Vercel empaqueta cada función por
-// separado y deja fuera lo que no cuelgue de ella, así que importar el del
-// frontend rompería en producción. Si cambian los precios, cambian en los dos
-// sitios; es el precio de no tener un paso de compilación compartido.
-const CATALOGO: Record<string, { nombre: string; precio: number }> = {
-  camiseta: { nombre: "Camiseta", precio: 2490 },
-  sudadera: { nombre: "Sudadera con capucha", precio: 4990 },
-  pantalon: { nombre: "Pantalón de chándal", precio: 4490 },
-  taza: { nombre: "Taza", precio: 1490 },
-  bolsa: { nombre: "Bolsa de tela", precio: 1690 },
-  gorra: { nombre: "Gorra", precio: 2190 },
-};
+/**
+ * La tabla de precios, escrita por `npm run sync:printful` al lado de esta
+ * función. Vive aquí y no en `src/` porque Vercel empaqueta cada función con lo
+ * que cuelga de ella: importar el catálogo del frontend rompería en producción.
+ *
+ * Se busca por id de variante, que es lo único que manda el navegador. El
+ * importe sale siempre de aquí.
+ */
+import tabla from "./precios.json";
+
+const PRECIOS = (tabla?.precios ?? {}) as Record<string, { nombre: string; precio: number }>;
 
 const ENVIO = { precio: 490, gratisDesde: 6000 };
 const MAX_UNIDADES = 20;
@@ -71,35 +70,35 @@ export default async function handler(req: Peticion, res: Respuesta) {
     const entrada = Array.isArray(body.lineas) ? body.lineas.slice(0, 20) : [];
     if (!entrada.length) return res.status(400).json({ error: "la cesta está vacía" });
 
-    // Se reconstruye la cesta con los precios del servidor.
+    // Se reconstruye la cesta con los precios del servidor. Del navegador solo
+    // se acepta qué variante y cuántas unidades.
     const lineas = entrada
       .map((l) => {
-        const id = typeof l.producto === "string" ? l.producto : "";
-        const producto = CATALOGO[id];
+        const variante = String(Number(l.variante) || "");
+        const articulo = PRECIOS[variante];
+        if (!articulo) return null;
+
         const cantidad = Math.min(
           MAX_UNIDADES,
           Math.max(1, Math.floor(Number(l.cantidad) || 0))
         );
-        if (!producto) return null;
-        const detalle = [texto(l.diseno), texto(l.color), texto(l.talla)]
-          .filter(Boolean)
-          .join(" · ");
+        const detalle = [texto(l.diseno), texto(l.color)].filter(Boolean).join(" · ");
+
         return {
           quantity: cantidad,
           price_data: {
             currency: "eur",
-            unit_amount: producto.precio,
+            unit_amount: articulo.precio,
             product_data: {
-              name: producto.nombre,
+              name: articulo.nombre,
               description: detalle || undefined,
               metadata: {
-                producto: id,
                 color: texto(l.color),
                 talla: texto(l.talla),
                 diseno: texto(l.diseno),
                 // El id de la imprenta viaja hasta aquí para que el pedido se
                 // pueda fabricar solo desde el webhook, sin volver a mirar nada.
-                variante: String(Number(l.variante) || ""),
+                variante,
               },
             },
           },
@@ -107,7 +106,9 @@ export default async function handler(req: Peticion, res: Respuesta) {
       })
       .filter((l): l is NonNullable<typeof l> => l !== null);
 
-    if (!lineas.length) return res.status(400).json({ error: "nada que cobrar" });
+    if (!lineas.length) {
+      return res.status(409).json({ error: "esos artículos ya no están a la venta" });
+    }
 
     const subtotal = lineas.reduce(
       (n, l) => n + l.price_data.unit_amount * l.quantity,

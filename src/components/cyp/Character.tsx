@@ -35,7 +35,7 @@ import type { Traje } from "./sastre";
  */
 const EXTRA_DEL_COSTURERO: Partial<Record<keyof Extras, PiezaId>> = {
   alas: "alas",
-  pelo: "melena",
+  pelo: "pelo",
   zapatos: "zapatos",
 };
 

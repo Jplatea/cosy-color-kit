@@ -1,4 +1,111 @@
 {
-  "sincronizado": null,
-  "productos": []
+  "sincronizado": "2026-08-20T09:49:48.640Z",
+  "productos": [
+    {
+      "id": 457099259,
+      "nombre": "Unisex t-shirt",
+      "miniatura": "https://files.cdn.printful.com/files/997/997bcc366105a0b21d730ced904c1ff0_preview.png",
+      "variantes": [
+        {
+          "id": 5449158693,
+          "catalogo": 9526,
+          "nombre": "Unisex t-shirt / XS",
+          "talla": "XS",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158694,
+          "catalogo": 4011,
+          "nombre": "Unisex t-shirt / S",
+          "talla": "S",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158695,
+          "catalogo": 4012,
+          "nombre": "Unisex t-shirt / M",
+          "talla": "M",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158696,
+          "catalogo": 4013,
+          "nombre": "Unisex t-shirt / L",
+          "talla": "L",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158697,
+          "catalogo": 4014,
+          "nombre": "Unisex t-shirt / XL",
+          "talla": "XL",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158698,
+          "catalogo": 4015,
+          "nombre": "Unisex t-shirt / 2XL",
+          "talla": "2XL",
+          "color": "White",
+          "precio": 3050,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158699,
+          "catalogo": 5294,
+          "nombre": "Unisex t-shirt / 3XL",
+          "talla": "3XL",
+          "color": "White",
+          "precio": 3200,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158700,
+          "catalogo": 5309,
+          "nombre": "Unisex t-shirt / 4XL",
+          "talla": "4XL",
+          "color": "White",
+          "precio": 3400,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5449158701,
+          "catalogo": 12872,
+          "nombre": "Unisex t-shirt / 5XL",
+          "talla": "5XL",
+          "color": "White",
+          "precio": 3650,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    }
+  ]
 }

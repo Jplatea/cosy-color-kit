@@ -39,8 +39,13 @@ export type Producto = {
   prenda: PrendaId;
   /** Qué es, en la ficha. */
   ficha: string;
-  /** Precio en céntimos. */
+  /**
+   * Precio "desde", en céntimos: el más barato de sus variantes. Es lo que se
+   * enseña en la tarjeta antes de elegir talla.
+   */
   precio: number;
+  /** Precio real de cada combinación. Printful cobra más por las tallas grandes. */
+  precios: Record<string, number>;
   tallas: TallaId[];
   colores: ColorPrenda[];
   disenos: DisenoId[];
@@ -154,8 +159,11 @@ function deLaImprenta(): Producto[] {
       const tallas = [...new Set(vivas.map((v) => v.talla || "UNICA"))];
 
       const variantes: Record<string, number> = {};
+      const precios: Record<string, number> = {};
       for (const v of vivas) {
-        variantes[claveVariante(idDeColor(v.color || "único"), v.talla || "UNICA", diseno)] = v.id;
+        const clave = claveVariante(idDeColor(v.color || "único"), v.talla || "UNICA", diseno);
+        variantes[clave] = v.id;
+        precios[clave] = v.precio;
       }
 
       return {
@@ -165,8 +173,11 @@ function deLaImprenta(): Producto[] {
         nombre: p.nombre.split(/\s[–—|]\s/)[0].trim() || p.nombre,
         prenda,
         ficha: ajuste.ficha ?? FICHAS[prenda],
-        // El precio lo pone Printful: es el único sitio donde debe vivir.
+        // El precio lo pone Printful: es el único sitio donde debe vivir. Y no
+        // es uno solo — una 5XL cuesta más que una S, así que se guarda el de
+        // cada combinación y en la tarjeta se enseña el más barato como "desde".
         precio: Math.min(...vivas.map((v) => v.precio)),
+        precios,
         tallas,
         colores,
         disenos: [diseno],
@@ -208,6 +219,7 @@ const MUESTRA: Producto[] = (
   ],
   disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"] as DisenoId[],
   variantes: {},
+  precios: {},
 }));
 
 const deImprenta = deLaImprenta();
@@ -216,6 +228,14 @@ const deImprenta = deLaImprenta();
 export const hayImprenta = deImprenta.length > 0;
 
 export const PRODUCTOS: Producto[] = hayImprenta ? deImprenta : MUESTRA;
+
+/**
+ * Lo que cuesta esa combinación. Si no está en la tabla —porque la imprenta no
+ * la tiene dada de alta— se devuelve el precio "desde", que es lo que se está
+ * enseñando en pantalla.
+ */
+export const precioDe = (p: Producto, color: string, talla: TallaId, diseno: DisenoId) =>
+  p.precios[claveVariante(color, talla, diseno)] ?? p.precio;
 
 export const euros = (centimos: number) =>
   (centimos / 100).toLocaleString("es-ES", {

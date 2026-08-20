@@ -28,6 +28,15 @@ import { fileURLToPath } from "node:url";
 const AQUI = dirname(fileURLToPath(import.meta.url));
 const RAIZ = join(AQUI, "..");
 const SALIDA = join(RAIZ, "src", "config", "printful.json");
+/**
+ * La misma información, recortada, al lado de la función de cobro.
+ *
+ * El servidor tiene que poder mirar el precio por su cuenta: si viniera en la
+ * petición, cualquiera compraría una camiseta por un céntimo cambiando un
+ * número en el inspector. Y tiene que vivir dentro de `api/` porque Vercel
+ * empaqueta cada función con lo que cuelga de ella y nada más.
+ */
+const SALIDA_API = join(RAIZ, "api", "precios.json");
 
 /** Lee `.env.local` sin depender de nada: son cuatro líneas de `CLAVE=valor`. */
 async function claveDelEntorno(nombre) {
@@ -169,7 +178,20 @@ async function main() {
   };
   await writeFile(SALIDA, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 
+  // Solo lo que el cobro necesita: qué es cada variante y cuánto vale.
+  const precios = {};
+  for (const p of productos) {
+    for (const v of p.variantes) {
+      precios[v.id] = {
+        nombre: `${p.nombre}${v.talla && v.talla !== "UNICA" ? ` · ${v.talla}` : ""}`,
+        precio: v.precio,
+      };
+    }
+  }
+  await writeFile(SALIDA_API, `${JSON.stringify({ precios }, null, 2)}\n`, "utf8");
+
   console.log(`\nEscrito en ${SALIDA}`);
+  console.log(`Y la tabla de precios del cobro en ${SALIDA_API}`);
   console.log("Aquí no hay nada secreto: son números de catálogo y precios.\n");
 
   const sinPrecio = productos.flatMap((p) => p.variantes).filter((v) => !v.precio);

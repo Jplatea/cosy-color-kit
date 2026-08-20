@@ -10,6 +10,7 @@ import {
   hayImprenta,
   claveVariante,
   euros,
+  precioDe,
   type Producto,
   type TallaId,
 } from "@/config/tienda";
@@ -137,7 +138,7 @@ export function Tienda() {
                       {p.nombre}
                     </h3>
                     <span className="font-display text-[20px] text-museo-tinta">
-                      {euros(p.precio)}
+                      {euros(precioDe(p, e.color, e.talla, e.diseno))}
                     </span>
                   </div>
                   <p className="mt-2 text-[13.5px] leading-[1.55] text-museo-tinta-suave">{p.ficha}</p>

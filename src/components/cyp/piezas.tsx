@@ -63,7 +63,8 @@ export type PiezaId =
   | "parche"
   | "pajarita"
   | "cinturon"
-  | "zapatos";
+  | "zapatos"
+  | "pelo";
 
 export type TexturaId = "rayas" | "lunares" | "escamas" | "pelo" | "metal";
 
@@ -517,6 +518,48 @@ const DIBUJOS: Record<PiezaId, Dibujo> = {
   ],
 
   /**
+   * El pelo.
+   *
+   * No vale la melena de león que ya había: esa va detrás del cuerpo —que es lo
+   * suyo para enmarcar una cabeza de león— y aquí desaparecía entera detrás de
+   * los lóbulos. El pelo va por delante y encima de la coronilla, con un
+   * mechón levantado: sin el mechón parece un casco.
+   */
+  pelo: ({ s, cima, alto }) => [
+    caja("pe-base", {
+      top: -24 * s + cima,
+      left: alto ? "2%" : "12%",
+      right: alto ? "2%" : "12%",
+      height: 50 * s,
+      borderRadius: `${30 * s}px ${30 * s}px ${10 * s}px ${10 * s}px`,
+      background: "linear-gradient(180deg,#4a3324,#241708)",
+      zIndex: 4,
+    }),
+    // El flequillo: tres picos por delante, para que no sea un bloque liso.
+    caja("pe-flequillo", {
+      top: 14 * s + cima,
+      left: alto ? "2%" : "12%",
+      right: alto ? "2%" : "12%",
+      height: 22 * s,
+      background: "#33220f",
+      clipPath: "polygon(0 0,100% 0,100% 40%,82% 100%,64% 34%,46% 100%,28% 34%,10% 96%,0 38%)",
+      zIndex: 5,
+    }),
+    // Y el mechón de arriba, que es lo que le da la gracia.
+    caja("pe-mechon", {
+      top: -46 * s + cima,
+      left: "54%",
+      width: 20 * s,
+      height: 34 * s,
+      background: "#3d2a1c",
+      borderRadius: `${10 * s}px ${10 * s}px 0 0`,
+      transform: "rotate(22deg)",
+      transformOrigin: "bottom center",
+      zIndex: 4,
+    }),
+  ],
+
+  /**
    * Los zapatos.
    *
    * Ninguno de los dos tiene pies, así que los zapatos no calzan nada: se
@@ -590,6 +633,7 @@ export const NOMBRES: Record<PiezaId, string> = {
   pajarita: "pajarita",
   cinturon: "cinturón",
   zapatos: "zapatos",
+  pelo: "pelo",
 };
 
 export const NOMBRES_TEXTURA: Record<TexturaId, string> = {

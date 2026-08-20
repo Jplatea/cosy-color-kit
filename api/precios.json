@@ -1,0 +1,40 @@
+{
+  "precios": {
+    "5449158693": {
+      "nombre": "Unisex t-shirt · XS",
+      "precio": 2900
+    },
+    "5449158694": {
+      "nombre": "Unisex t-shirt · S",
+      "precio": 2900
+    },
+    "5449158695": {
+      "nombre": "Unisex t-shirt · M",
+      "precio": 2900
+    },
+    "5449158696": {
+      "nombre": "Unisex t-shirt · L",
+      "precio": 2900
+    },
+    "5449158697": {
+      "nombre": "Unisex t-shirt · XL",
+      "precio": 2900
+    },
+    "5449158698": {
+      "nombre": "Unisex t-shirt · 2XL",
+      "precio": 3050
+    },
+    "5449158699": {
+      "nombre": "Unisex t-shirt · 3XL",
+      "precio": 3200
+    },
+    "5449158700": {
+      "nombre": "Unisex t-shirt · 4XL",
+      "precio": 3400
+    },
+    "5449158701": {
+      "nombre": "Unisex t-shirt · 5XL",
+      "precio": 3650
+    }
+  }
+}

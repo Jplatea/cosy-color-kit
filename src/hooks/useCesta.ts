@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { DisenoId } from "@/components/cyp/disenos";
-import { ENVIO, PRODUCTOS, claveVariante, type TallaId } from "@/config/tienda";
+import { ENVIO, PRODUCTOS, claveVariante, precioDe, type TallaId } from "@/config/tienda";
 
 /**
  * La cesta.
@@ -97,7 +97,9 @@ export function useCesta() {
   const detalle = lineas.map((l) => {
     const producto = PRODUCTOS.find((p) => p.id === l.producto)!;
     const variante = producto.variantes[claveVariante(l.color, l.talla, l.diseno)];
-    return { linea: l, producto, variante, importe: producto.precio * l.cantidad };
+    // El precio va por variante: una 5XL no cuesta lo mismo que una S.
+    const unidad = precioDe(producto, l.color, l.talla, l.diseno);
+    return { linea: l, producto, variante, unidad, importe: unidad * l.cantidad };
   });
 
   const unidades = detalle.reduce((n, d) => n + d.linea.cantidad, 0);
