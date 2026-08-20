@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Chip, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { Prenda } from "./prendas";
+import { Galeria } from "./galeria";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
 import { tinta } from "@/lib/color";
@@ -42,6 +43,8 @@ const porDefecto = (p: Producto): Eleccion => ({
 export function Tienda() {
   /** Qué foto de la galería se está mirando, por producto. */
   const [foto, setFoto] = useState<Record<string, number>>({});
+  /** Qué producto se está mirando a pantalla completa, y por qué foto. */
+  const [lupa, setLupa] = useState<{ id: string; i: number } | null>(null);
   const [eleccion, setEleccion] = useState<Record<string, Eleccion>>({});
   const [estado, setEstado] = useState<"quieto" | "yendo" | "cerrada" | "error">("quieto");
   const cesta = useCesta();
@@ -130,12 +133,24 @@ export function Tienda() {
                 */}
                 <Peana className="rounded-[3px] border border-museo-linea p-4">
                   {p.fotos.length ? (
-                    <img
-                      src={p.fotos[Math.min(foto[p.id] ?? 0, p.fotos.length - 1)]}
-                      alt={`${p.nombre} en ${color.nombre}`}
-                      loading="lazy"
-                      className="h-[230px] w-full object-contain"
-                    />
+                    /*
+                      La foto abre la galería a pantalla completa. A 230 px de
+                      alto el bordado del pecho es una mancha; quien va a
+                      gastarse cincuenta euros quiere verlo de cerca.
+                    */
+                    <button
+                      type="button"
+                      onClick={() => setLupa({ id: p.id, i: Math.min(foto[p.id] ?? 0, p.fotos.length - 1) })}
+                      className="block w-full cursor-zoom-in"
+                      aria-label={`Ver ${p.fotos.length === 1 ? "la foto" : `las ${p.fotos.length} fotos`} de ${p.nombre}`}
+                    >
+                      <img
+                        src={p.fotos[Math.min(foto[p.id] ?? 0, p.fotos.length - 1)]}
+                        alt={`${p.nombre} en ${color.nombre}`}
+                        loading="lazy"
+                        className="h-[230px] w-full object-contain transition-transform duration-300 hover:scale-[1.03]"
+                      />
+                    </button>
                   ) : (
                     <Prenda
                       prenda={p.prenda}
@@ -184,7 +199,8 @@ export function Tienda() {
                     <h3 className="font-display text-[22px] leading-tight text-museo-tinta">
                       {p.nombre}
                     </h3>
-                    <span className="shrink-0 font-display text-[20px] text-museo-tinta">
+                    {/* En latón: es el dato que se busca de un vistazo. */}
+                    <span className="shrink-0 font-display text-[21px] text-museo-laton">
                       {euros(precioDe(p, e.color, e.talla, e.diseno))}
                     </span>
                   </div>
@@ -405,6 +421,26 @@ export function Tienda() {
           </div>
         )}
       </div>
+
+      {/*
+        El visor va aquí abajo, fuera de la rejilla, porque se pinta encima de
+        todo con `position: fixed`. Al cerrarlo se queda seleccionada en la
+        tarjeta la foto en la que lo dejaste, que es lo que uno espera.
+      */}
+      {lupa &&
+        (() => {
+          const p = PRODUCTOS.find((x) => x.id === lupa.id);
+          if (!p?.fotos.length) return null;
+          return (
+            <Galeria
+              fotos={p.fotos}
+              nombre={p.nombre}
+              inicial={lupa.i}
+              onIndice={(i) => setFoto((v) => (v[p.id] === i ? v : { ...v, [p.id]: i }))}
+              onClose={() => setLupa(null)}
+            />
+          );
+        })()}
     </section>
   );
 }
