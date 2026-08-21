@@ -1,0 +1,83 @@
+{
+  "sincronizado": "2026-08-21T21:37:47.143Z",
+  "imprenta": "gelato",
+  "productos": [
+    {
+      "id": "camisetita",
+      "nombre": "Camisetita para ver a tus Bros en el padel",
+      "ficha": "Algodón peinado. Corte recto, cuello reforzado. El símbolo bordado en el pecho.",
+      "prenda": "camiseta",
+      "color": {
+        "id": "blanco",
+        "nombre": "Blanco",
+        "hex": "#ffffff"
+      },
+      "colocacion": "chest-left-embroidery",
+      "diseno": "/disenos/simbolo.png",
+      "envio": {
+        "precio": 4.29,
+        "dias": [
+          10,
+          12
+        ],
+        "nombre": "DHL Parcel Connect Home"
+      },
+      "variantes": [
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_s_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "S",
+          "coste": 1333,
+          "puesto": 2132,
+          "precio": 2650,
+          "moneda": "EUR",
+          "disponible": true
+        },
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_m_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "M",
+          "coste": 1333,
+          "puesto": 2132,
+          "precio": 2650,
+          "moneda": "EUR",
+          "disponible": true
+        },
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_l_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "L",
+          "coste": 1333,
+          "puesto": 2132,
+          "precio": 2650,
+          "moneda": "EUR",
+          "disponible": true
+        },
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_xl_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "XL",
+          "coste": 1333,
+          "puesto": 2132,
+          "precio": 2650,
+          "moneda": "EUR",
+          "disponible": true
+        },
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_2xl_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "2XL",
+          "coste": 1525,
+          "puesto": 2364,
+          "precio": 2850,
+          "moneda": "EUR",
+          "disponible": true
+        },
+        {
+          "uid": "apparel_product_gca_t-shirt_gsc_crewneck_gcu_unisex_gqa_classic_gsi_3xl_gco_white_gpr_chstl-emb_shslr-emb",
+          "talla": "3XL",
+          "coste": 1702,
+          "puesto": 2578,
+          "precio": 3100,
+          "moneda": "EUR",
+          "disponible": true
+        }
+      ]
+    }
+  ]
+}
