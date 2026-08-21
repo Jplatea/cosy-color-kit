@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-21T23:53:45.792Z",
+  "sincronizado": "2026-08-21T23:56:27.552Z",
   "productos": [
     {
       "id": 457944687,
@@ -31,9 +31,12 @@
     {
       "id": 457940971,
       "nombre": "Para que el ratoncito retoce alegremente",
-      "miniatura": "https://files.cdn.printful.com/files/faf/faffc9a3cf7359c2a1d75001a633ba04_preview.png",
+      "miniatura": "/tienda/para/01-de-frente.webp",
       "fotos": [
-        "https://files.cdn.printful.com/files/faf/faffc9a3cf7359c2a1d75001a633ba04_preview.png"
+        "/tienda/para/01-de-frente.webp",
+        "/tienda/para/02-con-raton.webp",
+        "/tienda/para/03-en-la-mesa.webp",
+        "/tienda/para/04-el-reverso.webp"
       ],
       "variantes": [
         {
