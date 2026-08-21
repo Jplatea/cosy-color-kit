@@ -50,6 +50,31 @@ const ENVIO_GRATIS_DESDE = 60;
 /** Tarifa europea de Stripe para tarjetas del EEE. Aproximada. */
 const COMISION = { porcentaje: 0.015, fijo: 0.25 };
 
+/** Lo que se quiere ganar por prenda. `npm run costes -- 12` para pedir otro. */
+const OBJETIVO = Number(process.argv[2]) || 8;
+
+/**
+ * A cuánto habría que venderlo para ganar `OBJETIVO` limpios.
+ *
+ * Hay que despejarlo y no tantear, porque el precio se muerde la cola: subirlo
+ * sube la comisión de la pasarela, que se lleva un porcentaje de lo cobrado.
+ * Y hay un escalón: pasando de `ENVIO_GRATIS_DESDE` la web deja de cobrar el
+ * envío, así que el precio sube pero lo cobrado no tanto. Por eso se resuelve
+ * en los dos escenarios y se elige el que de verdad llega al objetivo.
+ */
+function precioPara(coste) {
+  const despeja = (porte) =>
+    (OBJETIVO + COMISION.fijo + coste) / (1 - COMISION.porcentaje) - porte;
+
+  const conPorte = despeja(ENVIO_COBRADO);
+  if (conPorte < ENVIO_GRATIS_DESDE) return conPorte;
+  // Ya en el tramo de envío gratis: el comprador solo paga el precio.
+  return despeja(0);
+}
+
+/** A números de tienda: 26,19 no se pone en un escaparate; 26,50 sí. */
+const redondea = (n) => Math.ceil(n * 2) / 2;
+
 async function delEntorno(nombre) {
   if (process.env[nombre]) return process.env[nombre].trim();
   for (const fichero of [".env.local", ".env"]) {
@@ -118,7 +143,11 @@ async function informePrintful(clave) {
       const margenRepe = cobrado - sinDigi - comision;
 
       const tallas = variantes.filter((x) => x.retail_price === precio).map((x) => x.size || "única");
-      const señal = margenRepe < 0 ? "  ← PIERDES DINERO" : margenRepe < 3 ? "  ← muy justo" : "";
+      const sugerido = redondea(precioPara(sinDigi));
+      const señal =
+        margenRepe < 0 ? `  ← PIERDES DINERO · ponlo a ${eur(sugerido)}`
+        : margenRepe < OBJETIVO - 2 ? `  ← flojo · ponlo a ${eur(sugerido)}`
+        : "  ← bien";
 
       // La columna del coste enseña el que se repite, para que cuadre con el
       // margen de al lado. Meter ahí la digitalización descuadraba la resta y
@@ -134,7 +163,13 @@ async function informePrintful(clave) {
             ` del bordado: margen ${eur(margen)} esa vez)`
         );
       }
-      resumen.push({ producto: detalle.sync_product.name, cobrado, coste: sinDigi, margen: margenRepe });
+      resumen.push({
+        producto: detalle.sync_product.name,
+        tallas: tallas[0] === tallas.at(-1) ? tallas[0] : `${tallas[0]}–${tallas.at(-1)}`,
+        venta,
+        sugerido,
+        margen: margenRepe,
+      });
     }
   }
   return resumen;
