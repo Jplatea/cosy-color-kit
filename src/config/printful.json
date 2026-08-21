@@ -1,12 +1,18 @@
 {
-  "sincronizado": "2026-08-21T23:48:00.836Z",
+  "sincronizado": "2026-08-21T23:53:45.792Z",
   "productos": [
     {
       "id": 457944687,
       "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
-      "miniatura": "https://files.cdn.printful.com/files/15b/15bea5ec7f0faca452609b20b4620f89_preview.png",
+      "miniatura": "/tienda/bolsa/01-frente.webp",
       "fotos": [
-        "https://files.cdn.printful.com/files/15b/15bea5ec7f0faca452609b20b4620f89_preview.png"
+        "/tienda/bolsa/01-frente.webp",
+        "/tienda/bolsa/02-puesta.webp",
+        "/tienda/bolsa/03-colgada.webp",
+        "/tienda/bolsa/04-de-lado.webp",
+        "/tienda/bolsa/05-detras.webp",
+        "/tienda/bolsa/06-arriba.webp",
+        "/tienda/bolsa/07-por-dentro.webp"
       ],
       "variantes": [
         {
@@ -70,15 +76,18 @@
     {
       "id": 457271888,
       "nombre": "Sudadera to perita de cuello como si llevaras collarin",
-      "miniatura": "/tienda/sudadera/01-plana.webp",
+      "miniatura": "/tienda/sudadera/01-verde.webp",
       "fotos": [
-        "/tienda/sudadera/01-plana.webp",
-        "/tienda/sudadera/02-puesta.webp",
-        "/tienda/sudadera/04-bordado.webp",
-        "/tienda/sudadera/05-capucha.webp",
-        "/tienda/sudadera/06-puno.webp",
-        "/tienda/sudadera/07-detras.webp",
-        "/tienda/sudadera/08-plana-detras.webp"
+        "/tienda/sudadera/01-verde.webp",
+        "/tienda/sudadera/02-negra.webp",
+        "/tienda/sudadera/03-blanca.webp",
+        "/tienda/sudadera/04-verde-puesta.webp",
+        "/tienda/sudadera/05-negra-puesta.webp",
+        "/tienda/sudadera/06-blanca-puesta.webp",
+        "/tienda/sudadera/07-verde-espalda.webp",
+        "/tienda/sudadera/08-negra-espalda.webp",
+        "/tienda/sudadera/09-bordado.webp",
+        "/tienda/sudadera/10-detalle.webp"
       ],
       "variantes": [
         {
