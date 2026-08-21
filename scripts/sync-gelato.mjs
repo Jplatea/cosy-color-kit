@@ -32,6 +32,7 @@
  */
 
 import { writeFile, readFile, mkdir, readdir, rm } from "node:fs/promises";
+import { escribirPrecios } from "./lib/precios.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -346,7 +347,9 @@ async function main() {
     `${JSON.stringify({ sincronizado: new Date().toISOString(), tienda, productos: salida }, null, 2)}\n`,
     "utf8"
   );
+  const cuenta = await escribirPrecios(RAIZ);
   console.log(`Escrito en ${SALIDA}`);
+  console.log(`Y los precios de las dos imprentas, en api/checkout.ts (${JSON.stringify(cuenta)})`);
   console.log(`
 Los costes llevan el envío más barato y un ${IVA * 100} % de IVA. Si en Gelato diste un
 NIF español no te cobran ese IVA —lo declaras tú— y el margen real sale mejor

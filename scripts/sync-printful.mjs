@@ -22,6 +22,7 @@
  */
 
 import { writeFile, readFile, readdir, mkdir } from "node:fs/promises";
+import { escribirPrecios } from "./lib/precios.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -278,36 +279,13 @@ async function main() {
   };
   await writeFile(SALIDA, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 
-  // Solo lo que el cobro necesita: qué es cada variante y cuánto vale.
-  const precios = {};
-  for (const p of productos) {
-    for (const v of p.variantes) {
-      precios[v.id] = {
-        nombre: `${p.nombre}${v.talla && v.talla !== "UNICA" ? ` · ${v.talla}` : ""}`,
-        precio: v.precio,
-      };
-    }
-  }
-  // Se sustituye solo el trozo entre las marcas: el resto de la función de
-  // cobro no se toca. Si las marcas no están, se para en vez de escribir
-  // encima —así fue como se destruyó el fichero una vez—.
-  const DESDE = "// === PRECIOS · generado, no editar ===";
-  const HASTA = "// === FIN PRECIOS ===";
-  const cobro = await readFile(SALIDA_API, "utf8");
-  const a = cobro.indexOf(DESDE);
-  const b = cobro.indexOf(HASTA);
-  if (a < 0 || b < 0 || b < a) {
-    throw new Error(
-      "no encuentro las marcas de precios en api/checkout.ts; no escribo nada"
-    );
-  }
-  const tabla =
-    `${DESDE}\nconst PRECIOS: Record<string, { nombre: string; precio: number }> = ` +
-    `${JSON.stringify(precios, null, 2)};\n`;
-  await writeFile(SALIDA_API, cobro.slice(0, a) + tabla + cobro.slice(b), "utf8");
+  // Los precios de las dos imprentas van juntos: los escribe una función
+  // compartida, que si no el segundo sincronizador en correr borraría las
+  // variantes del primero.
+  const cuenta = await escribirPrecios(RAIZ);
 
   console.log(`\nEscrito en ${SALIDA}`);
-  console.log("Y los precios, dentro de api/checkout.ts");
+  console.log(`Y los precios de las dos imprentas, en api/checkout.ts (${JSON.stringify(cuenta)})`);
   console.log("Aquí no hay nada secreto: son números de catálogo y precios.\n");
 
   const sinPrecio = productos.flatMap((p) => p.variantes).filter((v) => !v.precio);

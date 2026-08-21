@@ -27,10 +27,13 @@
  *   STRIPE_WEBHOOK_SECRET   el secreto de firma (whsec_…), muy recomendable
  *   PRINTFUL_API_KEY        el token de Printful, con permiso sobre pedidos
  *   PRINTFUL_STORE_ID       solo si tu cuenta tiene más de una tienda
- *   PRINTFUL_CONFIRMAR      «1» para mandarlo a producción sin tocar nada.
- *                           Sin esto el pedido se queda en borrador y lo
- *                           confirmas tú en Printful, que para empezar es lo
- *                           sensato: se ve qué va a salir antes de pagarlo.
+ *   PRINTFUL_CONFIRMAR      «1» para mandarlo a producción sin tocar nada
+ *   GELATO_API_KEY          la clave de Gelato
+ *   GELATO_CONFIRMAR        «1» para lo mismo en Gelato
+ *
+ * Sin las dos variables de confirmar, los pedidos entran como borrador y los
+ * apruebas tú en el panel de cada imprenta. Para empezar es lo sensato: se ve
+ * qué va a salir antes de pagarlo.
  */
 
 import { createHmac, timingSafeEqual } from "node:crypto";
@@ -116,6 +119,35 @@ async function printful(ruta: string, opciones: RequestInit = {}) {
   return { ok: res.ok, estado: res.status, cuerpo: await res.json().catch(() => null) };
 }
 
+async function gelato(url: string, cuerpo?: unknown) {
+  const res = await fetch(url, {
+    method: cuerpo ? "POST" : "GET",
+    headers: {
+      "X-API-KEY": process.env.GELATO_API_KEY || "",
+      "content-type": "application/json",
+    },
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined,
+  });
+  return { ok: res.ok, estado: res.status, cuerpo: await res.json().catch(() => null) };
+}
+
+/**
+ * ¿Ya se mandó este pedido a Gelato?
+ *
+ * Gelato no tiene el `external_id` de Printful, que rechaza el duplicado solo;
+ * hay que preguntar por la referencia antes de crear nada. Si la consulta
+ * falla se contesta que no existe: crear un pedido de más se ve y se cancela,
+ * pero no crearlo deja a alguien pagado y sin camiseta.
+ */
+async function gelatoRepetido(referencia: string): Promise<boolean> {
+  const r = await gelato("https://order.gelatoapis.com/v4/orders:search", {
+    orderReferenceIds: [referencia],
+    limit: 1,
+  });
+  if (!r.ok) return false;
+  return Boolean((r.cuerpo as { orders?: unknown[] })?.orders?.length);
+}
+
 /** Lo que Stripe recogió en su formulario, traducido a lo que pide Printful. */
 function destinatario(sesion: Record<string, unknown>) {
   const cliente = (sesion.customer_details || {}) as Record<string, unknown>;
@@ -141,8 +173,9 @@ export default async function handler(req: Peticion, res: Respuesta) {
   if (req.method !== "POST") return res.status(405).json({ error: "método no permitido" });
 
   const claveStripe = process.env.STRIPE_SECRET_KEY;
-  if (!claveStripe || !process.env.PRINTFUL_API_KEY) {
-    console.error("[pedido] faltan STRIPE_SECRET_KEY o PRINTFUL_API_KEY");
+  // Basta con una imprenta configurada: la tienda puede vender solo de una.
+  if (!claveStripe || !(process.env.PRINTFUL_API_KEY || process.env.GELATO_API_KEY)) {
+    console.error("[pedido] falta STRIPE_SECRET_KEY o la clave de alguna imprenta");
     return res.status(503).json({ error: "sin configurar" });
   }
 
@@ -187,27 +220,26 @@ export default async function handler(req: Peticion, res: Respuesta) {
       return res.status(200).json({ ok: true, ignorado: "sin pagar" });
     }
 
-    // ¿Ya estaba? Stripe reintenta el aviso hasta que le contestas 200, y sin
-    // esta comprobación una red lenta se convierte en dos camisetas.
-    const previo = await printful(`/orders/@${encodeURIComponent(idSesion)}`);
-    if (previo.ok) {
-      console.log(`[pedido] ${idSesion} ya existía en Printful`);
-      return res.status(200).json({ ok: true, repetido: true });
+    /*
+      Cada línea sabe quién la fabrica, porque se apuntó al abrir el cobro.
+
+      Una misma cesta puede llevar una camiseta de Printful y una sudadera de
+      Gelato: son dos pedidos a dos imprentas distintas, no uno. Se reparten
+      aquí y cada una se manda por su lado.
+
+      La línea del envío se cae sola: no lleva variante porque el porte lo cobra
+      la web, y lo que se fabrica son prendas.
+    */
+    const lineas = (sesion.line_items?.data || []) as Record<string, any>[];
+    const reparto = { printful: [] as Record<string, any>[], gelato: [] as Record<string, any>[] };
+    for (const l of lineas) {
+      const meta = l.price?.product?.metadata || {};
+      if (!meta.variante) continue;
+      const donde = meta.imprenta === "gelato" ? "gelato" : "printful";
+      reparto[donde].push({ meta, cantidad: Number(l.quantity) || 1 });
     }
 
-    /*
-      La línea del envío se queda fuera a propósito: no lleva variante porque
-      el porte lo cobra la web, pero lo que se fabrica son prendas. El id de
-      Printful viaja en los metadatos desde que se abrió el cobro.
-    */
-    const articulos = ((sesion.line_items?.data || []) as Record<string, any>[])
-      .map((l) => ({
-        sync_variant_id: Number(l.price?.product?.metadata?.variante || 0),
-        quantity: Number(l.quantity) || 1,
-      }))
-      .filter((a) => a.sync_variant_id > 0);
-
-    if (!articulos.length) {
+    if (!reparto.printful.length && !reparto.gelato.length) {
       console.error(`[pedido] ${idSesion} sin artículos con variante`);
       return res.status(200).json({ ok: true, ignorado: "sin artículos" });
     }
@@ -218,25 +250,83 @@ export default async function handler(req: Peticion, res: Respuesta) {
       return res.status(200).json({ ok: true, ignorado: "sin dirección" });
     }
 
-    const confirmar = process.env.PRINTFUL_CONFIRMAR === "1";
-    const creado = await printful(`/orders?confirm=${confirmar ? "1" : "0"}`, {
-      method: "POST",
-      body: JSON.stringify({ external_id: idSesion, recipient: quien, items: articulos }),
-    });
+    const hechos: string[] = [];
 
-    if (!creado.ok) {
-      // 500 a propósito: así Stripe lo reintenta, que es justo lo que se
-      // quiere si Printful estaba caído. El pago ya está hecho; solo falta
-      // fabricar.
-      console.error(`[pedido] printful ${creado.estado}`, JSON.stringify(creado.cuerpo).slice(0, 400));
-      return res.status(500).json({ error: "la imprenta no ha aceptado el pedido" });
+    // ── Printful ────────────────────────────────────────────────────────────
+    if (reparto.printful.length) {
+      // ¿Ya estaba? Stripe reintenta el aviso hasta que le contestas 200, y sin
+      // esta comprobación una red lenta se convierte en dos camisetas.
+      const previo = await printful(`/orders/@${encodeURIComponent(idSesion)}`);
+      if (previo.ok) {
+        hechos.push("printful: ya existía");
+      } else {
+        const confirmar = process.env.PRINTFUL_CONFIRMAR === "1";
+        const creado = await printful(`/orders?confirm=${confirmar ? "1" : "0"}`, {
+          method: "POST",
+          body: JSON.stringify({
+            external_id: idSesion,
+            recipient: quien,
+            items: reparto.printful.map((x) => ({
+              sync_variant_id: Number(x.meta.variante),
+              quantity: x.cantidad,
+            })),
+          }),
+        });
+        if (!creado.ok) {
+          // 500 a propósito: así Stripe lo reintenta, que es justo lo que se
+          // quiere si la imprenta estaba caída. El pago ya está hecho; solo
+          // falta fabricar.
+          console.error(`[pedido] printful ${creado.estado}`, JSON.stringify(creado.cuerpo).slice(0, 400));
+          return res.status(500).json({ error: "la imprenta no ha aceptado el pedido" });
+        }
+        hechos.push(`printful #${creado.cuerpo?.result?.id} (${confirmar ? "confirmado" : "borrador"})`);
+      }
     }
 
-    console.log(
-      `[pedido] ${idSesion} -> printful #${creado.cuerpo?.result?.id}` +
-        ` · ${articulos.length} artículo(s) · ${confirmar ? "confirmado" : "borrador"}`
-    );
-    return res.status(200).json({ ok: true, pedido: creado.cuerpo?.result?.id });
+    // ── Gelato ──────────────────────────────────────────────────────────────
+    if (reparto.gelato.length) {
+      const repetido = await gelatoRepetido(idSesion);
+      if (repetido) {
+        hechos.push("gelato: ya existía");
+      } else {
+        const confirmar = process.env.GELATO_CONFIRMAR === "1";
+        const creado = await gelato("https://order.gelatoapis.com/v4/orders", {
+          // Es la misma llave con la que se pregunta si ya existe: así el
+          // reintento de Stripe encuentra el pedido en vez de duplicarlo.
+          orderReferenceId: idSesion,
+          customerReferenceId: quien.email || "culowypililarge",
+          orderType: confirmar ? "order" : "draft",
+          currency: "EUR",
+          recipient: {
+            country: quien.country_code,
+            firstName: (quien.name || "Cliente").split(" ")[0] || "Cliente",
+            lastName: (quien.name || "").split(" ").slice(1).join(" ") || "-",
+            addressLine1: quien.address1,
+            addressLine2: quien.address2 || undefined,
+            city: quien.city,
+            postCode: quien.zip,
+            state: quien.state_code || undefined,
+            email: quien.email,
+          },
+          products: reparto.gelato.map((x, i) => ({
+            itemReferenceId: `it-${i + 1}`,
+            // Gelato quiere el del catálogo, que describe la prenda entera; el
+            // de la tienda va también, que es lo que le ata el diseño puesto.
+            productUid: x.meta.uid,
+            storeProductVariantId: x.meta.variante,
+            quantity: x.cantidad,
+          })),
+        });
+        if (!creado.ok) {
+          console.error(`[pedido] gelato ${creado.estado}`, JSON.stringify(creado.cuerpo).slice(0, 400));
+          return res.status(500).json({ error: "la imprenta no ha aceptado el pedido" });
+        }
+        hechos.push(`gelato ${creado.cuerpo?.id ?? ""} (${confirmar ? "confirmado" : "borrador"})`);
+      }
+    }
+
+    console.log(`[pedido] ${idSesion} -> ${hechos.join(" · ")}`);
+    return res.status(200).json({ ok: true, hechos });
   } catch (err) {
     console.error("[pedido]", err);
     return res.status(500).json({ error: "no se ha podido crear el pedido" });
