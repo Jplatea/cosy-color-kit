@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-21T23:25:03.701Z",
+  "sincronizado": "2026-08-21T23:35:58.465Z",
   "productos": [
     {
       "id": 457944687,
@@ -36,7 +36,7 @@
           "nombre": "Para que el ratoncito retoce alegremente",
           "talla": "8.7\"x7.1\"",
           "color": "White",
-          "precio": 1050,
+          "precio": 1200,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -157,6 +157,160 @@
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
+        },
+        {
+          "id": 5452275032,
+          "catalogo": 13724,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / S",
+          "talla": "S",
+          "color": "Black",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275034,
+          "catalogo": 13725,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / M",
+          "talla": "M",
+          "color": "Black",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275054,
+          "catalogo": 13726,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / L",
+          "talla": "L",
+          "color": "Black",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275058,
+          "catalogo": 13727,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XL",
+          "talla": "XL",
+          "color": "Black",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275060,
+          "catalogo": 13728,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 2XL",
+          "talla": "2XL",
+          "color": "Black",
+          "precio": 5000,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275061,
+          "catalogo": 13729,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 3XL",
+          "talla": "3XL",
+          "color": "Black",
+          "precio": 5200,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452275062,
+          "catalogo": 13737,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XS",
+          "talla": "XS",
+          "color": "Bottle green",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452275063,
+          "catalogo": 13738,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / S",
+          "talla": "S",
+          "color": "Bottle green",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452275064,
+          "catalogo": 13739,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / M",
+          "talla": "M",
+          "color": "Bottle green",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452275065,
+          "catalogo": 13740,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / L",
+          "talla": "L",
+          "color": "Bottle green",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452276767,
+          "catalogo": 13723,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XS",
+          "talla": "XS",
+          "color": "Black",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#191919"
+        },
+        {
+          "id": 5452276823,
+          "catalogo": 13741,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XL",
+          "talla": "XL",
+          "color": "Bottle green",
+          "precio": 4850,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452276829,
+          "catalogo": 13742,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 2XL",
+          "talla": "2XL",
+          "color": "Bottle green",
+          "precio": 5000,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
+        },
+        {
+          "id": 5452276842,
+          "catalogo": 13743,
+          "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 3XL",
+          "talla": "3XL",
+          "color": "Bottle green",
+          "precio": 5200,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#344d34"
         }
       ]
     },

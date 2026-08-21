@@ -44,7 +44,7 @@ const PRECIOS: Record<string, Articulo> = {
   },
   "5452259381": {
     "nombre": "Para que el ratoncito retoce alegremente · 8.7\"x7.1\"",
-    "precio": 1050
+    "precio": 1200
   },
   "5449680122": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
@@ -75,6 +75,62 @@ const PRECIOS: Record<string, Articulo> = {
     "precio": 5000
   },
   "5449668450": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
+    "precio": 5200
+  },
+  "5452275032": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
+    "precio": 4850
+  },
+  "5452275034": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
+    "precio": 4850
+  },
+  "5452275054": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
+    "precio": 4850
+  },
+  "5452275058": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
+    "precio": 4850
+  },
+  "5452275060": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
+    "precio": 5000
+  },
+  "5452275061": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
+    "precio": 5200
+  },
+  "5452275062": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
+    "precio": 4850
+  },
+  "5452275063": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
+    "precio": 4850
+  },
+  "5452275064": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
+    "precio": 4850
+  },
+  "5452275065": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
+    "precio": 4850
+  },
+  "5452276767": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
+    "precio": 4850
+  },
+  "5452276823": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
+    "precio": 4850
+  },
+  "5452276829": {
+    "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
+    "precio": 5000
+  },
+  "5452276842": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
     "precio": 5200
   },
