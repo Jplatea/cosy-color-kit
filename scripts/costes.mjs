@@ -50,8 +50,21 @@ const ENVIO_GRATIS_DESDE = 60;
 /** Tarifa europea de Stripe para tarjetas del EEE. Aproximada. */
 const COMISION = { porcentaje: 0.015, fijo: 0.25 };
 
-/** Lo que se quiere ganar por prenda. `npm run costes -- 12` para pedir otro. */
-const OBJETIVO = Number(process.argv[2]) || 8;
+/**
+ * Lo que se quiere ganar. Dos formas de pedirlo:
+ *
+ *     npm run costes -- 12      doce euros limpios por prenda
+ *     npm run costes -- 15%     un quince por ciento de lo cobrado
+ *
+ * No son lo mismo y la diferencia importa. Una cantidad fija trata igual a una
+ * bolsa de veinte euros que a una de cien, lo que deja la cara con un margen
+ * ridículo en proporción. Un porcentaje escala con el precio, pero en lo barato
+ * puede quedarse en calderilla: el 15 % de una taza son dos euros, y dos euros
+ * no pagan el rato de atender una devolución.
+ */
+const PEDIDO = String(process.argv[2] || "8");
+const PORCENTUAL = PEDIDO.trim().endsWith("%");
+const OBJETIVO = Number(PEDIDO.replace("%", "")) || 8;
 
 /**
  * A cuánto habría que venderlo para ganar `OBJETIVO` limpios.
@@ -63,14 +76,27 @@ const OBJETIVO = Number(process.argv[2]) || 8;
  * en los dos escenarios y se elige el que de verdad llega al objetivo.
  */
 function precioPara(coste) {
+  /*
+    Con objetivo fijo se despeja directamente. Con porcentaje hay que despejar
+    otra cosa: el margen deja de ser un número y pasa a depender de lo cobrado,
+    que es justo lo que se busca. Sale de
+        cobrado - coste - comisión = OBJETIVO% · cobrado
+    agrupando los dos términos que van a porcentaje de lo cobrado.
+  */
+  const tajada = PORCENTUAL ? OBJETIVO / 100 : 0;
+  const fijo = PORCENTUAL ? 0 : OBJETIVO;
   const despeja = (porte) =>
-    (OBJETIVO + COMISION.fijo + coste) / (1 - COMISION.porcentaje) - porte;
+    (fijo + COMISION.fijo + coste) / (1 - COMISION.porcentaje - tajada) - porte;
 
   const conPorte = despeja(ENVIO_COBRADO);
   if (conPorte < ENVIO_GRATIS_DESDE) return conPorte;
   // Ya en el tramo de envío gratis: el comprador solo paga el precio.
   return despeja(0);
 }
+
+/** Lo que se gana con ese precio, para comprobar que el despeje cuadra. */
+const margenDe = (cobrado, coste) =>
+  cobrado - coste - (cobrado * COMISION.porcentaje + COMISION.fijo);
 
 /** A números de tienda: 26,19 no se pone en un escaparate; 26,50 sí. */
 const redondea = (n) => Math.ceil(n * 2) / 2;
@@ -146,7 +172,8 @@ async function informePrintful(clave) {
       const sugerido = redondea(precioPara(sinDigi));
       const señal =
         margenRepe < 0 ? `  ← PIERDES DINERO · ponlo a ${eur(sugerido)}`
-        : margenRepe < OBJETIVO - 2 ? `  ← flojo · ponlo a ${eur(sugerido)}`
+        : margenRepe < (PORCENTUAL ? (cobrado * OBJETIVO) / 100 - 0.5 : OBJETIVO - 2)
+          ? `  ← flojo · ponlo a ${eur(sugerido)}`
         : "  ← bien";
 
       // La columna del coste enseña el que se repite, para que cuadre con el
@@ -167,6 +194,8 @@ async function informePrintful(clave) {
         producto: detalle.sync_product.name,
         tallas: tallas[0] === tallas.at(-1) ? tallas[0] : `${tallas[0]}–${tallas.at(-1)}`,
         venta,
+        cobrado,
+        coste: sinDigi,
         sugerido,
         margen: margenRepe,
       });
@@ -336,17 +365,28 @@ async function main() {
   if (appId && secreto) await informeApliiq(appId, secreto);
   else console.log("APLIIQ · sin credenciales; añade APLIIQ_APP_ID y APLIIQ_SECRET para compararlo.");
 
-  const flojos = resumen.filter((r) => r.margen < OBJETIVO - 2);
+  const flojos = resumen.filter((r) =>
+    r.margen < (PORCENTUAL ? (r.cobrado * OBJETIVO) / 100 - 0.5 : OBJETIVO - 2)
+  );
   console.log("\n────────────────────────────────────────────");
   if (!flojos.length) {
-    console.log(`Todo por encima de ${eur(OBJETIVO - 2)} de margen. Nada que tocar.`);
+    console.log(
+      PORCENTUAL ? `Todo por encima del ${OBJETIVO} %. Nada que tocar.` : `Todo por encima de ${eur(OBJETIVO - 2)} de margen. Nada que tocar.`
+    );
   } else {
-    console.log(`PARA GANAR ${eur(OBJETIVO)} POR PRENDA\n`);
+    console.log(
+      PORCENTUAL
+        ? `PARA GANAR UN ${OBJETIVO} % DE LO COBRADO\n`
+        : `PARA GANAR ${eur(OBJETIVO)} POR PRENDA\n`
+    );
     console.log(`  Printful → tu producto → Edit → Retail price\n`);
     for (const r of flojos) {
+      const cobradoNuevo = r.sugerido + (r.sugerido >= ENVIO_GRATIS_DESDE ? 0 : ENVIO_COBRADO);
+      const ganaria = margenDe(cobradoNuevo, r.coste);
       console.log(
-        `  ${r.producto.slice(0, 38).padEnd(40)}${r.tallas.padEnd(10)}` +
-          `${eur(r.venta).padStart(9)}  →  ${eur(r.sugerido).padStart(9)}`
+        `  ${r.producto.slice(0, 34).padEnd(36)}${r.tallas.padEnd(10)}` +
+          `${eur(r.venta).padStart(9)}  →  ${eur(r.sugerido).padStart(9)}` +
+          `   ganas ${eur(ganaria).padStart(8)}  (${((100 * ganaria) / cobradoNuevo).toFixed(0)} %)`
       );
     }
     console.log(`

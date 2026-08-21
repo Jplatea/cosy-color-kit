@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-21T23:35:58.465Z",
+  "sincronizado": "2026-08-21T23:48:00.836Z",
   "productos": [
     {
       "id": 457944687,
@@ -15,7 +15,7 @@
           "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
           "talla": "One size",
           "color": "White",
-          "precio": 7700,
+          "precio": 10200,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -36,7 +36,7 @@
           "nombre": "Para que el ratoncito retoce alegremente",
           "talla": "8.7\"x7.1\"",
           "color": "White",
-          "precio": 1200,
+          "precio": 1350,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -60,7 +60,7 @@
           "nombre": "Bolsaca para el dinerete, gafitas chulas....",
           "talla": "15″×15″",
           "color": "Yellow",
-          "precio": 1850,
+          "precio": 2250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#de9219"
@@ -87,7 +87,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / XS",
           "talla": "XS",
           "color": "White",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -98,7 +98,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / S",
           "talla": "S",
           "color": "White",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -109,7 +109,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / M",
           "talla": "M",
           "color": "White",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -120,7 +120,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / L",
           "talla": "L",
           "color": "White",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -131,7 +131,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / XL",
           "talla": "XL",
           "color": "White",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -142,7 +142,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / 2XL",
           "talla": "2XL",
           "color": "White",
-          "precio": 5000,
+          "precio": 5850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -153,7 +153,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / 3XL",
           "talla": "3XL",
           "color": "White",
-          "precio": 5200,
+          "precio": 6550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -164,7 +164,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / S",
           "talla": "S",
           "color": "Black",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -175,7 +175,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / M",
           "talla": "M",
           "color": "Black",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -186,7 +186,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / L",
           "talla": "L",
           "color": "Black",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -197,7 +197,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XL",
           "talla": "XL",
           "color": "Black",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -208,7 +208,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 2XL",
           "talla": "2XL",
           "color": "Black",
-          "precio": 5000,
+          "precio": 5850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -219,7 +219,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 3XL",
           "talla": "3XL",
           "color": "Black",
-          "precio": 5200,
+          "precio": 6550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -230,7 +230,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XS",
           "talla": "XS",
           "color": "Bottle green",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -241,7 +241,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / S",
           "talla": "S",
           "color": "Bottle green",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -252,7 +252,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / M",
           "talla": "M",
           "color": "Bottle green",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -263,7 +263,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / L",
           "talla": "L",
           "color": "Bottle green",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -274,7 +274,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XS",
           "talla": "XS",
           "color": "Black",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -285,7 +285,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XL",
           "talla": "XL",
           "color": "Bottle green",
-          "precio": 4850,
+          "precio": 5700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -296,7 +296,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 2XL",
           "talla": "2XL",
           "color": "Bottle green",
-          "precio": 5000,
+          "precio": 5850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -307,7 +307,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 3XL",
           "talla": "3XL",
           "color": "Bottle green",
-          "precio": 5200,
+          "precio": 6550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -333,7 +333,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / S/M",
           "talla": "S/M",
           "color": "White",
-          "precio": 2100,
+          "precio": 2500,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -344,7 +344,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / L/XL",
           "talla": "L/XL",
           "color": "White",
-          "precio": 2100,
+          "precio": 2500,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -436,7 +436,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / 3XL",
           "talla": "3XL",
           "color": "White",
-          "precio": 3200,
+          "precio": 3250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -447,7 +447,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / 4XL",
           "talla": "4XL",
           "color": "White",
-          "precio": 3400,
+          "precio": 3450,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -458,7 +458,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / 5XL",
           "talla": "5XL",
           "color": "White",
-          "precio": 3650,
+          "precio": 3750,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
