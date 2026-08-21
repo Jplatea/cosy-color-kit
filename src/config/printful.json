@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-20T11:53:48.984Z",
+  "sincronizado": "2026-08-21T21:54:12.234Z",
   "productos": [
     {
       "id": 457277860,
@@ -137,7 +137,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / S/M",
           "talla": "S/M",
           "color": "White",
-          "precio": 1950,
+          "precio": 2100,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -148,7 +148,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / L/XL",
           "talla": "L/XL",
           "color": "White",
-          "precio": 1950,
+          "precio": 2100,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
