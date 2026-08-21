@@ -1,10 +1,9 @@
 /**
  * Escribe la tabla de precios dentro de `api/checkout.ts`.
  *
- * La usan los dos sincronizadores, y por eso vive aparte: antes la escribía
- * solo el de Printful, y en cuanto apareció Gelato el segundo en ejecutarse
- * habría borrado las variantes del primero. Ahora la tabla se arma leyendo los
- * dos ficheros de configuración, la escriba quien la escriba.
+ * Vive aparte del sincronizador porque la escritura tiene su propio cuidado
+ * —las marcas, el no pisar el resto del fichero— y mezclarla con la lectura de
+ * la imprenta enterraba las dos cosas.
  *
  * Va dentro del propio fichero de la función y no en un módulo al lado porque
  * las dos alternativas reventaron en producción con FUNCTION_INVOCATION_FAILED:
@@ -37,7 +36,6 @@ export async function escribirPrecios(raiz) {
   };
 
   const printful = await leer("printful.json");
-  const gelato = await leer("gelato.json");
 
   const precios = {};
 
@@ -46,24 +44,10 @@ export async function escribirPrecios(raiz) {
       precios[String(v.id)] = {
         nombre: etiqueta(p.nombre, v.talla),
         precio: v.precio,
-        imprenta: "printful",
       };
     }
   }
 
-  for (const p of gelato.productos ?? []) {
-    for (const v of p.variantes ?? []) {
-      precios[v.id] = {
-        nombre: etiqueta(p.nombre, v.talla),
-        precio: v.precio,
-        imprenta: "gelato",
-        // Gelato no sabe qué es un id de variante de su propia tienda cuando le
-        // pides un pedido: quiere el del catálogo, que describe la prenda
-        // entera. Viaja aquí para no tener que ir a buscarlo desde la función.
-        uid: v.uid,
-      };
-    }
-  }
 
   const ruta = join(raiz, "api", "checkout.ts");
   const actual = await readFile(ruta, "utf8");
@@ -76,15 +60,10 @@ export async function escribirPrecios(raiz) {
   }
 
   const tabla =
-    `${DESDE}\ntype Articulo = {\n` +
-    `  nombre: string;\n  precio: number;\n  imprenta: "printful" | "gelato";\n  uid?: string;\n};\n` +
+    `${DESDE}\ntype Articulo = { nombre: string; precio: number };\n` +
     `const PRECIOS: Record<string, Articulo> = ${JSON.stringify(precios, null, 2)};\n`;
 
   await writeFile(ruta, actual.slice(0, a) + tabla + actual.slice(b), "utf8");
 
-  const cuenta = Object.values(precios).reduce(
-    (n, v) => ({ ...n, [v.imprenta]: (n[v.imprenta] ?? 0) + 1 }),
-    {}
-  );
-  return cuenta;
+  return Object.keys(precios).length;
 }

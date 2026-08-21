@@ -1,6 +1,0 @@
-{
-  "sincronizado": null,
-  "tienda": null,
-  "productos": [],
-  "_nota": "Gelato está apagado: sus maquetas exigen Gelato+ y sin ellas la ficha se ve pobre. El sincronizador sigue en scripts/sync-gelato.mjs; para volver a encenderlo basta con `npm run sync:gelato`, que rellena este fichero otra vez."
-}

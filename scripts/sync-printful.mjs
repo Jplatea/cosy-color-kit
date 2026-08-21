@@ -285,7 +285,7 @@ async function main() {
   const cuenta = await escribirPrecios(RAIZ);
 
   console.log(`\nEscrito en ${SALIDA}`);
-  console.log(`Y los precios de las dos imprentas, en api/checkout.ts (${JSON.stringify(cuenta)})`);
+  console.log(`Y los precios, en api/checkout.ts (${cuenta} variantes)`);
   console.log("Aquí no hay nada secreto: son números de catálogo y precios.\n");
 
   const sinPrecio = productos.flatMap((p) => p.variantes).filter((v) => !v.precio);

@@ -20,7 +20,7 @@
  */
 
 /**
- * La tabla de precios, por id de variante de la imprenta que la fabrique.
+ * La tabla de precios, por id de variante de Printful.
  *
  * Está escrita aquí dentro, y no importada, después de que dos intentos
  * fallaran en producción con FUNCTION_INVOCATION_FAILED: ni un `import` de
@@ -28,117 +28,91 @@
  * Vercel mete cada función en su propio paquete y de al lado no llegaba nada,
  * así que lo único que no puede perderse por el camino es el propio fichero.
  *
- * La rellenan `npm run sync:printful` y `npm run sync:gelato` entre las dos
- * marcas, los dos con la misma función compartida para que el segundo en correr
- * no borre las variantes del primero. No se toca a mano: se vuelve a
- * sincronizar.
+ * La rellena `npm run sync:printful` entre las dos marcas. No se toca a mano:
+ * se vuelve a sincronizar.
  *
  * Se busca por id de variante, que es lo único que manda el navegador. El
  * importe sale siempre de aquí, nunca de la petición: si viniera en ella,
  * cualquiera compraría una sudadera por un céntimo.
  */
 // === PRECIOS · generado, no editar ===
-type Articulo = {
-  nombre: string;
-  precio: number;
-  imprenta: "printful" | "gelato";
-  uid?: string;
-};
+type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
   "5449680122": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 1850,
-    "imprenta": "printful"
+    "precio": 1850
   },
   "5449668444": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 4850,
-    "imprenta": "printful"
+    "precio": 4850
   },
   "5449668445": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 4850,
-    "imprenta": "printful"
+    "precio": 4850
   },
   "5449668446": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 4850,
-    "imprenta": "printful"
+    "precio": 4850
   },
   "5449668447": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 4850,
-    "imprenta": "printful"
+    "precio": 4850
   },
   "5449668448": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 4850,
-    "imprenta": "printful"
+    "precio": 4850
   },
   "5449668449": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5000,
-    "imprenta": "printful"
+    "precio": 5000
   },
   "5449668450": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 5200,
-    "imprenta": "printful"
+    "precio": 5200
   },
   "5449667542": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2100,
-    "imprenta": "printful"
+    "precio": 2100
   },
   "5449667543": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2100,
-    "imprenta": "printful"
+    "precio": 2100
   },
   "5449158693": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XS",
-    "precio": 2900,
-    "imprenta": "printful"
+    "precio": 2900
   },
   "5449158694": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900,
-    "imprenta": "printful"
+    "precio": 2900
   },
   "5449158695": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900,
-    "imprenta": "printful"
+    "precio": 2900
   },
   "5449158696": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900,
-    "imprenta": "printful"
+    "precio": 2900
   },
   "5449158697": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900,
-    "imprenta": "printful"
+    "precio": 2900
   },
   "5449158698": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 2XL",
-    "precio": 3050,
-    "imprenta": "printful"
+    "precio": 3050
   },
   "5449158699": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 3XL",
-    "precio": 3200,
-    "imprenta": "printful"
+    "precio": 3200
   },
   "5449158700": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 4XL",
-    "precio": 3400,
-    "imprenta": "printful"
+    "precio": 3400
   },
   "5449158701": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
-    "precio": 3650,
-    "imprenta": "printful"
+    "precio": 3650
   }
 };
 // === FIN PRECIOS ===
@@ -188,10 +162,8 @@ export default async function handler(req: Peticion, res: Respuesta) {
       .map((l) => {
         /*
           El identificador llega como texto y se limpia, no se convierte a
-          número: Printful numera sus variantes pero Gelato usa UUID, y un
-          `Number()` por el camino dejaba los de Gelato en `NaN`. Lo que de
-          verdad protege no es el formato sino la línea de después: si no está
-          en la tabla, no se vende.
+          número. Lo que de verdad protege no es el formato sino la línea de
+          después: si no está en la tabla, no se vende.
         */
         const variante = typeof l.variante === "string" || typeof l.variante === "number"
           ? String(l.variante).replace(/[^a-zA-Z0-9-]/g, "").slice(0, 64)
@@ -217,13 +189,9 @@ export default async function handler(req: Peticion, res: Respuesta) {
                 color: texto(l.color),
                 talla: texto(l.talla),
                 diseno: texto(l.diseno),
-                // El id de la variante y quién la fabrica viajan hasta aquí
-                // para que el webhook pueda mandar el pedido sin volver a mirar
-                // nada. En la tienda conviven dos imprentas y desde el nombre
-                // del producto no hay forma de saber cuál es cuál.
+                // El id de la imprenta viaja hasta aquí para que el pedido se
+                // pueda fabricar solo desde el webhook, sin volver a mirar nada.
                 variante,
-                imprenta: articulo.imprenta,
-                uid: articulo.uid || "",
               },
             },
           },

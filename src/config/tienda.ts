@@ -1,7 +1,6 @@
 import type { DisenoId } from "@/components/cyp/disenos";
 import type { PrendaId } from "@/components/cyp/prendas";
 import printful from "./printful.json";
-import gelato from "./gelato.json";
 
 /**
  * El catálogo de la tienda.
@@ -51,16 +50,11 @@ export type Producto = {
   colores: ColorPrenda[];
   disenos: DisenoId[];
   /**
-   * Quién lo fabrica. Viaja hasta el webhook para saber a qué imprenta mandarle
-   * el pedido: en la tienda conviven las dos y no se distinguen por el nombre.
-   */
-  imprenta: "printful" | "gelato";
-  /**
    * clave `color/talla/diseño` -> id de variante en su imprenta.
    *
-   * Es texto y no número porque Printful numera y Gelato usa UUID. Guardarlo
-   * como texto vale para los dos y evita que un `Number()` por el camino
-   * convierta un identificador de Gelato en `NaN`.
+   * Va como texto aunque Printful numere: los identificadores no se suman ni
+   * se comparan, solo se pasan tal cual, y en texto no hay `Number()` que los
+   * pueda estropear por el camino.
    */
   variantes: Record<string, string>;
   /**
@@ -188,7 +182,6 @@ function deLaImprenta(): Producto[] {
 
       return {
         id: `pf-${p.id}`,
-        imprenta: "printful" as const,
         // El nombre de Printful suele traer el modelo detrás; se queda lo de antes
         // del primer separador, que es como lo has llamado tú.
         nombre: p.nombre.split(/\s[–—|]\s/)[0].trim() || p.nombre,
@@ -240,112 +233,12 @@ const MUESTRA: Producto[] = (
     { id: "tinta", nombre: "Tinta", tela: "#1c1a18", sombra: "#000000", tinta: "#f2ece2" },
   ],
   disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"] as DisenoId[],
-  imprenta: "printful" as const,
   variantes: {},
   precios: {},
   fotos: [],
 }));
 
-type VarianteGelato = {
-  id: string;
-  talla: string;
-  color: string;
-  precio: number;
-  disponible?: boolean;
-};
-
-type ProductoGelato = {
-  id: string;
-  nombre: string;
-  ficha?: string;
-  fotos?: string[];
-  miniatura?: string;
-  variantes: VarianteGelato[];
-};
-
-/**
- * Lo mismo, pero de Gelato.
- *
- * Va aparte y no dentro de `deLaImprenta` porque las dos imprentas describen su
- * mercancía distinto y mezclarlo salía peor que repetir treinta líneas: Gelato
- * no manda el color en hexadecimal —solo su nombre en inglés—, sus precios ya
- * vienen calculados por el sincronizador con el margen puesto, y sus tallas son
- * las que ella tenga, que no coinciden con las de Printful.
- *
- * Los títulos de Gelato son el chiste entero y en una tarjeta no caben, así que
- * `acortar` los recorta. Por la coma no: cortando ahí salía «La Sudadera
- * perfecta para que», que no es una frase. Se corta por el guion que separa el
- * nombre de la descripción —«Tote Bag "Kit de Desahucio" – Bolsa de algodón…»—
- * y si aun así no cabe, por la última palabra entera y con puntos suspensivos,
- * que al menos avisan de que sigue.
- */
-function acortar(titulo: string, tope = 46): string {
-  const sinCola = titulo.split(/\s[–—-]\s/)[0].trim() || titulo;
-  if (sinCola.length <= tope) return sinCola;
-  const corte = sinCola.slice(0, tope);
-  return `${corte.slice(0, corte.lastIndexOf(" ")).trim()}…`;
-}
-
-function deGelato(): Producto[] {
-  const crudos = (gelato?.productos ?? []) as ProductoGelato[];
-
-  return crudos
-    .map((p): Producto | null => {
-      const vivas = p.variantes.filter((v) => v.disponible !== false && v.precio > 0);
-      if (!vivas.length) return null;
-
-      const prenda = buscar(PISTAS_PRENDA, p.nombre, "camiseta");
-      const diseno = buscar(PISTAS_DISENO, p.nombre, "simbolo");
-
-      const colores: ColorPrenda[] = [];
-      for (const v of vivas) {
-        const id = idDeColor(v.color || "único");
-        if (colores.some((c) => c.id === id)) continue;
-        // Gelato da el color por su nombre y no por su valor, así que se
-        // adivina de los cuatro que usa de verdad y si no, crudo.
-        const tela = /white|blanc/i.test(v.color)
-          ? "#f4f1ea"
-          : /black|negro/i.test(v.color)
-            ? "#1c1a18"
-            : /navy|azul/i.test(v.color)
-              ? "#22304a"
-              : "#efe9de";
-        colores.push({
-          id,
-          nombre: v.color || "Único",
-          tela,
-          sombra: oscurecer(tela),
-          tinta: tintaSobre(tela),
-        });
-      }
-
-      const variantes: Record<string, string> = {};
-      const precios: Record<string, number> = {};
-      for (const v of vivas) {
-        const clave = claveVariante(idDeColor(v.color || "único"), v.talla || "UNICA", diseno);
-        variantes[clave] = v.id;
-        precios[clave] = v.precio;
-      }
-
-      return {
-        id: `gl-${p.id}`,
-        imprenta: "gelato" as const,
-        nombre: acortar(p.nombre),
-        prenda,
-        ficha: p.ficha?.trim() || FICHAS[prenda],
-        precio: Math.min(...vivas.map((v) => v.precio)),
-        precios,
-        tallas: [...new Set(vivas.map((v) => v.talla || "UNICA"))],
-        colores,
-        disenos: [diseno],
-        variantes,
-        fotos: p.fotos?.length ? p.fotos : p.miniatura ? [p.miniatura] : [],
-      } satisfies Producto;
-    })
-    .filter((p): p is Producto => p !== null);
-}
-
-const deImprenta = [...deLaImprenta(), ...deGelato()];
+const deImprenta = deLaImprenta();
 
 /** true cuando lo que se ve viene de Printful y no del escaparate de muestra. */
 export const hayImprenta = deImprenta.length > 0;
