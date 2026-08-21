@@ -22,11 +22,13 @@
  *     estima con la tarifa europea de Stripe. Es una aproximación honesta,
  *     no un dato exacto.
  *
- * Si hay credenciales de Apliiq también trae su catálogo, para comparar. Son
- * opcionales: sin ellas el informe sale solo con Printful y lo dice.
+ * Si hay credenciales de otras imprentas —Gelato, Apliiq— también trae sus
+ * catálogos para comparar. Son opcionales: sin ellas el informe sale solo con
+ * Printful y lo dice.
  *
  * Variables (en `.env.local`, que está en el .gitignore):
  *   PRINTFUL_API_KEY   obligatoria
+ *   GELATO_API_KEY     opcional
  *   APLIIQ_APP_ID      opcional
  *   APLIIQ_SECRET      opcional
  */
@@ -180,6 +182,87 @@ async function informeApliiq(appId, secreto) {
   que los paga quien lo recibe.`);
 }
 
+// ─────────────────────────────────────────────────────────── Gelato
+
+/**
+ * Gelato reparte su API en varios subdominios —catálogo, precios, pedidos— y
+ * todos se abren con la misma llave en una cabecera. Sin firmas ni artificios.
+ */
+async function gelato(clave, url, cuerpo) {
+  const res = await fetch(url, {
+    method: cuerpo ? "POST" : "GET",
+    headers: { "X-API-KEY": clave, "content-type": "application/json" },
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined,
+  });
+  const texto = await res.text();
+  let json = null;
+  try {
+    json = JSON.parse(texto);
+  } catch {
+    /* a veces contesta texto plano cuando algo va mal */
+  }
+  return { ok: res.ok, estado: res.status, json, texto };
+}
+
+/** Lo que vendemos, para buscar su equivalente en su catálogo. */
+const EQUIVALENTES = [
+  { nuestro: "Camisetita", busca: /t-?shirt/i },
+  { nuestro: "Sudadera", busca: /hoodie|sweatshirt/i },
+  { nuestro: "Gorraca", busca: /cap|hat/i },
+  { nuestro: "Bolsaca", busca: /tote|bag/i },
+];
+
+async function informeGelato(clave) {
+  console.log("\nGELATO · catálogo y precio puesto en España\n");
+
+  const catalogos = await gelato(clave, "https://product.gelatoapis.com/v3/catalogs");
+  if (!catalogos.ok) {
+    console.log(`  No ha contestado el catálogo (${catalogos.estado}): ${catalogos.texto.slice(0, 200)}`);
+    return;
+  }
+  const lista = catalogos.json?.data ?? catalogos.json ?? [];
+  console.log(`  ${lista.length} catálogos disponibles`);
+
+  for (const { nuestro, busca } of EQUIVALENTES) {
+    const cat = lista.find((c) => busca.test(`${c.title || ""} ${c.catalogUid || ""}`));
+    if (!cat) {
+      console.log(`\n  ${nuestro}: no encuentro catálogo equivalente`);
+      continue;
+    }
+    console.log(`\n  ${nuestro}  →  catálogo «${cat.title || cat.catalogUid}»`);
+
+    const encontrados = await gelato(
+      clave,
+      `https://product.gelatoapis.com/v3/catalogs/${cat.catalogUid}/products:search`,
+      { limit: 3 }
+    );
+    if (!encontrados.ok) {
+      console.log(`    sin productos (${encontrados.estado}): ${encontrados.texto.slice(0, 160)}`);
+      continue;
+    }
+    const productos = encontrados.json?.products ?? encontrados.json?.data ?? [];
+    for (const prod of productos.slice(0, 3)) {
+      const uid = prod.productUid || prod.uid;
+      if (!uid) continue;
+      // El precio depende del país: aquí España, que es a donde se vende.
+      const precios = await gelato(
+        clave,
+        `https://product.gelatoapis.com/v3/products/${encodeURIComponent(uid)}/prices?country=ES&currency=EUR`
+      );
+      const uno = (precios.json?.data ?? precios.json ?? []).find?.((x) => x.quantity === 1);
+      console.log(
+        `    ${String(uid).slice(0, 52).padEnd(54)}` +
+          (uno ? `${eur(Number(uno.price))} (sin envío)` : `precio no disponible (${precios.estado})`)
+      );
+    }
+  }
+
+  console.log(`
+  Para comparar de verdad falta el envío, que Gelato calcula por pedido. Con
+  un producto elegido se le pide presupuesto y ya sale el número que compite
+  contra los de Printful de arriba.`);
+}
+
 // ─────────────────────────────────────────────────────────── main
 
 async function main() {
@@ -191,10 +274,14 @@ async function main() {
 
   const resumen = await informePrintful(clave);
 
+  const gelatoKey = await delEntorno("GELATO_API_KEY");
+  if (gelatoKey) await informeGelato(gelatoKey);
+  else console.log("\nGELATO · sin credenciales; añade GELATO_API_KEY para compararlo.");
+
   const appId = await delEntorno("APLIIQ_APP_ID");
   const secreto = await delEntorno("APLIIQ_SECRET");
   if (appId && secreto) await informeApliiq(appId, secreto);
-  else console.log("\nAPLIIQ · sin credenciales; añade APLIIQ_APP_ID y APLIIQ_SECRET para compararlo.");
+  else console.log("APLIIQ · sin credenciales; añade APLIIQ_APP_ID y APLIIQ_SECRET para compararlo.");
 
   const pierden = resumen.filter((r) => r.margen < 0);
   const justos = resumen.filter((r) => r.margen >= 0 && r.margen < 3);
