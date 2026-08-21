@@ -14,7 +14,8 @@
     "voces": "node scripts/voces.mjs",
     "sync:printful": "node scripts/sync-printful.mjs",
     "voces:generar": "node scripts/voces-generar.mjs",
-    "disenos": "node scripts/disenos.mjs"
+    "disenos": "node scripts/disenos.mjs",
+    "costes": "node scripts/costes.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
