@@ -139,60 +139,6 @@ const PRECIOS: Record<string, Articulo> = {
     "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
     "precio": 3650,
     "imprenta": "printful"
-  },
-  "4a2ea768-82ec-4402-bf73-c3fef93c6f68": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · XL",
-    "precio": 4400,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_xl_gco_white_gpr_4-4_gildan_18500"
-  },
-  "21b7c10f-cb24-4f8d-98f8-8b89d3096e9d": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · 4XL",
-    "precio": 5600,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_4xl_gco_white_gpr_4-4_gildan_18500"
-  },
-  "4605bb99-e013-4a02-b057-20c229e6b63f": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · L",
-    "precio": 4400,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_l_gco_white_gpr_4-4_gildan_18500"
-  },
-  "eeec2a8a-b3e5-45cd-a9e4-2b97dc58ee70": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · S",
-    "precio": 4400,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_s_gco_white_gpr_4-4_gildan_18500"
-  },
-  "c63c07b5-13aa-4312-b2b4-c34cf212e4d9": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · M",
-    "precio": 4400,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_m_gco_white_gpr_4-4_gildan_18500"
-  },
-  "ff320fac-14a4-4500-af5e-22ac3f97e818": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · 5XL",
-    "precio": 5850,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_5xl_gco_white_gpr_4-4_gildan_18500"
-  },
-  "89eaeebc-a6b6-4791-841d-1e675519c5a5": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · 3XL",
-    "precio": 4850,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_3xl_gco_white_gpr_4-4_gildan_18500"
-  },
-  "04ef42bd-6ab2-478c-932a-741dacd501bf": {
-    "nombre": "La Sudadera perfecta para que, aunque te confundan con un gorrilla, tu estés calentico · 2XL",
-    "precio": 4650,
-    "imprenta": "gelato",
-    "uid": "apparel_product_gca_hoodie_gsc_pullover_gcu_unisex_gqa_classic_gsi_2xl_gco_white_gpr_4-4_gildan_18500"
-  },
-  "0407f747-1a56-4621-a9b2-1309ee1eb15e": {
-    "nombre": "Tote Bag \"Kit de Desahucio\" – Bolsa de Algodón Resistente para Gente que lo tiene complicado con su pareja",
-    "precio": 2600,
-    "imprenta": "gelato",
-    "uid": "bag_product_bsc_tote-bag_bqa_clc_bsi_std-t_bco_white_bpr_4-4"
   }
 };
 // === FIN PRECIOS ===
