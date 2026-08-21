@@ -38,6 +38,14 @@
 // === PRECIOS · generado, no editar ===
 type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
+  "5452270555": {
+    "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita · One size",
+    "precio": 7700
+  },
+  "5452259381": {
+    "nombre": "Para que el ratoncito retoce alegremente · 8.7\"x7.1\"",
+    "precio": 1050
+  },
   "5449680122": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
     "precio": 1850

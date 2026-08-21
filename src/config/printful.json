@@ -1,6 +1,48 @@
 {
-  "sincronizado": "2026-08-21T22:47:02.971Z",
+  "sincronizado": "2026-08-21T23:25:03.701Z",
   "productos": [
+    {
+      "id": 457944687,
+      "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
+      "miniatura": "https://files.cdn.printful.com/files/15b/15bea5ec7f0faca452609b20b4620f89_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/15b/15bea5ec7f0faca452609b20b4620f89_preview.png"
+      ],
+      "variantes": [
+        {
+          "id": 5452270555,
+          "catalogo": 12021,
+          "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
+          "talla": "One size",
+          "color": "White",
+          "precio": 7700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    },
+    {
+      "id": 457940971,
+      "nombre": "Para que el ratoncito retoce alegremente",
+      "miniatura": "https://files.cdn.printful.com/files/faf/faffc9a3cf7359c2a1d75001a633ba04_preview.png",
+      "fotos": [
+        "https://files.cdn.printful.com/files/faf/faffc9a3cf7359c2a1d75001a633ba04_preview.png"
+      ],
+      "variantes": [
+        {
+          "id": 5452259381,
+          "catalogo": 13097,
+          "nombre": "Para que el ratoncito retoce alegremente",
+          "talla": "8.7\"x7.1\"",
+          "color": "White",
+          "precio": 1050,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    },
     {
       "id": 457277860,
       "nombre": "Bolsaca para el dinerete, gafitas chulas....",
