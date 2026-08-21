@@ -239,63 +239,81 @@ async function gelato(clave, url, cuerpo) {
   return { ok: res.ok, estado: res.status, json, texto };
 }
 
-/** Lo que vendemos, para buscar su equivalente en su catálogo. */
+/**
+ * Lo que vendemos y su equivalente en Gelato, por identificador exacto.
+ *
+ * Antes esto buscaba por expresión regular y la camiseta acabó comparándose
+ * con una sudadera: «swea**tshirt**s» contiene «tshirt». Con los
+ * identificadores no hay ambigüedad posible.
+ *
+ * El filtro del bordado es lo que hace que la comparación valga algo. Sin él
+ * salía el precio de la prenda en blanco, que es más barata en todas partes y
+ * no dice nada: lo que vendemos lleva el logo bordado en el pecho, y eso en
+ * Gelato es `chstl-emb`.
+ */
 const EQUIVALENTES = [
-  { nuestro: "Camisetita", busca: /t-?shirt/i },
-  { nuestro: "Sudadera", busca: /hoodie|sweatshirt/i },
-  { nuestro: "Gorraca", busca: /cap|hat/i },
-  { nuestro: "Bolsaca", busca: /tote|bag/i },
+  {
+    nuestro: "Camisetita",
+    catalogo: "t-shirts",
+    filtros: { GarmentPrint: ["chstl-emb_shslr-emb"], GarmentColor: ["white"], GarmentCut: ["unisex"], GarmentSize: ["M"] },
+  },
+  {
+    nuestro: "Sudadera",
+    catalogo: "hoodies",
+    filtros: { GarmentColor: ["white"], GarmentCut: ["unisex"], GarmentSize: ["M"] },
+  },
+  { nuestro: "Gorraca", catalogo: "dad-hat", filtros: {} },
+  { nuestro: "Bolsaca", catalogo: "tote-bags", filtros: {} },
 ];
 
 async function informeGelato(clave) {
-  console.log("\nGELATO · catálogo y precio puesto en España\n");
+  console.log("\nGELATO · lo mismo que vendemos, puesto en España\n");
 
-  const catalogos = await gelato(clave, "https://product.gelatoapis.com/v3/catalogs");
-  if (!catalogos.ok) {
-    console.log(`  No ha contestado el catálogo (${catalogos.estado}): ${catalogos.texto.slice(0, 200)}`);
-    return;
-  }
-  const lista = catalogos.json?.data ?? catalogos.json ?? [];
-  console.log(`  ${lista.length} catálogos disponibles`);
-
-  for (const { nuestro, busca } of EQUIVALENTES) {
-    const cat = lista.find((c) => busca.test(`${c.title || ""} ${c.catalogUid || ""}`));
-    if (!cat) {
-      console.log(`\n  ${nuestro}: no encuentro catálogo equivalente`);
-      continue;
-    }
-    console.log(`\n  ${nuestro}  →  catálogo «${cat.title || cat.catalogUid}»`);
-
+  for (const { nuestro, catalogo, filtros } of EQUIVALENTES) {
     const encontrados = await gelato(
       clave,
-      `https://product.gelatoapis.com/v3/catalogs/${cat.catalogUid}/products:search`,
-      { limit: 3 }
+      `https://product.gelatoapis.com/v3/catalogs/${catalogo}/products:search`,
+      { attributeFilters: filtros, limit: 20 }
     );
     if (!encontrados.ok) {
-      console.log(`    sin productos (${encontrados.estado}): ${encontrados.texto.slice(0, 160)}`);
+      console.log(`  ${nuestro.padEnd(12)} sin resultados (${encontrados.estado})`);
       continue;
     }
     const productos = encontrados.json?.products ?? encontrados.json?.data ?? [];
-    for (const prod of productos.slice(0, 3)) {
+    if (!productos.length) {
+      console.log(`  ${nuestro.padEnd(12)} el catálogo «${catalogo}» no devuelve nada con esos filtros`);
+      continue;
+    }
+
+    // De todas las variantes que encajan interesa la más barata: es la que
+    // marca el suelo con el que se puede competir.
+    let barato = null;
+    for (const prod of productos.slice(0, 8)) {
       const uid = prod.productUid || prod.uid;
       if (!uid) continue;
-      // El precio depende del país: aquí España, que es a donde se vende.
       const precios = await gelato(
         clave,
         `https://product.gelatoapis.com/v3/products/${encodeURIComponent(uid)}/prices?country=ES&currency=EUR`
       );
       const uno = (precios.json?.data ?? precios.json ?? []).find?.((x) => x.quantity === 1);
-      console.log(
-        `    ${String(uid).slice(0, 52).padEnd(54)}` +
-          (uno ? `${eur(Number(uno.price))} (sin envío)` : `precio no disponible (${precios.estado})`)
-      );
+      if (!uno) continue;
+      const valor = Number(uno.price);
+      if (!barato || valor < barato.valor) barato = { valor, uid };
     }
+
+    if (!barato) {
+      console.log(`  ${nuestro.padEnd(12)} sin precio para España`);
+      continue;
+    }
+    console.log(
+      `  ${nuestro.padEnd(12)}${eur(barato.valor).padStart(9)}   ${String(barato.uid).slice(0, 58)}`
+    );
   }
 
   console.log(`
-  Para comparar de verdad falta el envío, que Gelato calcula por pedido. Con
-  un producto elegido se le pide presupuesto y ya sale el número que compite
-  contra los de Printful de arriba.`);
+  Eso es la prenda fabricada, sin envío ni IVA. El de Printful de arriba sí
+  los lleva, así que para restar hay que comparar contra su columna de
+  producto: la camiseta bordada le sale a 17,50 € allí.`);
 }
 
 // ─────────────────────────────────────────────────────────── main
@@ -318,18 +336,23 @@ async function main() {
   if (appId && secreto) await informeApliiq(appId, secreto);
   else console.log("APLIIQ · sin credenciales; añade APLIIQ_APP_ID y APLIIQ_SECRET para compararlo.");
 
-  const pierden = resumen.filter((r) => r.margen < 0);
-  const justos = resumen.filter((r) => r.margen >= 0 && r.margen < 3);
+  const flojos = resumen.filter((r) => r.margen < OBJETIVO - 2);
   console.log("\n────────────────────────────────────────────");
-  if (pierden.length) {
-    console.log(`Pierdes dinero en ${pierden.length} combinación(es):`);
-    for (const r of pierden) console.log(`  · ${r.producto} — ${eur(r.margen)}`);
+  if (!flojos.length) {
+    console.log(`Todo por encima de ${eur(OBJETIVO - 2)} de margen. Nada que tocar.`);
+  } else {
+    console.log(`PARA GANAR ${eur(OBJETIVO)} POR PRENDA\n`);
+    console.log(`  Printful → tu producto → Edit → Retail price\n`);
+    for (const r of flojos) {
+      console.log(
+        `  ${r.producto.slice(0, 38).padEnd(40)}${r.tallas.padEnd(10)}` +
+          `${eur(r.venta).padStart(9)}  →  ${eur(r.sugerido).padStart(9)}`
+      );
+    }
+    console.log(`
+  Y después, aquí:   npm run sync:printful
+  La web copia los precios de Printful; en el código no se tocan.`);
   }
-  if (justos.length) {
-    console.log(`Al filo (menos de 3 €) en ${justos.length}:`);
-    for (const r of justos) console.log(`  · ${r.producto} — ${eur(r.margen)}`);
-  }
-  if (!pierden.length && !justos.length) console.log("Todo con margen razonable.");
   console.log(`
 Los márgenes de arriba son los de un pedido normal, sin la digitalización del
 bordado, que solo se paga la primera vez por diseño. La comisión de la pasarela
