@@ -19,17 +19,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script>
-      // Las luces se deciden antes de pintar: si no, quien entra de noche ve un
-      // fogonazo de papel blanco antes de que React llegue a montarse.
+      // Las luces se deciden antes de pintar: si no, quien ya eligió la noche
+      // ve un fogonazo de papel blanco antes de que React llegue a montarse.
+      //
+      // El museo abre de día siempre. Antes seguía al sistema, y eso hacía que
+      // media visita entrara por la puerta de noche sin haberlo pedido: la
+      // sala es de papel hueso y tinta negra, y esa es la primera impresión
+      // que tiene que dar. La noche sigue estando, pero se enciende a mano.
       (function () {
         try {
-          var g = localStorage.getItem("cyp:luces");
-          var noche =
-            g === "noche" ||
-            (g !== "dia" &&
-              window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (noche) document.documentElement.classList.add("noche");
+          if (localStorage.getItem("cyp:luces") === "noche")
+            document.documentElement.classList.add("noche");
         } catch (e) {}
       })();
     </script>

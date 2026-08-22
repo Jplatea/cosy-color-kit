@@ -182,6 +182,72 @@ const APODOS = {
   grey: /gris|grey|gray/i,
 };
 
+/**
+ * Palabras que no distinguen nada y solo alargan el nombre de la carpeta.
+ */
+const VACIAS = new Set([
+  "para", "de", "del", "la", "el", "los", "las", "un", "una", "que", "en", "con",
+  "y", "a", "al", "tus", "tu", "su", "sus", "como", "si", "aquellos", "aquellas",
+  "esos", "esas", "estan", "esta", "lo", "por", "se", "no",
+]);
+
+/**
+ * El nombre de carpeta de cada producto, garantizando que no se repita.
+ *
+ * La primera palabra sola no basta: en cuanto hay dos productos que empiezan
+ * igual —«Camisetita para ver a tus Bros» y «Camisetita para aquellos
+ * criptobros»— les toca la misma carpeta, y entonces cada uno enseña las fotos
+ * del otro. Pasó, y no avisa: la sincronización dice tan tranquila que los dos
+ * tienen veinticuatro fotos.
+ *
+ * Cuando dos chocan se les añade **la última palabra con significado** de su
+ * nombre, no la siguiente. La siguiente suele ser otra preposición y da
+ * `camisetita-para`; la última es la que de verdad los separa, y salen
+ * `camisetita-padel` y `camisetita-bancarrota`, que son nombres que uno
+ * reconoce al abrir el explorador. Si aún chocan se sigue tirando hacia atrás,
+ * y si el nombre es idéntico, se desempata con el id de Printful.
+ */
+function carpetasUnicas(nombres) {
+  const palabras = nombres.map((n) =>
+    String(n || "")
+      .normalize("NFD")
+      .replace(/\p{M}/gu, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+      .split(" ")
+      .filter(Boolean)
+  );
+  const carpetas = palabras.map((p) => p[0] || "producto");
+  const usadas = palabras.map(() => new Set([0]));
+
+  for (let vuelta = 0; vuelta < 6; vuelta++) {
+    const cuantos = new Map();
+    carpetas.forEach((c) => cuantos.set(c, (cuantos.get(c) || 0) + 1));
+    const chocan = carpetas.map((c, i) => (cuantos.get(c) > 1 ? i : -1)).filter((i) => i >= 0);
+    if (!chocan.length) return carpetas;
+
+    let cambio = false;
+    for (const i of chocan) {
+      // De atrás hacia delante, saltando lo que no distingue.
+      for (let k = palabras[i].length - 1; k >= 1; k--) {
+        if (usadas[i].has(k) || VACIAS.has(palabras[i][k])) continue;
+        carpetas[i] = `${carpetas[i]}-${palabras[i][k]}`;
+        usadas[i].add(k);
+        cambio = true;
+        break;
+      }
+    }
+    if (!cambio) break;
+  }
+  // Nombres tan parecidos que no hay palabra que los separe.
+  const vistas = new Set();
+  return carpetas.map((c, i) => {
+    if (!vistas.has(c)) { vistas.add(c); return c; }
+    return `${c}-${nombres.length && i}`;
+  });
+}
+
 const INSTRUCCIONES = `Fotos de este producto para la tienda de la web.
 
 Deja aquí las maquetas que descargues del generador de Printful (.jpg, .png o
@@ -292,8 +358,12 @@ async function main() {
   }
   console.log(`  ${lista.length} producto(s) en la tienda\n`);
 
+  // Las carpetas se reparten mirando la tienda entera, no producto a producto:
+  // solo se sabe que dos chocan cuando se ven los dos.
+  const carpetas = carpetasUnicas(lista.map((p) => p.name));
+
   const productos = [];
-  for (const resumen of lista) {
+  for (const [indice, resumen] of lista.entries()) {
     const detalle = await printful(`/store/products/${resumen.id}`);
     const crudas = (detalle?.sync_variants || [])
       // Lo que Printful marca como retirado no se puede fabricar, así que no
@@ -333,7 +403,7 @@ async function main() {
      * final, borrar ficheros no servía de nada. Si quieres conservar la suya,
      * guárdala en la carpeta como una más.
      */
-    const carpeta = ranura(detalle?.sync_product?.name ?? resumen.name);
+    const carpeta = carpetas[indice];
     let propias = await fotosLocales(carpeta);
 
     /*

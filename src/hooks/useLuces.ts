@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 /**
  * Las luces de la sala.
@@ -12,10 +12,11 @@ import { useCallback, useEffect, useSyncExternalStore } from "react";
  * y con un `useState` por sitio cada uno se habría enterado por su cuenta —o
  * no se habría enterado—. Aquí hay un único valor y quien quiera se suscribe.
  *
- * El primer valor lo elige la preferencia del sistema, no un capricho: quien
- * tenga el móvil en oscuro entra directamente de noche. En cuanto alguien toca
- * el interruptor, esa decisión manda y se recuerda; y mientras nadie lo haya
- * tocado, la web sigue al sistema si este cambia a media tarde.
+ * **El museo abre de día.** Siempre, aunque el móvil esté en modo oscuro. La
+ * sala es de papel hueso y tinta negra y esa es la primera impresión que tiene
+ * que dar; seguir al sistema hacía que media visita entrara de noche sin
+ * haberlo pedido. Quien quiera la noche le da al interruptor, y entonces sí se
+ * recuerda para las siguientes visitas.
  *
  * La clase se pone también en `index.html` antes de pintar nada, para que no
  * haya un fogonazo blanco al cargar de noche.
@@ -24,17 +25,6 @@ import { useCallback, useEffect, useSyncExternalStore } from "react";
 export type Luces = "dia" | "noche";
 
 const CLAVE = "cyp:luces";
-
-const esLuces = (v: unknown): v is Luces => v === "dia" || v === "noche";
-
-function guardado(): Luces | null {
-  try {
-    const v = localStorage.getItem(CLAVE);
-    return esLuces(v) ? v : null;
-  } catch {
-    return null;
-  }
-}
 
 /** Lo que dejó puesto el script de `index.html` antes de que React arrancara. */
 function leerDelDocumento(): Luces {
@@ -66,18 +56,6 @@ export function useLuces() {
     () => luces,
     () => "dia" as Luces
   );
-
-  // Mientras nadie haya tocado el interruptor, se sigue al sistema.
-  useEffect(() => {
-    if (typeof matchMedia !== "function") return;
-    const mq = matchMedia("(prefers-color-scheme: dark)");
-    const alCambiar = () => {
-      if (guardado()) return;
-      aplicar(mq.matches ? "noche" : "dia");
-    };
-    mq.addEventListener("change", alCambiar);
-    return () => mq.removeEventListener("change", alCambiar);
-  }, []);
 
   const cambiar = useCallback(() => {
     const siguiente: Luces = luces === "dia" ? "noche" : "dia";

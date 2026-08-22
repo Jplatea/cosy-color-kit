@@ -17,9 +17,9 @@ const FICHAS = [
     char: "culow" as const,
     titulo: "«Culow»",
     filas: [
-      ["Año", "2024"],
+      ["Año", "2026"],
       ["Técnica", "Poliestireno mate sobre peana"],
-      ["Medidas", "230 × 150 cm"],
+      ["Medidas", "2,30 × 1,50 cm"],
       ["Voz", "Grave"],
       ["Estado", "No se vende"],
     ] as [string, string][],
@@ -28,9 +28,9 @@ const FICHAS = [
     char: "pililarge" as const,
     titulo: "«Pililarge»",
     filas: [
-      ["Año", "2024"],
+      ["Año", "2026"],
       ["Técnica", "Poliestireno mate sobre peana"],
-      ["Medidas", "132 × 372 cm"],
+      ["Medidas", "1,32 × 3,72 cm"],
       ["Voz", "Aguda"],
       ["Estado", "Sigue de pie"],
     ] as [string, string][],
@@ -62,7 +62,7 @@ export function Hero() {
             className="md:w-[280px]"
             filas={[
               ["Autores", "Culow y Pililarge"],
-              ["Desde", "2024 — sigue abierta"],
+              ["Desde", "2026 — sigue abierta"],
               ["Duración", "Quince segundos por pieza"],
               ["Entrada", "Gratuita, como todo esto"],
             ]}

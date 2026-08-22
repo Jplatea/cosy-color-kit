@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Character } from "./Character";
+import { Pieza3D } from "./pieza3d";
 import { muestraDe } from "@/lib/voces";
 import { Cartela, Peana, Sala, SectionTitle } from "./primitives";
 
@@ -35,7 +35,7 @@ const PIEZAS = [
     filas: [
       ["Función", "Creerse lo anterior"],
       ["Registro", "Agudo, a trocitos"],
-      ["Conservación", "De pie desde 2024"],
+      ["Conservación", "De pie desde 2026"],
     ] as [string, string][],
   },
 ];
@@ -89,9 +89,19 @@ export function Personajes() {
 
         <div className="grid gap-x-[52px] gap-y-14 md:grid-cols-2">
           {PIEZAS.map((p) => (
-            <article key={p.nombre} className="grid gap-6 sm:grid-cols-[170px_1fr] sm:items-start">
-              <Peana className="h-[210px] rounded-[3px] pb-6 pt-5">
-                <Character char={p.char} scale={p.char === "culow" ? 0.5 : 0.33} />
+            <article key={p.nombre} className="grid gap-6 sm:grid-cols-[230px_1fr] sm:items-start">
+              {/*
+                Aquí ya no va el dibujo, va la escultura de verdad y se puede
+                girar. La vitrina crece de 170×210 a 230×260: en la de antes
+                cabía el dibujo, pero para dar la vuelta a algo con el dedo
+                hace falta sitio donde arrastrar.
+              */}
+              <Peana className="h-[260px] rounded-[3px] pb-5 pt-4">
+                <Pieza3D
+                  char={p.char}
+                  escalaPlana={p.char === "culow" ? 0.5 : 0.33}
+                  etiqueta={p.nombre}
+                />
               </Peana>
 
               <div>
