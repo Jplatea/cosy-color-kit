@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T14:58:47.679Z",
+  "sincronizado": "2026-08-22T14:59:56.255Z",
   "productos": [
     {
       "id": 458438995,
@@ -724,21 +724,11 @@
         "/tienda/camisetita-bancarrota/03-light-blue-espalda-plana.webp",
         "/tienda/camisetita-bancarrota/03-light-pink-espalda-plana.webp",
         "/tienda/camisetita-bancarrota/03-white-espalda-plana.webp",
-        "/tienda/camisetita-bancarrota/04-azalea-puesta-ella.webp",
-        "/tienda/camisetita-bancarrota/04-daisy-puesta-ella.webp",
-        "/tienda/camisetita-bancarrota/04-light-blue-puesta-ella.webp",
-        "/tienda/camisetita-bancarrota/04-light-pink-puesta-ella.webp",
-        "/tienda/camisetita-bancarrota/04-white-puesta-ella.webp",
-        "/tienda/camisetita-bancarrota/05-azalea-puesta-el.webp",
-        "/tienda/camisetita-bancarrota/05-daisy-puesta-el.webp",
-        "/tienda/camisetita-bancarrota/05-light-blue-puesta-el.webp",
-        "/tienda/camisetita-bancarrota/05-light-pink-puesta-el.webp",
-        "/tienda/camisetita-bancarrota/05-white-puesta-el.webp",
-        "/tienda/camisetita-bancarrota/06-azalea-tres-cuartos.webp",
-        "/tienda/camisetita-bancarrota/06-daisy-tres-cuartos.webp",
-        "/tienda/camisetita-bancarrota/06-light-blue-tres-cuartos.webp",
-        "/tienda/camisetita-bancarrota/06-light-pink-tres-cuartos.webp",
-        "/tienda/camisetita-bancarrota/06-white-tres-cuartos.webp"
+        "/tienda/camisetita-bancarrota/04-azalea-espalda-puesta.webp",
+        "/tienda/camisetita-bancarrota/04-daisy-espalda-puesta.webp",
+        "/tienda/camisetita-bancarrota/04-light-blue-espalda-puesta.webp",
+        "/tienda/camisetita-bancarrota/04-light-pink-espalda-puesta.webp",
+        "/tienda/camisetita-bancarrota/04-white-espalda-puesta.webp"
       ],
       "variantes": [
         {
