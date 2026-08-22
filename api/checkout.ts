@@ -38,6 +38,118 @@
 // === PRECIOS · generado, no editar ===
 type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
+  "5453151950": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151951": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151952": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151953": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151954": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151955": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151956": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151957": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151958": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151959": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151960": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151961": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151962": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151963": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151964": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151965": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151966": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151967": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151968": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151969": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151970": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151971": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151972": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151973": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
+  "5453151974": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
+    "precio": 2750
+  },
+  "5453151975": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
+    "precio": 2750
+  },
+  "5453151976": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
+    "precio": 2750
+  },
+  "5453151977": {
+    "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
+    "precio": 2750
+  },
   "5453002936": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XS",
     "precio": 2700
