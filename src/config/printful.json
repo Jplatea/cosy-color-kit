@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T09:58:13.096Z",
+  "sincronizado": "2026-08-22T10:20:03.707Z",
   "productos": [
     {
       "id": 457944687,
@@ -55,14 +55,23 @@
     {
       "id": 457277860,
       "nombre": "Bolsaca para el dinerete, gafitas chulas....",
-      "miniatura": "/tienda/bolsaca/01-amarilla-plana.webp",
+      "miniatura": "/tienda/bolsaca/01-amarilla-frente.webp",
       "fotos": [
-        "/tienda/bolsaca/01-amarilla-plana.webp",
-        "/tienda/bolsaca/02-amarilla-en-mano.webp",
-        "/tienda/bolsaca/03-amarilla-persona.webp",
-        "/tienda/bolsaca/04-amarilla-de-lado.webp",
-        "/tienda/bolsaca/black-printful.webp",
-        "/tienda/bolsaca/red-printful.webp"
+        "/tienda/bolsaca/01-amarilla-frente.webp",
+        "/tienda/bolsaca/01-negra-frente.webp",
+        "/tienda/bolsaca/01-roja-frente.webp",
+        "/tienda/bolsaca/02-amarilla-colgada.webp",
+        "/tienda/bolsaca/02-negra-colgada.webp",
+        "/tienda/bolsaca/02-roja-colgada.webp",
+        "/tienda/bolsaca/03-amarilla-de-lado.webp",
+        "/tienda/bolsaca/03-negra-de-lado.webp",
+        "/tienda/bolsaca/03-roja-de-lado.webp",
+        "/tienda/bolsaca/04-amarilla-escalera.webp",
+        "/tienda/bolsaca/04-negra-escalera.webp",
+        "/tienda/bolsaca/04-roja-escalera.webp",
+        "/tienda/bolsaca/05-amarilla-mesa.webp",
+        "/tienda/bolsaca/05-negra-mesa.webp",
+        "/tienda/bolsaca/05-roja-mesa.webp"
       ],
       "variantes": [
         {
