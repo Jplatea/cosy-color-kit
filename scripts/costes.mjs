@@ -420,6 +420,23 @@ está estimada con la tarifa europea de Stripe (${COMISION.porcentaje * 100} % +
 }
 
 /**
+ * Precios decididos a mano, que el cálculo no debe tocar.
+ *
+ * La herramienta aplica el objetivo a toda la tienda y no sabe de excepciones,
+ * así que sin esta lista cada vez que se ejecuta deshace en silencio una
+ * decisión tomada mirando el producto. Pasó a los diez minutos de tomarla: la
+ * camiseta de los criptobros se puso a 10,50 € a mano y el siguiente `va` la
+ * habría devuelto a 10,00 €.
+ *
+ * Se enseñan siempre, para que quede claro que no se han olvidado.
+ */
+const INTOCABLES = [
+  { patron: /criptobros/i, motivo: "10,50 € puesto a mano; al 10 % saldría a 10,00 €" },
+];
+
+const intocable = (nombre) => INTOCABLES.find((x) => x.patron.test(nombre));
+
+/**
  * Escribe en Printful el precio calculado, cuando se ha pedido con `va`.
  *
  * Toca **todos** los tramos que no estén ya en su sitio, no solo los que van
@@ -432,8 +449,24 @@ está estimada con la tarifa europea de Stripe (${COMISION.porcentaje * 100} % +
  * y deja media tienda a un precio y media a otro, que es peor que no empezar.
  */
 async function ponerPrecios(clave, resumen) {
-  const cambios = resumen.filter((r) => r.ids?.length && r.sugerido !== r.venta);
-  if (!cambios.length) return;
+  const todos = resumen.filter((r) => r.ids?.length && r.sugerido !== r.venta);
+  const respetados = todos.filter((r) => intocable(r.producto));
+  const cambios = todos.filter((r) => !intocable(r.producto));
+
+  if (respetados.length) {
+    console.log(`
+  NO SE TOCAN
+`);
+    for (const r of respetados) {
+      console.log(`  ${r.producto.slice(0, 34).padEnd(36)}${r.tallas.padEnd(10)}${eur(r.venta).padStart(9)}`);
+      console.log(`  ${"".padEnd(36)}${intocable(r.producto).motivo}`);
+    }
+  }
+  if (!cambios.length) {
+    if (respetados.length) console.log(`
+  Nada más que cambiar.`);
+    return;
+  }
 
   const suben = cambios.filter((r) => r.sugerido > r.venta);
   const bajan = cambios.filter((r) => r.sugerido < r.venta);

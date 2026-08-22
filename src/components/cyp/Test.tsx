@@ -9,11 +9,18 @@ import { papel, tinta } from "@/lib/color";
 /**
  * "¿Cuál de los dos eres tú?".
  *
- * Cinco preguntas, dos respuestas cada una, y el resultado es el personaje que
+ * Diez preguntas, dos respuestas cada una, y el resultado es el personaje que
  * más veces has elegido. La gracia no está en acertar —no hay nada que
  * acertar— sino en que el personaje que te toca te lo dice él mismo con su
  * voz, y en que el resultado se puede copiar y pegar donde sea.
+ *
+ * Eran cinco y el empate era imposible. Con diez existe, y no se tapa: el
+ * cinco a cinco tiene dictamen propio. Sin él se habría ido en silencio al
+ * lado que quedara en el `else`, que es de las cosas que no detecta nadie
+ * porque el test siempre contesta algo.
  */
+
+type Ganador = "culow" | "pililarge" | "empate";
 
 type Respuesta = { texto: string; quien: "culow" | "pililarge" };
 
@@ -33,10 +40,24 @@ const PREGUNTAS: { pregunta: string; opciones: [Respuesta, Respuesta] }[] = [
     ],
   },
   {
+    pregunta: "Una puerta que pone «tire».",
+    opciones: [
+      { texto: "Empujo. La puerta está mal", quien: "culow" },
+      { texto: "Tiro, no cede, y le pido perdón", quien: "pililarge" },
+    ],
+  },
+  {
     pregunta: "Hay una silla libre en la sala.",
     opciones: [
       { texto: "Me siento antes de que la vea nadie", quien: "culow" },
       { texto: "La miro un rato. Ya me sentaré", quien: "pililarge" },
+    ],
+  },
+  {
+    pregunta: "Le llega un audio de tres minutos.",
+    opciones: [
+      { texto: "Lo pongo a doble y contesto «vale»", quien: "culow" },
+      { texto: "Lo oigo entero. Dos veces", quien: "pililarge" },
     ],
   },
   {
@@ -47,13 +68,53 @@ const PREGUNTAS: { pregunta: string; opciones: [Respuesta, Respuesta] }[] = [
     ],
   },
   {
+    pregunta: "Queda una croqueta en la fuente.",
+    opciones: [
+      { texto: "Ya me la he comido", quien: "culow" },
+      { texto: "Digo que no y me arrepiento toda la noche", quien: "pililarge" },
+    ],
+  },
+  {
     pregunta: "El microondas pita.",
     opciones: [
       { texto: "Voy corriendo. Es mío", quien: "culow" },
       { texto: "Espero por si pita otra vez", quien: "pililarge" },
     ],
   },
+  {
+    pregunta: "Se apagan las luces de golpe.",
+    opciones: [
+      { texto: "Grito, para que sepan que estoy", quien: "culow" },
+      { texto: "Me quedo quieto por si es de la exposición", quien: "pililarge" },
+    ],
+  },
+  {
+    pregunta: "Le piden la hora por la calle.",
+    opciones: [
+      { texto: "La digo mal, pero con seguridad", quien: "culow" },
+      { texto: "Miro el reloj tres veces antes de decirla", quien: "pililarge" },
+    ],
+  },
 ];
+
+/**
+ * Quién sale de estas respuestas: gana el más votado.
+ *
+ * Estaba escrito dos veces —una para pintar y otra para hablar— y con dos
+ * copias de la misma cuenta es cuestión de tiempo que una se quede atrás.
+ *
+ * Empate no es «no sé»: es el tercer resultado, y a medio contestar sale
+ * mucho. Da igual, porque el dictamen solo se enseña con las diez puestas.
+ */
+function dictamen(respuestas: (0 | 1 | null)[]): Ganador {
+  const culow = respuestas.reduce<number>(
+    (n, o, i) => (o === null ? n : n + (PREGUNTAS[i].opciones[o].quien === "culow" ? 1 : 0)),
+    0
+  );
+  const pilis = respuestas.filter((r) => r !== null).length - culow;
+  if (culow === pilis) return "empate";
+  return culow > pilis ? "culow" : "pililarge";
+}
 
 const VEREDICTO = {
   culow: {
@@ -68,6 +129,13 @@ const VEREDICTO = {
     resumen:
       "Vas despacio, preguntas cosas raras y no le haces mal a nadie. Sigues intentando sentarte y algún día lo consigues.",
   },
+  // Cinco y cinco. Lo dice Culow, que habla primero siempre.
+  empate: {
+    titulo: "Eres un rarito",
+    linea: "Ni Culow ni Pililarge. Eres un rarito. Y mira que aquí el listón está bajo.",
+    resumen:
+      "Cinco y cinco. No te pareces a ninguno de los dos, que en un museo con solo dos piezas tiene su mérito.",
+  },
 } as const;
 
 export function Test() {
@@ -80,12 +148,7 @@ export function Test() {
   const contestadas = elegidas.filter((v) => v !== null).length;
   const completo = contestadas === PREGUNTAS.length;
 
-  const culowes = elegidas.reduce<number>(
-    (n, opcion, i) => (opcion === null ? n : n + (PREGUNTAS[i].opciones[opcion].quien === "culow" ? 1 : 0)),
-    0
-  );
-  // Empate imposible: son cinco preguntas.
-  const ganador = culowes * 2 > PREGUNTAS.length ? "culow" : "pililarge";
+  const ganador = dictamen(elegidas);
   const v = VEREDICTO[ganador];
 
   const responder = (i: number, opcion: 0 | 1) => {
@@ -95,12 +158,10 @@ export function Test() {
 
     // En cuanto se cierra la última, el ganador se presenta con su voz.
     if (siguiente.every((val) => val !== null)) {
-      const culowFinal = siguiente.reduce<number>(
-        (n, o, j) => n + (PREGUNTAS[j].opciones[o as 0 | 1].quien === "culow" ? 1 : 0),
-        0
-      );
-      const quien = culowFinal * 2 > PREGUNTAS.length ? "culow" : "pililarge";
-      speak(VEREDICTO[quien].linea, quien);
+      const quien = dictamen(siguiente);
+      // Del empate no hay voz, así que lo dice Culow. Esperar a que Pililarge
+      // se anime a hablar no es de este personaje.
+      speak(VEREDICTO[quien].linea, quien === "empate" ? "culow" : quien);
     }
   };
 
@@ -129,7 +190,7 @@ export function Test() {
             ¿Con cuál de las dos <span className="italic text-museo-tinta-suave">se identifica usted</span>?
           </SectionTitle>
           <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.65] text-museo-tinta-suave">
-            Cinco preguntas sin ningún rigor científico. Al final se lo dice en voz alta la pieza
+            Diez preguntas sin ningún rigor científico. Al final se lo dice en voz alta la pieza
             que le haya tocado.
           </p>
         </div>
@@ -179,12 +240,20 @@ className="border border-museo-linea bg-museo-pared p-[22px]"
           >
             {completo ? (
               <>
-                <Peana className="h-[230px] rounded-[3px] pb-6 pt-5">
-                  <Character
-                    char={ganador}
-                    scale={ganador === "culow" ? (narrow ? 0.5 : 0.62) : narrow ? 0.34 : 0.42}
-                    bob
-                  />
+                {/* En el empate salen los dos, mirando a ver quién es usted. */}
+                <Peana className="h-[230px] gap-5 rounded-[3px] pb-6 pt-5">
+                  {ganador === "empate" ? (
+                    <>
+                      <Character char="culow" scale={narrow ? 0.34 : 0.42} bob />
+                      <Character char="pililarge" scale={narrow ? 0.24 : 0.3} bob />
+                    </>
+                  ) : (
+                    <Character
+                      char={ganador}
+                      scale={ganador === "culow" ? (narrow ? 0.5 : 0.62) : narrow ? 0.34 : 0.42}
+                      bob
+                    />
+                  )}
                 </Peana>
                 <div>
                   <div className="cartela text-museo-laton">Dictamen</div>

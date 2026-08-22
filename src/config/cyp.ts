@@ -176,8 +176,8 @@ export const duet: { who: "culow" | "pililarge"; text: string; audio?: string }[
 ];
 
 export const marquee = [
-  "Culow no tiene brazos y aún así señala",
-  "Pililarge lleva 4 años intentando sentarse",
+  "Culow contesta antes de que le pregunten",
+  "Pililarge se lo cree todo, incluso esto",
   "Humor tonto con acabados de lujo",
   "Poemas absurdos y homenajes imposibles",
   "Una voz grave, una voz aguda, cero argumento",
