@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T15:29:32.831Z",
+  "sincronizado": "2026-08-22T15:37:09.735Z",
   "productos": [
     {
       "id": 458451943,
@@ -15,7 +15,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×18″",
           "talla": "12″×18″",
           "color": "Black",
-          "precio": 2100,
+          "precio": 2050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -26,7 +26,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×22″",
           "talla": "12″×22″",
           "color": "Black",
-          "precio": 2200,
+          "precio": 2150,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -37,7 +37,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 16″×32″",
           "talla": "16″×32″",
           "color": "Black",
-          "precio": 2800,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -58,7 +58,7 @@
           "nombre": "La bolsa que se bolsepapea a todas las bolsas",
           "talla": "One size",
           "color": "White",
-          "precio": 7700,
+          "precio": 9600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"

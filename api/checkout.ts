@@ -40,19 +40,19 @@ type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
   "5453261502": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 12″×18″",
-    "precio": 2100
+    "precio": 2050
   },
   "5453261503": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 12″×22″",
-    "precio": 2200
+    "precio": 2150
   },
   "5453261504": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 16″×32″",
-    "precio": 2800
+    "precio": 2850
   },
   "5453194211": {
     "nombre": "La bolsa que se bolsepapea a todas las bolsas · One size",
-    "precio": 7700
+    "precio": 9600
   },
   "5453185424": {
     "nombre": "Gorrica para ponertela en la cabeza · One size",
