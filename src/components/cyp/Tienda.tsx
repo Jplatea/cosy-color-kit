@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Chip, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { Prenda } from "./prendas";
 import { Galeria } from "./galeria";
-import { Banderola } from "./banderola";
+import { Tira } from "./tira";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
 import { tinta } from "@/lib/color";
@@ -89,7 +89,23 @@ export function Tienda() {
   };
 
   return (
-    <section id="tienda" className="bg-museo-pared px-6 py-[86px] lg:px-8">
+    /*
+      La única sala con el fondo teñido.
+
+      Es donde se vende, y conviene que al bajar por la página se note que has
+      entrado en otro sitio. El tinte es un velo de latón sobre la pared de
+      siempre, no un color nuevo: así gira con las luces —de día un dorado
+      pálido sobre hueso, de noche un ámbar sobre negro— sin escribir dos
+      paletas. Un ocho por ciento basta; más y parece una promoción.
+    */
+    <section
+      id="tienda"
+      className="px-6 py-[86px] lg:px-8"
+      style={{
+        backgroundColor: "rgb(var(--cyp-pared))",
+        backgroundImage: `linear-gradient(rgb(var(--cyp-laton) / 0.09), rgb(var(--cyp-laton) / 0.05))`,
+      }}
+    >
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-museo-linea pb-8">
           <div>
@@ -107,16 +123,6 @@ export function Tienda() {
               </p>
             )}
           </div>
-          {/*
-            La banderola vive en la cabecera de la sala y no dentro de la
-            rejilla: es el letrero de la puerta, no un producto. En pantalla
-            estrecha se esconde, que ahí el espacio se lo tienen que repartir
-            el título y la cesta.
-          */}
-          <div className="hidden lg:block">
-            <Banderola>¡Souvenirs!</Banderola>
-          </div>
-
           {cesta.unidades > 0 && (
             <a
               href="#cesta"
@@ -128,7 +134,15 @@ export function Tienda() {
           )}
         </div>
 
-        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {/*
+          `grid-auto-rows: 1fr` iguala todas las filas a la más alta, no solo
+          las tarjetas dentro de una misma fila. Sin eso, la fila con
+          selectores de talla y color medía doscientos píxeles más que la de
+          los productos de talla única, y la rejilla parecía rota. Con los
+          selectores pegados abajo, los botones de compra quedan todos a la
+          misma altura.
+        */}
+        <div className="grid gap-x-8 gap-y-12 [grid-auto-rows:1fr] sm:grid-cols-2 lg:grid-cols-3">
           {PRODUCTOS.map((p) => {
             const e = elegido(p);
             const color = p.colores.find((c) => c.id === e.color) ?? p.colores[0];
@@ -139,7 +153,7 @@ export function Tienda() {
             const fotos = fotosDe(p, e.color);
 
             return (
-              <article key={p.id} className="flex flex-col">
+              <article key={p.id} className="flex h-full flex-col">
                 {/*
                   Las fotos de Printful mandan sobre el dibujo: son la imagen
                   real de lo que se recibe, y en una tienda eso pesa más que la
@@ -178,40 +192,29 @@ export function Tienda() {
                   )}
                 </Peana>
 
-                {/*
-                  Las demás vistas, debajo. Con una sola no hay nada que elegir.
-                  Se envuelven en varias filas porque de un producto puede haber
-                  una docena de maquetas y en una sola fila se saldrían.
-                */}
-                {fotos.length > 1 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {fotos.map((url, i) => {
-                      const activa = (foto[p.id] ?? 0) === i;
-                      return (
-                        <button
-                          key={url}
-                          type="button"
-                          onClick={() => setFoto((v) => ({ ...v, [p.id]: i }))}
-                          aria-label={`Vista ${i + 1} de ${p.nombre}`}
-                          aria-pressed={activa}
-                          className="h-[54px] w-[54px] shrink-0 border bg-museo-peana p-[3px] transition-colors"
-                          style={{ borderColor: activa ? tinta() : tinta(0.16) }}
-                        >
-                          <img
-                            src={url}
-                            alt=""
-                            loading="lazy"
-                            className="h-full w-full object-contain"
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                <Tira
+                  fotos={fotos}
+                  activa={Math.min(foto[p.id] ?? 0, fotos.length - 1)}
+                  onElegir={(i) => setFoto((v) => ({ ...v, [p.id]: i }))}
+                  nombre={p.nombre}
+                />
 
-                <div className="mt-4 flex-1 border-t border-museo-tinta pt-3">
+                {/*
+                  El bloque del nombre tiene alto fijo y el texto se recorta.
+
+                  Los títulos son el chiste entero —«Bolsa para los fuertecitos
+                  de gimnasio que quieren vacilar de mochilita»— y van de una a
+                  cuatro líneas según el producto. Sin tope, cada tarjeta
+                  empezaba sus botones a una altura distinta y la rejilla
+                  quedaba desigual. El nombre completo sigue estando en el
+                  `title`, para quien quiera leerlo entero.
+                */}
+                <div className="mt-4 border-t border-museo-tinta pt-3">
                   <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="font-display text-[22px] leading-tight text-museo-tinta">
+                    <h3
+                      title={p.nombre}
+                      className="line-clamp-2 min-h-[54px] font-display text-[22px] leading-tight text-museo-tinta"
+                    >
                       {p.nombre}
                     </h3>
                     {/* En latón: es el dato que se busca de un vistazo. */}
@@ -219,7 +222,9 @@ export function Tienda() {
                       {euros(precioDe(p, e.color, e.talla, e.diseno))}
                     </span>
                   </div>
-                  <p className="mt-2 text-[13.5px] leading-[1.55] text-museo-tinta-suave">{p.ficha}</p>
+                  <p className="mt-2 line-clamp-2 min-h-[42px] text-[13.5px] leading-[1.55] text-museo-tinta-suave">
+                    {p.ficha}
+                  </p>
                 </div>
 
                 {/*
@@ -235,7 +240,7 @@ export function Tienda() {
                   única es pedir que elijan entre una cosa, y encima sugiere que
                   cambiarla cambia lo que se fabrica.
                 */}
-                <div className="mt-4 grid gap-[14px]">
+                <div className="mt-4 grid content-end gap-[14px] flex-1">
                   {p.tallas.length > 1 && (
                     <div className="grid gap-[8px]">
                       <span className="cartela text-museo-tinta-tenue">Talla</span>

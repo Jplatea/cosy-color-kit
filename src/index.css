@@ -28,7 +28,14 @@
   /* El latón de día va más oscuro de lo que pediría el gusto: con el tono
      claro, la letra de cartela de 11 px se quedaba en 3,9 de contraste sobre
      el papel, por debajo del mínimo legible. */
-  --cyp-laton: 138 108 51;
+  /*
+     Oscurecido de 138 108 51 para que el precio se lea.
+
+     A ese valor daba 4,48 sobre papel —justo por debajo del mínimo— y 4,32
+     sobre el fondo teñido de la tienda, que es donde más se usa. Aquí son
+     4,97 y 4,77. La diferencia de tono no se aprecia; la de legibilidad sí.
+  */
+  --cyp-laton: 130 101 46;
   --cyp-laton-hi: 168 132 63;
 
   /* Las tres paradas del degradado de la peana, de arriba abajo. */
