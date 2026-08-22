@@ -40,247 +40,247 @@ type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
   "5452270555": {
     "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita · One size",
-    "precio": 10200
+    "precio": 9600
   },
   "5452259381": {
     "nombre": "Para que el ratoncito retoce alegremente · 8.7\"x7.1\"",
-    "precio": 1350
+    "precio": 1250
   },
   "5449680122": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2250
+    "precio": 2100
   },
   "5452910521": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2250
+    "precio": 2100
   },
   "5452910522": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2250
+    "precio": 2100
   },
   "5449668444": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5700
+    "precio": 5350
   },
   "5449668445": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5700
+    "precio": 5350
   },
   "5449668446": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5700
+    "precio": 5350
   },
   "5449668447": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5700
+    "precio": 5350
   },
   "5449668448": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5700
+    "precio": 5350
   },
   "5449668449": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5850
+    "precio": 5500
   },
   "5449668450": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 6550
+    "precio": 5700
   },
   "5452275032": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275034": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275054": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275058": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275060": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5850
+    "precio": 5500
   },
   "5452275061": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 6550
+    "precio": 5700
   },
   "5452275062": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275063": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275064": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5700
+    "precio": 5350
   },
   "5452275065": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5700
+    "precio": 5350
   },
   "5452276767": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5700
+    "precio": 5350
   },
   "5452276823": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5700
+    "precio": 5350
   },
   "5452276829": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5850
+    "precio": 5500
   },
   "5452276842": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 6550
+    "precio": 5700
   },
   "5449667542": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2500
+    "precio": 2350
   },
   "5449667543": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909812": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909813": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909814": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909815": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909816": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909817": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909818": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2500
+    "precio": 2350
   },
   "5452909819": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2500
+    "precio": 2350
   },
   "5449158693": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XS",
-    "precio": 2900
+    "precio": 2700
   },
   "5449158694": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900
+    "precio": 2700
   },
   "5449158695": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900
+    "precio": 2700
   },
   "5449158696": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900
+    "precio": 2700
   },
   "5449158697": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900
+    "precio": 2700
   },
   "5449158698": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 2XL",
-    "precio": 3050
+    "precio": 2850
   },
   "5449158699": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 3XL",
-    "precio": 3250
+    "precio": 3050
   },
   "5449158700": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 4XL",
-    "precio": 3450
+    "precio": 3200
   },
   "5449158701": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
-    "precio": 3750
+    "precio": 3500
   },
   "5452906230": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906231": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906232": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906233": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906234": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906235": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906236": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906237": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906238": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906239": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906240": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906241": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906242": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906243": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906244": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2900
+    "precio": 2700
   },
   "5452906245": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
-    "precio": 2900
+    "precio": 2700
   }
 };
 // === FIN PRECIOS ===

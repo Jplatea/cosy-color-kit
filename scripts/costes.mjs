@@ -439,9 +439,20 @@ async function ponerPrecios(clave, resumen) {
   const bajan = cambios.filter((r) => r.sugerido < r.venta);
   const cuantas = cambios.reduce((n, r) => n + r.ids.length, 0);
 
+  const linea = (r) =>
+    `  ${r.producto.slice(0, 34).padEnd(36)}${r.tallas.padEnd(10)}` +
+    `${eur(r.venta).padStart(9)}  →  ${eur(r.sugerido).padStart(9)}`;
+
   if (!APLICAR) {
-    console.log(`\n  Son ${cuantas} variante(s): ${suben.length} tramo(s) al alza`);
-    console.log(`  y ${bajan.length} a la baja, que hoy dan más del ${OBJETIVO} %.`);
+    if (suben.length) {
+      console.log(`\n  SUBIRÍAN (van cortos del ${OBJETIVO} %)\n`);
+      suben.forEach((r) => console.log(linea(r)));
+    }
+    if (bajan.length) {
+      console.log(`\n  BAJARÍAN (hoy dan más del ${OBJETIVO} %)\n`);
+      bajan.forEach((r) => console.log(linea(r)));
+    }
+    console.log(`\n  ${cuantas} variante(s) en total.`);
     console.log(`  Para escribirlo en Printful:   npm run costes -- ${PEDIDO} va`);
     return;
   }
