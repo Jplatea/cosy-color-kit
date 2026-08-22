@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T15:37:09.735Z",
+  "sincronizado": "2026-08-22T17:59:12.388Z",
   "productos": [
     {
       "id": 458451943,
@@ -59,39 +59,6 @@
           "talla": "One size",
           "color": "White",
           "precio": 9600,
-          "moneda": "EUR",
-          "disponible": true,
-          "hex": "#ffffff"
-        }
-      ]
-    },
-    {
-      "id": 458438995,
-      "nombre": "Gorrica para ponertela en la cabeza",
-      "miniatura": "/tienda/gorrica/black-printful.webp",
-      "fotos": [
-        "/tienda/gorrica/black-printful.webp",
-        "/tienda/gorrica/white-printful.webp"
-      ],
-      "variantes": [
-        {
-          "id": 5453185424,
-          "catalogo": 16244,
-          "nombre": "Gorrica para ponertela en la cabeza / Black",
-          "talla": "One size",
-          "color": "Black",
-          "precio": 3000,
-          "moneda": "EUR",
-          "disponible": true,
-          "hex": "#0b0b0b"
-        },
-        {
-          "id": 5453185425,
-          "catalogo": 16245,
-          "nombre": "Gorrica para ponertela en la cabeza / White",
-          "talla": "One size",
-          "color": "White",
-          "precio": 3000,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1702,7 +1669,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#9eab96"
+          "hex": ""
         },
         {
           "id": 5452906234,
@@ -1735,7 +1702,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#eda027"
+          "hex": ""
         },
         {
           "id": 5452906237,

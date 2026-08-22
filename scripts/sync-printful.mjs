@@ -184,6 +184,25 @@ const APODOS = {
 };
 
 /**
+ * Productos que están en Printful pero no salen en la web.
+ *
+ * No es lo mismo que borrarlos allí. Un producto puede estar bien montado y no
+ * querer enseñarse todavía, o —como pasó con la gorrica— estar montado de
+ * forma que la imprenta no lo sabe fabricar: Printful contesta «esa
+ * combinación de producto y técnica no se puede fabricar» al pedirle el coste.
+ *
+ * Ese caso es el peligroso, porque desde fuera no se ve nada raro: el producto
+ * sale en la tienda, se puede pagar, y **el pedido falla después de haberle
+ * cobrado al comprador**. Sacarlo de aquí corta eso al momento y no toca nada
+ * en Printful, así que si se arregla el diseño basta con quitarlo de la lista.
+ *
+ * `npm run costes` es quien los delata: los marca como NO SE PUEDE FABRICAR.
+ */
+const OCULTOS = [
+  { patron: /gorrica/i, motivo: "Printful no la sabe fabricar: revisa la técnica del diseño" },
+];
+
+/**
  * Palabras que no distinguen nada y solo alargan el nombre de la carpeta.
  */
 const VACIAS = new Set([
@@ -388,7 +407,7 @@ async function aWebp(buffer, lado = 900) {
 async function main() {
   console.log("Leyendo tu tienda de Printful…");
 
-  const lista = await printful("/store/products");
+  let lista = await printful("/store/products");
   if (!Array.isArray(lista) || !lista.length) {
     console.log("\nNo hay ningún producto todavía. Créalo en Printful y vuelve a ejecutar esto.");
     return;
@@ -397,6 +416,17 @@ async function main() {
 
   // Las carpetas se reparten mirando la tienda entera, no producto a producto:
   // solo se sabe que dos chocan cuando se ven los dos.
+  // Los ocultos se apartan antes de repartir carpetas, para que no gasten
+  // nombre ni salgan en el recuento.
+  const escondidos = lista.filter((p) => OCULTOS.some((o) => o.patron.test(p.name)));
+  lista = lista.filter((p) => !escondidos.includes(p));
+  for (const p of escondidos) {
+    const motivo = OCULTOS.find((o) => o.patron.test(p.name))?.motivo || "";
+    console.log(`  · ${p.name}`);
+    console.log(`      NO SALE EN LA WEB · ${motivo}
+`);
+  }
+
   const carpetas = carpetasUnicas(lista.map((p) => p.name));
 
   const productos = [];

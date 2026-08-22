@@ -54,14 +54,6 @@ const PRECIOS: Record<string, Articulo> = {
     "nombre": "La bolsa que se bolsepapea a todas las bolsas · One size",
     "precio": 9600
   },
-  "5453185424": {
-    "nombre": "Gorrica para ponertela en la cabeza · One size",
-    "precio": 3000
-  },
-  "5453185425": {
-    "nombre": "Gorrica para ponertela en la cabeza · One size",
-    "precio": 3000
-  },
   "5453151950": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
     "precio": 2750
