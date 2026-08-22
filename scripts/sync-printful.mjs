@@ -23,6 +23,7 @@
 
 import { writeFile, readFile, readdir, mkdir } from "node:fs/promises";
 import { escribirPrecios } from "./lib/precios.mjs";
+import { destapar } from "./lib/destapar.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -338,15 +339,39 @@ async function bajarPorColor(carpeta, variantes, propias) {
   return bajadas;
 }
 
-/** PNG de Printful a webp del tamaño de la tienda. */
+/**
+ * PNG de Printful a webp del tamaño de la tienda, con el fondo recortado.
+ *
+ * Sus maquetas traen el blanco pintado y no transparente, así que en la tienda
+ * —que es de papel crema— se veía un rectángulo blanco detrás de la prenda,
+ * justo al lado de las fotos que bajas tú del generador, que sí vienen
+ * recortadas. Se quita aquí, una vez, y no en cada visita.
+ *
+ * El recorte se hace **antes** de encoger. Al escalar aparecen píxeles
+ * intermedios entre la prenda y el fondo, y sobre esos la inundación ya no
+ * sabe dónde parar: el canto sale sucio.
+ */
 async function aWebp(buffer, lado = 900) {
   const { createCanvas, loadImage } = await import("@napi-rs/canvas");
   const img = await loadImage(buffer);
+
+  const pleno = createCanvas(img.width, img.height);
+  const gp = pleno.getContext("2d");
+  gp.drawImage(img, 0, 0);
+  const datos = gp.getImageData(0, 0, img.width, img.height);
+  const quitado = destapar(datos.data, img.width, img.height);
+  // Si se lleva casi todo, es que la prenda no se distinguía del fondo. Antes
+  // de bajar el margen pasaba con la camiseta blanca: se comía el 88 %.
+  if (quitado < 0.7) {
+    gp.clearRect(0, 0, img.width, img.height);
+    gp.putImageData(datos, 0, 0);
+  }
+
   const escala = Math.min(1, lado / Math.max(img.width, img.height));
   const ancho = Math.round(img.width * escala);
   const alto = Math.round(img.height * escala);
   const lienzo = createCanvas(ancho, alto);
-  lienzo.getContext("2d").drawImage(img, 0, 0, ancho, alto);
+  lienzo.getContext("2d").drawImage(pleno, 0, 0, ancho, alto);
   return lienzo.encode("webp", 82);
 }
 
