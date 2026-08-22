@@ -1,12 +1,26 @@
 {
-  "sincronizado": "2026-08-22T12:40:57.376Z",
+  "sincronizado": "2026-08-22T12:46:02.910Z",
   "productos": [
     {
       "id": 458352318,
       "nombre": "Padelbros alucinarán con la camisetita molona",
-      "miniatura": "/tienda/padelbros/white-printful.webp",
+      "miniatura": "/tienda/padelbros/00-white-espalda.webp",
       "fotos": [
-        "/tienda/padelbros/white-printful.webp"
+        "/tienda/padelbros/00-white-espalda.webp",
+        "/tienda/padelbros/01-heather-prism-ice-blue-espalda.webp",
+        "/tienda/padelbros/01-heather-prism-mint-espalda.webp",
+        "/tienda/padelbros/01-ocean-blue-espalda.webp",
+        "/tienda/padelbros/01-soft-pink-espalda.webp",
+        "/tienda/padelbros/02-heather-prism-ice-blue-frente.webp",
+        "/tienda/padelbros/02-heather-prism-mint-frente.webp",
+        "/tienda/padelbros/02-ocean-blue-frente.webp",
+        "/tienda/padelbros/02-soft-pink-frente.webp",
+        "/tienda/padelbros/02-white-frente.webp",
+        "/tienda/padelbros/03-heather-prism-ice-blue-lado.webp",
+        "/tienda/padelbros/03-heather-prism-mint-lado.webp",
+        "/tienda/padelbros/03-ocean-blue-lado.webp",
+        "/tienda/padelbros/03-soft-pink-lado.webp",
+        "/tienda/padelbros/03-white-lado.webp"
       ],
       "variantes": [
         {

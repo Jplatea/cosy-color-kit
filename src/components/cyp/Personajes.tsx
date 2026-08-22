@@ -31,7 +31,7 @@ const PIEZAS = [
     nombre: "Pililarge",
     epigrafe: "Alto · inocente · un poco tonto",
     texto:
-      "Volumen capsular de eje vertical, sin articulación conocida. Voz aguda y cero maldad: se cree todo lo que le cuenta Culow, incluso cuando Culow se está riendo mientras se lo cuenta. Lleva cuatro años intentando sentarse en un taburete y sostiene que va por buen camino.",
+      "Volumen capsular de eje vertical, sin articulación conocida. Voz aguda y cero maldad: se cree todo lo que le cuenta Culow, incluso cuando Culow se está riendo mientras se lo cuenta. Sigue intentando sentarse en un taburete y sostiene que va por buen camino.",
     filas: [
       ["Función", "Creerse lo anterior"],
       ["Registro", "Agudo, a trocitos"],

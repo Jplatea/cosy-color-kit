@@ -23,7 +23,7 @@ export function SiteFooter() {
             culowypililarge.com
           </a>
           <div className="mt-[7px]">
-            © {new Date().getFullYear()} · Hecho a mano y sin brazos
+            © {new Date().getFullYear()} · Hecho a mano y sin prisa
           </div>
         </div>
       </div>

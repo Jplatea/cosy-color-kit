@@ -81,7 +81,7 @@ export type Short = {
 
 const shortsDeEjemplo: Short[] = [
   { youtubeId: "", title: "Pililarge intenta sentarse" },
-  { youtubeId: "", title: "Culow aplaude sin brazos" },
+  { youtubeId: "", title: "Culow se aplaude a sí mismo" },
   { youtubeId: "", title: "La cola del banco" },
   { youtubeId: "", title: "Dos formas, un ascensor" },
 ];
@@ -141,7 +141,7 @@ export const poems: Poem[] = [
   },
   {
     title: "Tratado del taburete",
-    body: "He estudiado la silla\ncuatro años enteros.\nSigo de pie.\nCreo que voy ganando.",
+    body: "He estudiado la silla\ndesde el primer día.\nSigo de pie.\nCreo que voy ganando.",
     voice: "pililarge",
   },
   {

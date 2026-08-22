@@ -137,8 +137,8 @@ const PISTAS_PRENDA: [PrendaId, RegExp][] = [
 
 const PISTAS_DISENO: [DisenoId, RegExp][] = [
   ["rotulo", /r[oó]tulo|logotipo|wordmark/i],
-  ["brazos", /brazo|se[ñn]ala/i],
-  ["sentarme", /sentar|cuatro a[ñn]os|4 a[ñn]os/i],
+  ["razon", /raz[oó]n|se[ñn]ala/i],
+  ["credulo", /creo|cr[eé]dul|sentar/i],
   ["lujo", /lujo/i],
   ["simbolo", /s[ií]mbolo|logo|icono/i],
 ];
@@ -224,6 +224,25 @@ function deLaImprenta(): Producto[] {
         });
       }
 
+      /*
+        La tarjeta abre por el color de su foto de portada.
+
+        La portada es la primera foto de la carpeta y el color elegido era el
+        primero que devolviera Printful, y no tienen por qué ser el mismo: se
+        ponía de portada una camiseta blanca y la tarjeta arrancaba con la
+        muestra verde marcada, enseñando la verde. Bastaba con que la imprenta
+        listara los colores en otro orden.
+
+        Así que manda la foto: se busca de qué color es la portada y ese color
+        pasa al principio. Quien quiera cambiar la portada solo tiene que
+        renombrar una foto para que ordene antes, sin tocar código.
+      */
+      const portada = (p.fotos ?? [])[0] || "";
+      if (portada && colores.length > 1) {
+        const suyo = colores.findIndex((c) => patronDe(c).test(portada.split("/").pop() || ""));
+        if (suyo > 0) colores.unshift(...colores.splice(suyo, 1));
+      }
+
       const tallas = [...new Set(vivas.map((v) => v.talla || "UNICA"))];
 
       const variantes: Record<string, string> = {};
@@ -286,7 +305,7 @@ const MUESTRA: Producto[] = (
     { id: "crudo", nombre: "Crudo", tela: "#efe9de", sombra: "#b9ae9c", tinta: "#14120f" },
     { id: "tinta", nombre: "Tinta", tela: "#1c1a18", sombra: "#000000", tinta: "#f2ece2" },
   ],
-  disenos: ["simbolo", "rotulo", "brazos", "sentarme", "lujo"] as DisenoId[],
+  disenos: ["simbolo", "rotulo", "razon", "credulo", "lujo"] as DisenoId[],
   variantes: {},
   precios: {},
   fotos: [],

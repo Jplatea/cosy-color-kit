@@ -14,7 +14,7 @@ import type { ReactNode } from "react";
 
 export type Zona = { x: number; y: number; w: number; h: number };
 
-export type DisenoId = "simbolo" | "brazos" | "sentarme" | "lujo" | "rotulo";
+export type DisenoId = "simbolo" | "razon" | "credulo" | "lujo" | "rotulo";
 
 export type Diseno = {
   nombre: string;
@@ -99,18 +99,18 @@ export const DISENOS: Record<DisenoId, Diseno> = {
     ),
   },
 
-  brazos: {
-    nombre: "Sin brazos",
-    descripcion: "«Culow no tiene brazos y aún así señala», en letra de cartela.",
+  razon: {
+    nombre: "Tiene razón",
+    descripcion: "«Culow tiene razón aunque no la tenga», en letra de cartela.",
     dibujar: (z, tinta) =>
-      lineas(z, tinta, ["CULOW NO TIENE BRAZOS", "Y AÚN ASÍ SEÑALA"]),
+      lineas(z, tinta, ["CULOW TIENE RAZÓN", "AUNQUE NO LA TENGA"]),
   },
 
-  sentarme: {
-    nombre: "Cuatro años",
-    descripcion: "«Llevo cuatro años intentando sentarme». Lo dice Pililarge.",
+  credulo: {
+    nombre: "Me lo creo todo",
+    descripcion: "«Me lo creo todo y aun así me va bien». Lo dice Pililarge.",
     dibujar: (z, tinta) =>
-      lineas(z, tinta, ["LLEVO CUATRO AÑOS", "INTENTANDO", "SENTARME"]),
+      lineas(z, tinta, ["ME LO CREO TODO", "Y AUN ASÍ", "ME VA BIEN"]),
   },
 
   lujo: {
@@ -126,4 +126,4 @@ export const DISENOS: Record<DisenoId, Diseno> = {
   },
 };
 
-export const ORDEN_DISENOS: DisenoId[] = ["simbolo", "rotulo", "brazos", "sentarme", "lujo"];
+export const ORDEN_DISENOS: DisenoId[] = ["simbolo", "rotulo", "razon", "credulo", "lujo"];
