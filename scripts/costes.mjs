@@ -169,10 +169,29 @@ async function informePrintful(clave) {
 
     for (const [precio, v] of tramos) {
       const venta = Number(precio);
-      const { costs } = await printful(clave, "/orders/estimate-costs", {
-        recipient: DESTINO,
-        items: [{ sync_variant_id: v.id, quantity: 1 }],
-      });
+      /*
+        Un producto que la imprenta no sabe fabricar no puede tumbar el informe.
+
+        Pasó con una gorra recién creada: Printful respondía 400 —«esa
+        combinación de producto y técnica no se puede fabricar»— y el error
+        subía hasta arriba, así que no se veía el margen de ningún otro
+        producto. Y lo que hay que enterarse es justo de lo contrario: eso no
+        es un fallo del informe, es un producto que **no se puede vender** y
+        que si alguien compra, el pedido fallará.
+      */
+      let costs;
+      try {
+        ({ costs } = await printful(clave, "/orders/estimate-costs", {
+          recipient: DESTINO,
+          items: [{ sync_variant_id: v.id, quantity: 1 }],
+        }));
+      } catch (e) {
+        const tallasMal = variantes.filter((x) => x.retail_price === precio).map((x) => x.size || "única");
+        console.log(
+          `    ${(tallasMal[0] || "").padEnd(10)}NO SE PUEDE FABRICAR · ${String(e.message).split(": ").slice(1).join(": ").slice(0, 90)}`
+        );
+        continue;
+      }
 
       const cobrado = venta + (venta >= ENVIO_GRATIS_DESDE ? 0 : ENVIO_COBRADO);
       const comision = cobrado * COMISION.porcentaje + COMISION.fijo;
