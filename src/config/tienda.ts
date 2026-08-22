@@ -65,6 +65,43 @@ export type Producto = {
   fotos: string[];
 };
 
+/**
+ * Las fotos que le tocan a un color.
+ *
+ * Las maquetas vienen nombradas por lo que enseñan —`01-verde`, `05-negra-
+ * puesta`, `09-bordado`—, así que el color se lee del propio nombre. Una foto
+ * que no nombra ningún color sale siempre: el primer plano del bordado o el
+ * detalle del puño valen para los tres.
+ *
+ * Sin esto la galería enseñaba las diez fotos a la vez, y elegir «negra» te
+ * dejaba mirando una sudadera verde. Con un solo color el filtro no se aplica,
+ * que ahí no hay nada que separar.
+ */
+const APODOS: Record<string, RegExp> = {
+  white: /blanc|white/i,
+  black: /negr|black/i,
+  "bottle-green": /verde|green/i,
+  yellow: /amarill|yellow/i,
+  navy: /azul|navy/i,
+};
+
+export function fotosDe(p: Producto, color: string): string[] {
+  if (p.colores.length < 2) return p.fotos;
+  const suyo = APODOS[color];
+  if (!suyo) return p.fotos;
+  const otros = Object.entries(APODOS)
+    .filter(([id]) => id !== color && p.colores.some((c) => c.id === id))
+    .map(([, patron]) => patron);
+
+  const propias = p.fotos.filter((f) => {
+    const nombre = f.split("/").pop() || "";
+    if (suyo.test(nombre)) return true;
+    // Las neutras —bordado, detalle— no nombran color y valen para todos.
+    return !otros.some((patron) => patron.test(nombre));
+  });
+  return propias.length ? propias : p.fotos;
+}
+
 /** La clave con la que se busca la variante de imprenta. */
 export const claveVariante = (color: string, talla: TallaId, diseno: DisenoId) =>
   `${color}/${talla}/${diseno}`;

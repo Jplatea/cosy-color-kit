@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Chip, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { Prenda } from "./prendas";
 import { Galeria } from "./galeria";
+import { Banderola } from "./banderola";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
 import { tinta } from "@/lib/color";
@@ -12,6 +13,7 @@ import {
   hayImprenta,
   claveVariante,
   euros,
+  fotosDe,
   precioDe,
   type Producto,
   type TallaId,
@@ -105,6 +107,16 @@ export function Tienda() {
               </p>
             )}
           </div>
+          {/*
+            La banderola vive en la cabecera de la sala y no dentro de la
+            rejilla: es el letrero de la puerta, no un producto. En pantalla
+            estrecha se esconde, que ahí el espacio se lo tienen que repartir
+            el título y la cesta.
+          */}
+          <div className="hidden lg:block">
+            <Banderola>¡Souvenirs!</Banderola>
+          </div>
+
           {cesta.unidades > 0 && (
             <a
               href="#cesta"
@@ -122,6 +134,9 @@ export function Tienda() {
             const color = p.colores.find((c) => c.id === e.color) ?? p.colores[0];
             const diseno = DISENOS[e.diseno];
             const variante = p.variantes[claveVariante(e.color, e.talla, e.diseno)];
+            // Elegir «negra» y seguir viendo una sudadera verde no tenía
+            // sentido: la galería se queda con las fotos de ese color.
+            const fotos = fotosDe(p, e.color);
 
             return (
               <article key={p.id} className="flex flex-col">
@@ -132,7 +147,7 @@ export function Tienda() {
                   que aún no tenga foto.
                 */}
                 <Peana className="rounded-[3px] border border-museo-linea p-4">
-                  {p.fotos.length ? (
+                  {fotos.length ? (
                     /*
                       La foto abre la galería a pantalla completa. A 230 px de
                       alto el bordado del pecho es una mancha; quien va a
@@ -140,12 +155,12 @@ export function Tienda() {
                     */
                     <button
                       type="button"
-                      onClick={() => setLupa({ id: p.id, i: Math.min(foto[p.id] ?? 0, p.fotos.length - 1) })}
+                      onClick={() => setLupa({ id: p.id, i: Math.min(foto[p.id] ?? 0, fotos.length - 1) })}
                       className="block w-full cursor-zoom-in"
-                      aria-label={`Ver ${p.fotos.length === 1 ? "la foto" : `las ${p.fotos.length} fotos`} de ${p.nombre}`}
+                      aria-label={`Ver ${fotos.length === 1 ? "la foto" : `las ${fotos.length} fotos`} de ${p.nombre}`}
                     >
                       <img
-                        src={p.fotos[Math.min(foto[p.id] ?? 0, p.fotos.length - 1)]}
+                        src={fotos[Math.min(foto[p.id] ?? 0, fotos.length - 1)]}
                         alt={`${p.nombre} en ${color.nombre}`}
                         loading="lazy"
                         className="h-[230px] w-full object-contain transition-transform duration-300 hover:scale-[1.03]"
@@ -168,9 +183,9 @@ export function Tienda() {
                   Se envuelven en varias filas porque de un producto puede haber
                   una docena de maquetas y en una sola fila se saldrían.
                 */}
-                {p.fotos.length > 1 && (
+                {fotos.length > 1 && (
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {p.fotos.map((url, i) => {
+                    {fotos.map((url, i) => {
                       const activa = (foto[p.id] ?? 0) === i;
                       return (
                         <button
@@ -240,17 +255,40 @@ export function Tienda() {
 
                   {p.colores.length > 1 && (
                     <div className="grid gap-[8px]">
-                      <span className="cartela text-museo-tinta-tenue">Color</span>
-                      <div className="flex flex-wrap gap-[7px]">
-                        {p.colores.map((c) => (
-                          <Chip
-                            key={c.id}
-                            active={e.color === c.id}
-                            onClick={() => cambiar(p, { color: c.id })}
-                          >
-                            {c.nombre}
-                          </Chip>
-                        ))}
+                      <span className="cartela text-museo-tinta-tenue">
+                        Color
+                        <span className="ml-2 text-museo-tinta-suave">{color.nombre}</span>
+                      </span>
+                      {/*
+                        Muestras del tejido, no nombres. «Bottle green» no le
+                        dice nada a nadie hasta que lo ve, y el hexadecimal lo
+                        da Printful, así que el color de la pastilla es el de la
+                        prenda de verdad. El nombre se lee arriba, junto a la
+                        etiqueta, para quien navegue con lector de pantalla o
+                        no distinga bien los tonos.
+                      */}
+                      <div className="flex flex-wrap gap-[10px]">
+                        {p.colores.map((c) => {
+                          const puesto = e.color === c.id;
+                          return (
+                            <button
+                              key={c.id}
+                              type="button"
+                              onClick={() => cambiar(p, { color: c.id })}
+                              title={c.nombre}
+                              aria-label={c.nombre}
+                              aria-pressed={puesto}
+                              className="grid h-[30px] w-[30px] place-items-center rounded-full border transition-transform hover:scale-110"
+                              style={{
+                                background: c.tela,
+                                borderColor: puesto ? tinta() : tinta(0.22),
+                                // El anillo separa la pastilla blanca del papel,
+                                // que si no parece un agujero.
+                                boxShadow: puesto ? `0 0 0 3px rgb(var(--cyp-papel)), 0 0 0 4px ${tinta()}` : "none",
+                              }}
+                            />
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -430,10 +468,12 @@ export function Tienda() {
       {lupa &&
         (() => {
           const p = PRODUCTOS.find((x) => x.id === lupa.id);
-          if (!p?.fotos.length) return null;
+          if (!p) return null;
+          const suyas = fotosDe(p, (eleccion[p.id] ?? porDefecto(p)).color);
+          if (!suyas.length) return null;
           return (
             <Galeria
-              fotos={p.fotos}
+              fotos={suyas}
               nombre={p.nombre}
               inicial={lupa.i}
               onIndice={(i) => setFoto((v) => (v[p.id] === i ? v : { ...v, [p.id]: i }))}
