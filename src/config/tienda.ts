@@ -83,15 +83,32 @@ const APODOS: Record<string, RegExp> = {
   "bottle-green": /verde|green/i,
   yellow: /amarill|yellow/i,
   navy: /azul|navy/i,
+  red: /roj|red/i,
+  grey: /gris|grey|gray/i,
 };
+
+/**
+ * Cómo se reconoce un color en el nombre de un fichero.
+ *
+ * Los apodos de arriba existen porque las fotos que hiciste tú están en
+ * castellano —`02-negra.webp`— y el color en Printful se llama «Black». Para
+ * todo lo demás vale el propio identificador: las maquetas que se baja la
+ * sincronización aterrizan ya con él delante, `heather-prism-lilac-…`, justo
+ * para no tener que venir aquí a apuntar cada color nuevo a mano.
+ *
+ * El patrón mira que el nombre no esté pegado a otras letras, para que un
+ * color corto como «red» no se dé por encontrado dentro de otra palabra.
+ */
+function patronDe(c: ColorPrenda): RegExp {
+  return APODOS[c.id] ?? new RegExp(`(^|[^a-z])${c.id.replace(/-/g, "[-_ ]?")}([^a-z]|$)`, "i");
+}
 
 export function fotosDe(p: Producto, color: string): string[] {
   if (p.colores.length < 2) return p.fotos;
-  const suyo = APODOS[color];
-  if (!suyo) return p.fotos;
-  const otros = Object.entries(APODOS)
-    .filter(([id]) => id !== color && p.colores.some((c) => c.id === id))
-    .map(([, patron]) => patron);
+  const elegido = p.colores.find((c) => c.id === color);
+  if (!elegido) return p.fotos;
+  const suyo = patronDe(elegido);
+  const otros = p.colores.filter((c) => c.id !== color).map(patronDe);
 
   const propias = p.fotos.filter((f) => {
     const nombre = f.split("/").pop() || "";

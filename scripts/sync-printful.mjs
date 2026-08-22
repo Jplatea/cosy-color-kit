@@ -145,6 +145,43 @@ const ranura = (nombre) =>
     .trim()
     .split(" ")[0] || "producto";
 
+/**
+ * El identificador de un color, con **todas** sus palabras.
+ *
+ * Aquí no vale `ranura`, que se queda con la primera: «Heather Prism Lilac» y
+ * «Heather Ice Blue» se convertían las dos en `heather` y la segunda maqueta
+ * pisaba a la primera, dejando el mismo lila para los dos colores.
+ *
+ * Tiene que salir igual que el `idDeColor` de `src/config/tienda.ts`, porque
+ * es por ahí por donde se reconocen: el fichero se llama como el color y la
+ * web busca el color en el nombre del fichero.
+ */
+const ranuraColor = (nombre) =>
+  String(nombre || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "unico";
+
+/**
+ * Cómo se llama cada color en las fotos que hiciste tú.
+ *
+ * Tus ficheros están en castellano —`03-blanca.webp`— y Printful dice
+ * «White». Sin esto se daba por buena la maqueta suya y se bajaba encima de
+ * una foto tuya que ya existía y era mejor. Es la misma lista que hay en
+ * `src/config/tienda.ts`, que es donde se leen al pintar la tienda.
+ */
+const APODOS = {
+  white: /blanc|white/i,
+  black: /negr|black/i,
+  "bottle-green": /verde|green/i,
+  yellow: /amarill|yellow/i,
+  navy: /azul|navy/i,
+  red: /roj|red/i,
+  grey: /gris|grey|gray/i,
+};
+
 const INSTRUCCIONES = `Fotos de este producto para la tienda de la web.
 
 Deja aquí las maquetas que descargues del generador de Printful (.jpg, .png o
@@ -181,6 +218,68 @@ async function fotosLocales(carpeta) {
   const ficheros = (await readdir(dir)).filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f));
   ficheros.sort((a, b) => a.localeCompare(b, "es", { numeric: true }));
   return ficheros.map((f) => `/tienda/${carpeta}/${encodeURIComponent(f)}`);
+}
+
+/**
+ * Baja la maqueta de Printful de los colores que no tengan foto propia.
+ *
+ * El nombre del fichero no es decorativo: **es el dato**. La web decide qué
+ * fotos enseñar al elegir un color mirando si el nombre del fichero lleva ese
+ * color, así que la maqueta de «Heather Prism Lilac» tiene que aterrizar como
+ * `heather-prism-lilac-printful.webp` y no con el hash que trae la URL.
+ *
+ * Por eso también se guarda en disco en vez de enlazar la URL de Printful:
+ * enlazándola no habría nombre que mirar, y además esas direcciones caducan.
+ *
+ * Se convierte a webp porque sus maquetas vienen en PNG de un mega largo y
+ * esta es una tienda que se ve en el móvil.
+ */
+async function bajarPorColor(carpeta, variantes, propias) {
+  const dir = join(ALBUM, carpeta);
+  const nombres = propias.map((f) => decodeURIComponent(f.split("/").pop() || "").toLowerCase());
+  const tiene = (slug) => nombres.some((n) => n.includes(slug) || APODOS[slug]?.test(n));
+
+  // Una maqueta por color, la primera que aparezca.
+  const porColor = new Map();
+  for (const v of variantes) {
+    const color = (v.color || "").trim();
+    if (!color || porColor.has(color)) continue;
+    const previo = (v.files || []).find((f) => f.type === "preview")?.preview_url;
+    if (previo) porColor.set(color, previo);
+  }
+  // Con un solo color no hay nada que distinguir: las fotos que hay valen.
+  if (porColor.size < 2) return 0;
+
+  let bajadas = 0;
+  for (const [color, url] of porColor) {
+    const slug = ranuraColor(color);
+    // ¿Ya tienes tú una foto de este color? Entonces manda la tuya.
+    if (tiene(slug)) continue;
+    const destino = join(dir, `${slug}-printful.webp`);
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const original = Buffer.from(await r.arrayBuffer());
+      await writeFile(destino, await aWebp(original));
+      console.log(`      ↓ maqueta de «${color}» → ${slug}-printful.webp`);
+      bajadas++;
+    } catch (e) {
+      console.log(`      (no pude bajar la maqueta de «${color}»: ${e.message})`);
+    }
+  }
+  return bajadas;
+}
+
+/** PNG de Printful a webp del tamaño de la tienda. */
+async function aWebp(buffer, lado = 900) {
+  const { createCanvas, loadImage } = await import("@napi-rs/canvas");
+  const img = await loadImage(buffer);
+  const escala = Math.min(1, lado / Math.max(img.width, img.height));
+  const ancho = Math.round(img.width * escala);
+  const alto = Math.round(img.height * escala);
+  const lienzo = createCanvas(ancho, alto);
+  lienzo.getContext("2d").drawImage(img, 0, 0, ancho, alto);
+  return lienzo.encode("webp", 82);
 }
 
 async function main() {
@@ -235,7 +334,29 @@ async function main() {
      * guárdala en la carpeta como una más.
      */
     const carpeta = ranura(detalle?.sync_product?.name ?? resumen.name);
-    const propias = await fotosLocales(carpeta);
+    let propias = await fotosLocales(carpeta);
+
+    /*
+      Un color sin foto propia se trae la suya de Printful.
+
+      Añadir «Sage» a una camiseta cuya carpeta solo tiene fotos de la blanca
+      dejaba la tienda mintiendo: elegías verde y seguías viendo una prenda
+      blanca. Y la regla de «si hay fotos tuyas, las de Printful no aparecen»
+      —que existe para poder borrar una foto de verdad— hacía que eso no se
+      arreglara solo nunca.
+
+      Así que la regla pasa a mirarse **por color** y no por producto. El color
+      que ya tiene foto tuya sigue intocable; el que no la tiene se baja la
+      maqueta de Printful una vez, al disco, con el nombre del color delante:
+      es ese nombre el que después permite enseñar las fotos que tocan al
+      elegir un color. Si algún día le haces fotos mejores, las metes en la
+      carpeta y esta deja de traerse la suya.
+    */
+    if (propias.length) {
+      const bajadas = await bajarPorColor(carpeta, crudas, propias);
+      if (bajadas) propias = await fotosLocales(carpeta);
+    }
+
     const fotos = [...propias];
     const meter = (url) => {
       if (!url) return;

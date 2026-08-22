@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-21T23:56:27.552Z",
+  "sincronizado": "2026-08-22T09:45:21.642Z",
   "productos": [
     {
       "id": 457944687,
@@ -55,12 +55,14 @@
     {
       "id": 457277860,
       "nombre": "Bolsaca para el dinerete, gafitas chulas....",
-      "miniatura": "/tienda/bolsaca/01-plana.webp",
+      "miniatura": "/tienda/bolsaca/01-amarilla-plana.webp",
       "fotos": [
-        "/tienda/bolsaca/01-plana.webp",
-        "/tienda/bolsaca/02-en-mano.webp",
-        "/tienda/bolsaca/03-persona.webp",
-        "/tienda/bolsaca/04-de-lado.webp"
+        "/tienda/bolsaca/01-amarilla-plana.webp",
+        "/tienda/bolsaca/02-amarilla-en-mano.webp",
+        "/tienda/bolsaca/03-amarilla-persona.webp",
+        "/tienda/bolsaca/04-amarilla-de-lado.webp",
+        "/tienda/bolsaca/black-printful.webp",
+        "/tienda/bolsaca/red-printful.webp"
       ],
       "variantes": [
         {
@@ -73,6 +75,28 @@
           "moneda": "EUR",
           "disponible": true,
           "hex": "#de9219"
+        },
+        {
+          "id": 5452910521,
+          "catalogo": 4533,
+          "nombre": "Bolsaca para el dinerete, gafitas chulas.... / Black",
+          "talla": "15″×15″",
+          "color": "Black",
+          "precio": 2250,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#000000"
+        },
+        {
+          "id": 5452910522,
+          "catalogo": 8904,
+          "nombre": "Bolsaca para el dinerete, gafitas chulas.... / Red",
+          "talla": "15″×15″",
+          "color": "Red",
+          "precio": 2250,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c5262a"
         }
       ]
     },
@@ -329,14 +353,18 @@
     {
       "id": 457271468,
       "nombre": "Gorraca para aparcar coches como un pro",
-      "miniatura": "/tienda/gorraca/01-escritorio.webp",
+      "miniatura": "/tienda/gorraca/01-blanca-escritorio.webp",
       "fotos": [
-        "/tienda/gorraca/01-escritorio.webp",
-        "/tienda/gorraca/02-de-lado.webp",
-        "/tienda/gorraca/03-puesta.webp",
-        "/tienda/gorraca/04-puesta-2.webp",
-        "/tienda/gorraca/05-detras.webp",
-        "/tienda/gorraca/06-dentro.webp"
+        "/tienda/gorraca/01-blanca-escritorio.webp",
+        "/tienda/gorraca/02-blanca-de-lado.webp",
+        "/tienda/gorraca/03-blanca-puesta.webp",
+        "/tienda/gorraca/04-blanca-puesta-2.webp",
+        "/tienda/gorraca/05-blanca-detras.webp",
+        "/tienda/gorraca/06-blanca-dentro.webp",
+        "/tienda/gorraca/dark-navy-printful.webp",
+        "/tienda/gorraca/grey-printful.webp",
+        "/tienda/gorraca/red-printful.webp",
+        "/tienda/gorraca/royal-blue-printful.webp"
       ],
       "variantes": [
         {
@@ -360,20 +388,112 @@
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
+        },
+        {
+          "id": 5452909812,
+          "catalogo": 5278,
+          "nombre": "Gorraca para aparcar coches como un pro / Dark Navy / S/M",
+          "talla": "S/M",
+          "color": "Dark Navy",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#171822"
+        },
+        {
+          "id": 5452909813,
+          "catalogo": 5279,
+          "nombre": "Gorraca para aparcar coches como un pro / Dark Navy / L/XL",
+          "talla": "L/XL",
+          "color": "Dark Navy",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#171822"
+        },
+        {
+          "id": 5452909814,
+          "catalogo": 5286,
+          "nombre": "Gorraca para aparcar coches como un pro / Royal Blue / S/M",
+          "talla": "S/M",
+          "color": "Royal Blue",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#0b3466"
+        },
+        {
+          "id": 5452909815,
+          "catalogo": 5287,
+          "nombre": "Gorraca para aparcar coches como un pro / Royal Blue / L/XL",
+          "talla": "L/XL",
+          "color": "Royal Blue",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#0b3466"
+        },
+        {
+          "id": 5452909816,
+          "catalogo": 5288,
+          "nombre": "Gorraca para aparcar coches como un pro / Red / S/M",
+          "talla": "S/M",
+          "color": "Red",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#bf0a1b"
+        },
+        {
+          "id": 5452909817,
+          "catalogo": 5289,
+          "nombre": "Gorraca para aparcar coches como un pro / Red / L/XL",
+          "talla": "L/XL",
+          "color": "Red",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#bf0a1b"
+        },
+        {
+          "id": 5452909818,
+          "catalogo": 5282,
+          "nombre": "Gorraca para aparcar coches como un pro / Grey / S/M",
+          "talla": "S/M",
+          "color": "Grey",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#717171"
+        },
+        {
+          "id": 5452909819,
+          "catalogo": 5283,
+          "nombre": "Gorraca para aparcar coches como un pro / Grey / L/XL",
+          "talla": "L/XL",
+          "color": "Grey",
+          "precio": 2500,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#717171"
         }
       ]
     },
     {
       "id": 457099259,
       "nombre": "Camisetita para ver a tus Bros en el padel",
-      "miniatura": "/tienda/camisetita/01-espalda-puesta.webp",
+      "miniatura": "/tienda/camisetita/01-blanca-espalda-puesta.webp",
       "fotos": [
-        "/tienda/camisetita/01-espalda-puesta.webp",
-        "/tienda/camisetita/02-plana.webp",
-        "/tienda/camisetita/03-percha.webp",
-        "/tienda/camisetita/04-delante.webp",
-        "/tienda/camisetita/05-plana-delante.webp",
-        "/tienda/camisetita/06-blanca.webp"
+        "/tienda/camisetita/01-blanca-espalda-puesta.webp",
+        "/tienda/camisetita/02-blanca-plana.webp",
+        "/tienda/camisetita/03-blanca-percha.webp",
+        "/tienda/camisetita/04-blanca-delante.webp",
+        "/tienda/camisetita/05-blanca-plana-delante.webp",
+        "/tienda/camisetita/06-blanca.webp",
+        "/tienda/camisetita/heather-ice-blue-printful.webp",
+        "/tienda/camisetita/heather-prism-lilac-printful.webp",
+        "/tienda/camisetita/mustard-printful.webp",
+        "/tienda/camisetita/sage-printful.webp"
       ],
       "variantes": [
         {
@@ -474,6 +594,182 @@
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
+        },
+        {
+          "id": 5452906230,
+          "catalogo": 22050,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Sage / S",
+          "talla": "S",
+          "color": "Sage",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#9eab96"
+        },
+        {
+          "id": 5452906231,
+          "catalogo": 22051,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Sage / M",
+          "talla": "M",
+          "color": "Sage",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#9eab96"
+        },
+        {
+          "id": 5452906232,
+          "catalogo": 22052,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Sage / L",
+          "talla": "L",
+          "color": "Sage",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#9eab96"
+        },
+        {
+          "id": 5452906233,
+          "catalogo": 22053,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Sage / XL",
+          "talla": "XL",
+          "color": "Sage",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#9eab96"
+        },
+        {
+          "id": 5452906234,
+          "catalogo": 10376,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Mustard / S",
+          "talla": "S",
+          "color": "Mustard",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#eda027"
+        },
+        {
+          "id": 5452906235,
+          "catalogo": 10377,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Mustard / M",
+          "talla": "M",
+          "color": "Mustard",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#eda027"
+        },
+        {
+          "id": 5452906236,
+          "catalogo": 10378,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Mustard / L",
+          "talla": "L",
+          "color": "Mustard",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#eda027"
+        },
+        {
+          "id": 5452906237,
+          "catalogo": 10379,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Mustard / XL",
+          "talla": "XL",
+          "color": "Mustard",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#eda027"
+        },
+        {
+          "id": 5452906238,
+          "catalogo": 9374,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Prism Lilac / S",
+          "talla": "S",
+          "color": "Heather Prism Lilac",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#deafcd"
+        },
+        {
+          "id": 5452906239,
+          "catalogo": 9375,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Prism Lilac / M",
+          "talla": "M",
+          "color": "Heather Prism Lilac",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#deafcd"
+        },
+        {
+          "id": 5452906240,
+          "catalogo": 9376,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Prism Lilac / L",
+          "talla": "L",
+          "color": "Heather Prism Lilac",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#deafcd"
+        },
+        {
+          "id": 5452906241,
+          "catalogo": 9377,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Prism Lilac / XL",
+          "talla": "XL",
+          "color": "Heather Prism Lilac",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#deafcd"
+        },
+        {
+          "id": 5452906242,
+          "catalogo": 21310,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Ice Blue / S",
+          "talla": "S",
+          "color": "Heather Ice Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#e8fdff"
+        },
+        {
+          "id": 5452906243,
+          "catalogo": 21311,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Ice Blue / M",
+          "talla": "M",
+          "color": "Heather Ice Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#e8fdff"
+        },
+        {
+          "id": 5452906244,
+          "catalogo": 21312,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Ice Blue / L",
+          "talla": "L",
+          "color": "Heather Ice Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#e8fdff"
+        },
+        {
+          "id": 5452906245,
+          "catalogo": 21313,
+          "nombre": "Camisetita para ver a tus Bros en el padel / Heather Ice Blue / XL",
+          "talla": "XL",
+          "color": "Heather Ice Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#e8fdff"
         }
       ]
     }

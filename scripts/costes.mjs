@@ -67,6 +67,18 @@ const PORCENTUAL = PEDIDO.trim().endsWith("%");
 const OBJETIVO = Number(PEDIDO.replace("%", "")) || 8;
 
 /**
+ * Con `va` al final, además de calcular lo escribe en Printful.
+ *
+ *     npm run costes -- 10%       dice lo que habría que cobrar
+ *     npm run costes -- 10% va    lo pone
+ *
+ * Se pide a propósito una palabra de más. Esto cambia el precio de venta de la
+ * tienda entera de un tirón, y no debería poder pasar por escribir mal un
+ * comando. Lo que hace se ha enseñado siempre antes, en la tabla de arriba.
+ */
+const APLICAR = process.argv.slice(3).some((a) => /^(va|aplica|--aplicar)$/i.test(a));
+
+/**
  * A cuánto habría que venderlo para ganar `OBJETIVO` limpios.
  *
  * Hay que despejarlo y no tantear, porque el precio se muerde la cola: subirlo
@@ -198,6 +210,9 @@ async function informePrintful(clave) {
         coste: sinDigi,
         sugerido,
         margen: margenRepe,
+        // Las variantes de este tramo, para poder escribirles el precio.
+        // Cuestan lo mismo, así que les toca el mismo precio a todas.
+        ids: variantes.filter((x) => x.retail_price === precio).map((x) => x.id),
       });
     }
   }
@@ -393,10 +408,78 @@ async function main() {
   Y después, aquí:   npm run sync:printful
   La web copia los precios de Printful; en el código no se tocan.`);
   }
+
+  // Fuera del if: cuando *nada* va corto es justo cuando puede haber precios
+  // por encima del objetivo esperando a que se los baje.
+  await ponerPrecios(clave, resumen);
+
   console.log(`
 Los márgenes de arriba son los de un pedido normal, sin la digitalización del
 bordado, que solo se paga la primera vez por diseño. La comisión de la pasarela
 está estimada con la tarifa europea de Stripe (${COMISION.porcentaje * 100} % + ${eur(COMISION.fijo)}).`);
+}
+
+/**
+ * Escribe en Printful el precio calculado, cuando se ha pedido con `va`.
+ *
+ * Toca **todos** los tramos que no estén ya en su sitio, no solo los que van
+ * cortos. Si el objetivo baja del 15 % al 10 %, la mitad de la tienda está por
+ * encima y dejarla ahí sería no haber cambiado el objetivo. Las dos direcciones
+ * se enseñan por separado, porque bajar un precio de escaparate es una decisión
+ * distinta de arreglar una pérdida y conviene verla como tal.
+ *
+ * La pausa entre llamadas no es prudencia: sin ella Printful corta a la décima
+ * y deja media tienda a un precio y media a otro, que es peor que no empezar.
+ */
+async function ponerPrecios(clave, resumen) {
+  const cambios = resumen.filter((r) => r.ids?.length && r.sugerido !== r.venta);
+  if (!cambios.length) return;
+
+  const suben = cambios.filter((r) => r.sugerido > r.venta);
+  const bajan = cambios.filter((r) => r.sugerido < r.venta);
+  const cuantas = cambios.reduce((n, r) => n + r.ids.length, 0);
+
+  if (!APLICAR) {
+    console.log(`\n  Son ${cuantas} variante(s): ${suben.length} tramo(s) al alza`);
+    console.log(`  y ${bajan.length} a la baja, que hoy dan más del ${OBJETIVO} %.`);
+    console.log(`  Para escribirlo en Printful:   npm run costes -- ${PEDIDO} va`);
+    return;
+  }
+
+  console.log(`\n────────────────────────────────────────────`);
+  console.log(`ESCRIBIENDO ${cuantas} PRECIO(S) EN PRINTFUL\n`);
+
+  let hechas = 0;
+  for (const r of cambios) {
+    console.log(
+      `  ${r.producto.slice(0, 34).padEnd(36)}${r.tallas.padEnd(10)}` +
+        `${eur(r.venta).padStart(9)}  →  ${eur(r.sugerido).padStart(9)}`
+    );
+    for (const id of r.ids) {
+      for (let intento = 0; ; intento++) {
+        try {
+          const res = await fetch(`https://api.printful.com/store/variants/${id}`, {
+            method: "PUT",
+            headers: { authorization: `Bearer ${clave}`, "content-type": "application/json" },
+            body: JSON.stringify({ retail_price: r.sugerido.toFixed(2) }),
+          });
+          if (res.status === 429 && intento < 5) {
+            await new Promise((s) => setTimeout(s, 2000 * 2 ** intento));
+            continue;
+          }
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          hechas++;
+          break;
+        } catch (e) {
+          if (intento >= 5) throw e;
+          await new Promise((s) => setTimeout(s, 2000 * 2 ** intento));
+        }
+      }
+      await new Promise((s) => setTimeout(s, 900));
+    }
+  }
+
+  console.log(`\n  ${hechas} variante(s) escritas. Ahora:   npm run sync:printful`);
 }
 
 main().catch((err) => {

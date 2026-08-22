@@ -50,6 +50,14 @@ const PRECIOS: Record<string, Articulo> = {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
     "precio": 2250
   },
+  "5452910521": {
+    "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
+    "precio": 2250
+  },
+  "5452910522": {
+    "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
+    "precio": 2250
+  },
   "5449668444": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
     "precio": 5700
@@ -142,6 +150,38 @@ const PRECIOS: Record<string, Articulo> = {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
     "precio": 2500
   },
+  "5452909812": {
+    "nombre": "Gorraca para aparcar coches como un pro · S/M",
+    "precio": 2500
+  },
+  "5452909813": {
+    "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+    "precio": 2500
+  },
+  "5452909814": {
+    "nombre": "Gorraca para aparcar coches como un pro · S/M",
+    "precio": 2500
+  },
+  "5452909815": {
+    "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+    "precio": 2500
+  },
+  "5452909816": {
+    "nombre": "Gorraca para aparcar coches como un pro · S/M",
+    "precio": 2500
+  },
+  "5452909817": {
+    "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+    "precio": 2500
+  },
+  "5452909818": {
+    "nombre": "Gorraca para aparcar coches como un pro · S/M",
+    "precio": 2500
+  },
+  "5452909819": {
+    "nombre": "Gorraca para aparcar coches como un pro · L/XL",
+    "precio": 2500
+  },
   "5449158693": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XS",
     "precio": 2900
@@ -177,6 +217,70 @@ const PRECIOS: Record<string, Articulo> = {
   "5449158701": {
     "nombre": "Camisetita para ver a tus Bros en el padel · 5XL",
     "precio": 3750
+  },
+  "5452906230": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · S",
+    "precio": 2900
+  },
+  "5452906231": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · M",
+    "precio": 2900
+  },
+  "5452906232": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · L",
+    "precio": 2900
+  },
+  "5452906233": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XL",
+    "precio": 2900
+  },
+  "5452906234": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · S",
+    "precio": 2900
+  },
+  "5452906235": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · M",
+    "precio": 2900
+  },
+  "5452906236": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · L",
+    "precio": 2900
+  },
+  "5452906237": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XL",
+    "precio": 2900
+  },
+  "5452906238": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · S",
+    "precio": 2900
+  },
+  "5452906239": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · M",
+    "precio": 2900
+  },
+  "5452906240": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · L",
+    "precio": 2900
+  },
+  "5452906241": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XL",
+    "precio": 2900
+  },
+  "5452906242": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · S",
+    "precio": 2900
+  },
+  "5452906243": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · M",
+    "precio": 2900
+  },
+  "5452906244": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · L",
+    "precio": 2900
+  },
+  "5452906245": {
+    "nombre": "Camisetita para ver a tus Bros en el padel · XL",
+    "precio": 2900
   }
 };
 // === FIN PRECIOS ===
