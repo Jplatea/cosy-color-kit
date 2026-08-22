@@ -40,83 +40,83 @@ type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
   "5452966559": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966560": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · M",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966562": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · L",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966563": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · XL",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966564": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966565": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · M",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966566": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · L",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966567": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · XL",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966568": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966569": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · M",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966570": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · L",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966571": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · XL",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966572": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966573": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · M",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966574": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · L",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966575": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · XL",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966576": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966577": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · M",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966578": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · L",
-    "precio": 1000
+    "precio": 1050
   },
   "5452966579": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · XL",
-    "precio": 1000
+    "precio": 1050
   },
   "5452270555": {
     "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita · One size",

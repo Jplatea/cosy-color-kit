@@ -43,6 +43,17 @@ const MODELO_POR_VOZ: Record<string, string> = {
   culow: process.env.ELEVENLABS_MODEL_CULOW || "eleven_v3",
   pililarge: process.env.ELEVENLABS_MODEL_PILILARGE || "eleven_v3",
 };
+/**
+ * El modelo global, que ahora es **el último recurso y no el primero**.
+ *
+ * Estaba puesto al revés y se comió la elección por personaje: si en Vercel
+ * hay un `ELEVENLABS_MODEL`, ganaba él y `eleven_v3` no llegaba a usarse
+ * nunca. Desde fuera no se notaba —sale voz, suena parecida— y por dentro
+ * estaba hablando el modelo de siempre, con su acento latino de fábrica.
+ *
+ * Ahora manda lo que diga `MODELO_POR_VOZ`, que a su vez se puede afinar por
+ * personaje con `ELEVENLABS_MODEL_CULOW` y `ELEVENLABS_MODEL_PILILARGE`.
+ */
 const MODELO = process.env.ELEVENLABS_MODEL || "";
 
 
@@ -84,7 +95,7 @@ const AJUSTES: Record<string, Record<string, number | boolean>> = {
  * saliendo de Redis con el acento viejo durante los dos meses que dura la
  * caché, y uno se vuelve loco creyendo que el ajuste no hace nada.
  */
-const VERSION_AJUSTES = "v3-ceceo";
+const VERSION_AJUSTES = "v4-modelo-por-voz";
 
 /**
  * Escribe el texto con ceceo andaluz antes de mandárselo al modelo.
@@ -203,7 +214,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const params = new URL(req.url || "", "http://x").searchParams;
   const quien = String(params.get("v") || "").toLowerCase();
   const texto = String(params.get("t") || "").trim();
-  const modelo = MODELO || MODELO_POR_VOZ[quien] || "eleven_multilingual_v2";
+  const modelo = MODELO_POR_VOZ[quien] || MODELO || "eleven_multilingual_v2";
 
   /*
     Si falta la voz de Pililarge, se sale del paso con la de Culow subida.
@@ -248,6 +259,9 @@ export default async function handler(req: Peticion, res: Respuesta) {
     res.setHeader("content-type", "audio/mpeg");
     // Cuánto tiene que subirlo el navegador. 0 = tal cual viene.
     if (subirTono) res.setHeader("x-cyp-modular", String(subirTono));
+    // Qué modelo ha hablado de verdad. Sin esto, que la elección por personaje
+    // no se estuviera aplicando era invisible desde fuera.
+    res.setHeader("x-cyp-modelo", modelo);
     res.setHeader("content-length", String(audio.length));
     // Una frase siempre suena igual, así que se puede cachear para siempre.
     res.setHeader("cache-control", "public, max-age=31536000, s-maxage=31536000, immutable");

@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T11:12:14.326Z",
+  "sincronizado": "2026-08-22T11:17:07.256Z",
   "productos": [
     {
       "id": 458338367,
@@ -19,7 +19,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Azalea / S",
           "talla": "S",
           "color": "Azalea",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ff98c6"
@@ -30,7 +30,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Azalea / M",
           "talla": "M",
           "color": "Azalea",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ff98c6"
@@ -41,7 +41,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Azalea / L",
           "talla": "L",
           "color": "Azalea",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ff98c6"
@@ -52,7 +52,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Azalea / XL",
           "talla": "XL",
           "color": "Azalea",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ff98c6"
@@ -63,7 +63,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Daisy / S",
           "talla": "S",
           "color": "Daisy",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffc946"
@@ -74,7 +74,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Daisy / M",
           "talla": "M",
           "color": "Daisy",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffc946"
@@ -85,7 +85,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Daisy / L",
           "talla": "L",
           "color": "Daisy",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffc946"
@@ -96,7 +96,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Daisy / XL",
           "talla": "XL",
           "color": "Daisy",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffc946"
@@ -107,7 +107,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Pink / S",
           "talla": "S",
           "color": "Light Pink",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd4d5"
@@ -118,7 +118,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Pink / M",
           "talla": "M",
           "color": "Light Pink",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd4d5"
@@ -129,7 +129,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Pink / L",
           "talla": "L",
           "color": "Light Pink",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd4d5"
@@ -140,7 +140,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Pink / XL",
           "talla": "XL",
           "color": "Light Pink",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd4d5"
@@ -151,7 +151,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Blue / S",
           "talla": "S",
           "color": "Light Blue",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#d9efff"
@@ -162,7 +162,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Blue / M",
           "talla": "M",
           "color": "Light Blue",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#d9efff"
@@ -173,7 +173,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Blue / L",
           "talla": "L",
           "color": "Light Blue",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#d9efff"
@@ -184,7 +184,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / Light Blue / XL",
           "talla": "XL",
           "color": "Light Blue",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#d9efff"
@@ -195,7 +195,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / White / S",
           "talla": "S",
           "color": "White",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fffefa"
@@ -206,7 +206,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / White / M",
           "talla": "M",
           "color": "White",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fffefa"
@@ -217,7 +217,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / White / L",
           "talla": "L",
           "color": "White",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fffefa"
@@ -228,7 +228,7 @@
           "nombre": "Camisetita para aquellos criptobros que están en bancarrota / White / XL",
           "talla": "XL",
           "color": "White",
-          "precio": 1000,
+          "precio": 1050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fffefa"
