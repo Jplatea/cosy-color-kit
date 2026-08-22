@@ -718,6 +718,22 @@ export default async function handler(req: Peticion, res: Respuesta) {
     params.set("shipping_address_collection[allowed_countries][0]", "ES");
     params.set("shipping_address_collection[allowed_countries][1]", "PT");
     params.set("locale", "es");
+    /*
+      Cómo sale el cargo en el extracto del banco.
+
+      La cuenta de Stripe se comparte con otro proyecto y su nombre público es
+      el de aquel, así que sin esto el comprador ve un cobro de una marca que
+      no ha visitado nunca —y eso, en un extracto, es lo que hace que alguien
+      llame al banco a reclamar en vez de a la tienda.
+
+      Ojo: esto arregla el extracto, **no la página de pago**. El nombre y el
+      logotipo de esa página salen de los datos públicos de la cuenta, no de
+      la petición, y no hay parámetro que los sustituya: o se renombra la
+      cuenta o cada tienda necesita la suya.
+
+      Máximo 22 caracteres y sin < > " ' *, o Stripe rechaza la sesión entera.
+    */
+    params.set("payment_intent_data[statement_descriptor]", "CULOW Y PILILARGE");
     lineas.forEach((l, i) => {
       params.set(`line_items[${i}][quantity]`, String(l.quantity));
       params.set(`line_items[${i}][price_data][currency]`, l.price_data.currency);
