@@ -219,8 +219,18 @@ function carpetasUnicas(nombres) {
       .split(" ")
       .filter(Boolean)
   );
-  const carpetas = palabras.map((p) => p[0] || "producto");
-  const usadas = palabras.map(() => new Set([0]));
+  /*
+    La primera palabra con significado, no la primera a secas.
+
+    «La bolsa que se bolsepapea…» y «Una alfombrilla que no vale…» daban
+    carpetas llamadas `la` y `una`, que no dicen nada de lo que hay dentro y
+    que además chocarían con el siguiente producto que empiece por un
+    artículo. El desempate de abajo no lo arreglaba: solo actúa cuando dos
+    carpetas coinciden, y estas dos eran distintas entre sí.
+  */
+  const primera = (p) => p.findIndex((w) => !VACIAS.has(w));
+  const carpetas = palabras.map((p) => (primera(p) >= 0 ? p[primera(p)] : p[0]) || "producto");
+  const usadas = palabras.map((p) => new Set([Math.max(0, primera(p))]));
 
   for (let vuelta = 0; vuelta < 6; vuelta++) {
     const cuantos = new Map();
@@ -499,6 +509,35 @@ async function main() {
   // compartida, que si no el segundo sincronizador en correr borraría las
   // variantes del primero.
   const cuenta = await escribirPrecios(RAIZ);
+
+  /*
+    Carpetas con fotos que ya no mira nadie.
+
+    El nombre de una carpeta puede cambiar al aparecer un producto nuevo: crear
+    «La bolsa que se bolsepapea» hizo que la bolsa de gimnasio pasara de
+    `bolsa` a `bolsa-mochilita`, y sus siete fotos se quedaron atrás sin que
+    nada lo dijera. En la web el producto sigue saliendo —con la maqueta que se
+    baja sola— y parece normal; solo se nota si te acuerdas de que antes tenía
+    siete. Así que se dice.
+  */
+  const enUso = new Set(productos.flatMap((p) => p.fotos.map((f) => f.split("/")[2])));
+  const huerfanas = [];
+  for (const carpeta of await readdir(ALBUM)) {
+    if (enUso.has(carpeta)) continue;
+    try {
+      const dentro = await readdir(join(ALBUM, carpeta));
+      const fotos = dentro.filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f));
+      if (fotos.length) huerfanas.push(`${carpeta} (${fotos.length} fotos)`);
+    } catch {
+      /* no era una carpeta */
+    }
+  }
+  if (huerfanas.length) {
+    console.log(`\nAviso: hay fotos en carpetas que ya no usa ningun producto.`);
+    console.log(`Seguramente ese producto cambio de nombre y con el su carpeta.`);
+    console.log(`Muevelas a la nueva o no volveran a salir en la web:`);
+    for (const h of huerfanas) console.log(`   public/tienda/${h}`);
+  }
 
   console.log(`\nEscrito en ${SALIDA}`);
   console.log(`Y los precios, en api/checkout.ts (${cuenta} variantes)`);

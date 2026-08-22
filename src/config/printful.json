@@ -1,6 +1,70 @@
 {
-  "sincronizado": "2026-08-22T14:59:56.255Z",
+  "sincronizado": "2026-08-22T15:29:32.831Z",
   "productos": [
+    {
+      "id": 458451943,
+      "nombre": "Una alfombrilla que no vale para la puerta de la casa",
+      "miniatura": "/tienda/alfombrilla/black-printful.webp",
+      "fotos": [
+        "/tienda/alfombrilla/black-printful.webp"
+      ],
+      "variantes": [
+        {
+          "id": 5453261502,
+          "catalogo": 22325,
+          "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×18″",
+          "talla": "12″×18″",
+          "color": "Black",
+          "precio": 2100,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#050505"
+        },
+        {
+          "id": 5453261503,
+          "catalogo": 22326,
+          "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×22″",
+          "talla": "12″×22″",
+          "color": "Black",
+          "precio": 2200,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#050505"
+        },
+        {
+          "id": 5453261504,
+          "catalogo": 22327,
+          "nombre": "Una alfombrilla que no vale para la puerta de la casa / 16″×32″",
+          "talla": "16″×32″",
+          "color": "Black",
+          "precio": 2800,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#050505"
+        }
+      ]
+    },
+    {
+      "id": 458442885,
+      "nombre": "La bolsa que se bolsepapea a todas las bolsas",
+      "miniatura": "/tienda/bolsa-bolsas/white-printful.webp",
+      "fotos": [
+        "/tienda/bolsa-bolsas/white-printful.webp"
+      ],
+      "variantes": [
+        {
+          "id": 5453194211,
+          "catalogo": 12021,
+          "nombre": "La bolsa que se bolsepapea a todas las bolsas",
+          "talla": "One size",
+          "color": "White",
+          "precio": 7700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    },
     {
       "id": 458438995,
       "nombre": "Gorrica para ponertela en la cabeza",
@@ -956,15 +1020,15 @@
     {
       "id": 457944687,
       "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
-      "miniatura": "/tienda/bolsa/01-frente.webp",
+      "miniatura": "/tienda/bolsa-mochilita/01-frente.webp",
       "fotos": [
-        "/tienda/bolsa/01-frente.webp",
-        "/tienda/bolsa/02-puesta.webp",
-        "/tienda/bolsa/03-colgada.webp",
-        "/tienda/bolsa/04-de-lado.webp",
-        "/tienda/bolsa/05-detras.webp",
-        "/tienda/bolsa/06-arriba.webp",
-        "/tienda/bolsa/07-por-dentro.webp"
+        "/tienda/bolsa-mochilita/01-frente.webp",
+        "/tienda/bolsa-mochilita/02-puesta.webp",
+        "/tienda/bolsa-mochilita/03-colgada.webp",
+        "/tienda/bolsa-mochilita/04-de-lado.webp",
+        "/tienda/bolsa-mochilita/05-detras.webp",
+        "/tienda/bolsa-mochilita/06-arriba.webp",
+        "/tienda/bolsa-mochilita/07-por-dentro.webp"
       ],
       "variantes": [
         {
@@ -983,12 +1047,12 @@
     {
       "id": 457940971,
       "nombre": "Para que el ratoncito retoce alegremente",
-      "miniatura": "/tienda/para/01-de-frente.webp",
+      "miniatura": "/tienda/ratoncito/01-de-frente.webp",
       "fotos": [
-        "/tienda/para/01-de-frente.webp",
-        "/tienda/para/02-con-raton.webp",
-        "/tienda/para/03-en-la-mesa.webp",
-        "/tienda/para/04-el-reverso.webp"
+        "/tienda/ratoncito/01-de-frente.webp",
+        "/tienda/ratoncito/02-con-raton.webp",
+        "/tienda/ratoncito/03-en-la-mesa.webp",
+        "/tienda/ratoncito/04-el-reverso.webp"
       ],
       "variantes": [
         {
