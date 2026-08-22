@@ -18,7 +18,7 @@ const PIEZAS = [
     nombre: "Culow",
     epigrafe: "Bajito · redondo · basto",
     texto:
-      "Dos lóbulos esféricos unidos por su punto de tangencia. Voz grave y modales de bar a las tres de la tarde: contesta antes de que le pregunten, se ríe de sus propios chistes y no pide perdón por nada. Carece de extremidades superiores, lo que no le ha impedido nunca señalar a nadie.",
+      "Dos lóbulos esféricos unidos por su punto de tangencia. Voz grave y modales de bar a las tres de la tarde: contesta antes de que le pregunten, se ríe de sus propios chistes y no pide perdón por nada. Brazos cortos y rectos, que no le han impedido nunca señalar a nadie.",
     filas: [
       ["Función", "Empezar los problemas"],
       ["Registro", "Grave, atropellado"],

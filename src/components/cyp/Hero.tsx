@@ -1,4 +1,4 @@
-import { Character } from "./Character";
+import { Pieza3D } from "./pieza3d";
 import { Cartela, Peana } from "./primitives";
 import { useNarrow } from "@/hooks/useNarrow";
 import { ICONOS, type RedId } from "./social-icons";
@@ -73,10 +73,21 @@ export function Hero() {
         <div className="grid gap-[26px] py-[54px] md:grid-cols-2">
           {FICHAS.map((f) => (
             <figure key={f.titulo} className="animate-cyp-rise">
-              <Peana className="h-[380px] rounded-[3px] px-8 pb-[46px] pt-10 sm:h-[440px]">
-                <Character
+              {/*
+                La pieza de verdad, girable, y no el dibujo.
+
+                Estaba solo en la sala 03 y allí no la encontraba nadie: quien
+                entra ve esto, y esto eran dos formas planas. La vitrina de la
+                entrada es la grande de la casa —440 píxeles—, que es justo lo
+                que hace falta para dar la vuelta a algo con el dedo.
+
+                El dibujo no se tira: sigue siendo el respaldo si no hay WebGL,
+                y por eso `escalaPlana` conserva los tamaños de antes.
+              */}
+              <Peana className="h-[380px] rounded-[3px] px-6 pb-8 pt-6 sm:h-[440px]">
+                <Pieza3D
                   char={f.char}
-                  scale={
+                  escalaPlana={
                     f.char === "culow"
                       ? narrow
                         ? 0.78
@@ -85,7 +96,7 @@ export function Hero() {
                         ? 0.58
                         : 0.78
                   }
-                  bob
+                  etiqueta={f.titulo.replace(/[«»]/g, "")}
                 />
               </Peana>
               <figcaption className="mt-5 border-t border-museo-tinta pt-4">

@@ -313,8 +313,10 @@ async function bajarPorColor(carpeta, variantes, propias) {
     const previo = (v.files || []).find((f) => f.type === "preview")?.preview_url;
     if (previo) porColor.set(color, previo);
   }
-  // Con un solo color no hay nada que distinguir: las fotos que hay valen.
-  if (porColor.size < 2) return 0;
+  // Con un solo color y fotos tuyas no hay nada que distinguir. Pero si no
+  // tienes ninguna, sí merece bajarla: si no, la web acaba enlazando la del
+  // CDN de Printful, que es una dirección con caducidad.
+  if (porColor.size < 2 && nombres.length) return 0;
 
   let bajadas = 0;
   for (const [color, url] of porColor) {
@@ -422,10 +424,8 @@ async function main() {
       elegir un color. Si algún día le haces fotos mejores, las metes en la
       carpeta y esta deja de traerse la suya.
     */
-    if (propias.length) {
-      const bajadas = await bajarPorColor(carpeta, crudas, propias);
-      if (bajadas) propias = await fotosLocales(carpeta);
-    }
+    const bajadas = await bajarPorColor(carpeta, crudas, propias);
+    if (bajadas) propias = await fotosLocales(carpeta);
 
     const fotos = [...propias];
     const meter = (url) => {

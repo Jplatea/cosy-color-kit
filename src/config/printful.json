@@ -1,16 +1,16 @@
 {
-  "sincronizado": "2026-08-22T11:03:55.367Z",
+  "sincronizado": "2026-08-22T11:12:14.326Z",
   "productos": [
     {
       "id": 458338367,
       "nombre": "Camisetita para aquellos criptobros que están en bancarrota",
-      "miniatura": "https://files.cdn.printful.com/files/c09/c0955479a897ba8c9f55b38f7f2f8bb5_preview.png",
+      "miniatura": "/tienda/camisetita-bancarrota/azalea-printful.webp",
       "fotos": [
-        "https://files.cdn.printful.com/files/c09/c0955479a897ba8c9f55b38f7f2f8bb5_preview.png",
-        "https://files.cdn.printful.com/files/acb/acb6cb6438308f69b3b1c9b692b888c1_preview.png",
-        "https://files.cdn.printful.com/files/7bd/7bd93f7dd2b542f533d5957de99cff78_preview.png",
-        "https://files.cdn.printful.com/files/ed1/ed183810a10a3486138bbd9765ef33a9_preview.png",
-        "https://files.cdn.printful.com/files/875/87557346fb0f8357dc60f0ee92262424_preview.png"
+        "/tienda/camisetita-bancarrota/azalea-printful.webp",
+        "/tienda/camisetita-bancarrota/daisy-printful.webp",
+        "/tienda/camisetita-bancarrota/light-blue-printful.webp",
+        "/tienda/camisetita-bancarrota/light-pink-printful.webp",
+        "/tienda/camisetita-bancarrota/white-printful.webp"
       ],
       "variantes": [
         {
