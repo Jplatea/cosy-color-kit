@@ -3,6 +3,7 @@ import { Chip, GoldButton, Peana, Sala, SectionTitle } from "./primitives";
 import { Prenda } from "./prendas";
 import { Galeria } from "./galeria";
 import { Tira } from "./tira";
+import { BandaColores, BandaTallas } from "./banda";
 import { DISENOS, type DisenoId } from "./disenos";
 import { useCesta } from "@/hooks/useCesta";
 import { tinta } from "@/lib/color";
@@ -210,93 +211,57 @@ export function Tienda() {
                   `title`, para quien quiera leerlo entero.
                 */}
                 <div className="mt-4 border-t border-museo-tinta pt-3">
-                  <div className="flex items-baseline justify-between gap-3">
+                  {/*
+                    `items-start` y no `items-baseline`: alineando por línea
+                    base, un título de una línea y otro de dos colocaban el
+                    precio a alturas distintas y arrastraban dos píxeles a todo
+                    lo de debajo.
+                  */}
+                  <div className="flex items-start justify-between gap-3">
                     <h3
                       title={p.nombre}
-                      className="line-clamp-2 min-h-[54px] font-display text-[22px] leading-tight text-museo-tinta"
+                      className="line-clamp-2 h-[54px] font-display text-[22px] leading-tight text-museo-tinta"
                     >
                       {p.nombre}
                     </h3>
                     {/* En latón: es el dato que se busca de un vistazo. */}
-                    <span className="shrink-0 font-display text-[21px] text-museo-laton">
+                    <span className="shrink-0 pt-[2px] font-display text-[21px] leading-none text-museo-laton">
                       {euros(precioDe(p, e.color, e.talla, e.diseno))}
                     </span>
                   </div>
-                  <p className="mt-2 line-clamp-2 min-h-[42px] text-[13.5px] leading-[1.55] text-museo-tinta-suave">
+                  <p className="mt-2 line-clamp-2 h-[42px] text-[13.5px] leading-[1.55] text-museo-tinta-suave">
                     {p.ficha}
                   </p>
                 </div>
 
                 {/*
-                  Los selectores van a la vista, sin desplegable.
-                  Antes estaban detrás de un botón «Elegir y añadir», y aunque
-                  funcionaban no los encontraba nadie: la talla es lo único que
+                  Las bandas de elección, cada una con su altura reservada.
+
+                  Van a la vista y no tras un desplegable: hubo una versión con
+                  un botón «Elegir y añadir» que las escondía, y aunque
+                  funcionaba no las encontraba nadie. La talla es lo único que
                   hay que decidir aquí, así que esconderla era esconder la
                   compra entera.
 
-                  Estampado y color vienen dados por el producto de Printful
-                  —cada uno es un diseño sobre un tejido concreto—, así que solo
-                  aparecen si de verdad hay entre qué elegir. Ofrecer una opción
-                  única es pedir que elijan entre una cosa, y encima sugiere que
-                  cambiarla cambia lo que se fabrica.
+                  Y aparecen siempre, tenga el producto una opción o nueve. Lo
+                  que se ganaba ocultándolas —no pedir que elijas entre una
+                  cosa— se perdía en la rejilla: cada tarjeta empezaba sus
+                  botones a una altura distinta. Con una sola opción se escribe
+                  el valor en vez de dejar el hueco vacío.
                 */}
                 <div className="mt-4 grid content-end gap-[14px] flex-1">
-                  {p.tallas.length > 1 && (
-                    <div className="grid gap-[8px]">
-                      <span className="cartela text-museo-tinta-tenue">Talla</span>
-                      <div className="flex flex-wrap gap-[7px]">
-                        {p.tallas.map((tl) => (
-                          <Chip
-                            key={tl}
-                            active={e.talla === tl}
-                            onClick={() => cambiar(p, { talla: tl })}
-                          >
-                            {NOMBRE_TALLA(tl)}
-                          </Chip>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  <BandaTallas
+                    tallas={p.tallas}
+                    activa={e.talla}
+                    onElegir={(t) => cambiar(p, { talla: t })}
+                    nombreDe={NOMBRE_TALLA}
+                  />
 
-                  {p.colores.length > 1 && (
-                    <div className="grid gap-[8px]">
-                      <span className="cartela text-museo-tinta-tenue">
-                        Color
-                        <span className="ml-2 text-museo-tinta-suave">{color.nombre}</span>
-                      </span>
-                      {/*
-                        Muestras del tejido, no nombres. «Bottle green» no le
-                        dice nada a nadie hasta que lo ve, y el hexadecimal lo
-                        da Printful, así que el color de la pastilla es el de la
-                        prenda de verdad. El nombre se lee arriba, junto a la
-                        etiqueta, para quien navegue con lector de pantalla o
-                        no distinga bien los tonos.
-                      */}
-                      <div className="flex flex-wrap gap-[10px]">
-                        {p.colores.map((c) => {
-                          const puesto = e.color === c.id;
-                          return (
-                            <button
-                              key={c.id}
-                              type="button"
-                              onClick={() => cambiar(p, { color: c.id })}
-                              title={c.nombre}
-                              aria-label={c.nombre}
-                              aria-pressed={puesto}
-                              className="grid h-[30px] w-[30px] place-items-center rounded-full border transition-transform hover:scale-110"
-                              style={{
-                                background: c.tela,
-                                borderColor: puesto ? tinta() : tinta(0.22),
-                                // El anillo separa la pastilla blanca del papel,
-                                // que si no parece un agujero.
-                                boxShadow: puesto ? `0 0 0 3px rgb(var(--cyp-papel)), 0 0 0 4px ${tinta()}` : "none",
-                              }}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
+                  <BandaColores
+                    colores={p.colores}
+                    activo={e.color}
+                    onElegir={(c) => cambiar(p, { color: c })}
+                  />
 
                   {p.disenos.length > 1 && (
                     <div className="grid gap-[8px]">

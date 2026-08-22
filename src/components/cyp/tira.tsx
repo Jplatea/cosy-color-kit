@@ -60,7 +60,14 @@ export function Tira({ fotos, activa, onElegir, nombre }: Props) {
   const deslizar = (hacia: 1 | -1) =>
     carril.current?.scrollBy({ left: hacia * 180, behavior: "smooth" });
 
-  if (fotos.length < 2) return null;
+  /*
+    Con una sola foto no hay tira, pero el hueco se queda igual.
+
+    Devolver `null` hacía que esa tarjeta subiera 54 píxeles y su descripción
+    dejara de estar a la altura de las demás. La rejilla solo se lee como una
+    rejilla si las bandas coinciden de tarjeta a tarjeta.
+  */
+  if (fotos.length < 2) return <div className="mt-2 h-[54px]" aria-hidden />;
 
   return (
     <div className="relative mt-2">
