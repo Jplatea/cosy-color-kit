@@ -1,6 +1,324 @@
 {
-  "sincronizado": "2026-08-22T11:17:07.256Z",
+  "sincronizado": "2026-08-22T12:40:57.376Z",
   "productos": [
+    {
+      "id": 458352318,
+      "nombre": "Padelbros alucinarán con la camisetita molona",
+      "miniatura": "/tienda/padelbros/white-printful.webp",
+      "fotos": [
+        "/tienda/padelbros/white-printful.webp"
+      ],
+      "variantes": [
+        {
+          "id": 5453002936,
+          "catalogo": 9579,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / XS",
+          "talla": "XS",
+          "color": "Heather Prism Mint",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002937,
+          "catalogo": 9381,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / S",
+          "talla": "S",
+          "color": "Heather Prism Mint",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002938,
+          "catalogo": 9382,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / M",
+          "talla": "M",
+          "color": "Heather Prism Mint",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002939,
+          "catalogo": 9383,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / L",
+          "talla": "L",
+          "color": "Heather Prism Mint",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002940,
+          "catalogo": 9384,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / XL",
+          "talla": "XL",
+          "color": "Heather Prism Mint",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002941,
+          "catalogo": 9385,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / 2XL",
+          "talla": "2XL",
+          "color": "Heather Prism Mint",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#aad5b9"
+        },
+        {
+          "id": 5453002942,
+          "catalogo": 4116,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / S",
+          "talla": "S",
+          "color": "Ocean Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#a9dff6"
+        },
+        {
+          "id": 5453002943,
+          "catalogo": 4117,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / M",
+          "talla": "M",
+          "color": "Ocean Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#a9dff6"
+        },
+        {
+          "id": 5453002944,
+          "catalogo": 4118,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / L",
+          "talla": "L",
+          "color": "Ocean Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#a9dff6"
+        },
+        {
+          "id": 5453002945,
+          "catalogo": 4119,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / XL",
+          "talla": "XL",
+          "color": "Ocean Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#a9dff6"
+        },
+        {
+          "id": 5453002946,
+          "catalogo": 4120,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / 2XL",
+          "talla": "2XL",
+          "color": "Ocean Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#a9dff6"
+        },
+        {
+          "id": 5453002947,
+          "catalogo": 9576,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / XS",
+          "talla": "XS",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002948,
+          "catalogo": 9360,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / S",
+          "talla": "S",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002949,
+          "catalogo": 9361,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / M",
+          "talla": "M",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002950,
+          "catalogo": 9362,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / L",
+          "talla": "L",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002951,
+          "catalogo": 9363,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / XL",
+          "talla": "XL",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002952,
+          "catalogo": 9364,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / 2XL",
+          "talla": "2XL",
+          "color": "Heather Prism Ice Blue",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#c3e2e3"
+        },
+        {
+          "id": 5453002953,
+          "catalogo": 20680,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / S",
+          "talla": "S",
+          "color": "Soft Pink",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffd8e1"
+        },
+        {
+          "id": 5453002954,
+          "catalogo": 20678,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / M",
+          "talla": "M",
+          "color": "Soft Pink",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffd8e1"
+        },
+        {
+          "id": 5453002955,
+          "catalogo": 20676,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / L",
+          "talla": "L",
+          "color": "Soft Pink",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffd8e1"
+        },
+        {
+          "id": 5453002956,
+          "catalogo": 20674,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / XL",
+          "talla": "XL",
+          "color": "Soft Pink",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffd8e1"
+        },
+        {
+          "id": 5453002957,
+          "catalogo": 20672,
+          "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / 2XL",
+          "talla": "2XL",
+          "color": "Soft Pink",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffd8e1"
+        },
+        {
+          "id": 5453002958,
+          "catalogo": 9526,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / XS",
+          "talla": "XS",
+          "color": "White",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5453002960,
+          "catalogo": 4011,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / S",
+          "talla": "S",
+          "color": "White",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5453002961,
+          "catalogo": 4012,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / M",
+          "talla": "M",
+          "color": "White",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5453002962,
+          "catalogo": 4013,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / L",
+          "talla": "L",
+          "color": "White",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5453002963,
+          "catalogo": 4014,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / XL",
+          "talla": "XL",
+          "color": "White",
+          "precio": 2700,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        },
+        {
+          "id": 5453002964,
+          "catalogo": 4015,
+          "nombre": "Padelbros alucinarán con la camisetita molona / White / 2XL",
+          "talla": "2XL",
+          "color": "White",
+          "precio": 2900,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    },
     {
       "id": 458338367,
       "nombre": "Camisetita para aquellos criptobros que están en bancarrota",

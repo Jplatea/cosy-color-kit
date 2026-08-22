@@ -38,6 +38,118 @@
 // === PRECIOS · generado, no editar ===
 type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
+  "5453002936": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XS",
+    "precio": 2700
+  },
+  "5453002937": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · S",
+    "precio": 2700
+  },
+  "5453002938": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · M",
+    "precio": 2700
+  },
+  "5453002939": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · L",
+    "precio": 2700
+  },
+  "5453002940": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XL",
+    "precio": 2700
+  },
+  "5453002941": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
+    "precio": 2900
+  },
+  "5453002942": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · S",
+    "precio": 2700
+  },
+  "5453002943": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · M",
+    "precio": 2700
+  },
+  "5453002944": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · L",
+    "precio": 2700
+  },
+  "5453002945": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XL",
+    "precio": 2700
+  },
+  "5453002946": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
+    "precio": 2900
+  },
+  "5453002947": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XS",
+    "precio": 2700
+  },
+  "5453002948": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · S",
+    "precio": 2700
+  },
+  "5453002949": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · M",
+    "precio": 2700
+  },
+  "5453002950": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · L",
+    "precio": 2700
+  },
+  "5453002951": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XL",
+    "precio": 2700
+  },
+  "5453002952": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
+    "precio": 2900
+  },
+  "5453002953": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · S",
+    "precio": 2700
+  },
+  "5453002954": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · M",
+    "precio": 2700
+  },
+  "5453002955": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · L",
+    "precio": 2700
+  },
+  "5453002956": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XL",
+    "precio": 2700
+  },
+  "5453002957": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
+    "precio": 2900
+  },
+  "5453002958": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XS",
+    "precio": 2700
+  },
+  "5453002960": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · S",
+    "precio": 2700
+  },
+  "5453002961": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · M",
+    "precio": 2700
+  },
+  "5453002962": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · L",
+    "precio": 2700
+  },
+  "5453002963": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · XL",
+    "precio": 2700
+  },
+  "5453002964": {
+    "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
+    "precio": 2900
+  },
   "5452966559": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
     "precio": 1050
