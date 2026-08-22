@@ -1,6 +1,39 @@
 {
-  "sincronizado": "2026-08-22T14:31:37.395Z",
+  "sincronizado": "2026-08-22T14:58:47.679Z",
   "productos": [
+    {
+      "id": 458438995,
+      "nombre": "Gorrica para ponertela en la cabeza",
+      "miniatura": "/tienda/gorrica/black-printful.webp",
+      "fotos": [
+        "/tienda/gorrica/black-printful.webp",
+        "/tienda/gorrica/white-printful.webp"
+      ],
+      "variantes": [
+        {
+          "id": 5453185424,
+          "catalogo": 16244,
+          "nombre": "Gorrica para ponertela en la cabeza / Black",
+          "talla": "One size",
+          "color": "Black",
+          "precio": 3000,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#0b0b0b"
+        },
+        {
+          "id": 5453185425,
+          "catalogo": 16245,
+          "nombre": "Gorrica para ponertela en la cabeza / White",
+          "talla": "One size",
+          "color": "White",
+          "precio": 3000,
+          "moneda": "EUR",
+          "disponible": true,
+          "hex": "#ffffff"
+        }
+      ]
+    },
     {
       "id": 458423639,
       "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos",
@@ -674,13 +707,38 @@
     {
       "id": 458338367,
       "nombre": "Camisetita para aquellos criptobros que están en bancarrota",
-      "miniatura": "/tienda/camisetita-bancarrota/azalea-printful.webp",
+      "miniatura": "/tienda/camisetita-bancarrota/01-azalea-frente-plana.webp",
       "fotos": [
-        "/tienda/camisetita-bancarrota/azalea-printful.webp",
-        "/tienda/camisetita-bancarrota/daisy-printful.webp",
-        "/tienda/camisetita-bancarrota/light-blue-printful.webp",
-        "/tienda/camisetita-bancarrota/light-pink-printful.webp",
-        "/tienda/camisetita-bancarrota/white-printful.webp"
+        "/tienda/camisetita-bancarrota/01-azalea-frente-plana.webp",
+        "/tienda/camisetita-bancarrota/01-daisy-frente-plana.webp",
+        "/tienda/camisetita-bancarrota/01-light-blue-frente-plana.webp",
+        "/tienda/camisetita-bancarrota/01-light-pink-frente-plana.webp",
+        "/tienda/camisetita-bancarrota/01-white-frente-plana.webp",
+        "/tienda/camisetita-bancarrota/02-azalea-frente-puesta.webp",
+        "/tienda/camisetita-bancarrota/02-daisy-frente-puesta.webp",
+        "/tienda/camisetita-bancarrota/02-light-blue-frente-puesta.webp",
+        "/tienda/camisetita-bancarrota/02-light-pink-frente-puesta.webp",
+        "/tienda/camisetita-bancarrota/02-white-frente-puesta.webp",
+        "/tienda/camisetita-bancarrota/03-azalea-espalda-plana.webp",
+        "/tienda/camisetita-bancarrota/03-daisy-espalda-plana.webp",
+        "/tienda/camisetita-bancarrota/03-light-blue-espalda-plana.webp",
+        "/tienda/camisetita-bancarrota/03-light-pink-espalda-plana.webp",
+        "/tienda/camisetita-bancarrota/03-white-espalda-plana.webp",
+        "/tienda/camisetita-bancarrota/04-azalea-puesta-ella.webp",
+        "/tienda/camisetita-bancarrota/04-daisy-puesta-ella.webp",
+        "/tienda/camisetita-bancarrota/04-light-blue-puesta-ella.webp",
+        "/tienda/camisetita-bancarrota/04-light-pink-puesta-ella.webp",
+        "/tienda/camisetita-bancarrota/04-white-puesta-ella.webp",
+        "/tienda/camisetita-bancarrota/05-azalea-puesta-el.webp",
+        "/tienda/camisetita-bancarrota/05-daisy-puesta-el.webp",
+        "/tienda/camisetita-bancarrota/05-light-blue-puesta-el.webp",
+        "/tienda/camisetita-bancarrota/05-light-pink-puesta-el.webp",
+        "/tienda/camisetita-bancarrota/05-white-puesta-el.webp",
+        "/tienda/camisetita-bancarrota/06-azalea-tres-cuartos.webp",
+        "/tienda/camisetita-bancarrota/06-daisy-tres-cuartos.webp",
+        "/tienda/camisetita-bancarrota/06-light-blue-tres-cuartos.webp",
+        "/tienda/camisetita-bancarrota/06-light-pink-tres-cuartos.webp",
+        "/tienda/camisetita-bancarrota/06-white-tres-cuartos.webp"
       ],
       "variantes": [
         {
