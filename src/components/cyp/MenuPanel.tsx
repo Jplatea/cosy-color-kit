@@ -119,35 +119,33 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
 
         {/* ── Las ocho, en rejilla. En móvil, lista de texto grande. ── */}
         <div className="mx-auto w-full max-w-[1180px] flex-1 px-6 lg:px-8">
-          <div className="hidden border-l border-t border-museo-linea sm:grid sm:grid-cols-3 lg:grid-cols-4">
-            {directorio.map((sala, i) => {
+          {/*
+            Sin cuadrícula: manda el dibujo.
+
+            Las líneas servían cuando esto era un plano impreso dentro de la
+            página, donde había que separarlo del texto de alrededor. Aquí, sobre
+            una lámina que ya flota por sí sola, cada raya era un borde de más
+            compitiendo con los ocho iconos —que es lo único que hay que mirar—.
+            Quitadas, el icono crece de 38 a 54 y la retícula la sostiene el aire.
+
+            El fondo al pasar por encima se queda: es lo que dice dónde acaba
+            cada celda ahora que no hay líneas que lo digan.
+          */}
+          <div className="hidden gap-x-4 gap-y-6 sm:grid sm:grid-cols-3 lg:grid-cols-4">
+            {directorio.map((sala) => {
               const Icono = ICONOS_CYP[sala.icono as IconoCyp];
               return (
                 <a
                   key={sala.href}
                   href={sala.href}
                   onClick={cerrar}
-                  className="group flex min-h-[178px] flex-col border-b border-r border-museo-linea p-[20px] transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none sm:p-[24px]"
+                  className="group flex flex-col rounded-[3px] p-[18px] transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none"
                 >
-                  <span className="cartela text-museo-laton">{String(i + 1).padStart(2, "0")}</span>
-                  <Icono className="mt-[16px] h-[38px] w-[38px] text-museo-laton transition-colors duration-200 group-hover:text-museo-tinta" />
-                  <div className="mt-auto pt-[18px]">
-                    <div className="cartela text-museo-tinta">{sala.titulo}</div>
-                    <p className="mt-[7px] text-[13px] leading-[1.5] text-museo-tinta-tenue">
-                      {sala.pie}
-                    </p>
-                  </div>
-                  {/*
-                    La flecha, la única señal de que la celda entera se pulsa.
-                    Sin ella una rejilla de texto no parece pulsable, y arriba
-                    competiría con el número.
-                  */}
-                  <span
-                    aria-hidden
-                    className="mt-[14px] text-[15px] leading-none text-museo-tinta-tenue transition-transform duration-200 group-hover:translate-x-[4px] group-hover:text-museo-tinta"
-                  >
-                    →
-                  </span>
+                  <Icono className="h-[54px] w-[54px] text-museo-laton transition-[color,transform] duration-200 ease-out group-hover:-translate-y-[2px] group-hover:text-museo-tinta" />
+                  <div className="cartela mt-[20px] text-museo-tinta">{sala.titulo}</div>
+                  <p className="mt-[7px] text-[13px] leading-[1.5] text-museo-tinta-tenue">
+                    {sala.pie}
+                  </p>
                 </a>
               );
             })}
@@ -160,10 +158,14 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
                 key={sala.href}
                 href={sala.href}
                 onClick={cerrar}
-                className="flex items-center justify-between border-b border-museo-linea py-[16px] font-display text-[25px] leading-none text-museo-tinta"
+                className="flex items-center gap-[14px] border-b border-museo-linea-fina py-[15px] font-display text-[23px] leading-none text-museo-tinta"
               >
+                {(() => {
+                  const Icono = ICONOS_CYP[sala.icono as IconoCyp];
+                  return <Icono className="h-[26px] w-[26px] shrink-0 text-museo-laton" />;
+                })()}
                 {sala.titulo}
-                <span aria-hidden className="text-[16px] text-museo-tinta-tenue">
+                <span aria-hidden className="ml-auto text-[16px] text-museo-tinta-tenue">
                   →
                 </span>
               </a>
