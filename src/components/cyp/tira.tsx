@@ -50,8 +50,25 @@ export function Tira({ fotos, activa, onElegir, nombre }: Props) {
     return () => observador.disconnect();
   }, [fotos.length]);
 
-  /** Al elegir una foto se la trae a la vista, que puede estar fuera del carril. */
+  /*
+    Al elegir una foto se la trae a la vista, que puede estar fuera del carril.
+
+    **Menos la primera vez.** Esto se disparaba también al montar, y como en la
+    tienda hay once tarjetas montándose a la vez, cada una arrastraba la página
+    hasta su propia tira: la última ganaba y la web abría a 7.323 píxeles,
+    dentro de la tienda, siempre en el mismo sitio. Parecía que el navegador
+    recordaba la posición, y no: la movíamos nosotros.
+
+    `block: "nearest"` no basta para evitarlo, porque al montar el elemento
+    todavía está por debajo del pliegue y para el navegador «lo más cerca» es
+    subirlo a la pantalla.
+  */
+  const montado = useRef(false);
   useEffect(() => {
+    if (!montado.current) {
+      montado.current = true;
+      return;
+    }
     const el = carril.current;
     const hijo = el?.children[activa] as HTMLElement | undefined;
     hijo?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
