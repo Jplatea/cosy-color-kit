@@ -75,10 +75,25 @@ export const menuDestacado = [
   { icono: "test", muestra: { tipo: "duo", separados: true }, titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
 ] as const;
 
+/**
+ * Las ocho celdas del directorio de la página.
+ *
+ * Son las seis de arriba más las dos salas de contenido que no cabían en el
+ * nivel 1 pero tampoco merecen el pie: los textos de sala y la tasación. Ocho
+ * es el número que aguanta una rejilla de cuatro sin dejar huecos, y sigue
+ * estando lejos de las doce decisiones que había antes.
+ *
+ * Comparte datos con el panel del botón de menú, así que las dos cosas no
+ * pueden desmentirse: si aquí se añade una sala, aparece en los dos sitios.
+ */
+export const directorio = [
+  ...menuDestacado,
+  { icono: "textos", muestra: { tipo: "duo" }, titulo: "Textos de sala", pie: "Poemas absurdos, colgados de la pared", href: "#poemas" },
+  { icono: "tasacion", muestra: { tipo: "duo" }, titulo: "Tasación", pie: "Cuánto valdría todo esto. Poco", href: "#subasta" },
+] as const;
+
 /** Al pie del panel, en pequeño: lo que hace falta pero no se anuncia. */
 export const menuSecundario = [
-  { label: "Textos de sala", href: "#poemas" },
-  { label: "Tasación", href: "#subasta" },
   { label: "Libro de visitas", href: "#visitas" },
   { label: "Otras sedes", href: "#redes" },
   { label: "Préstamos", href: "#contacto" },

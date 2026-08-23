@@ -150,6 +150,37 @@ export const IconoTest = ({ className }: Props) => (
   </svg>
 );
 
+/**
+ * Textos de sala: la cartela colgada, con su renglón escrito.
+ *
+ * Al pasar por encima se subraya la primera línea, como si alguien la
+ * estuviera leyendo. Es la sala de los poemas: el gesto es leer.
+ */
+export const IconoTextos = ({ className }: Props) => (
+  <svg {...base} className={className} aria-hidden>
+    <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+    <path d="M7 10h10" className="transition-[stroke-width] duration-200 ease-out group-hover:[stroke-width:2.2]" />
+    <path d="M7 13.5h6" />
+  </svg>
+);
+
+/**
+ * Tasación: el martillo del subastador, que golpea al pasar por encima.
+ *
+ * Gira desde el mango y no desde el centro, que es como se sujeta. Un martillo
+ * que pivota por su cabeza no parece un martillo.
+ */
+export const IconoTasacion = ({ className }: Props) => (
+  <svg {...base} className={className} aria-hidden>
+    <path d="M4.5 20.5h11" />
+    <g className="origin-[9px_15px] transition-transform duration-200 ease-out group-hover:rotate-[-14deg]">
+      <path d="m8.6 8.4 4.6 4.6" />
+      <rect x="11.4" y="3.1" width="7.2" height="3.9" rx="1.4" transform="rotate(45 15 5.05)" />
+      <path d="m8 9 -3.2 3.2a1.7 1.7 0 0 0 2.4 2.4L10.4 11.4" />
+    </g>
+  </svg>
+);
+
 export const ICONOS_CYP = {
   piezas: IconoPiezas,
   videos: IconoVideos,
@@ -157,6 +188,8 @@ export const ICONOS_CYP = {
   vestuario: IconoVestuario,
   tienda: IconoTienda,
   test: IconoTest,
+  textos: IconoTextos,
+  tasacion: IconoTasacion,
 } as const;
 
 export type IconoCyp = keyof typeof ICONOS_CYP;
