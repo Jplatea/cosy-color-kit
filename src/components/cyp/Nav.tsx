@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Interruptor } from "./Interruptor";
 import { LogoMark } from "./Logo";
-import { useLuces } from "@/hooks/useLuces";
 import { menuPrincipal } from "@/config/cyp";
 import { MenuPanel } from "./MenuPanel";
 
 /**
  * La cabecera del museo.
  *
- * Arriba del todo, una línea de horario y entrada como la de cualquier
- * institución seria; debajo, el rótulo y el acceso a las salas. Cuando se baja,
- * la línea de arriba desaparece y solo queda el rótulo pegado, para no robarle
- * sitio a la sala que se esté mirando.
+ * Una sola línea: el rótulo, dos palabras y la tienda. Encima había una banda
+ * con el horario y el «prohibido tocar», que era un buen chiste de museo pero
+ * ocupaba una franja entera de pantalla en cada visita para decir algo que solo
+ * tiene gracia la primera vez.
  *
  * Arriba solo hay **dos palabras y la tienda**. Antes había siete enlaces —y
  * la web tiene doce salas, así que a cinco no se llegaba— y en una cabecera
@@ -72,9 +71,7 @@ function BotonTienda({ compacto = false }: { compacto?: boolean }) {
 }
 
 export function Nav() {
-  const { esDeNoche } = useLuces();
   const [abierto, setAbierto] = useState(false);
-  const [bajado, setBajado] = useState(false);
   const [oculta, setOculta] = useState(false);
   const ultimoY = useRef(0);
 
@@ -92,7 +89,6 @@ export function Nav() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setBajado(y > 40);
       if (Math.abs(y - ultimoY.current) > 6) {
         setOculta(y > 120 && y > ultimoY.current);
         ultimoY.current = y;
@@ -114,22 +110,6 @@ export function Nav() {
         oculta ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      {/* Banda de horario: lo primero que se lee en la puerta de un museo. */}
-      <div
-        className={`overflow-hidden border-b border-museo-linea-fina transition-[max-height,opacity] duration-300 ${
-          bajado ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
-        }`}
-      >
-        <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-6 py-[9px] lg:px-8">
-          <span className="cartela text-museo-tinta-tenue">
-            Abierto todos los días · Entrada gratuita
-          </span>
-          <span className="cartela hidden text-museo-tinta-tenue sm:block">
-            {esDeNoche ? "Luces bajadas · Prohibido tocar (se puede)" : "Prohibido tocar las piezas (se puede)"}
-          </span>
-        </div>
-      </div>
-
       <div className="mx-auto flex max-w-[1180px] items-center gap-3 px-6 py-[14px] sm:gap-5 lg:px-8">
         <a href="#inicio" className="mr-auto flex items-center gap-[14px]">
           <LogoMark className="h-[26px] w-[33px] text-museo-tinta" />
