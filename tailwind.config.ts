@@ -63,6 +63,11 @@ export default {
           from: { opacity: "0", transform: "translateY(14px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        /* El panel del menú al abrirse: aparece y baja un pelo, no salta. */
+        "cyp-panel": {
+          from: { opacity: "0", transform: "translateY(-8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "cyp-bob": "cyp-bob 7s ease-in-out infinite",
@@ -70,6 +75,7 @@ export default {
         "cyp-marquee": "cyp-marquee 38s linear infinite",
         "cyp-blink": "cyp-blink 6s ease-in-out infinite",
         "cyp-rise": "cyp-rise .5s cubic-bezier(.22,1,.36,1) both",
+        "cyp-panel": "cyp-panel .22s cubic-bezier(.22,1,.36,1) both",
       },
     },
   },

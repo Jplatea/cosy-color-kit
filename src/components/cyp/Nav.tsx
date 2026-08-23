@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Interruptor } from "./Interruptor";
 import { LogoMark } from "./Logo";
 import { useLuces } from "@/hooks/useLuces";
-import { nav, socials } from "@/config/cyp";
+import { menuPrincipal } from "@/config/cyp";
+import { MenuPanel } from "./MenuPanel";
 
 /**
  * La cabecera del museo.
@@ -12,16 +13,22 @@ import { nav, socials } from "@/config/cyp";
  * la línea de arriba desaparece y solo queda el rótulo pegado, para no robarle
  * sitio a la sala que se esté mirando.
  *
- * Las salas van dentro de un desplegable y no en fila. Eran siete enlaces
- * seguidos compitiendo entre ellos, y en una cabecera donde todo pesa lo mismo
- * no destaca nada. Guardados, queda sitio para lo único que hay que ver: la
- * tienda.
+ * Arriba solo hay **dos palabras y la tienda**. Antes había siete enlaces —y
+ * la web tiene doce salas, así que a cinco no se llegaba— y en una cabecera
+ * donde todo pesa lo mismo no destaca nada. Cuando una web crece, el menú
+ * horizontal no crece con ella: se agrupa. Lo demás vive detrás del botón de
+ * menú, que abre la pantalla entera y ahí sí hay sitio para enseñarlo con
+ * dibujos.
+ *
+ * La barra se esconde al bajar y vuelve **en cuanto se empieza a subir**, no
+ * al llegar arriba del todo. En una página tan larga como esta, esperar a que
+ * el visitante suba mil píxeles para devolverle el menú es hacerle trabajar.
  */
 
 /** La tienda sale del listado: tiene su propio botón y estaría dos veces. */
 const ES_TIENDA = (href: string) => href === "#tienda";
-const SALAS = nav.filter((item) => !ES_TIENDA(item.href));
-const TIENDA = nav.find((item) => ES_TIENDA(item.href));
+const NIVEL1 = menuPrincipal.filter((item) => !ES_TIENDA(item.href));
+const TIENDA = menuPrincipal.find((item) => ES_TIENDA(item.href));
 
 /**
  * El botón de la tienda: una placa de latón.
@@ -67,36 +74,46 @@ function BotonTienda({ compacto = false }: { compacto?: boolean }) {
 export function Nav() {
   const { esDeNoche } = useLuces();
   const [abierto, setAbierto] = useState(false);
-  const [salas, setSalas] = useState(false);
   const [bajado, setBajado] = useState(false);
-  const desplegable = useRef<HTMLDivElement>(null);
+  const [oculta, setOculta] = useState(false);
+  const ultimoY = useRef(0);
 
+  /*
+    La barra desaparece al bajar y vuelve al subir.
+
+    Se mira el **sentido** del desplazamiento y no la posición, que es lo que
+    hace que vuelva enseguida: basta con empezar a subir. Y hay un margen de
+    seis píxeles porque sin él, el temblor de un ratón de rueda fina o el
+    rebote del móvil la hacen parpadear.
+
+    Por encima de los primeros 120 píxeles no se esconde nunca: arriba del todo
+    la cabecera no le quita sitio a nada.
+  */
   useEffect(() => {
-    const onScroll = () => setBajado(window.scrollY > 40);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setBajado(y > 40);
+      if (Math.abs(y - ultimoY.current) > 6) {
+        setOculta(y > 120 && y > ultimoY.current);
+        ultimoY.current = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Un desplegable que no se cierra al pinchar fuera se queda ahí molestando. */
+  /* Con el panel abierto la barra se queda quieta y a la vista. */
   useEffect(() => {
-    if (!salas) return;
-    const fuera = (ev: MouseEvent) => {
-      if (!desplegable.current?.contains(ev.target as Node)) setSalas(false);
-    };
-    const escape = (ev: KeyboardEvent) => {
-      if (ev.key === "Escape") setSalas(false);
-    };
-    document.addEventListener("mousedown", fuera);
-    window.addEventListener("keydown", escape);
-    return () => {
-      document.removeEventListener("mousedown", fuera);
-      window.removeEventListener("keydown", escape);
-    };
-  }, [salas]);
+    if (abierto) setOculta(false);
+  }, [abierto]);
 
   return (
-    <header className="sticky top-0 z-[60] border-b border-museo-linea bg-museo-papel/90 backdrop-blur-[10px]">
+    <header
+      className={`sticky top-0 z-[60] border-b border-museo-linea bg-museo-papel/90 backdrop-blur-[10px] transition-transform duration-300 ease-out ${
+        oculta ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       {/* Banda de horario: lo primero que se lee en la puerta de un museo. */}
       <div
         className={`overflow-hidden border-b border-museo-linea-fina transition-[max-height,opacity] duration-300 ${
@@ -141,98 +158,58 @@ export function Nav() {
           </span>
         </a>
 
-        {/* El plano de salas, guardado en un cajón. */}
-        <div ref={desplegable} className="relative hidden lg:block">
-          <button
-            type="button"
-            onClick={() => setSalas((v) => !v)}
-            aria-expanded={salas}
-            className="cartela flex items-center gap-[7px] rounded-[2px] border border-museo-linea px-[14px] py-[9px] text-museo-tinta-suave transition-colors hover:border-museo-tinta hover:text-museo-tinta"
-          >
-            Salas
-            <span
-              aria-hidden
-              className={`text-[9px] transition-transform duration-200 ${salas ? "rotate-180" : ""}`}
-            >
-              ▼
-            </span>
-          </button>
+        {/*
+          Nivel 1: dos palabras.
 
-          {salas && (
-            <div className="absolute right-0 top-[calc(100%+9px)] w-[260px] rounded-[3px] border border-museo-linea bg-museo-papel p-[6px] shadow-[0_12px_34px_rgb(var(--cyp-tinta)/0.14)]">
-              {SALAS.map((item, i) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setSalas(false)}
-                  className="flex items-baseline gap-3 rounded-[2px] px-[12px] py-[9px] text-[14px] text-museo-tinta transition-colors hover:bg-museo-peana"
-                >
-                  <span className="cartela w-5 shrink-0 text-museo-laton">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
+          «Las piezas» lleva a los personajes y «El museo» a todo lo demás. No
+          son secciones nuevas: son la puerta de dos grupos, y el visitante
+          entiende de un vistazo qué hay aquí sin leerse doce enlaces.
+        */}
+        <nav className="hidden items-center gap-6 lg:flex">
+          {NIVEL1.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="relative text-[14px] text-museo-tinta-suave transition-colors hover:text-museo-tinta"
+            >
+              {item.label}
+              <span
+                aria-hidden
+                className="absolute -bottom-[5px] left-0 h-px w-0 bg-museo-tinta transition-[width] duration-200 ease-out hover:w-full"
+              />
+            </a>
+          ))}
+        </nav>
 
         <BotonTienda />
 
         <Interruptor />
 
-        <a
-          href={socials.youtube}
-          target="_blank"
-          rel="noopener"
-          className="hidden rounded-[2px] border border-museo-tinta px-[16px] py-[9px] text-[13px] font-medium text-museo-tinta transition-colors hover:bg-museo-tinta hover:text-museo-papel lg:inline-block"
-        >
-          Suscribirse
-        </a>
+        {/*
+          El botón de menú, ahora en todos los tamaños.
 
+          Antes solo salía en el móvil y en el ordenador había un desplegable
+          distinto: dos menús que mantener y dos sitios donde mirar. Ahora es
+          el mismo, y lo que cambia es lo que se abre —rejilla con dibujos o
+          lista de texto grande—, que es donde de verdad se diferencian.
+        */}
         <button
           type="button"
-          onClick={() => setAbierto((v) => !v)}
-          aria-label={abierto ? "Cerrar el plano" : "Ver el plano de salas"}
+          onClick={() => setAbierto(true)}
+          aria-label="Abrir el menú"
           aria-expanded={abierto}
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-[2px] border border-museo-linea text-museo-tinta lg:hidden"
+          className="flex h-9 shrink-0 items-center gap-[9px] rounded-[2px] border border-museo-linea px-[12px] text-museo-tinta transition-colors hover:border-museo-tinta"
         >
           <span className="grid gap-[4px]">
-            <span className={`block h-px w-[15px] bg-current transition-transform ${abierto ? "translate-y-[5px] rotate-45" : ""}`} />
-            <span className={`block h-px w-[15px] bg-current transition-opacity ${abierto ? "opacity-0" : ""}`} />
-            <span className={`block h-px w-[15px] bg-current transition-transform ${abierto ? "-translate-y-[5px] -rotate-45" : ""}`} />
+            <span className="block h-px w-[15px] bg-current" />
+            <span className="block h-px w-[15px] bg-current" />
+            <span className="block h-px w-[15px] bg-current" />
           </span>
+          <span className="cartela hidden sm:block">Menú</span>
         </button>
       </div>
 
-      {abierto && (
-        <div className="border-t border-museo-linea-fina px-6 pb-5 pt-3 lg:hidden">
-          <div className="cartela mb-3 text-museo-tinta-tenue">Plano de salas</div>
-          <div className="grid">
-            {SALAS.map((item, i) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setAbierto(false)}
-                className="flex items-baseline gap-4 border-b border-museo-linea-fina py-[11px] text-[16px] text-museo-tinta"
-              >
-                <span className="cartela w-6 text-museo-laton">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {item.label}
-              </a>
-            ))}
-          </div>
-          <a
-            href={socials.youtube}
-            target="_blank"
-            rel="noopener"
-            className="mt-4 block rounded-[2px] border border-museo-tinta py-[11px] text-center text-[14px] font-medium text-museo-tinta"
-          >
-            Suscribirse en YouTube
-          </a>
-        </div>
-      )}
+      <MenuPanel abierto={abierto} cerrar={() => setAbierto(false)} />
     </header>
   );
 }

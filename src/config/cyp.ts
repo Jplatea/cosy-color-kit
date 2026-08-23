@@ -35,6 +35,55 @@ export const nav = [
   { label: "Libro de visitas", href: "#visitas" },
 ] as const;
 
+/**
+ * El menú, en dos niveles.
+ *
+ * La cabecera listaba siete salas de las doce que hay, y la solución no era
+ * alargarla: cuando una web crece, el menú horizontal no crece con ella, se
+ * agrupa. Aquí el visitante toma **tres decisiones, no doce**.
+ *
+ * Arriba solo va lo que alguien puede querer hacer nada más llegar. Todo lo
+ * demás —las salas de una visita, el libro, los recados— vive detrás del botón
+ * de menú, que es donde se puede desplegar sin apretar nada.
+ *
+ * Y lo administrativo va al pie del panel, en letra pequeña y sin dibujo, a
+ * propósito: préstamos, redes y libro de visitas no deben competir a la vista
+ * con la tienda ni con los personajes. Ese es justo el error que se comete
+ * cuando todo se pinta igual.
+ */
+
+/** Nivel 1: lo que se ve siempre. Tres palabras y el carrito. */
+export const menuPrincipal = [
+  { label: "Las piezas", href: "#personajes" },
+  { label: "El museo", href: "#videos" },
+  { label: "Tienda", href: "#tienda" },
+] as const;
+
+/**
+ * Nivel 2: las seis cosas que se pueden hacer aquí, con su dibujo.
+ *
+ * Seis y no doce. El icono lo elige `iconos-cyp.tsx` por este nombre, y son
+ * dibujos propios —con Culow y Pililarge dentro— y no pictogramas de librería:
+ * en un menú de marca, el icono es marca.
+ */
+export const menuDestacado = [
+  { icono: "piezas", titulo: "Quién es quién", pie: "Conócelos, y gíralos", href: "#personajes" },
+  { icono: "videos", titulo: "Piezas breves", pie: "Los vídeos del canal", href: "#videos" },
+  { icono: "audioguia", titulo: "Audioguía", pie: "Escríbeles y te contestan", href: "#hablar" },
+  { icono: "vestuario", titulo: "Vestuario", pie: "Vísteles tú mismo", href: "#vestidor" },
+  { icono: "tienda", titulo: "Tienda", pie: "Lo que se puede llevar puesto", href: "#tienda" },
+  { icono: "test", titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
+] as const;
+
+/** Al pie del panel, en pequeño: lo que hace falta pero no se anuncia. */
+export const menuSecundario = [
+  { label: "Textos de sala", href: "#poemas" },
+  { label: "Tasación", href: "#subasta" },
+  { label: "Libro de visitas", href: "#visitas" },
+  { label: "Otras sedes", href: "#redes" },
+  { label: "Préstamos", href: "#contacto" },
+] as const;
+
 export type Video = {
   /** ID de YouTube: lo que va después de `v=`. Con esto la miniatura y el enlace salen solos. */
   youtubeId?: string;
