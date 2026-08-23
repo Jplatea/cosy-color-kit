@@ -17,6 +17,10 @@ import { ICONOS, type RedId } from "./social-icons";
  * grande con su flecha. No es el mismo panel encogido: con el pulgar lo que se
  * busca es leer rápido, y ahí un icono de 30 píxeles estorba más que ayuda.
  *
+ * Se superpone a la sala en vez de sustituirla: la página sigue detrás,
+ * atenuada, y por eso se entiende que cerrando se vuelve donde uno estaba. Un
+ * folio opaco de pantalla completa parecía otra página distinta.
+ *
  * **Se pinta en el `body` con un portal, y eso no es opcional.** Estaba dentro
  * de la cabecera, que lleva `transform` para esconderse al bajar, y un ancestro
  * con `transform` pasa a ser el bloque contenedor de todo lo que tenga dentro
@@ -61,14 +65,29 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
   if (!abierto) return null;
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-[60] animate-cyp-panel bg-museo-papel"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Menú del museo"
-      ref={panel}
-    >
-      <div className="flex h-full flex-col overflow-y-auto">
+    <>
+      {/*
+        La sala de detrás, atenuada.
+
+        Sin esto el panel era un folio opaco de pantalla completa y no parecía
+        un menú: parecía que se había navegado a otra página. Dejando ver la
+        sala por debajo se entiende que estás encima de ella y que cerrando
+        vuelves donde estabas. Se cierra al pulsar aquí, que es lo que todo el
+        mundo intenta antes de buscar la equis.
+      */}
+      <div
+        className="fixed inset-0 z-[59] animate-cyp-velo bg-museo-tinta/45 backdrop-blur-[2px]"
+        onClick={cerrar}
+        aria-hidden
+      />
+      <div
+        className="fixed inset-x-0 top-0 z-[60] max-h-[92vh] animate-cyp-panel overflow-y-auto border-b border-museo-linea bg-museo-papel shadow-[0_24px_60px_rgb(var(--cyp-tinta)/0.28)]"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú del museo"
+        ref={panel}
+      >
+        <div className="flex flex-col pb-8">
         <div className="mx-auto flex w-full max-w-[1180px] items-start justify-between gap-6 px-6 py-[20px] lg:px-8">
           <div>
             <span className="cartela text-museo-laton">Plano del museo</span>
@@ -153,7 +172,7 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
         </div>
 
         {/* ── Al pie, lo administrativo. Pequeño y sin dibujo, a propósito. ── */}
-        <div className="mt-10 border-t border-museo-linea">
+        <div className="mt-9 border-t border-museo-linea">
           <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-5 px-6 py-7 sm:flex-row sm:items-center sm:justify-between lg:px-8">
             <div className="flex flex-wrap gap-x-6 gap-y-3">
               {menuSecundario.map((item) => (
@@ -186,8 +205,9 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>,
+    </>,
     document.body
   );
 }

@@ -63,6 +63,8 @@ export default {
           from: { opacity: "0", transform: "translateY(14px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        /* El velo de detrás: solo aparece, sin moverse. */
+        "cyp-velo": { from: { opacity: "0" }, to: { opacity: "1" } },
         /* El panel del menú al abrirse: aparece y baja un pelo, no salta. */
         "cyp-panel": {
           from: { opacity: "0", transform: "translateY(-8px)" },
@@ -76,6 +78,7 @@ export default {
         "cyp-blink": "cyp-blink 6s ease-in-out infinite",
         "cyp-rise": "cyp-rise .5s cubic-bezier(.22,1,.36,1) both",
         "cyp-panel": "cyp-panel .22s cubic-bezier(.22,1,.36,1) both",
+        "cyp-velo": "cyp-velo .2s ease-out both",
       },
     },
   },
