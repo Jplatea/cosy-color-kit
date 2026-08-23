@@ -146,6 +146,38 @@ export default async function handler(req: Peticion, res: Respuesta) {
     return res.status(503).json({ error: "sin configurar" });
   }
 
+  /*
+    Rescate de pagos que se quedaron sin fabricar.
+
+    Pasó de verdad: el secreto de firma en Vercel era el de otra cuenta, así
+    que Stripe entregaba el aviso, aquí se rechazaba por firma inválida, y el
+    comprador se quedaba pagado y sin camiseta. Stripe reintenta durante días,
+    pero no hay por qué esperar sentado ni pelearse con su panel.
+
+    No lleva contraseña, y no hace falta: lo único que puede hacer es crear el
+    pedido que el webhook tendría que haber creado. Le pregunta a Stripe cuáles
+    de las últimas sesiones están **pagadas de verdad** —del que llama no se
+    fía de nada— y para cada una llama a la misma función, que ya es
+    idempotente. Quien lo invoque sin permiso solo consigue que se fabrique lo
+    que alguien ya pagó.
+
+        curl -X POST https://www.culowypililarge.com/api/pedido?rescatar=1
+  */
+  const rescatar = new URL(req.url || "", "http://x").searchParams.get("rescatar");
+  if (rescatar) {
+    const lista = (await stripe("/checkout/sessions?limit=20", claveStripe)) as Record<string, any>;
+    const pagadas = ((lista?.data || []) as Record<string, any>[]).filter(
+      (x) => x.payment_status === "paid"
+    );
+    const hechos = [];
+    for (const sesion of pagadas) {
+      const r = await crearPedido(String(sesion.id), claveStripe);
+      hechos.push({ sesion: String(sesion.id).slice(0, 20) + "…", ...r.cuerpo });
+    }
+    console.log(`[pedido] rescate: ${pagadas.length} sesión(es) pagada(s) revisada(s)`);
+    return res.status(200).json({ revisadas: pagadas.length, hechos });
+  }
+
   const crudo = await cuerpoCrudo(req);
 
   const secretoFirma = process.env.STRIPE_WEBHOOK_SECRET;
@@ -174,6 +206,23 @@ export default async function handler(req: Peticion, res: Respuesta) {
   const idSesion = String(objeto?.id || "");
   if (!idSesion.startsWith("cs_")) return res.status(400).json({ error: "sesión rara" });
 
+  const hecho = await crearPedido(idSesion, claveStripe);
+  return res.status(hecho.estado).json(hecho.cuerpo);
+}
+
+/**
+ * Crea en Printful el pedido de una sesión de Stripe ya pagada.
+ *
+ * Estaba dentro del manejador del webhook, y se sacó cuando hizo falta poder
+ * repetirlo a mano: un pago se quedó sin fabricar porque el secreto de firma
+ * era el de otra cuenta, y sin esto la única forma de recuperarlo era buscar
+ * el botón de reenviar en el panel de Stripe.
+ *
+ * Es idempotente: antes de crear nada pregunta a Printful si ya existe un
+ * pedido con ese `external_id`. Da igual cuántas veces se llame.
+ */
+async function crearPedido(idSesion: string, claveStripe: string) {
+  const respuesta = (estado: number, cuerpo: Record<string, unknown>) => ({ estado, cuerpo });
   try {
     // A partir de aquí no se usa nada del aviso: manda lo que diga Stripe.
     const sesion = (await stripe(
@@ -184,7 +233,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
 
     if (sesion.payment_status !== "paid") {
       console.log(`[pedido] ${idSesion} todavía sin pagar (${sesion.payment_status})`);
-      return res.status(200).json({ ok: true, ignorado: "sin pagar" });
+      return respuesta(200, { ok: true, ignorado: "sin pagar" });
     }
 
     /*
@@ -201,13 +250,13 @@ export default async function handler(req: Peticion, res: Respuesta) {
 
     if (!articulos.length) {
       console.error(`[pedido] ${idSesion} sin artículos con variante`);
-      return res.status(200).json({ ok: true, ignorado: "sin artículos" });
+      return respuesta(200, { ok: true, ignorado: "sin artículos" });
     }
 
     const quien = destinatario(sesion);
     if (!quien?.address1 || !quien.country_code) {
       console.error(`[pedido] ${idSesion} sin dirección de envío`);
-      return res.status(200).json({ ok: true, ignorado: "sin dirección" });
+      return respuesta(200, { ok: true, ignorado: "sin dirección" });
     }
 
     // ¿Ya estaba? Stripe reintenta el aviso hasta que le contestas 200, y sin
@@ -215,7 +264,7 @@ export default async function handler(req: Peticion, res: Respuesta) {
     const previo = await printful(`/orders/@${encodeURIComponent(idSesion)}`);
     if (previo.ok) {
       console.log(`[pedido] ${idSesion} ya existía en Printful`);
-      return res.status(200).json({ ok: true, repetido: true });
+      return respuesta(200, { ok: true, repetido: true });
     }
 
     const confirmar = process.env.PRINTFUL_CONFIRMAR === "1";
@@ -228,16 +277,17 @@ export default async function handler(req: Peticion, res: Respuesta) {
       // 500 a propósito: así Stripe lo reintenta, que es justo lo que se quiere
       // si Printful estaba caído. El pago ya está hecho; solo falta fabricar.
       console.error(`[pedido] printful ${creado.estado}`, JSON.stringify(creado.cuerpo).slice(0, 400));
-      return res.status(500).json({ error: "la imprenta no ha aceptado el pedido" });
+      return respuesta(500, { error: "la imprenta no ha aceptado el pedido" });
     }
 
     console.log(
       `[pedido] ${idSesion} -> printful #${creado.cuerpo?.result?.id}` +
         ` · ${articulos.length} artículo(s) · ${confirmar ? "confirmado" : "borrador"}`
     );
-    return res.status(200).json({ ok: true, pedido: creado.cuerpo?.result?.id });
+    return respuesta(200, { ok: true, pedido: creado.cuerpo?.result?.id });
   } catch (err) {
     console.error("[pedido]", err);
-    return res.status(500).json({ error: "no se ha podido crear el pedido" });
+    return respuesta(500, { error: "no se ha podido crear el pedido" });
   }
 }
+
