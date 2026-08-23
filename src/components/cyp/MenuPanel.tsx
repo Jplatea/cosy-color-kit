@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ICONOS_CYP, type IconoCyp } from "./iconos-cyp";
 import { menuDestacado, menuSecundario, socials, handles } from "@/config/cyp";
 import { ICONOS, type RedId } from "./social-icons";
@@ -15,6 +16,16 @@ import { MuestraMenu } from "./muestra-menu";
  * En el ordenador es una rejilla de tres; en el móvil, una lista de texto
  * grande con su flecha. No es el mismo panel encogido: con el pulgar lo que se
  * busca es leer rápido, y ahí un icono de 30 píxeles estorba más que ayuda.
+ *
+ * **Se pinta en el `body` con un portal, y eso no es opcional.** Estaba dentro
+ * de la cabecera, que lleva `transform` para esconderse al bajar, y un ancestro
+ * con `transform` pasa a ser el bloque contenedor de todo lo que tenga dentro
+ * en `position: fixed`. El resultado: `inset-0` daba los cuatro lados a cero
+ * —se veía en el inspector— pero el panel medía 69 píxeles de alto en vez de la
+ * pantalla entera, porque se anclaba a la cabecera. Sus 589 píxeles de
+ * contenido quedaban recortados y por debajo asomaba la portada. Sacándolo al
+ * `body` queda inmune a cualquier transformación que se le ponga a la cabecera
+ * en el futuro.
  */
 
 const REDES: { id: RedId; nombre: string; href: string }[] = [
@@ -49,7 +60,7 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
 
   if (!abierto) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[60] animate-cyp-panel bg-museo-papel"
       role="dialog"
@@ -165,6 +176,7 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
