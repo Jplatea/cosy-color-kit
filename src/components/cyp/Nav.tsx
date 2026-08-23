@@ -116,11 +116,28 @@ export function Nav() {
       <div className="mx-auto flex max-w-[1180px] items-center gap-3 px-6 py-[14px] sm:gap-5 lg:px-8">
         <a href="#inicio" className="mr-auto flex items-center gap-[14px]">
           <LogoMark className="h-[26px] w-[33px] text-museo-tinta" />
-          <span className="leading-[1.05]">
-            <span className="block font-display text-[19px] tracking-[-0.01em] text-museo-tinta sm:text-[21px]">
+          {/*
+            Las dos líneas, con sitio para la cola de la «g».
+
+            Iban con `leading-[1.05]`, y a ese interlineado la caja del nombre
+            acaba justo donde empieza la cartela: cero píxeles de hueco. La
+            letra no cabe en su caja —la «g» de Pililarge baja por debajo— así
+            que su cola se metía dentro de «Colección permanente» y se veía
+            pisado. Es de las cosas que solo se notan con esa palabra concreta,
+            porque es la única con descendente.
+
+            Se arregla con interlineado normal y un hueco explícito, no
+            estirando el interlineado a ojo: así el espacio entre las dos
+            líneas es un número que se ve en el código y no el resto de una
+            resta entre la caja de la fuente y su altura.
+          */}
+          <span className="grid gap-[3px]">
+            <span className="block font-display text-[19px] leading-[1.16] tracking-[-0.01em] text-museo-tinta sm:text-[21px]">
               Culow &amp; Pililarge
             </span>
-            <span className="cartela block text-museo-tinta-tenue">Colección permanente</span>
+            <span className="cartela block leading-[1.2] text-museo-tinta-tenue">
+              Colección permanente
+            </span>
           </span>
         </a>
 
