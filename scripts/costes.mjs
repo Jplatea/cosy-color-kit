@@ -229,6 +229,15 @@ async function informePrintful(clave) {
         coste: sinDigi,
         sugerido,
         margen: margenRepe,
+        // El desglose tal cual lo da Printful, para la tabla de abajo. El
+        // descuento del plan viene aparte del subtotal, así que el coste real
+        // de fabricar es la resta de los dos: sin hacerla, un plan de pago
+        // parece que no sirve de nada.
+        prod: costs.subtotal - (costs.discount || 0),
+        descuento: costs.discount || 0,
+        envio: costs.shipping || 0,
+        iva: (costs.vat || 0) + (costs.tax || 0),
+        comision,
         // Las variantes de este tramo, para poder escribirles el precio.
         // Cuestan lo mismo, así que les toca el mismo precio a todas.
         ids: variantes.filter((x) => x.retail_price === precio).map((x) => x.id),
@@ -428,6 +437,8 @@ async function main() {
   La web copia los precios de Printful; en el código no se tocan.`);
   }
 
+  tabla(resumen);
+
   // Fuera del if: cuando *nada* va corto es justo cuando puede haber precios
   // por encima del objetivo esperando a que se los baje.
   await ponerPrecios(clave, resumen);
@@ -543,6 +554,64 @@ async function ponerPrecios(clave, resumen) {
   }
 
   console.log(`\n  ${hechas} variante(s) escritas. Ahora:   npm run sync:printful`);
+}
+
+/**
+ * Qué cuesta y qué deja cada producto, en una tabla.
+ *
+ * El informe de arriba está pensado para decidir precios; esto es para mirar el
+ * negocio. Separa lo que Printful mete junto en un solo total: la prenda, el
+ * porte que te cobran a ti y el IVA. Sin separarlos no se ve, por ejemplo, que
+ * en una camiseta el envío es casi una cuarta parte del coste, ni cuánto te
+ * está ahorrando de verdad el plan de pago.
+ *
+ * «Cobras» no es el PVP: es el PVP más los 4,90 € de envío que paga el cliente,
+ * salvo que llegue al mínimo de envío gratis, donde el porte lo pagas tú y por
+ * eso el margen baja de golpe.
+ */
+function tabla(resumen) {
+  if (!resumen.length) return;
+  console.log(`
+────────────────────────────────────────────
+QUÉ CUESTA Y QUÉ DEJA CADA UNO
+`);
+  console.log(
+    "  " +
+      "producto".padEnd(30) +
+      "talla".padEnd(10) +
+      ["PVP", "prenda", "envío", "IVA", "coste", "cobras", "comis.", "margen"]
+        .map((c) => c.padStart(9))
+        .join("")
+  );
+  console.log("  " + "─".repeat(112));
+
+  let totalMargen = 0;
+  let totalDescuento = 0;
+  for (const r of resumen) {
+    if (r.prod === undefined) {
+      console.log(`  ${r.producto.slice(0, 28).padEnd(30)}${r.tallas.padEnd(10)}   no se puede fabricar`);
+      continue;
+    }
+    totalMargen += r.margen;
+    totalDescuento += r.descuento || 0;
+    console.log(
+      "  " +
+        r.producto.slice(0, 28).padEnd(30) +
+        r.tallas.slice(0, 9).padEnd(10) +
+        [r.venta, r.prod, r.envio, r.iva, r.coste, r.cobrado, r.comision, r.margen]
+          .map((n) => eur(n).padStart(9))
+          .join("")
+    );
+  }
+
+  console.log(`
+  «Cobras» es el PVP más los ${eur(ENVIO_COBRADO)} de envío que paga el cliente. Pasando de
+  ${eur(ENVIO_GRATIS_DESDE)} el porte lo pagas tú, y por eso ahí el margen cae de golpe.`);
+  if (totalDescuento > 0) {
+    console.log(`
+  Tu plan de Printful está descontando ${eur(totalDescuento)} sumando un artículo de
+  cada tramo. Ese descuento ya está restado en la columna «prenda».`);
+  }
 }
 
 main().catch((err) => {
