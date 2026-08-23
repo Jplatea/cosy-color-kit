@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-08-19T23:28:28.569Z",
+  "syncedAt": "2026-08-23T05:46:58.496Z",
   "videos": [
+    {
+      "youtubeId": "CIwiglqQBes",
+      "title": "Culow poético",
+      "meta": "YouTube · hace 2 meses",
+      "vertical": true,
+      "publicado": "2026-05-31T17:05:30+00:00",
+      "banda": 0.267,
+      "centro": 0.525,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "IJI6XlCo_oY",
       "title": "Quien corre sin hablar...",
@@ -52,23 +62,23 @@
       "banda": 0.208,
       "centro": 0.512,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "i7P-0FNijSY",
-      "title": "Como Come el Mulo...",
-      "meta": "YouTube · hace 6 meses",
-      "vertical": true,
-      "publicado": "2026-01-27T16:56:35+00:00",
-      "banda": 0.267,
-      "centro": 0.5,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "qZYzPUTh7fA",
+      "title": "Paco",
+      "meta": "YouTube · hace 2 días",
+      "vertical": true,
+      "publicado": "2026-08-20T13:31:08+00:00",
+      "banda": 0.867,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "0_i0yMDNnBA",
       "title": "Sandía en el microhondas 🍉",
-      "meta": "YouTube · hace 2 días",
+      "meta": "YouTube · hace 5 días",
       "vertical": true,
       "publicado": "2026-08-17T15:17:43+00:00",
       "banda": 0.817,
@@ -98,7 +108,7 @@
     {
       "youtubeId": "hKRfbEcBVgY",
       "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
-      "meta": "YouTube · hace 4 sem.",
+      "meta": "YouTube · hace 1 meses",
       "vertical": true,
       "publicado": "2026-07-21T10:57:53+00:00",
       "banda": 0.367,
@@ -128,21 +138,11 @@
     {
       "youtubeId": "CXdsbkgXjJQ",
       "title": "Poesía olorosa",
-      "meta": "YouTube · hace 1 meses",
+      "meta": "YouTube · hace 2 meses",
       "vertical": true,
       "publicado": "2026-06-21T16:16:19+00:00",
       "banda": 0.317,
       "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "CIwiglqQBes",
-      "title": "Culow poético",
-      "meta": "YouTube · hace 2 meses",
-      "vertical": true,
-      "publicado": "2026-05-31T17:05:30+00:00",
-      "banda": 0.267,
-      "centro": 0.525,
       "ratio": 0.5625
     }
   ]
