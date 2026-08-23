@@ -23,7 +23,7 @@
 
 import { writeFile, readFile, readdir, mkdir } from "node:fs/promises";
 import { escribirPrecios } from "./lib/precios.mjs";
-import { destapar } from "./lib/destapar.mjs";
+import { destapar, cohesion } from "./lib/destapar.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -389,9 +389,21 @@ async function aWebp(buffer, lado = 900) {
   gp.drawImage(img, 0, 0);
   const datos = gp.getImageData(0, 0, img.width, img.height);
   const quitado = destapar(datos.data, img.width, img.height);
-  // Si se lleva casi todo, es que la prenda no se distinguía del fondo. Antes
-  // de bajar el margen pasaba con la camiseta blanca: se comía el 88 %.
-  if (quitado < 0.7) {
+  /*
+    Se acepta si lo que queda es una sola pieza y no se ha ido todo.
+
+    Antes se rechazaba por encima del 70 % quitado, y esa regla tiró un recorte
+    perfecto: la alfombrilla ocupa poco en el lienzo, así que quitarle bien el
+    fondo se lleva el 76 %. La cantidad no dice nada por sí sola.
+
+    Ojo con lo que este seguro **no** hace. Se probó contra el caso que rompía
+    la camiseta blanca —el margen en 30— y no lo detecta: lo que sobrevive allí
+    es el contorno, y un contorno sigue siendo una sola pieza (da 100 %). De la
+    prenda blanca protege el margen estrecho, que está medido, no esto. Aquí
+    solo se atrapan los desastres: que no quede nada, o que quede en pedazos.
+  */
+  const entera = cohesion(datos.data, img.width, img.height);
+  if (entera >= 0.9 && quitado < 0.99) {
     gp.clearRect(0, 0, img.width, img.height);
     gp.putImageData(datos, 0, 0);
   }

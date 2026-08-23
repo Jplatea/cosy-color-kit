@@ -77,3 +77,48 @@ export function destapar(px, ancho, alto, { fondo = 2, borde = 10 } = {}) {
   }
   return tocados / (ancho * alto);
 }
+
+/**
+ * Cuánto de lo que queda opaco forma una sola pieza, de 0 a 1.
+ *
+ * Es el modo honesto de saber si el recorte ha salido bien, y sustituye a un
+ * seguro anterior que miraba solo cuánto se había quitado: «si se lleva más
+ * del 70 %, es que se ha comido el producto». Esa regla era falsa y tiró un
+ * recorte perfecto — la alfombrilla ocupa poco en el lienzo, así que quitarle
+ * bien el fondo se lleva el 76 %.
+ *
+ * Mide la forma en vez de la cantidad: un recorte limpio deja una silueta de
+ * una pieza —la alfombrilla da 99,7 %— y uno degenerado la deja en pedazos.
+ *
+ * No es una red que lo pare todo, y conviene saberlo. Con la camiseta blanca y
+ * el margen mal puesto sobrevive el contorno, y un contorno también es una
+ * sola pieza: da 100 % y pasaría. De ese caso protege el margen estrecho, que
+ * está medido; esto solo atrapa los desastres.
+ */
+export function cohesion(px, ancho, alto) {
+  const visto = new Uint8Array(ancho * alto);
+  const cola = new Int32Array(ancho * alto);
+  let opacos = 0;
+  let mayor = 0;
+
+  for (let semilla = 0; semilla < ancho * alto; semilla++) {
+    if (visto[semilla] || px[semilla * 4 + 3] === 0) continue;
+    let fin = 0;
+    cola[fin++] = semilla;
+    visto[semilla] = 1;
+    let n = 0;
+    for (let cab = 0; cab < fin; cab++) {
+      const p = cola[cab];
+      n++;
+      const x = p % ancho;
+      const y = (p / ancho) | 0;
+      if (x + 1 < ancho) { const r = p + 1; if (!visto[r] && px[r * 4 + 3] !== 0) { visto[r] = 1; cola[fin++] = r; } }
+      if (x > 0) { const r = p - 1; if (!visto[r] && px[r * 4 + 3] !== 0) { visto[r] = 1; cola[fin++] = r; } }
+      if (y + 1 < alto) { const r = p + ancho; if (!visto[r] && px[r * 4 + 3] !== 0) { visto[r] = 1; cola[fin++] = r; } }
+      if (y > 0) { const r = p - ancho; if (!visto[r] && px[r * 4 + 3] !== 0) { visto[r] = 1; cola[fin++] = r; } }
+    }
+    opacos += n;
+    if (n > mayor) mayor = n;
+  }
+  return opacos ? mayor / opacos : 0;
+}

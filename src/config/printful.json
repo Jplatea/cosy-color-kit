@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-22T17:59:12.388Z",
+  "sincronizado": "2026-08-23T09:31:18.863Z",
   "productos": [
     {
       "id": 458451943,
@@ -1669,7 +1669,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": ""
+          "hex": "#9eab96"
         },
         {
           "id": 5452906234,
@@ -1702,7 +1702,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": ""
+          "hex": "#eda027"
         },
         {
           "id": 5452906237,
