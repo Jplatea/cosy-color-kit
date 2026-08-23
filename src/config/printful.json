@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-23T10:24:39.914Z",
+  "sincronizado": "2026-08-23T10:27:53.193Z",
   "productos": [
     {
       "id": 458451943,
@@ -54,9 +54,17 @@
     {
       "id": 458442885,
       "nombre": "La bolsa que se bolsepapea a todas las bolsas",
-      "miniatura": "/tienda/bolsa-bolsas/white-printful.webp",
+      "miniatura": "/tienda/bolsa-bolsas/01-frente.webp",
       "fotos": [
-        "/tienda/bolsa-bolsas/white-printful.webp"
+        "/tienda/bolsa-bolsas/01-frente.webp",
+        "/tienda/bolsa-bolsas/02-tres-cuartos.webp",
+        "/tienda/bolsa-bolsas/03-puesta.webp",
+        "/tienda/bolsa-bolsas/04-en-mano.webp",
+        "/tienda/bolsa-bolsas/05-rotulo.webp",
+        "/tienda/bolsa-bolsas/06-rejilla.webp",
+        "/tienda/bolsa-bolsas/07-por-dentro.webp",
+        "/tienda/bolsa-bolsas/08-detras.webp",
+        "/tienda/bolsa-bolsas/09-de-lado.webp"
       ],
       "variantes": [
         {
