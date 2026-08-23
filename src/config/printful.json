@@ -1,5 +1,5 @@
 {
-  "sincronizado": "2026-08-23T10:27:53.193Z",
+  "sincronizado": "2026-08-23T11:12:59.444Z",
   "productos": [
     {
       "id": 458451943,
@@ -22,7 +22,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×18″",
           "talla": "12″×18″",
           "color": "Black",
-          "precio": 2050,
+          "precio": 2000,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -33,7 +33,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 12″×22″",
           "talla": "12″×22″",
           "color": "Black",
-          "precio": 2150,
+          "precio": 2100,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -44,7 +44,7 @@
           "nombre": "Una alfombrilla que no vale para la puerta de la casa / 16″×32″",
           "talla": "16″×32″",
           "color": "Black",
-          "precio": 2850,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#050505"
@@ -73,7 +73,7 @@
           "nombre": "La bolsa que se bolsepapea a todas las bolsas",
           "talla": "One size",
           "color": "White",
-          "precio": 9600,
+          "precio": 9900,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -114,7 +114,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Asphalt / S",
           "talla": "S",
           "color": "Asphalt",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#52514f"
@@ -125,7 +125,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Asphalt / M",
           "talla": "M",
           "color": "Asphalt",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#52514f"
@@ -136,7 +136,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Asphalt / L",
           "talla": "L",
           "color": "Asphalt",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#52514f"
@@ -147,7 +147,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Asphalt / XL",
           "talla": "XL",
           "color": "Asphalt",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#52514f"
@@ -158,7 +158,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pebble / S",
           "talla": "S",
           "color": "Pebble",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#9a8479"
@@ -169,7 +169,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pebble / M",
           "talla": "M",
           "color": "Pebble",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#9a8479"
@@ -180,7 +180,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pebble / L",
           "talla": "L",
           "color": "Pebble",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#9a8479"
@@ -191,7 +191,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pebble / XL",
           "talla": "XL",
           "color": "Pebble",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#9a8479"
@@ -202,7 +202,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Yellow Gold / S",
           "talla": "S",
           "color": "Heather Yellow Gold",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#FFB834"
@@ -213,7 +213,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Yellow Gold / M",
           "talla": "M",
           "color": "Heather Yellow Gold",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#FFB834"
@@ -224,7 +224,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Yellow Gold / L",
           "talla": "L",
           "color": "Heather Yellow Gold",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#FFB834"
@@ -235,7 +235,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Yellow Gold / XL",
           "talla": "XL",
           "color": "Heather Yellow Gold",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#FFB834"
@@ -246,7 +246,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Prism Dusty Blue / S",
           "talla": "S",
           "color": "Heather Prism Dusty Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a5c8bc"
@@ -257,7 +257,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Prism Dusty Blue / M",
           "talla": "M",
           "color": "Heather Prism Dusty Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a5c8bc"
@@ -268,7 +268,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Prism Dusty Blue / L",
           "talla": "L",
           "color": "Heather Prism Dusty Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a5c8bc"
@@ -279,7 +279,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Heather Prism Dusty Blue / XL",
           "talla": "XL",
           "color": "Heather Prism Dusty Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a5c8bc"
@@ -290,7 +290,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pink / S",
           "talla": "S",
           "color": "Pink",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fdbfc7"
@@ -301,7 +301,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pink / M",
           "talla": "M",
           "color": "Pink",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fdbfc7"
@@ -312,7 +312,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pink / L",
           "talla": "L",
           "color": "Pink",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fdbfc7"
@@ -323,7 +323,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Pink / XL",
           "talla": "XL",
           "color": "Pink",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#fdbfc7"
@@ -334,7 +334,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Baby Blue / S",
           "talla": "S",
           "color": "Baby Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c7d7ef"
@@ -345,7 +345,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Baby Blue / M",
           "talla": "M",
           "color": "Baby Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c7d7ef"
@@ -356,7 +356,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Baby Blue / L",
           "talla": "L",
           "color": "Baby Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c7d7ef"
@@ -367,7 +367,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / Baby Blue / XL",
           "talla": "XL",
           "color": "Baby Blue",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c7d7ef"
@@ -378,7 +378,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / White / S",
           "talla": "S",
           "color": "White",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -389,7 +389,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / White / M",
           "talla": "M",
           "color": "White",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -400,7 +400,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / White / L",
           "talla": "L",
           "color": "White",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -411,7 +411,7 @@
           "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos / White / XL",
           "talla": "XL",
           "color": "White",
-          "precio": 2750,
+          "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -446,7 +446,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / XS",
           "talla": "XS",
           "color": "Heather Prism Mint",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -457,7 +457,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / S",
           "talla": "S",
           "color": "Heather Prism Mint",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -468,7 +468,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / M",
           "talla": "M",
           "color": "Heather Prism Mint",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -479,7 +479,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / L",
           "talla": "L",
           "color": "Heather Prism Mint",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -490,7 +490,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / XL",
           "talla": "XL",
           "color": "Heather Prism Mint",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -501,7 +501,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Mint / 2XL",
           "talla": "2XL",
           "color": "Heather Prism Mint",
-          "precio": 2900,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#aad5b9"
@@ -512,7 +512,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / S",
           "talla": "S",
           "color": "Ocean Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a9dff6"
@@ -523,7 +523,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / M",
           "talla": "M",
           "color": "Ocean Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a9dff6"
@@ -534,7 +534,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / L",
           "talla": "L",
           "color": "Ocean Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a9dff6"
@@ -545,7 +545,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / XL",
           "talla": "XL",
           "color": "Ocean Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a9dff6"
@@ -556,7 +556,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Ocean Blue / 2XL",
           "talla": "2XL",
           "color": "Ocean Blue",
-          "precio": 2900,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#a9dff6"
@@ -567,7 +567,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / XS",
           "talla": "XS",
           "color": "Heather Prism Ice Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -578,7 +578,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / S",
           "talla": "S",
           "color": "Heather Prism Ice Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -589,7 +589,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / M",
           "talla": "M",
           "color": "Heather Prism Ice Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -600,7 +600,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / L",
           "talla": "L",
           "color": "Heather Prism Ice Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -611,7 +611,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / XL",
           "talla": "XL",
           "color": "Heather Prism Ice Blue",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -622,7 +622,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Heather Prism Ice Blue / 2XL",
           "talla": "2XL",
           "color": "Heather Prism Ice Blue",
-          "precio": 2900,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c3e2e3"
@@ -633,7 +633,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / S",
           "talla": "S",
           "color": "Soft Pink",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd8e1"
@@ -644,7 +644,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / M",
           "talla": "M",
           "color": "Soft Pink",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd8e1"
@@ -655,7 +655,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / L",
           "talla": "L",
           "color": "Soft Pink",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd8e1"
@@ -666,7 +666,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / XL",
           "talla": "XL",
           "color": "Soft Pink",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd8e1"
@@ -677,7 +677,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / Soft Pink / 2XL",
           "talla": "2XL",
           "color": "Soft Pink",
-          "precio": 2900,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffd8e1"
@@ -688,7 +688,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / XS",
           "talla": "XS",
           "color": "White",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -699,7 +699,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / S",
           "talla": "S",
           "color": "White",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -710,7 +710,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / M",
           "talla": "M",
           "color": "White",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -721,7 +721,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / L",
           "talla": "L",
           "color": "White",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -732,7 +732,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / XL",
           "talla": "XL",
           "color": "White",
-          "precio": 2700,
+          "precio": 2600,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -743,7 +743,7 @@
           "nombre": "Padelbros alucinarán con la camisetita molona / White / 2XL",
           "talla": "2XL",
           "color": "White",
-          "precio": 2900,
+          "precio": 2850,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1019,7 +1019,7 @@
           "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita",
           "talla": "One size",
           "color": "White",
-          "precio": 9600,
+          "precio": 9900,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1043,7 +1043,7 @@
           "nombre": "Para que el ratoncito retoce alegremente",
           "talla": "8.7\"x7.1\"",
           "color": "White",
-          "precio": 1250,
+          "precio": 1200,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1078,7 +1078,7 @@
           "nombre": "Bolsaca para el dinerete, gafitas chulas....",
           "talla": "15″×15″",
           "color": "Yellow",
-          "precio": 2100,
+          "precio": 2050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#de9219"
@@ -1089,7 +1089,7 @@
           "nombre": "Bolsaca para el dinerete, gafitas chulas.... / Black",
           "talla": "15″×15″",
           "color": "Black",
-          "precio": 2100,
+          "precio": 2050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#000000"
@@ -1100,7 +1100,7 @@
           "nombre": "Bolsaca para el dinerete, gafitas chulas.... / Red",
           "talla": "15″×15″",
           "color": "Red",
-          "precio": 2100,
+          "precio": 2050,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#c5262a"
@@ -1135,7 +1135,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / XS",
           "talla": "XS",
           "color": "White",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1146,7 +1146,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / S",
           "talla": "S",
           "color": "White",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1157,7 +1157,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / M",
           "talla": "M",
           "color": "White",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1168,7 +1168,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / L",
           "talla": "L",
           "color": "White",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1179,7 +1179,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / XL",
           "talla": "XL",
           "color": "White",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1190,7 +1190,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / 2XL",
           "talla": "2XL",
           "color": "White",
-          "precio": 5500,
+          "precio": 5400,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1201,7 +1201,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / 3XL",
           "talla": "3XL",
           "color": "White",
-          "precio": 5700,
+          "precio": 5550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1212,7 +1212,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / S",
           "talla": "S",
           "color": "Black",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1223,7 +1223,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / M",
           "talla": "M",
           "color": "Black",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1234,7 +1234,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / L",
           "talla": "L",
           "color": "Black",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1245,7 +1245,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XL",
           "talla": "XL",
           "color": "Black",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1256,7 +1256,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 2XL",
           "talla": "2XL",
           "color": "Black",
-          "precio": 5500,
+          "precio": 5400,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1267,7 +1267,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / 3XL",
           "talla": "3XL",
           "color": "Black",
-          "precio": 5700,
+          "precio": 5550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1278,7 +1278,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XS",
           "talla": "XS",
           "color": "Bottle green",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1289,7 +1289,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / S",
           "talla": "S",
           "color": "Bottle green",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1300,7 +1300,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / M",
           "talla": "M",
           "color": "Bottle green",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1311,7 +1311,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / L",
           "talla": "L",
           "color": "Bottle green",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1322,7 +1322,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Black / XS",
           "talla": "XS",
           "color": "Black",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#191919"
@@ -1333,7 +1333,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / XL",
           "talla": "XL",
           "color": "Bottle green",
-          "precio": 5350,
+          "precio": 5250,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1344,7 +1344,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 2XL",
           "talla": "2XL",
           "color": "Bottle green",
-          "precio": 5500,
+          "precio": 5400,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1355,7 +1355,7 @@
           "nombre": "Sudadera to perita de cuello como si llevaras collarin / Bottle green / 3XL",
           "talla": "3XL",
           "color": "Bottle green",
-          "precio": 5700,
+          "precio": 5550,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#344d34"
@@ -1410,7 +1410,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / S/M",
           "talla": "S/M",
           "color": "White",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1421,7 +1421,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / L/XL",
           "talla": "L/XL",
           "color": "White",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1432,7 +1432,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Dark Navy / S/M",
           "talla": "S/M",
           "color": "Dark Navy",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#171822"
@@ -1443,7 +1443,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Dark Navy / L/XL",
           "talla": "L/XL",
           "color": "Dark Navy",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#171822"
@@ -1454,7 +1454,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Royal Blue / S/M",
           "talla": "S/M",
           "color": "Royal Blue",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#0b3466"
@@ -1465,7 +1465,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Royal Blue / L/XL",
           "talla": "L/XL",
           "color": "Royal Blue",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#0b3466"
@@ -1476,7 +1476,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Red / S/M",
           "talla": "S/M",
           "color": "Red",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#bf0a1b"
@@ -1487,7 +1487,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Red / L/XL",
           "talla": "L/XL",
           "color": "Red",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#bf0a1b"
@@ -1498,7 +1498,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Grey / S/M",
           "talla": "S/M",
           "color": "Grey",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#717171"
@@ -1509,7 +1509,7 @@
           "nombre": "Gorraca para aparcar coches como un pro / Grey / L/XL",
           "talla": "L/XL",
           "color": "Grey",
-          "precio": 2350,
+          "precio": 2300,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#717171"
@@ -1549,7 +1549,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / XS",
           "talla": "XS",
           "color": "White",
-          "precio": 2700,
+          "precio": 2650,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1560,7 +1560,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / S",
           "talla": "S",
           "color": "White",
-          "precio": 2700,
+          "precio": 2650,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1571,7 +1571,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / M",
           "talla": "M",
           "color": "White",
-          "precio": 2700,
+          "precio": 2650,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1582,7 +1582,7 @@
           "nombre": "Camisetita para ver a tus Bros en el padel / L",
           "talla": "L",
           "color": "White",
-          "precio": 2700,
+          "precio": 2650,
           "moneda": "EUR",
           "disponible": true,
           "hex": "#ffffff"
@@ -1651,7 +1651,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#9eab96"
+          "hex": ""
         },
         {
           "id": 5452906231,
@@ -1684,7 +1684,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#9eab96"
+          "hex": ""
         },
         {
           "id": 5452906234,
@@ -1706,7 +1706,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#eda027"
+          "hex": ""
         },
         {
           "id": 5452906236,
@@ -1717,7 +1717,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#eda027"
+          "hex": ""
         },
         {
           "id": 5452906237,
@@ -1750,7 +1750,7 @@
           "precio": 2700,
           "moneda": "EUR",
           "disponible": true,
-          "hex": "#deafcd"
+          "hex": ""
         },
         {
           "id": 5452906240,

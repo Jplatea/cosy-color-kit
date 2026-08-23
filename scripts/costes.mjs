@@ -461,7 +461,7 @@ está estimada con la tarifa europea de Stripe (${COMISION.porcentaje * 100} % +
  * Se enseñan siempre, para que quede claro que no se han olvidado.
  */
 const INTOCABLES = [
-  { patron: /criptobros/i, motivo: "10,50 € puesto a mano; al 10 % saldría a 10,00 €" },
+  { patron: /criptobros/i, motivo: "10,50 € puesto a mano; ya deja un 19 %, por encima del objetivo" },
 ];
 
 const intocable = (nombre) => INTOCABLES.find((x) => x.patron.test(nombre));

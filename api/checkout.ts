@@ -40,243 +40,243 @@ type Articulo = { nombre: string; precio: number };
 const PRECIOS: Record<string, Articulo> = {
   "5453261502": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 12″×18″",
-    "precio": 2050
+    "precio": 2000
   },
   "5453261503": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 12″×22″",
-    "precio": 2150
+    "precio": 2100
   },
   "5453261504": {
     "nombre": "Una alfombrilla que no vale para la puerta de la casa · 16″×32″",
-    "precio": 2850
+    "precio": 2700
   },
   "5453194211": {
     "nombre": "La bolsa que se bolsepapea a todas las bolsas · One size",
-    "precio": 9600
+    "precio": 9900
   },
   "5453151950": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151951": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151952": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151953": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151954": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151955": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151956": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151957": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151958": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151959": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151960": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151961": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151962": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151963": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151964": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151965": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151966": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151967": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151968": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151969": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151970": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151971": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151972": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151973": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151974": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · S",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151975": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · M",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151976": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · L",
-    "precio": 2750
+    "precio": 2700
   },
   "5453151977": {
     "nombre": "Camisetita para esos maduritos que se quieren poner fuertecitos · XL",
-    "precio": 2750
+    "precio": 2700
   },
   "5453002936": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XS",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002937": {
     "nombre": "Padelbros alucinarán con la camisetita molona · S",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002938": {
     "nombre": "Padelbros alucinarán con la camisetita molona · M",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002939": {
     "nombre": "Padelbros alucinarán con la camisetita molona · L",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002940": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XL",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002941": {
     "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
-    "precio": 2900
+    "precio": 2850
   },
   "5453002942": {
     "nombre": "Padelbros alucinarán con la camisetita molona · S",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002943": {
     "nombre": "Padelbros alucinarán con la camisetita molona · M",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002944": {
     "nombre": "Padelbros alucinarán con la camisetita molona · L",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002945": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XL",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002946": {
     "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
-    "precio": 2900
+    "precio": 2850
   },
   "5453002947": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XS",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002948": {
     "nombre": "Padelbros alucinarán con la camisetita molona · S",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002949": {
     "nombre": "Padelbros alucinarán con la camisetita molona · M",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002950": {
     "nombre": "Padelbros alucinarán con la camisetita molona · L",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002951": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XL",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002952": {
     "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
-    "precio": 2900
+    "precio": 2850
   },
   "5453002953": {
     "nombre": "Padelbros alucinarán con la camisetita molona · S",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002954": {
     "nombre": "Padelbros alucinarán con la camisetita molona · M",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002955": {
     "nombre": "Padelbros alucinarán con la camisetita molona · L",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002956": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XL",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002957": {
     "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
-    "precio": 2900
+    "precio": 2850
   },
   "5453002958": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XS",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002960": {
     "nombre": "Padelbros alucinarán con la camisetita molona · S",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002961": {
     "nombre": "Padelbros alucinarán con la camisetita molona · M",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002962": {
     "nombre": "Padelbros alucinarán con la camisetita molona · L",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002963": {
     "nombre": "Padelbros alucinarán con la camisetita molona · XL",
-    "precio": 2700
+    "precio": 2600
   },
   "5453002964": {
     "nombre": "Padelbros alucinarán con la camisetita molona · 2XL",
-    "precio": 2900
+    "precio": 2850
   },
   "5452966559": {
     "nombre": "Camisetita para aquellos criptobros que están en bancarrota · S",
@@ -360,163 +360,163 @@ const PRECIOS: Record<string, Articulo> = {
   },
   "5452270555": {
     "nombre": "Bolsa para los fuertecitos de gimnasio que quieren vacilar de mochilita · One size",
-    "precio": 9600
+    "precio": 9900
   },
   "5452259381": {
     "nombre": "Para que el ratoncito retoce alegremente · 8.7\"x7.1\"",
-    "precio": 1250
+    "precio": 1200
   },
   "5449680122": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2100
+    "precio": 2050
   },
   "5452910521": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2100
+    "precio": 2050
   },
   "5452910522": {
     "nombre": "Bolsaca para el dinerete, gafitas chulas.... · 15″×15″",
-    "precio": 2100
+    "precio": 2050
   },
   "5449668444": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5350
+    "precio": 5250
   },
   "5449668445": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5350
+    "precio": 5250
   },
   "5449668446": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5350
+    "precio": 5250
   },
   "5449668447": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5350
+    "precio": 5250
   },
   "5449668448": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5350
+    "precio": 5250
   },
   "5449668449": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5500
+    "precio": 5400
   },
   "5449668450": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 5700
+    "precio": 5550
   },
   "5452275032": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275034": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275054": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275058": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275060": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5500
+    "precio": 5400
   },
   "5452275061": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 5700
+    "precio": 5550
   },
   "5452275062": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275063": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · S",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275064": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · M",
-    "precio": 5350
+    "precio": 5250
   },
   "5452275065": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · L",
-    "precio": 5350
+    "precio": 5250
   },
   "5452276767": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XS",
-    "precio": 5350
+    "precio": 5250
   },
   "5452276823": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · XL",
-    "precio": 5350
+    "precio": 5250
   },
   "5452276829": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 2XL",
-    "precio": 5500
+    "precio": 5400
   },
   "5452276842": {
     "nombre": "Sudadera to perita de cuello como si llevaras collarin · 3XL",
-    "precio": 5700
+    "precio": 5550
   },
   "5449667542": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2350
+    "precio": 2300
   },
   "5449667543": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909812": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909813": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909814": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909815": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909816": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909817": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909818": {
     "nombre": "Gorraca para aparcar coches como un pro · S/M",
-    "precio": 2350
+    "precio": 2300
   },
   "5452909819": {
     "nombre": "Gorraca para aparcar coches como un pro · L/XL",
-    "precio": 2350
+    "precio": 2300
   },
   "5449158693": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XS",
-    "precio": 2700
+    "precio": 2650
   },
   "5449158694": {
     "nombre": "Camisetita para ver a tus Bros en el padel · S",
-    "precio": 2700
+    "precio": 2650
   },
   "5449158695": {
     "nombre": "Camisetita para ver a tus Bros en el padel · M",
-    "precio": 2700
+    "precio": 2650
   },
   "5449158696": {
     "nombre": "Camisetita para ver a tus Bros en el padel · L",
-    "precio": 2700
+    "precio": 2650
   },
   "5449158697": {
     "nombre": "Camisetita para ver a tus Bros en el padel · XL",
