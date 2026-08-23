@@ -52,12 +52,16 @@ export const nav = [
  * cuando todo se pinta igual.
  */
 
-/** Nivel 1: lo que se ve siempre. Tres palabras y el carrito. */
-export const menuPrincipal = [
-  { label: "Las piezas", href: "#personajes" },
-  { label: "El museo", href: "#videos" },
-  { label: "Tienda", href: "#tienda" },
-] as const;
+/**
+ * Nivel 1: solo la tienda.
+ *
+ * Llegó a tener siete enlaces, luego dos palabras y la tienda, y al final una
+ * sola cosa. Es lo único que se vende, así que es lo único que merece estar
+ * siempre a la vista; todo lo demás vive en el menú, donde se ve entero y con
+ * dibujos. Una cabecera con dos enlaces sueltos y un botón de menú que lleva a
+ * esos mismos sitios era decir dos veces lo mismo.
+ */
+export const menuPrincipal = [{ label: "Tienda", href: "#tienda" }] as const;
 
 /**
  * Nivel 2: las seis cosas que se pueden hacer aquí, con su dibujo.
@@ -67,12 +71,12 @@ export const menuPrincipal = [
  * en un menú de marca, el icono es marca.
  */
 export const menuDestacado = [
-  { icono: "piezas", muestra: { tipo: "duo" }, titulo: "Quién es quién", pie: "Conócelos, y gíralos", href: "#personajes" },
-  { icono: "videos", muestra: { tipo: "video" }, titulo: "Piezas breves", pie: "Los vídeos del canal", href: "#videos" },
-  { icono: "audioguia", muestra: { tipo: "personaje", quien: "pililarge", habla: true }, titulo: "Audioguía", pie: "Escríbeles y te contestan", href: "#hablar" },
-  { icono: "vestuario", muestra: { tipo: "personaje", quien: "culow", disfraz: "ninja" }, titulo: "Vestuario", pie: "Vísteles tú mismo", href: "#vestidor" },
-  { icono: "tienda", muestra: { tipo: "producto" }, titulo: "Tienda", pie: "Lo que se puede llevar puesto", href: "#tienda" },
-  { icono: "test", muestra: { tipo: "duo", separados: true }, titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
+  { icono: "piezas", titulo: "Quién es quién", pie: "Conócelos, y gíralos", href: "#personajes" },
+  { icono: "videos", titulo: "Piezas breves", pie: "Los vídeos del canal", href: "#videos" },
+  { icono: "audioguia", titulo: "Audioguía", pie: "Escríbeles y te contestan", href: "#hablar" },
+  { icono: "vestuario", titulo: "Vestuario", pie: "Vísteles tú mismo", href: "#vestidor" },
+  { icono: "tienda", titulo: "Tienda", pie: "Lo que se puede llevar puesto", href: "#tienda" },
+  { icono: "test", titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
 ] as const;
 
 /**
@@ -88,8 +92,8 @@ export const menuDestacado = [
  */
 export const directorio = [
   ...menuDestacado,
-  { icono: "textos", muestra: { tipo: "duo" }, titulo: "Textos de sala", pie: "Poemas absurdos, colgados de la pared", href: "#poemas" },
-  { icono: "tasacion", muestra: { tipo: "duo" }, titulo: "Tasación", pie: "Cuánto valdría todo esto. Poco", href: "#subasta" },
+  { icono: "textos", titulo: "Textos de sala", pie: "Poemas absurdos, colgados de la pared", href: "#poemas" },
+  { icono: "tasacion", titulo: "Tasación", pie: "Cuánto valdría todo esto. Poco", href: "#subasta" },
 ] as const;
 
 /** Al pie del panel, en pequeño: lo que hace falta pero no se anuncia. */

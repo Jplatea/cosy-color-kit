@@ -31,6 +31,27 @@
           if (localStorage.getItem("cyp:luces") === "noche")
             document.documentElement.classList.add("noche");
         } catch (e) {}
+
+        /*
+          La visita empieza por la puerta.
+
+          El navegador recuerda por dónde ibas y al volver te deja en mitad de
+          una sala, que en una página tan larga como esta desorienta: no se
+          entiende si has entrado o si te has perdido. Se le quita esa manía
+          —`scrollRestoration` a mano— y se sube arriba al cargar.
+
+          Salvo que la dirección traiga un ancla. Si alguien comparte el enlace
+          de la tienda, tiene que abrirse en la tienda; ahí el que manda es el
+          `#`, no esto.
+        */
+        try {
+          if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+          if (!location.hash) {
+            window.addEventListener("load", function () {
+              window.scrollTo(0, 0);
+            });
+          }
+        } catch (e) {}
       })();
     </script>
   </head>

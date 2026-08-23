@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { ICONOS_CYP, type IconoCyp } from "./iconos-cyp";
-import { menuDestacado, menuSecundario, socials, handles } from "@/config/cyp";
+import { LogoMark } from "./Logo";
+import { directorio, menuSecundario, socials, handles } from "@/config/cyp";
 import { ICONOS, type RedId } from "./social-icons";
-import { MuestraMenu } from "./muestra-menu";
 
 /**
  * El panel del menú: el nivel 2.
@@ -69,13 +69,27 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
       ref={panel}
     >
       <div className="flex h-full flex-col overflow-y-auto">
-        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-6 py-[18px] lg:px-8">
-          <span className="cartela text-museo-tinta-tenue">¿Por dónde empezamos?</span>
+        <div className="mx-auto flex w-full max-w-[1180px] items-start justify-between gap-6 px-6 py-[20px] lg:px-8">
+          <div>
+            <span className="cartela text-museo-laton">Plano del museo</span>
+            <div className="mt-3 font-display text-[34px] leading-[1.05] text-museo-tinta sm:text-[44px]">
+              Explora <span className="italic text-museo-tinta-suave">nuestro mundo</span>
+            </div>
+            <p className="mt-2 text-[14px] text-museo-tinta-tenue">
+              Ocho salas y ningún recorrido obligatorio.
+            </p>
+          </div>
+          <div className="hidden items-center gap-4 lg:flex">
+            <LogoMark className="h-[38px] w-[48px] shrink-0 text-museo-laton" />
+            <p className="max-w-[24ch] text-[13.5px] leading-[1.5] text-museo-tinta-suave">
+              Dos personajes. Humor especial. Un caos que entendemos mejor entre los dos.
+            </p>
+          </div>
           <button
             type="button"
             onClick={cerrar}
             aria-label="Cerrar el menú"
-            className="grid h-10 w-10 place-items-center rounded-[2px] border border-museo-linea text-museo-tinta transition-colors hover:border-museo-tinta"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-[2px] border border-museo-linea text-museo-tinta transition-colors hover:border-museo-tinta"
           >
             <span className="relative block h-[15px] w-[15px]">
               <span className="absolute left-0 top-1/2 block h-px w-full rotate-45 bg-current" />
@@ -84,40 +98,37 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
           </button>
         </div>
 
-        {/* ── Las seis, en rejilla. En móvil, lista de texto grande. ── */}
+        {/* ── Las ocho, en rejilla. En móvil, lista de texto grande. ── */}
         <div className="mx-auto w-full max-w-[1180px] flex-1 px-6 lg:px-8">
-          <div className="hidden border border-museo-linea sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {menuDestacado.map((item) => {
-              const Icono = ICONOS_CYP[item.icono as IconoCyp];
+          <div className="hidden border-l border-t border-museo-linea sm:grid sm:grid-cols-3 lg:grid-cols-4">
+            {directorio.map((sala, i) => {
+              const Icono = ICONOS_CYP[sala.icono as IconoCyp];
               return (
                 <a
-                  key={item.href}
-                  href={item.href}
+                  key={sala.href}
+                  href={sala.href}
                   onClick={cerrar}
-                  className="group flex flex-col border-b border-r border-museo-linea transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none"
+                  className="group flex min-h-[178px] flex-col border-b border-r border-museo-linea p-[20px] transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none sm:p-[24px]"
                 >
-                  {/*
-                    La imagen manda y el icono baja a marca.
-
-                    Con los dos del mismo tamaño competían: el dibujo de línea
-                    dice de qué va la sala y la fotografía enseña lo que hay
-                    dentro, y para decidir rápido sirve más lo segundo. El
-                    icono se queda en 18 píxeles al lado del título, que es
-                    donde sigue haciendo su trabajo —dar identidad— sin robarle
-                    sitio a lo que de verdad se mira.
-                  */}
-                  <MuestraMenu muestra={item.muestra as never} />
-                  <div className="p-[22px]">
-                    <div className="flex items-center gap-[9px]">
-                      <Icono className="h-[18px] w-[18px] shrink-0 text-museo-laton transition-colors duration-200 group-hover:text-museo-tinta" />
-                      <span className="font-display text-[22px] leading-[1.15] text-museo-tinta">
-                        {item.titulo}
-                      </span>
-                    </div>
-                    <p className="mt-[6px] text-[13.5px] leading-[1.5] text-museo-tinta-tenue">
-                      {item.pie}
+                  <span className="cartela text-museo-laton">{String(i + 1).padStart(2, "0")}</span>
+                  <Icono className="mt-[16px] h-[38px] w-[38px] text-museo-laton transition-colors duration-200 group-hover:text-museo-tinta" />
+                  <div className="mt-auto pt-[18px]">
+                    <div className="cartela text-museo-tinta">{sala.titulo}</div>
+                    <p className="mt-[7px] text-[13px] leading-[1.5] text-museo-tinta-tenue">
+                      {sala.pie}
                     </p>
                   </div>
+                  {/*
+                    La flecha, la única señal de que la celda entera se pulsa.
+                    Sin ella una rejilla de texto no parece pulsable, y arriba
+                    competiría con el número.
+                  */}
+                  <span
+                    aria-hidden
+                    className="mt-[14px] text-[15px] leading-none text-museo-tinta-tenue transition-transform duration-200 group-hover:translate-x-[4px] group-hover:text-museo-tinta"
+                  >
+                    →
+                  </span>
                 </a>
               );
             })}
@@ -125,15 +136,15 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
 
           {/* En el pulgar manda el texto, no el dibujo. */}
           <div className="grid sm:hidden">
-            {menuDestacado.map((item) => (
+            {directorio.map((sala) => (
               <a
-                key={item.href}
-                href={item.href}
+                key={sala.href}
+                href={sala.href}
                 onClick={cerrar}
-                className="flex items-center justify-between border-b border-museo-linea py-[18px] font-display text-[27px] leading-none text-museo-tinta"
+                className="flex items-center justify-between border-b border-museo-linea py-[16px] font-display text-[25px] leading-none text-museo-tinta"
               >
-                {item.titulo}
-                <span aria-hidden className="text-[17px] text-museo-tinta-tenue">
+                {sala.titulo}
+                <span aria-hidden className="text-[16px] text-museo-tinta-tenue">
                   →
                 </span>
               </a>

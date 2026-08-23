@@ -12,22 +12,20 @@ import { MenuPanel } from "./MenuPanel";
  * ocupaba una franja entera de pantalla en cada visita para decir algo que solo
  * tiene gracia la primera vez.
  *
- * Arriba solo hay **dos palabras y la tienda**. Antes había siete enlaces —y
- * la web tiene doce salas, así que a cinco no se llegaba— y en una cabecera
- * donde todo pesa lo mismo no destaca nada. Cuando una web crece, el menú
- * horizontal no crece con ella: se agrupa. Lo demás vive detrás del botón de
- * menú, que abre la pantalla entera y ahí sí hay sitio para enseñarlo con
- * dibujos.
+ * Arriba solo queda **la tienda**. Llegó a haber siete enlaces, luego dos
+ * palabras y la tienda, y al final una sola cosa: es lo único que se vende, así
+ * que es lo único que merece estar siempre a la vista. Tener además dos enlaces
+ * sueltos que llevaban a los mismos sitios que el menú era decir dos veces lo
+ * mismo. Todo lo demás vive detrás del botón, que abre la pantalla entera y ahí
+ * sí hay sitio para enseñarlo con dibujos.
  *
  * La barra se esconde al bajar y vuelve **en cuanto se empieza a subir**, no
  * al llegar arriba del todo. En una página tan larga como esta, esperar a que
  * el visitante suba mil píxeles para devolverle el menú es hacerle trabajar.
  */
 
-/** La tienda sale del listado: tiene su propio botón y estaría dos veces. */
-const ES_TIENDA = (href: string) => href === "#tienda";
-const NIVEL1 = menuPrincipal.filter((item) => !ES_TIENDA(item.href));
-const TIENDA = menuPrincipal.find((item) => ES_TIENDA(item.href));
+/** Lo único que se vende, y por eso lo único que se queda arriba. */
+const TIENDA = menuPrincipal[0];
 
 /**
  * El botón de la tienda: una placa de latón.
@@ -137,29 +135,6 @@ export function Nav() {
             </span>
           </span>
         </a>
-
-        {/*
-          Nivel 1: dos palabras.
-
-          «Las piezas» lleva a los personajes y «El museo» a todo lo demás. No
-          son secciones nuevas: son la puerta de dos grupos, y el visitante
-          entiende de un vistazo qué hay aquí sin leerse doce enlaces.
-        */}
-        <nav className="hidden items-center gap-6 lg:flex">
-          {NIVEL1.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="relative text-[14px] text-museo-tinta-suave transition-colors hover:text-museo-tinta"
-            >
-              {item.label}
-              <span
-                aria-hidden
-                className="absolute -bottom-[5px] left-0 h-px w-0 bg-museo-tinta transition-[width] duration-200 ease-out hover:w-full"
-              />
-            </a>
-          ))}
-        </nav>
 
         <BotonTienda />
 

@@ -1,6 +1,5 @@
 import { Nav } from "@/components/cyp/Nav";
 import { Hero } from "@/components/cyp/Hero";
-import { Explora } from "@/components/cyp/Explora";
 import { Videos } from "@/components/cyp/Videos";
 import { Personajes } from "@/components/cyp/Personajes";
 import { HazlosHablar } from "@/components/cyp/HazlosHablar";
@@ -22,7 +21,6 @@ const Index = () => {
     <div className="min-w-0 overflow-x-hidden">
       <Nav />
       <Hero />
-      <Explora />
       <Videos />
       <Personajes />
       <HazlosHablar />
