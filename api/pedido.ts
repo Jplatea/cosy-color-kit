@@ -259,9 +259,26 @@ async function crearPedido(idSesion: string, claveStripe: string) {
       return respuesta(200, { ok: true, ignorado: "sin dirección" });
     }
 
+    /*
+      El identificador que ve la imprenta, recortado.
+
+      Printful contesta 400 «Invalid External ID specified» si se le manda el
+      id de sesión entero: los que emite Stripe ahora rondan los 66 caracteres
+      y su campo no llega. Costó verlo porque el síntoma era otro —el pedido no
+      aparecía— y había un problema de firma delante tapándolo; con la firma ya
+      arreglada, este pago habría fallado igual.
+
+      Se corta a 32. Sigue empezando por `cs_live_`, así que en el panel de
+      Printful se reconoce de un vistazo que viene de Stripe, y lo que queda
+      detrás es de sobra para que dos pagos no coincidan jamás. Lo importante
+      es que sea **el mismo cálculo** al buscar y al crear: de eso vive la
+      comprobación de duplicados de aquí abajo.
+    */
+    const idCorto = idSesion.slice(0, 32);
+
     // ¿Ya estaba? Stripe reintenta el aviso hasta que le contestas 200, y sin
     // esta comprobación una red lenta se convierte en dos camisetas.
-    const previo = await printful(`/orders/@${encodeURIComponent(idSesion)}`);
+    const previo = await printful(`/orders/@${encodeURIComponent(idCorto)}`);
     if (previo.ok) {
       console.log(`[pedido] ${idSesion} ya existía en Printful`);
       return respuesta(200, { ok: true, repetido: true });
@@ -270,7 +287,7 @@ async function crearPedido(idSesion: string, claveStripe: string) {
     const confirmar = process.env.PRINTFUL_CONFIRMAR === "1";
     const creado = await printful(`/orders?confirm=${confirmar ? "1" : "0"}`, {
       method: "POST",
-      body: JSON.stringify({ external_id: idSesion, recipient: quien, items: articulos }),
+      body: JSON.stringify({ external_id: idCorto, recipient: quien, items: articulos }),
     });
 
     if (!creado.ok) {
