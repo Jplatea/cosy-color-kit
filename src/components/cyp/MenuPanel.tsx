@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { ICONOS_CYP, type IconoCyp } from "./iconos-cyp";
 import { menuDestacado, menuSecundario, socials, handles } from "@/config/cyp";
 import { ICONOS, type RedId } from "./social-icons";
+import { MuestraMenu } from "./muestra-menu";
 
 /**
  * El panel del menú: el nivel 2.
@@ -82,14 +83,27 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
                   key={item.href}
                   href={item.href}
                   onClick={cerrar}
-                  className="group flex flex-col gap-[16px] border-b border-r border-museo-linea p-[26px] transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none"
+                  className="group flex flex-col border-b border-r border-museo-linea transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none"
                 >
-                  <Icono className="h-[34px] w-[34px] text-museo-laton transition-colors duration-200 group-hover:text-museo-tinta" />
-                  <div>
-                    <div className="font-display text-[24px] leading-[1.15] text-museo-tinta">
-                      {item.titulo}
+                  {/*
+                    La imagen manda y el icono baja a marca.
+
+                    Con los dos del mismo tamaño competían: el dibujo de línea
+                    dice de qué va la sala y la fotografía enseña lo que hay
+                    dentro, y para decidir rápido sirve más lo segundo. El
+                    icono se queda en 18 píxeles al lado del título, que es
+                    donde sigue haciendo su trabajo —dar identidad— sin robarle
+                    sitio a lo que de verdad se mira.
+                  */}
+                  <MuestraMenu muestra={item.muestra as never} />
+                  <div className="p-[22px]">
+                    <div className="flex items-center gap-[9px]">
+                      <Icono className="h-[18px] w-[18px] shrink-0 text-museo-laton transition-colors duration-200 group-hover:text-museo-tinta" />
+                      <span className="font-display text-[22px] leading-[1.15] text-museo-tinta">
+                        {item.titulo}
+                      </span>
                     </div>
-                    <p className="mt-[5px] text-[14px] leading-[1.5] text-museo-tinta-tenue">
+                    <p className="mt-[6px] text-[13.5px] leading-[1.5] text-museo-tinta-tenue">
                       {item.pie}
                     </p>
                   </div>

@@ -67,12 +67,12 @@ export const menuPrincipal = [
  * en un menú de marca, el icono es marca.
  */
 export const menuDestacado = [
-  { icono: "piezas", titulo: "Quién es quién", pie: "Conócelos, y gíralos", href: "#personajes" },
-  { icono: "videos", titulo: "Piezas breves", pie: "Los vídeos del canal", href: "#videos" },
-  { icono: "audioguia", titulo: "Audioguía", pie: "Escríbeles y te contestan", href: "#hablar" },
-  { icono: "vestuario", titulo: "Vestuario", pie: "Vísteles tú mismo", href: "#vestidor" },
-  { icono: "tienda", titulo: "Tienda", pie: "Lo que se puede llevar puesto", href: "#tienda" },
-  { icono: "test", titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
+  { icono: "piezas", muestra: { tipo: "duo" }, titulo: "Quién es quién", pie: "Conócelos, y gíralos", href: "#personajes" },
+  { icono: "videos", muestra: { tipo: "video" }, titulo: "Piezas breves", pie: "Los vídeos del canal", href: "#videos" },
+  { icono: "audioguia", muestra: { tipo: "personaje", quien: "pililarge", habla: true }, titulo: "Audioguía", pie: "Escríbeles y te contestan", href: "#hablar" },
+  { icono: "vestuario", muestra: { tipo: "personaje", quien: "culow", disfraz: "ninja" }, titulo: "Vestuario", pie: "Vísteles tú mismo", href: "#vestidor" },
+  { icono: "tienda", muestra: { tipo: "producto" }, titulo: "Tienda", pie: "Lo que se puede llevar puesto", href: "#tienda" },
+  { icono: "test", muestra: { tipo: "duo", separados: true }, titulo: "¿Cuál eres tú?", pie: "Diez preguntas sin rigor", href: "#test" },
 ] as const;
 
 /** Al pie del panel, en pequeño: lo que hace falta pero no se anuncia. */
