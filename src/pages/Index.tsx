@@ -12,6 +12,7 @@ import { Test } from "@/components/cyp/Test";
 import { Visitas } from "@/components/cyp/Visitas";
 import { Contacto } from "@/components/cyp/Contacto";
 import { SiteFooter } from "@/components/cyp/SiteFooter";
+import { VolverArriba } from "@/components/cyp/VolverArriba";
 import { useSectionTracking } from "@/hooks/useVisitas";
 
 const Index = () => {
@@ -33,6 +34,7 @@ const Index = () => {
       <Visitas />
       <Contacto />
       <SiteFooter />
+      <VolverArriba />
     </div>
   );
 };
