@@ -1,12 +1,19 @@
 {
-  "sincronizado": "2026-08-23T09:31:18.863Z",
+  "sincronizado": "2026-08-23T10:24:39.914Z",
   "productos": [
     {
       "id": 458451943,
       "nombre": "Una alfombrilla que no vale para la puerta de la casa",
-      "miniatura": "/tienda/alfombrilla/black-printful.webp",
+      "miniatura": "/tienda/alfombrilla/01-grande.webp",
       "fotos": [
-        "/tienda/alfombrilla/black-printful.webp"
+        "/tienda/alfombrilla/01-grande.webp",
+        "/tienda/alfombrilla/02-mediana.webp",
+        "/tienda/alfombrilla/03-pequena.webp",
+        "/tienda/alfombrilla/04-escritorio.webp",
+        "/tienda/alfombrilla/05-canto.webp",
+        "/tienda/alfombrilla/06-reverso.webp",
+        "/tienda/alfombrilla/07-escritorio-mediana.webp",
+        "/tienda/alfombrilla/08-escritorio-pequena.webp"
       ],
       "variantes": [
         {
