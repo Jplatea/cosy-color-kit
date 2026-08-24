@@ -141,8 +141,18 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
                   onClick={cerrar}
                   className="group flex flex-col rounded-[3px] p-[18px] transition-colors duration-200 hover:bg-museo-pared focus-visible:bg-museo-pared focus-visible:outline-none"
                 >
-                  <Icono className="h-[54px] w-[54px] text-museo-laton transition-[color,transform] duration-200 ease-out group-hover:-translate-y-[2px] group-hover:text-museo-tinta" />
-                  <div className="cartela mt-[20px] text-museo-tinta">{sala.titulo}</div>
+                  {/*
+                    Una medalla, no un trazo suelto sobre el papel.
+
+                    A 54px el dibujo era solo una línea fina flotando en el aire:
+                    correcto pero sin peso. El anillo de latón le da un cuerpo, como
+                    las medallas de las cartelas del museo, y el icono crece dentro
+                    de él en vez de competir con el borde.
+                  */}
+                  <span className="grid h-[76px] w-[76px] place-items-center rounded-full border border-museo-laton/35 bg-museo-laton/[0.07] transition-colors duration-200 ease-out group-hover:border-museo-tinta/45 group-hover:bg-museo-tinta/[0.05]">
+                    <Icono className="h-[40px] w-[40px] text-museo-laton transition-[color,transform] duration-200 ease-out group-hover:-translate-y-[2px] group-hover:text-museo-tinta" />
+                  </span>
+                  <div className="cartela mt-[16px] text-museo-tinta">{sala.titulo}</div>
                   <p className="mt-[7px] text-[13px] leading-[1.5] text-museo-tinta-tenue">
                     {sala.pie}
                   </p>
@@ -162,7 +172,11 @@ export function MenuPanel({ abierto, cerrar }: { abierto: boolean; cerrar: () =>
               >
                 {(() => {
                   const Icono = ICONOS_CYP[sala.icono as IconoCyp];
-                  return <Icono className="h-[26px] w-[26px] shrink-0 text-museo-laton" />;
+                  return (
+                    <span className="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full border border-museo-laton/35 bg-museo-laton/[0.07]">
+                      <Icono className="h-[24px] w-[24px] text-museo-laton" />
+                    </span>
+                  );
                 })()}
                 {sala.titulo}
                 <span aria-hidden className="ml-auto text-[16px] text-museo-tinta-tenue">

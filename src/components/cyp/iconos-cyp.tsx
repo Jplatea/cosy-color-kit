@@ -15,7 +15,7 @@
  * una cápsula alta, que es toda su silueta— así que el menú acaba contando
  * quiénes son antes de entrar en ninguna sala.
  *
- * Comparten cuadrícula de 24, trazo de 1,4 y puntas redondeadas para que se
+ * Comparten cuadrícula de 24, trazo de 1,6 y puntas redondeadas para que se
  * lean como una familia. El color va en `currentColor`, para que la celda pueda
  * oscurecerlo al pasar sin tocar el dibujo.
  *
@@ -30,7 +30,7 @@ const base = {
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 1.4,
+  strokeWidth: 1.6,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
 };
