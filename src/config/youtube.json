@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-08-27T16:32:40.033Z",
+  "syncedAt": "2026-08-28T17:27:43.637Z",
   "videos": [
+    {
+      "youtubeId": "W5PwOvU87Bs",
+      "title": "Homenaje a Oliver Tree y Gaspi",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-07-04T11:07:45+00:00",
+      "banda": 0.3,
+      "centro": 0.508,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "CXdsbkgXjJQ",
       "title": "Poesía olorosa",
@@ -52,23 +62,23 @@
       "banda": 0.242,
       "centro": 0.496,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "gkEDOc414CU",
-      "title": "Culow habla líquido",
-      "meta": "YouTube · hace 6 meses",
-      "vertical": true,
-      "publicado": "2026-02-11T21:33:01+00:00",
-      "banda": 0.183,
-      "centro": 0.475,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "sgUOHPyCciw",
+      "title": "La máquina del temu / larva 🐛",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-08-28T14:16:23+00:00",
+      "banda": 0.833,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "Fzz8jSv-1zs",
       "title": "Sigan viendo 🐌",
-      "meta": "YouTube · hace 3 días",
+      "meta": "YouTube · hace 4 días",
       "vertical": true,
       "publicado": "2026-08-24T14:24:31+00:00",
       "banda": 0.85,
@@ -133,16 +143,6 @@
       "publicado": "2026-07-14T12:12:42+00:00",
       "banda": 0.317,
       "centro": 0.492,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "W5PwOvU87Bs",
-      "title": "Homenaje a Oliver Tree y Gaspi",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-07-04T11:07:45+00:00",
-      "banda": 0.3,
-      "centro": 0.508,
       "ratio": 0.5625
     }
   ]
