@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-08-31T11:37:49.120Z",
+  "syncedAt": "2026-09-01T10:10:07.080Z",
   "videos": [
+    {
+      "youtubeId": "m9S7-X9qylI",
+      "title": "Chiste chistoso 1",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-07-14T12:12:42+00:00",
+      "banda": 0.317,
+      "centro": 0.492,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "W5PwOvU87Bs",
       "title": "Homenaje a Oliver Tree y Gaspi",
@@ -52,23 +62,23 @@
       "banda": 0.283,
       "centro": 0.5,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "hom5niMwMQc",
-      "title": "La playa cansa y la piscina da hambre Pronto la historia de",
-      "meta": "YouTube · hace 6 meses",
-      "vertical": true,
-      "publicado": "2026-02-25T21:03:44+00:00",
-      "banda": 0.242,
-      "centro": 0.496,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "l-MIEbHrUO8",
+      "title": "A Oliver le cayó un meteorito mientras caminaba",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-08-31T13:32:59+00:00",
+      "banda": 0.692,
+      "centro": 0.479,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "sgUOHPyCciw",
       "title": "La máquina del temu / larva 🐛",
-      "meta": "YouTube · hace 2 días",
+      "meta": "YouTube · hace 3 días",
       "vertical": true,
       "publicado": "2026-08-28T14:16:23+00:00",
       "banda": 0.833,
@@ -78,7 +88,7 @@
     {
       "youtubeId": "Fzz8jSv-1zs",
       "title": "Sigan viendo 🐌",
-      "meta": "YouTube · hace 6 días",
+      "meta": "YouTube · hace 1 sem.",
       "vertical": true,
       "publicado": "2026-08-24T14:24:31+00:00",
       "banda": 0.85,
@@ -98,7 +108,7 @@
     {
       "youtubeId": "0_i0yMDNnBA",
       "title": "Sandía en el microhondas 🍉",
-      "meta": "YouTube · hace 1 sem.",
+      "meta": "YouTube · hace 2 sem.",
       "vertical": true,
       "publicado": "2026-08-17T15:17:43+00:00",
       "banda": 0.817,
@@ -133,16 +143,6 @@
       "publicado": "2026-07-21T10:57:53+00:00",
       "banda": 0.367,
       "centro": 0.55,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "m9S7-X9qylI",
-      "title": "Chiste chistoso 1",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-07-14T12:12:42+00:00",
-      "banda": 0.317,
-      "centro": 0.492,
       "ratio": 0.5625
     }
   ]
