@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-09-06T09:27:47.170Z",
+  "syncedAt": "2026-09-07T10:22:27.795Z",
   "videos": [
+    {
+      "youtubeId": "hKRfbEcBVgY",
+      "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-07-21T10:57:53+00:00",
+      "banda": 0.367,
+      "centro": 0.55,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "m9S7-X9qylI",
       "title": "Chiste chistoso 1",
@@ -52,23 +62,23 @@
       "banda": 0.292,
       "centro": 0.512,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "UI5IVQ5MToo",
-      "title": "El consejo de Culow",
-      "meta": "YouTube · hace 3 meses",
-      "vertical": true,
-      "publicado": "2026-05-16T13:10:07+00:00",
-      "banda": 0.283,
-      "centro": 0.5,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "qjqZ19xDt-Y",
+      "title": "Gambas al pilpil 🦐",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-09-06T18:46:55+00:00",
+      "banda": 1,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "l-MIEbHrUO8",
       "title": "A Oliver le cayó un meteorito mientras caminaba",
-      "meta": "YouTube · hace 5 días",
+      "meta": "YouTube · hace 6 días",
       "vertical": true,
       "publicado": "2026-08-31T13:32:59+00:00",
       "banda": 0.692,
@@ -133,16 +143,6 @@
       "publicado": "2026-08-03T11:22:21+00:00",
       "banda": 0.7,
       "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "hKRfbEcBVgY",
-      "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-07-21T10:57:53+00:00",
-      "banda": 0.367,
-      "centro": 0.55,
       "ratio": 0.5625
     }
   ]
