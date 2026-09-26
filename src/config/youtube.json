@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-09-25T10:13:43.829Z",
+  "syncedAt": "2026-09-26T09:54:27.297Z",
   "videos": [
+    {
+      "youtubeId": "0_i0yMDNnBA",
+      "title": "Sandía en el microhondas 🍉",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-08-17T15:17:43+00:00",
+      "banda": 0.817,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "nC-NNDp2ij0",
       "title": "Club ❌ Asociación✅",
@@ -52,23 +62,23 @@
       "banda": 0.3,
       "centro": 0.508,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "CXdsbkgXjJQ",
-      "title": "Poesía olorosa",
-      "meta": "YouTube · hace 3 meses",
-      "vertical": true,
-      "publicado": "2026-06-21T16:16:19+00:00",
-      "banda": 0.317,
-      "centro": 0.5,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "jqmfNGhnCVU",
+      "title": "En qué rama vas a estudiar",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-09-25T18:59:10+00:00",
+      "banda": 0.983,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "fPHq9hi34NI",
       "title": "Pililarge psicólogo",
-      "meta": "YouTube · hace 6 días",
+      "meta": "YouTube · hace 1 sem.",
       "vertical": true,
       "publicado": "2026-09-18T19:21:18+00:00",
       "banda": 0.817,
@@ -78,7 +88,7 @@
     {
       "youtubeId": "a5ONi59wX8c",
       "title": "Quiero una cerveza y una fregona 🍺🧹",
-      "meta": "YouTube · hace 1 sem.",
+      "meta": "YouTube · hace 2 sem.",
       "vertical": true,
       "publicado": "2026-09-11T13:39:28+00:00",
       "banda": 0.742,
@@ -108,7 +118,7 @@
     {
       "youtubeId": "sgUOHPyCciw",
       "title": "La máquina del temu / larva 🐛",
-      "meta": "YouTube · hace 3 sem.",
+      "meta": "YouTube · hace 4 sem.",
       "vertical": true,
       "publicado": "2026-08-28T14:16:23+00:00",
       "banda": 0.833,
@@ -132,16 +142,6 @@
       "vertical": true,
       "publicado": "2026-08-20T13:31:08+00:00",
       "banda": 0.867,
-      "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "0_i0yMDNnBA",
-      "title": "Sandía en el microhondas 🍉",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-08-17T15:17:43+00:00",
-      "banda": 0.817,
       "centro": 0.5,
       "ratio": 0.5625
     }
