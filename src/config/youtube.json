@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-10-02T11:08:17.427Z",
+  "syncedAt": "2026-10-03T10:26:23.965Z",
   "videos": [
+    {
+      "youtubeId": "qZYzPUTh7fA",
+      "title": "Paco",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-08-20T13:31:08+00:00",
+      "banda": 0.867,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "0_i0yMDNnBA",
       "title": "Sandía en el microhondas 🍉",
@@ -26,7 +36,7 @@
     {
       "youtubeId": "bqOO2kLhU64",
       "title": "El viaje a Túnez 🇹🇳",
-      "meta": "YouTube · hace 1 meses",
+      "meta": "YouTube · hace 2 meses",
       "vertical": true,
       "publicado": "2026-08-03T11:22:21+00:00",
       "banda": 0.7,
@@ -52,23 +62,23 @@
       "banda": 0.317,
       "centro": 0.492,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "W5PwOvU87Bs",
-      "title": "Homenaje a Oliver Tree y Gaspi",
-      "meta": "YouTube · hace 3 meses",
-      "vertical": true,
-      "publicado": "2026-07-04T11:07:45+00:00",
-      "banda": 0.3,
-      "centro": 0.508,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "FnwPQiWDytw",
+      "title": "Teodoro",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-10-02T17:23:16+00:00",
+      "banda": 1,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "jqmfNGhnCVU",
       "title": "En qué rama vas a estudiar",
-      "meta": "YouTube · hace 6 días",
+      "meta": "YouTube · hace 1 sem.",
       "vertical": true,
       "publicado": "2026-09-25T18:59:10+00:00",
       "banda": 0.983,
@@ -78,7 +88,7 @@
     {
       "youtubeId": "fPHq9hi34NI",
       "title": "Pililarge psicólogo",
-      "meta": "YouTube · hace 1 sem.",
+      "meta": "YouTube · hace 2 sem.",
       "vertical": true,
       "publicado": "2026-09-18T19:21:18+00:00",
       "banda": 0.817,
@@ -88,7 +98,7 @@
     {
       "youtubeId": "a5ONi59wX8c",
       "title": "Quiero una cerveza y una fregona 🍺🧹",
-      "meta": "YouTube · hace 2 sem.",
+      "meta": "YouTube · hace 3 sem.",
       "vertical": true,
       "publicado": "2026-09-11T13:39:28+00:00",
       "banda": 0.742,
@@ -132,16 +142,6 @@
       "vertical": true,
       "publicado": "2026-08-24T14:24:31+00:00",
       "banda": 0.85,
-      "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "qZYzPUTh7fA",
-      "title": "Paco",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-08-20T13:31:08+00:00",
-      "banda": 0.867,
       "centro": 0.5,
       "ratio": 0.5625
     }
