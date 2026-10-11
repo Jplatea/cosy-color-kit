@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-10-10T11:12:23.620Z",
+  "syncedAt": "2026-10-11T11:25:49.259Z",
   "videos": [
+    {
+      "youtubeId": "Fzz8jSv-1zs",
+      "title": "Sigan viendo 🐌",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-08-24T14:24:31+00:00",
+      "banda": 0.85,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "qZYzPUTh7fA",
       "title": "Paco",
@@ -52,19 +62,19 @@
       "banda": 0.367,
       "centro": 0.55,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "m9S7-X9qylI",
-      "title": "Chiste chistoso 1",
-      "meta": "YouTube · hace 2 meses",
-      "vertical": true,
-      "publicado": "2026-07-14T12:12:42+00:00",
-      "banda": 0.317,
-      "centro": 0.492,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
+    {
+      "youtubeId": "kMaNBuVeRBI",
+      "title": "Un paseo en bicicleta",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-10-10T12:24:11+00:00",
+      "banda": 1,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "FnwPQiWDytw",
       "title": "Teodoro",
@@ -132,16 +142,6 @@
       "vertical": true,
       "publicado": "2026-08-28T14:16:23+00:00",
       "banda": 0.833,
-      "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "Fzz8jSv-1zs",
-      "title": "Sigan viendo 🐌",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-08-24T14:24:31+00:00",
-      "banda": 0.85,
       "centro": 0.5,
       "ratio": 0.5625
     }
