@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-10-16T09:53:15.222Z",
+  "syncedAt": "2026-10-17T09:24:59.519Z",
   "videos": [
+    {
+      "youtubeId": "sgUOHPyCciw",
+      "title": "La máquina del temu / larva 🐛",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-08-28T14:16:23+00:00",
+      "banda": 0.833,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "Fzz8jSv-1zs",
       "title": "Sigan viendo 🐌",
@@ -26,7 +36,7 @@
     {
       "youtubeId": "0_i0yMDNnBA",
       "title": "Sandía en el microhondas 🍉",
-      "meta": "YouTube · hace 1 meses",
+      "meta": "YouTube · hace 2 meses",
       "vertical": true,
       "publicado": "2026-08-17T15:17:43+00:00",
       "banda": 0.817,
@@ -52,23 +62,20 @@
       "banda": 0.7,
       "centro": 0.5,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "hKRfbEcBVgY",
-      "title": "Respira... Culow y Pililarge//Chiste Chistoso 2.",
-      "meta": "YouTube · hace 2 meses",
-      "vertical": true,
-      "publicado": "2026-07-21T10:57:53+00:00",
-      "banda": 0.367,
-      "centro": 0.55,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "qYOifkg_hA4",
+      "title": "La puerta del bosque",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-10-16T18:40:35+00:00"
+    },
+    {
       "youtubeId": "kMaNBuVeRBI",
       "title": "Un paseo en bicicleta",
-      "meta": "YouTube · hace 5 días",
+      "meta": "YouTube · hace 6 días",
       "vertical": true,
       "publicado": "2026-10-10T12:24:11+00:00",
       "banda": 1,
@@ -78,7 +85,7 @@
     {
       "youtubeId": "FnwPQiWDytw",
       "title": "Teodoro",
-      "meta": "YouTube · hace 1 sem.",
+      "meta": "YouTube · hace 2 sem.",
       "vertical": true,
       "publicado": "2026-10-02T17:23:16+00:00",
       "banda": 1,
@@ -88,7 +95,7 @@
     {
       "youtubeId": "jqmfNGhnCVU",
       "title": "En qué rama vas a estudiar",
-      "meta": "YouTube · hace 2 sem.",
+      "meta": "YouTube · hace 3 sem.",
       "vertical": true,
       "publicado": "2026-09-25T18:59:10+00:00",
       "banda": 0.983,
@@ -98,7 +105,7 @@
     {
       "youtubeId": "fPHq9hi34NI",
       "title": "Pililarge psicólogo",
-      "meta": "YouTube · hace 3 sem.",
+      "meta": "YouTube · hace 4 sem.",
       "vertical": true,
       "publicado": "2026-09-18T19:21:18+00:00",
       "banda": 0.817,
@@ -133,16 +140,6 @@
       "publicado": "2026-08-31T13:32:59+00:00",
       "banda": 0.692,
       "centro": 0.479,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "sgUOHPyCciw",
-      "title": "La máquina del temu / larva 🐛",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-08-28T14:16:23+00:00",
-      "banda": 0.833,
-      "centro": 0.5,
       "ratio": 0.5625
     }
   ]
