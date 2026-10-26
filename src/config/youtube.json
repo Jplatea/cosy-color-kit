@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-10-25T09:50:37.659Z",
+  "syncedAt": "2026-10-26T11:10:06.756Z",
   "videos": [
+    {
+      "youtubeId": "l-MIEbHrUO8",
+      "title": "A Oliver le cayó un meteorito mientras caminaba",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-08-31T13:32:59+00:00",
+      "banda": 0.692,
+      "centro": 0.479,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "sgUOHPyCciw",
       "title": "La máquina del temu / larva 🐛",
@@ -52,19 +62,16 @@
       "banda": 0.675,
       "centro": 0.521,
       "ratio": 1
-    },
-    {
-      "youtubeId": "bqOO2kLhU64",
-      "title": "El viaje a Túnez 🇹🇳",
-      "meta": "YouTube · hace 2 meses",
-      "vertical": true,
-      "publicado": "2026-08-03T11:22:21+00:00",
-      "banda": 0.7,
-      "centro": 0.5,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
+    {
+      "youtubeId": "00HEvTbsLx8",
+      "title": "Una riña debajo del bar",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-10-25T15:09:07+00:00"
+    },
     {
       "youtubeId": "qYOifkg_hA4",
       "title": "La puerta del bosque",
@@ -95,7 +102,7 @@
     {
       "youtubeId": "jqmfNGhnCVU",
       "title": "En qué rama vas a estudiar",
-      "meta": "YouTube · hace 4 sem.",
+      "meta": "YouTube · hace 1 meses",
       "vertical": true,
       "publicado": "2026-09-25T18:59:10+00:00",
       "banda": 0.983,
@@ -130,16 +137,6 @@
       "publicado": "2026-09-06T18:46:55+00:00",
       "banda": 1,
       "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "l-MIEbHrUO8",
-      "title": "A Oliver le cayó un meteorito mientras caminaba",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-08-31T13:32:59+00:00",
-      "banda": 0.692,
-      "centro": 0.479,
       "ratio": 0.5625
     }
   ]
