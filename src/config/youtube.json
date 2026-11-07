@@ -1,8 +1,18 @@
 {
   "channelId": "UCRmsdrKDweWCLqXAe1LLTAw",
   "handle": "@CulowPililarge",
-  "syncedAt": "2026-11-06T12:58:53.997Z",
+  "syncedAt": "2026-11-07T11:45:28.116Z",
   "videos": [
+    {
+      "youtubeId": "a5ONi59wX8c",
+      "title": "Quiero una cerveza y una fregona 🍺🧹",
+      "meta": "YouTube · hace 1 meses",
+      "vertical": true,
+      "publicado": "2026-09-11T13:39:28+00:00",
+      "banda": 0.742,
+      "centro": 0.404,
+      "ratio": 0.5625
+    },
     {
       "youtubeId": "qjqZ19xDt-Y",
       "title": "Gambas al pilpil 🦐",
@@ -52,23 +62,23 @@
       "banda": 0.867,
       "centro": 0.5,
       "ratio": 0.5625
-    },
-    {
-      "youtubeId": "0_i0yMDNnBA",
-      "title": "Sandía en el microhondas 🍉",
-      "meta": "YouTube · hace 2 meses",
-      "vertical": true,
-      "publicado": "2026-08-17T15:17:43+00:00",
-      "banda": 0.817,
-      "centro": 0.5,
-      "ratio": 0.5625
     }
   ],
   "shorts": [
     {
+      "youtubeId": "NwL4KCUOkyg",
+      "title": "Cinta transportadora",
+      "meta": "YouTube · nuevo",
+      "vertical": true,
+      "publicado": "2026-11-06T17:59:34+00:00",
+      "banda": 1,
+      "centro": 0.5,
+      "ratio": 0.5625
+    },
+    {
       "youtubeId": "ZtExDjjj-T4",
       "title": "8 por 8",
-      "meta": "YouTube · hace 6 días",
+      "meta": "YouTube · hace 1 sem.",
       "vertical": true,
       "publicado": "2026-10-30T16:11:14+00:00",
       "banda": 1,
@@ -85,7 +95,7 @@
     {
       "youtubeId": "qYOifkg_hA4",
       "title": "La puerta del bosque",
-      "meta": "YouTube · hace 2 sem.",
+      "meta": "YouTube · hace 3 sem.",
       "vertical": true,
       "publicado": "2026-10-16T18:40:35+00:00"
     },
@@ -127,16 +137,6 @@
       "publicado": "2026-09-18T19:21:18+00:00",
       "banda": 0.817,
       "centro": 0.5,
-      "ratio": 0.5625
-    },
-    {
-      "youtubeId": "a5ONi59wX8c",
-      "title": "Quiero una cerveza y una fregona 🍺🧹",
-      "meta": "YouTube · hace 1 meses",
-      "vertical": true,
-      "publicado": "2026-09-11T13:39:28+00:00",
-      "banda": 0.742,
-      "centro": 0.404,
       "ratio": 0.5625
     }
   ]
